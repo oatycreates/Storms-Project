@@ -30,7 +30,7 @@ REM Check if the Google Drive directory exists
 IF NOT EXIST %orig_assets_path% (
     ECHO Google Drive folder couldn't be found at: %orig_assets_path%! && ECHO Download the app from https://www.google.com.au/drive/download/ before running this script again.
 ) ELSE (
-    ROBOCOPY !orig_assets_path! !dest_path! /E /DCOPY:DAT /XO /IS /XA:H
+    ROBOCOPY !orig_assets_path! !dest_path! /E /XO /IS /XA:H
 )
 
 ECHO Done!
