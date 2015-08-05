@@ -24,7 +24,7 @@ public class AirshipDyingBehaviour : MonoBehaviour // A simple script that sets 
 	void Update()
 	{
 		myRigid.useGravity = true;
-		myRigid.AddForce(Vector3.down * 9.8f, ForceMode.Impulse);
+		myRigid.AddForce(Vector3.down * fallAcceleration, ForceMode.Impulse);
 		
 		//change the camera behaviour;
 		airshipMainCam.camFollowPlayer = false;
