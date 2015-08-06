@@ -571,6 +571,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &179846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 471288}
+  m_Layer: 0
+  m_Name: ExplosionCentre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &180364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,6 +1021,18 @@ Transform:
   - {fileID: 462940}
   m_Father: {fileID: 471496}
   m_RootOrder: 3
+--- !u!4 &471288
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179846}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 471496}
+  m_RootOrder: 9
 --- !u!4 &471496
 Transform:
   m_ObjectHideFlags: 1
@@ -1025,6 +1052,7 @@ Transform:
   - {fileID: 445854}
   - {fileID: 481876}
   - {fileID: 416114}
+  - {fileID: 471288}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &478990
@@ -1771,6 +1799,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallAcceleration: 100
   timerUntilReset: 15
+  explosionForce: 10
+  explosionRadius: 3
+  explosionCentreTrans: {fileID: 471288}
   airshipMainCam: {fileID: 11469610}
 --- !u!114 &11442140
 MonoBehaviour:
@@ -1955,6 +1986,8 @@ MonoBehaviour:
   pitchForce: 750
   yawForce: 1000
   rollForce: 500
+  pitchLimitMult: .699999988
+  rollLimitMult: .800000012
   airshipMainCam: {fileID: 11469610}
   roll: 0
   pitch: 0

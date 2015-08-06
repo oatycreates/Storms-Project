@@ -106,7 +106,6 @@ public class AirshipControlBehaviour : MonoBehaviour
 	void FixedUpdate()
 	{
         // Doing this here makes it easier on the physics
-		AutoLevel();
 		ConstantForwardMovement();
 		CalculateTorque();
         CalculateRightingForce();
@@ -122,12 +121,6 @@ public class AirshipControlBehaviour : MonoBehaviour
 		pitch = Mathf.Clamp(pitch, -1, 1);
 		yaw = Mathf.Clamp(yaw, -1, 1);
 		throttle = Mathf.Clamp(throttle, -1, 1);
-	}
-
-	private void AutoLevel()
-	{
-		//I've left this blank for the time being... 
-		//Maybe check over standard assets to see how they AUTO LEVEL
 	}
 
     /// <summary>
