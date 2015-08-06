@@ -15,7 +15,6 @@ using System.Collections;
 /// </summary>
 public class SceneManager : MonoBehaviour
 {
-
 	void Update () 
 	{
 		if (Application.isEditor == true)
