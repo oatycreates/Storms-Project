@@ -105,7 +105,7 @@ public class StateManager : MonoBehaviour
 			{
 				hinges.SetActive(false);
 			}
-			
+
 			if (rouletteHierachy != null)
 			{
 				rouletteHierachy.SetActive(true);

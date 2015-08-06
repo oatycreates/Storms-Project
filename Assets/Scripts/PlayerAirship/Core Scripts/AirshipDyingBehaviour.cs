@@ -38,9 +38,9 @@ public class AirshipDyingBehaviour : MonoBehaviour
 		m_myRigid = gameObject.GetComponent<Rigidbody>();
 	}
 	
-	void Start () 
+	void OnEnable()
 	{
-		
+		m_myRigid.AddExplosionForce (10.0f, gameObject.transform.position, 3.0f);
 	}
 	
 	void Update()
