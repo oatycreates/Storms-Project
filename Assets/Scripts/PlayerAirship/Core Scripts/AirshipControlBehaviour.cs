@@ -94,7 +94,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 	
 	public void PlayerInputs(float a_Vertical, float a_Horizontal, float a_camVertical, float a_camHorizontal, float a_triggers)
 	{
-		roll = a_Horizontal;
+        roll = 0.25f * a_Horizontal + a_camHorizontal;
 		pitch = a_Vertical;
 		yaw = a_Horizontal;
 		throttle = a_triggers;
