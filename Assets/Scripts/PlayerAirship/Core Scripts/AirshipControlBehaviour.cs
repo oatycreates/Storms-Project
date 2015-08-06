@@ -99,6 +99,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 		AutoLevel();
 		ConstantForwardMovement();
 		CalculateTorque();
+
 	}
 	
     /// <summary>
@@ -149,5 +150,6 @@ public class AirshipControlBehaviour : MonoBehaviour
 
         // Add all the torque forces together
 		m_myRigid.AddTorque(torque);
+
 	}
 }

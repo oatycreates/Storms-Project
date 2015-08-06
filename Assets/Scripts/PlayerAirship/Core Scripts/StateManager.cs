@@ -46,6 +46,7 @@ public class StateManager : MonoBehaviour
 	//References to the different components on the Airship
 	public GameObject colliders;
 	public GameObject meshes;
+	public GameObject hinges;
 	public GameObject rouletteHierachy;
 	
 	//Remember the start position and rotation in world space, so we can return here when the player has died.
@@ -99,6 +100,11 @@ public class StateManager : MonoBehaviour
 			{
 				meshes.SetActive(false);
 			}
+
+			if (hinges != null)
+			{
+				hinges.SetActive(false);
+			}
 			
 			if (rouletteHierachy != null)
 			{
@@ -123,6 +129,11 @@ public class StateManager : MonoBehaviour
 			if (meshes != null)
 			{
 				meshes.SetActive(true);
+			}
+
+			if (hinges != null)
+			{
+				hinges.SetActive(true);
 			}
 			
 			if (rouletteHierachy != null)
@@ -150,6 +161,11 @@ public class StateManager : MonoBehaviour
 			{
 				meshes.SetActive(true);
 			}
+
+			if (hinges != null)
+			{
+				hinges.SetActive(true);
+			}
 			
 			if (rouletteHierachy != null)
 			{
@@ -175,6 +191,11 @@ public class StateManager : MonoBehaviour
 			if (meshes != null)
 			{
 				meshes.SetActive(true);
+			}
+
+			if (hinges != null)
+			{
+				hinges.SetActive(true);
 			}
 			
 			if (rouletteHierachy != null)
