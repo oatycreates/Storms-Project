@@ -37,6 +37,16 @@ public class AirshipControlBehaviour : MonoBehaviour
     public float rollForce = 1000.0f;
 
     /// <summary>
+    /// Multiplier for the pitch auto-level force.
+    /// </summary>
+    public float pitchLimitMult = 0.7f;
+
+    /// <summary>
+    /// Multiplier for the pitch auto-level force.
+    /// </summary>
+    public float rollLimitMult = 0.8f;
+
+    /// <summary>
     /// Handle to the airship camera script.
     /// </summary>
     public AirshipCamBehaviour airshipMainCam;
@@ -99,6 +109,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 		AutoLevel();
 		ConstantForwardMovement();
 		CalculateTorque();
+        CalculateRightingForce();
 
 	}
 	
@@ -150,6 +161,29 @@ public class AirshipControlBehaviour : MonoBehaviour
 
         // Add all the torque forces together
 		m_myRigid.AddTorque(torque);
-
 	}
+
+    /// <summary>
+    /// Attempts to auto-level the player's ship. Counters roll moreso than pitch, ignores yaw.
+    /// </summary>
+    private void CalculateRightingForce()
+    {
+        // Calculate a few useful vectors relative to the ship and the world
+        Vector3 worldUp = new Vector3(0, 1, 0); // Up relative to the world
+        Vector3 shipForward = transform.forward; // Front relative to the ship
+        Vector3 shipRight = transform.right; // Right relative to the ship
+
+        var torque = Vector3.zero;
+
+        // Roll
+        float rollDot = Vector3.Dot(worldUp, shipRight);
+        torque += -rollDot * m_myRigid.transform.forward * rollForce * rollLimitMult;
+
+        // Pitch
+        float pitchDot = Vector3.Dot(-worldUp, shipForward);
+        torque += -pitchDot * m_myRigid.transform.right * pitchForce * pitchLimitMult;
+
+        // Add all the torque forces together
+        m_myRigid.AddTorque(torque);
+    }
 }
