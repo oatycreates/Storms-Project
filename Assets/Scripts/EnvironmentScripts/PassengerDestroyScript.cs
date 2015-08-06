@@ -1,19 +1,33 @@
-﻿using UnityEngine;
+﻿/**
+ * File: PassengerDestroyScript.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Kills players beneath kill-Y.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public class PassengerDestroyScript : MonoBehaviour //This script deactivates the Pirate Passengers as soon as they go below a certain height. The name of this script is a Misnomer.
+/// <summary>
+/// This script deactivates the Pirate Passengers as soon as they go below a certain height. The name of this script is a misnomer.
+/// </summary>
+public class PassengerDestroyScript : MonoBehaviour
 {
+    /// <summary>
+    /// Kill-Y.
+    /// </summary>
 	public float heightTillDeath = -2000.0f;
 	
-
 	void Update () 
 	{
 		if (gameObject.activeInHierarchy)
 		{
 			if (gameObject.transform.position.y < heightTillDeath)
 			{
-				gameObject.SetActive(false); //Check timeout
-				Debug.Log("Gone to sleep");
+                // Check timeout
+				gameObject.SetActive(false);
 			}
 		}
 	}

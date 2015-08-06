@@ -1,11 +1,26 @@
-﻿using UnityEngine;
+﻿/**
+ * File: SpawnPassengers.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the spawning and pooling of pasengers.
+ **/
+
+using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;	//For lists
+// For lists
+using System.Collections.Generic;
 
-public class SpawnPassengers : MonoBehaviour 	// A script to pool and spawn pirate passengers
+/// <summary>
+/// A script to pool and spawn pirate passengers.
+/// </summary>
+public class SpawnPassengers : MonoBehaviour
 {
-
-	public int pooledAmount = 2000; // To avoid memory spikes
+    /// <summary>
+    /// To avoid memory spikes.
+    /// </summary>
+	public int pooledAmount = 2000;
 	public float spawnRateInSeconds = 1.0f;
 	private float startSpawnRate;
 
@@ -13,11 +28,10 @@ public class SpawnPassengers : MonoBehaviour 	// A script to pool and spawn pira
 
 	//public GameObject passengerPrefab;
 
-	//detect player presence
-	private Ray myRay;
-	private RaycastHit hit;
-	public float rayCastLength = 50.0f;
-
+    // Detect player presence
+    public float rayCastLength = 50.0f;
+	private Ray m_myRay;
+	private RaycastHit m_m_hit;
 
 	void Start () 
 	{
@@ -32,82 +46,86 @@ public class SpawnPassengers : MonoBehaviour 	// A script to pool and spawn pira
 
 			singlePassenger.tag = "Passengers";
 
-			//add Passenger scripts here
+			// Add Passenger scripts here
 			singlePassenger.AddComponent<PassengerDestroyScript>();
 
 			singlePassenger.SetActive(false);
-			//add to the passengers list
+			// Add to the passengers list
 			passengers.Add(singlePassenger);
 
 		}
 
-		startSpawnRate = spawnRateInSeconds;	//Save an initial spawnRate.
-
+        // Save an initial spawnRate
+		startSpawnRate = spawnRateInSeconds;
 	}
-
 
 	void Update () 
 	{
-		spawnRateInSeconds -= Time.deltaTime; // count down
+        // Count down
+		spawnRateInSeconds -= Time.deltaTime;
 
-		Vector3 relativeSpace = gameObject.transform.TransformDirection (Vector3.down);	// from world space to local space
+        // From world space to local space
+		Vector3 relativeSpace = gameObject.transform.TransformDirection (Vector3.down);
 
-		myRay = new Ray (gameObject.transform.position, relativeSpace);
-		Debug.DrawRay (myRay.origin, myRay.direction * rayCastLength, Color.green);
+		m_myRay = new Ray (gameObject.transform.position, relativeSpace);
+		Debug.DrawRay (m_myRay.origin, m_myRay.direction * rayCastLength, Color.green);
 
 
 		if (spawnRateInSeconds < 0)
 		{
-			SpawnPassenger();	// call function
+			SpawnPassenger();
 
-			spawnRateInSeconds = startSpawnRate; // reset spawn rate
+			spawnRateInSeconds = startSpawnRate; // Reset spawn rate
 
 		}
 
-		/*
-		if (Physics.Raycast(myRay, out hit, rayCastLength))	//fire a ray
-		{
-			if (hit.collider.gameObject.tag == "Player1_" || hit.collider.gameObject.tag == "Player2_"  || hit.collider.gameObject.tag == "Player3_" || hit.collider.gameObject.tag == "Player4_" )
-			{
-				if (spawnRateInSeconds < 0)
-				{
-					SpawnPassenger();
-					spawnRateInSeconds = startSpawnRate; //Reset spawn rate
-				}
-			}
-		}*/
-	}
-
+        /*
+        // Fire a ray
+        if (Physics.Raycast(m_myRay, out m_hit, rayCastLength))
+        {
+            if (m_hit.collider.gameObject.tag == "Player1_" || m_hit.collider.gameObject.tag == "Player2_"  || m_hit.collider.gameObject.tag == "Player3_" || m_hit.collider.gameObject.tag == "Player4_" )
+            {
+                if (spawnRateInSeconds < 0)
+                {
+                    SpawnPassenger();
+                    //Reset spawn rate
+                    spawnRateInSeconds = startSpawnRate;
+                }
+            }
+        }*/
+    }
 
 	void SpawnPassenger()
-	{
-		for (int i = 0; i < passengers.Count; i++)	//loop through
+    {
+        // Variables for loop
+        Vector3 relativeSpace;
+        Rigidbody passengerRb;
+
+        // Loop through, find first non-active player
+		for (int i = 0; i < passengers.Count; i++)
 		{
-			if (!passengers[i].activeInHierarchy) //search for inactive passengers
+            // Search for inactive passengers
+			if (!passengers[i].activeInHierarchy)
 			{
 				passengers[i].transform.position = gameObject.transform.position;
 				passengers[i].transform.rotation = Quaternion.identity;
 
 				passengers[i].SetActive(true);
 
-				//Use relative space to spawn
-				Vector3 relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
+				// Use relative space to spawn
+                relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
 
-				//Reset velocity before adding to it
-				passengers[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
-				passengers[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+				// Reset velocity before adding to it
+				passengerRb = passengers[i].GetComponent<Rigidbody>();
+                passengerRb.velocity = Vector3.zero;
+				passengerRb.angularVelocity = Vector3.zero;
 
-				//add initial passenger velocity here!
-				passengers[i].GetComponent<Rigidbody>().AddForce(relativeSpace * 10, ForceMode.Impulse);	//Jump!
-
-				break;	//Don't forget this!
+                // Add initial passenger velocity here!	Jump!
+                passengerRb.AddForce(relativeSpace * 10, ForceMode.Impulse);
+                
+                // Don't forget this!
+				break;
 			}
 		}
-
-
 	}
-
-
-
-
 }
