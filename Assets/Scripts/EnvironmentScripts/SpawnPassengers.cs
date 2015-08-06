@@ -93,6 +93,10 @@ public class SpawnPassengers : MonoBehaviour 	// A script to pool and spawn pira
 				//Use relative space to spawn
 				Vector3 relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
 
+				//Reset velocity before adding to it
+				passengers[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+				passengers[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
 				//add initial passenger velocity here!
 				passengers[i].GetComponent<Rigidbody>().AddForce(relativeSpace * 10, ForceMode.Impulse);	//Jump!
 
