@@ -10,9 +10,28 @@
 using UnityEngine;
 using System.Collections;
 
-public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinning Wheel' effect on the Roulette Wheel
-												// Inputs are passed in from Input Manager script VIA the Roulette Behaviour State script.
+/// <summary>
+/// This script manages the 'Spinning Wheel' effect on the Roulette Wheel.
+/// Inputs are passed in from Input Manager script via the Roulette Behaviour State script.
+/// </summary>
+public class RouletteSpinWheel : MonoBehaviour
 {
+    /// <summary>
+    /// The various buffers that the player can get on start.
+    /// </summary>
+    enum ERouletteBuffs
+    {
+        SPEED_BOOST,
+        MEGA_BOOST,
+        HEALTH_BOOST, 
+        DAMAGE_BOOST
+    };
+
+    /// <summary>
+    /// How long to wait after the choice was picked before starting.
+    /// </summary>
+    public float rouletteEndWait = 0.5f;
+
 	private float changeAngularDrag;
 	
 	public GameObject rotatorJoint;
@@ -21,6 +40,10 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 	
 	private bool inputStop;
 	private bool inputSpeedUp;
+
+    // For delaying the end of the roulette wheel state
+    private float m_currEndWait;
+    private bool m_rouletteDone = false;
 
     /// <summary>
     /// For making the roulette wheel's spin finish on a 90 degree boundary. 
@@ -62,6 +85,10 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 		
 		// Get the start rotation of the handle joint
 		rotateAmount = 0;
+
+        // Reset variables
+        m_currEndWait = rouletteEndWait;
+        m_rouletteDone = false;
 		
 		//Make the wheel spin
 		Spin();
@@ -110,18 +137,20 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
         // Slerp into the final position if applicable
         if (targetFinalRotation != Quaternion.identity)
         {
-            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, targetFinalRotation, Time.deltaTime * 5.0f);
+            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, targetFinalRotation, Time.deltaTime * 10.0f);
         }
 
-		//NOTE: Right now- this just triggers the State Manager to change the object from ROULETE to NORMAL CONTROL
+        //NOTE: Right now- this just triggers the State Manager to change the object from ROULETE to NORMAL CONTROL
+        int selectedIndex = Mathf.RoundToInt(m_myRigid.rotation.eulerAngles.x / 90.0f);
 		if (m_myRigid.angularVelocity.x > -1.0f && m_myRigid.angularVelocity.x < 0)
         {
-            int selectedIndex = Mathf.RoundToInt(m_myRigid.rotation.eulerAngles.x / 90.0f);
-            if (Mathf.RoundToInt(m_myRigid.rotation.eulerAngles.x % 90.0f) == 0)
+            int roundAngle = Mathf.RoundToInt(m_myRigid.rotation.eulerAngles.x % 90.0f);
+            if (roundAngle >= 88 || roundAngle <= 2)
             {
+                // End the roulette state
                 targetFinalRotation = Quaternion.identity;
-                Debug.Log("DONE!");
-                //RouletteDone(selectedIndex);
+                m_currEndWait = rouletteEndWait;
+                m_rouletteDone = true;
             }
             else
             {
@@ -130,6 +159,17 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
             }
 		}
 		
+        // For waiting before leaving the control state
+        if (m_rouletteDone)
+        {
+            m_currEndWait -= Time.deltaTime;
+
+            if (m_currEndWait <= 0)
+            {
+                RouletteDone(selectedIndex);
+                m_rouletteDone = false;
+            }
+        }
 	}
 	
 	void OnDisable()
@@ -155,9 +195,46 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
     /// <param name="a_finalSelectionIndex">Index of the roulette wheel once the spin has finished.</param>
     void RouletteDone(int a_finalSelectionIndex)
     {
-        // TODO Apply roulette reward buff here
+        // Apply roulette reward buff
+        ERouletteBuffs currBuff = (ERouletteBuffs)a_finalSelectionIndex;
+
+        ApplyBuff(currBuff);
 
         // Switch to the gameplay state
         gameObject.transform.parent.transform.GetComponentInParent<StateManager>().currentPlayerState = EPlayerState.Control;
+    }
+
+    /// <summary>
+    /// Applies the input buff.
+    /// </summary>
+    /// <param name="a_buff">Buff to apply.</param>
+    void ApplyBuff(ERouletteBuffs a_buff)
+    {
+        Debug.LogWarning("TODO Finish implementing the roulette buffs!");
+
+        // Apply the input buff
+        switch (a_buff)
+        {
+            case ERouletteBuffs.SPEED_BOOST:
+            {
+                Debug.Log("Speed boost!");
+                break;
+            }
+            case ERouletteBuffs.MEGA_BOOST:
+            {
+                Debug.Log("Mega boost!");
+                break;
+            }
+            case ERouletteBuffs.HEALTH_BOOST:
+            {
+                Debug.Log("Health boost!");
+                break;
+            }
+            case ERouletteBuffs.DAMAGE_BOOST:
+            {
+                Debug.Log("Damage boost!");
+                break;
+            }
+        }
     }
 }
