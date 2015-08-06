@@ -1,10 +1,21 @@
-﻿using UnityEngine;
+﻿/**
+ * File: AirshipCamBehaviour.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the camera's following of each player.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public class AirshipCamBehaviour : MonoBehaviour //Basic lerp follow airship
-{												// Don't change the cam height/width/ pixel position here - do that in the master cam controller
-												 //However, we can tell the camera where to go and what positiont to take here.
-
+/// <summary>
+/// Basic lerp follow airship. Don't change the cam height/width/ pixel position here - do that in the master cam controller.
+/// However, we can tell the camera where to go and what positiont to take here.
+/// </summary>
+public class AirshipCamBehaviour : MonoBehaviour
+{
 	[HideInInspector]
 	public bool camFollowPlayer = true;
 
@@ -13,16 +24,17 @@ public class AirshipCamBehaviour : MonoBehaviour //Basic lerp follow airship
 	
 	public float camSpeed = 5.0f;
 	
-	//Keep a reference to the start position, so we can reset to the Roulette Position
-	private Vector3 myStartPos;
-	private Quaternion myStartRot;
+	// Keep a reference to the start position, so we can reset to the Roulette Position
+	private Vector3 m_myStartPos;
+	private Quaternion m_myStartRot;
 
 	void Start () 
 	{
-		gameObject.transform.parent = null; //detach from parent on start!
+        // Detach from parent on start!
+		gameObject.transform.parent = null;
 		
-		myStartPos = gameObject.transform.position;
-		myStartRot = gameObject.transform.rotation;
+		m_myStartPos = gameObject.transform.position;
+		m_myStartRot = gameObject.transform.rotation;
 	}
 	
 	void Update () 
@@ -61,9 +73,12 @@ public class AirshipCamBehaviour : MonoBehaviour //Basic lerp follow airship
 		}
 	}
 	
-	public void RouletteCam()	//reset me
+    /// <summary>
+    /// Reset the camera back for the roulette state.
+    /// </summary>
+	public void RouletteCam()
 	{
-		gameObject.transform.position = myStartPos;
-		gameObject.transform.rotation = myStartRot;
+		gameObject.transform.position = m_myStartPos;
+		gameObject.transform.rotation = m_myStartRot;
 	}
 }

@@ -1,14 +1,27 @@
-﻿using UnityEngine;
+﻿/**
+ * File: AirshipSuicideBehaviour.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the controlled kamakazi of the player ship.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public class AirshipSuicideBehaviour : MonoBehaviour //This ship determines how the ship moves once the player has decided to "commit suicide"
-{													// and play as a kamikazi 'Fire Ship'
-													//Compared to regular movent, this time the airship controls like a missile - Player has less control.
-
-	private Rigidbody myRigid;
+/// <summary>
+/// This ship determines how the ship moves once the player has decided to "commit suicide" and play as a kamikazi 'Fire Ship'.
+/// Compared to regular movement, this time the airship controls like a missile - Player has less control.
+/// </summary>
+public class AirshipSuicideBehaviour : MonoBehaviour
+{
 	public GameObject fireShipParticles;
 	
-	public float timerUntilReset = 15.0f;	// How long untill the player defaults back to the roulette selection screen?
+    /// <summary>
+    /// How long untill the player defaults back to the roulette selection screen?
+    /// </summary>
+	public float timerUntilReset = 15.0f;
 	
 	//Less inputs than the standard airship controller
 	public float pitchForce = 1000.0f;
@@ -19,12 +32,18 @@ public class AirshipSuicideBehaviour : MonoBehaviour //This ship determines how 
 	public float pitch;
 	[HideInInspector]
 	public float yaw;
-	
+
+    /// <summary>
+    /// Handle to the airship camera script.
+    /// </summary>
 	public AirshipCamBehaviour airshipMainCam;
+
+    // Cached variables
+    private Rigidbody m_myRigid;
 	
 	void Awake()
 	{
-		myRigid = gameObject.GetComponent<Rigidbody>();
+		m_myRigid = gameObject.GetComponent<Rigidbody>();
 	}
 	
 	void Start () 
@@ -34,20 +53,20 @@ public class AirshipSuicideBehaviour : MonoBehaviour //This ship determines how 
 	
 	void Update()
 	{
-		//set cam stuff
+		// Set cam stuff
 		airshipMainCam.camFollowPlayer = true;
 	
-		//turn on particles
+		// Turn on particles
 		fireShipParticles.SetActive(true);
 		
-		myRigid.useGravity = false;		
+		m_myRigid.useGravity = false;		
 		
-		//Time unil the player state resets
+		// Time unil the player state resets
 		timerUntilReset -= Time.deltaTime;
 		
 		if (timerUntilReset < 0.0f)
 		{
-			gameObject.GetComponent<StateManager>().currentPlayerState = PlayerState.Roulette;
+			gameObject.GetComponent<StateManager>().currentEPlayerState = EPlayerState.Roulette;
 		}
 	}
 	
@@ -62,37 +81,49 @@ public class AirshipSuicideBehaviour : MonoBehaviour //This ship determines how 
 	{
 		pitch = a_Vertical;
 		yaw = a_Horizontal;
-		
-		ClampInputs();	//got this trick from the standard vehicle assets
+
+        // Keep the inputs in reasonable ranges, see the standard asset examples for more
+        ClampInputs();
 	}
-	
+
+    /// <summary>
+    /// Clamps the input values into the [-1, 1] range.
+    /// </summary>
 	void ClampInputs()
 	{
 		pitch = Mathf.Clamp(pitch, -1, 1);
 		yaw = Mathf.Clamp(yaw, -1, 1);
 	
 	}
-	
-	private void Rocket()	//got this working...
+
+    /// <summary>
+    /// Moves the player's ship forward with the rocket speed.
+    /// </summary>
+	private void Rocket()
 	{
 		
-		myRigid.AddRelativeForce(Vector3.forward * 250, ForceMode.Impulse);
+		m_myRigid.AddRelativeForce(Vector3.forward * 250, ForceMode.Impulse);
+
+        // This finds the 'up' vector.
+		var liftDirection = Vector3.Cross(m_myRigid.velocity, m_myRigid.transform.right).normalized;
 		
-		var liftDirection = Vector3.Cross(myRigid.velocity, myRigid.transform.right).normalized;	//This finds the 'up' vector.
-		
-		myRigid.AddForce(liftDirection);
+		m_myRigid.AddForce(liftDirection);
 	}
-	
-	
-	private void CalculateTorque()	// also taken from Standard assets example
+
+    /// <summary>
+    /// Calculates the rotation forces on the ship, see the standard assets example for more.
+    /// </summary>
+	private void CalculateTorque()
 	{
 		var torque = Vector3.zero;
 		
-		torque += -pitch * myRigid.transform.right * pitchForce;	
+		torque += -pitch * m_myRigid.transform.right * pitchForce;	
 		
-		torque += yaw * myRigid.transform.up * yawForce;
-		//no roll here
-		
-		myRigid.AddTorque(torque);	//add all the torque forces together
+		torque += yaw * m_myRigid.transform.up * yawForce;
+
+		// No roll here
+
+        // Add all the torque forces together
+		m_myRigid.AddTorque(torque);
 	}
 }

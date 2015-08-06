@@ -1,11 +1,30 @@
-﻿using UnityEngine;
+﻿/**
+ * File: AirshipCamBehaviour.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the setup of each scene camera. Stretches the camera if there are different numbers of players.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public enum CamerasInScene{One,Two,Three,Four}
+public enum ECamerasInScene
+{
+    One, 
+    Two, 
+    Three, 
+    Four
+};
 
-public class MasterCamera : MonoBehaviour 		// A very important script. This sets the camera's screen width/height depending on the number of players.
-{												//For now, this has to be set manually.
-	public CamerasInScene currentCamera;
+/// <summary>
+/// A very important script. This sets the camera's screen width/height depending on the number of players.
+/// For now, this has to be set manually.
+/// </summary>
+public class MasterCamera : MonoBehaviour
+{
+	public ECamerasInScene currentCamera;
 	
 	public Camera cam1;
 	public Camera cam2;
@@ -15,44 +34,44 @@ public class MasterCamera : MonoBehaviour 		// A very important script. This set
 
 	void Update () 
 	{
-		if (currentCamera == CamerasInScene.One)
+		if (currentCamera == ECamerasInScene.One)
 		{
 			cam1.enabled = true;
 			cam2.enabled = false;
 			cam3.enabled = false;
 			cam4.enabled = false;
 			
-			cam1.rect = new Rect(0,0,1,1);
-			
-			
+			cam1.rect = new Rect(0, 0, 1, 1);
 		}	
 		
-		if (currentCamera == CamerasInScene.Two)
+		if (currentCamera == ECamerasInScene.Two)
 		{
 			cam1.enabled = true;
 			cam2.enabled = true;
 			cam3.enabled = false;
 			cam4.enabled = false;
-			
-			cam1.rect = new Rect(0f,0.5f,1f,0.5f);	//One on top
-			cam2.rect = new Rect(0,0.0f,1f,0.5f);
+
+            // One on top
+			cam1.rect = new Rect(0f, 0.5f, 1f, 0.5f);
+			cam2.rect = new Rect(0, 0.0f, 1f, 0.5f);
 			
 		}	
 		
-		if (currentCamera == CamerasInScene.Three)
+		if (currentCamera == ECamerasInScene.Three)
 		{
 			cam1.enabled = true;
 			cam2.enabled = true;
 			cam3.enabled = true;
 			cam4.enabled = false;
-			
-			cam1.rect = new Rect(0,0.5f, 0.5f,0.5f);
-			cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);	//Cam two top right
+
+            // Cam two top right
+			cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+            cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
 			cam3.rect = new Rect(0, 0, 1f, 0.5f);
 			
 		}	
 		
-		if (currentCamera == CamerasInScene.Four)
+		if (currentCamera == ECamerasInScene.Four)
 		{
 			cam1.enabled = true;
 			cam2.enabled = true;

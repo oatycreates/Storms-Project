@@ -1,7 +1,19 @@
-﻿using UnityEngine;
+﻿/**
+ * File: SceneManager.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the switching between scenes.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public class SceneManager : MonoBehaviour //This script changes the current scene/ level or room.
+/// <summary>
+/// This script changes the current scene, level, or room.
+/// </summary>
+public class SceneManager : MonoBehaviour
 {
 
 	void Update () 

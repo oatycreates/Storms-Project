@@ -1,18 +1,30 @@
-﻿using UnityEngine;
+﻿/**
+ * File: PrisonFortressRotate.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the rotation and positioning of the prison fortress.
+ **/
+
+using UnityEngine;
 using System.Collections;
+
 [RequireComponent(typeof(Rigidbody))]
 public class PrisonFortressRotate : MonoBehaviour 	//This script rotates the Prison Fortress ship in local space
 {
-	private Rigidbody myRigid;
-	public float rotateForce = 10.0f;
+    public float rotateForce = 10.0f;
+
+    // Cached variables
+    private Rigidbody m_myRigid;
 
 	void Start () 
 	{
-		myRigid = gameObject.GetComponent<Rigidbody>();
+		m_myRigid = gameObject.GetComponent<Rigidbody>();
 	}
 	
 	void FixedUpdate () 
 	{
-		myRigid.AddRelativeTorque(Vector3.up * rotateForce);
+		m_myRigid.AddRelativeTorque(Vector3.up * rotateForce);
 	}
 }

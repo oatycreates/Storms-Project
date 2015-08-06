@@ -4,7 +4,7 @@ using System.Collections;
 public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinning Wheel' effect on the Roulette Wheel
 												// Inputs are passed in from Input Manager script VIA the Roulette Behaviour State script.
 {
-	private Rigidbody myRigid;
+	private Rigidbody m_myRigid;
 	private float changeAngularDrag;
 	
 	public GameObject rotatorJoint;
@@ -24,16 +24,16 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 		gameObject.transform.localScale = new Vector3(4, 1, 1);	//try not to change these
 	
 		//Set/Reset physics components
-		myRigid = gameObject.GetComponent<Rigidbody>();
+		m_myRigid = gameObject.GetComponent<Rigidbody>();
 		//Set Components of the rigidbody in the start.
 		
-		myRigid.isKinematic = false;
-		myRigid.useGravity = false;
+		m_myRigid.isKinematic = false;
+		m_myRigid.useGravity = false;
 		
-		myRigid.drag = 0;
-		myRigid.angularDrag = 0.001f;	//low on start
+		m_myRigid.drag = 0;
+		m_myRigid.angularDrag = 0.001f;	//low on start
 		
-		myRigid.maxAngularVelocity = 14;	//default 7
+		m_myRigid.maxAngularVelocity = 14;	//default 7
 		
 		//get the startRotation of the handle joint
 		rotateAmount = 0;
@@ -51,7 +51,7 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 		
 		if (inputStop)		// Slow the roulette wheel by increasing the rigidbody Drag
 		{
-			myRigid.angularDrag = Mathf.Lerp(myRigid.angularDrag, 1, 0.25f);	
+			m_myRigid.angularDrag = Mathf.Lerp(m_myRigid.angularDrag, 1, 0.25f);	
 			
 			pullHandle = true;
 		}
@@ -82,9 +82,9 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 		// Use this space to check the Result of the roulettewheel
 		
 		//NOTE: Right now- this just triggers the State Manager to change the object from ROULETE to NORMAL CONTROL
-		if (myRigid.angularVelocity.x > -1.0f && myRigid.angularVelocity.x < 0)
+		if (m_myRigid.angularVelocity.x > -1.0f && m_myRigid.angularVelocity.x < 0)
 		{
-			gameObject.transform.parent.transform.GetComponentInParent<StateManager>().currentPlayerState = PlayerState.Control;
+			gameObject.transform.parent.transform.GetComponentInParent<StateManager>().currentEPlayerState = EPlayerState.Control;
 		}
 		
 	}
@@ -92,7 +92,7 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 	
 	void OnDisable()
 	{
-		myRigid.angularVelocity = Vector3.zero;
+		m_myRigid.angularVelocity = Vector3.zero;
 	}
 	
 	public void ChangeSpeed(bool a_slow, bool a_faster)
@@ -103,7 +103,7 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 	
 	void Spin()
 	{
-		myRigid.angularDrag = 0.001f;
-		myRigid.AddRelativeTorque(Vector3.left * 100, ForceMode.Impulse);
+		m_myRigid.angularDrag = 0.001f;
+		m_myRigid.AddRelativeTorque(Vector3.left * 100, ForceMode.Impulse);
 	}
 }

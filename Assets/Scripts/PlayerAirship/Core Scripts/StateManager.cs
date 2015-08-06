@@ -1,18 +1,39 @@
-﻿using UnityEngine;
+﻿/**
+ * File: RoulletteBehaviour.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Gives the player something to do when they die. A catch-up mechanic ala Super Mario Kart.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public enum PlayerState {Roulette, Control, Dying, Suicide}
+/// <summary>
+/// The state that the local player is currently in.
+/// </summary>
+public enum EPlayerState
+{
+    Roulette, 
+    Control, 
+    Dying, 
+    Suicide
+};
 
-														//The State Manager will automatically add these 6 scripts - they are Vital to how the airship works
+/// <summary>
+/// This script organises all the different 'States' the player can be in. If we need to add more States, make sure to do them here.
+/// The State Manager will automatically add these 6 scripts - they are Vital to how the airship works.
+/// </summary>
 [RequireComponent(typeof(RouletteBehaviour))]
 [RequireComponent(typeof(AirshipControlBehaviour))]
 [RequireComponent(typeof(AirshipDyingBehaviour))]
 [RequireComponent(typeof(AirshipSuicideBehaviour))]
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(TagChildren))]
-public class StateManager : MonoBehaviour 	//This script organises all the different 'States' the player can be in. //If we need to add more States, make sure to do them here
+public class StateManager : MonoBehaviour
 {
-	public PlayerState currentPlayerState;
+	public EPlayerState currentEPlayerState;
 	
 	//References to all the different scripts
 	private RouletteBehaviour rouletteScript;
@@ -28,13 +49,13 @@ public class StateManager : MonoBehaviour 	//This script organises all the diffe
 	public GameObject rouletteHierachy;
 	
 	//Remember the start position and rotation in world space, so we can return here when the player has died.
-	private Vector3 worldStartPos;
-	private Quaternion worldStartRotation;
+	private Vector3 m_worldStartPos;
+	private Quaternion m_worldStartRotation;
 	
 
 	void Start () 
 	{
-		currentPlayerState = PlayerState.Roulette;
+		currentEPlayerState = EPlayerState.Roulette;
 		
 		rouletteScript = gameObject.GetComponent<RouletteBehaviour>();
 		airshipScript = gameObject.GetComponent<AirshipControlBehaviour>();
@@ -43,30 +64,32 @@ public class StateManager : MonoBehaviour 	//This script organises all the diffe
 		
 		inputManager = gameObject.GetComponent<InputManager>();
 		
-		//world position
-		worldStartPos = gameObject.transform.position;
-		worldStartRotation = gameObject.transform.rotation;
+		// World position & rotation
+		m_worldStartPos = gameObject.transform.position;
+		m_worldStartRotation = gameObject.transform.rotation;
 	}
 	
 	
 	void Update () 
 	{
-		if (Application.isEditor == true)	//hehehe
+        // Hehehe
+		if (Application.isEditor == true)
 		{
 			DevHacks();
 		}
-	
-		if (currentPlayerState == PlayerState.Roulette)		//The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
+
+       // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
+        if (currentEPlayerState == EPlayerState.Roulette)
 		{
-			//Roulette control
+			// Roulette control
 			rouletteScript.enabled = true;
-			//reset position
-			rouletteScript.ResetPosition(worldStartPos, worldStartRotation);
+			// Reset position
+			rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
 			airshipScript.enabled = false;
 			dyingScript.enabled = false;
 			suicideScript.enabled = false;
 			
-			//We don't need to see the airship during the roulette wheel
+			// We don't need to see the airship during the roulette wheel
 			if (colliders != null)
 			{
 				colliders.SetActive(false);
@@ -82,11 +105,11 @@ public class StateManager : MonoBehaviour 	//This script organises all the diffe
 				rouletteHierachy.SetActive(true);
 			}
 		}
-		
-		
-		if (currentPlayerState == PlayerState.Control)	//Standard player airship control
+
+        // Standard player airship control
+		if (currentEPlayerState == EPlayerState.Control)
 		{
-			//Standard Physics Control
+			// Standard Physics Control
 			rouletteScript.enabled = false;
 			airshipScript.enabled = true;
 			dyingScript.enabled = false;
@@ -107,11 +130,11 @@ public class StateManager : MonoBehaviour 	//This script organises all the diffe
 				rouletteHierachy.SetActive(false);
 			}
 		}
-		
-		
-		if (currentPlayerState == PlayerState.Dying)	// Player has no-control over airship, but it's still affected by forces. Gravity is making the airship fall.
+
+        // Player has no-control over airship, but it's still affected by forces. Gravity is making the airship fall
+		if (currentEPlayerState == EPlayerState.Dying)
 		{
-			//No Control, gravity makes airship fall
+			// No Control, gravity makes airship fall
 			rouletteScript.enabled = false;
 			airshipScript.enabled = false;
 			dyingScript.enabled = true;
@@ -133,11 +156,11 @@ public class StateManager : MonoBehaviour 	//This script organises all the diffe
 				rouletteHierachy.SetActive(false);
 			}
 		}
-		
-		
-		if (currentPlayerState == PlayerState.Suicide) 	// Recent addition- this is for the fireship/suicide function - the player has limited control here. //Needs further experimentation.
+
+        // Recent addition- this is for the fireship/suicide function - the player has limited control here, needs further experimentation
+		if (currentEPlayerState == EPlayerState.Suicide)
 		{
-			////Airship behaves like a rocket
+			// Airship behaves like a rocket
 			rouletteScript.enabled = false;
 			airshipScript.enabled = false;
 			dyingScript.enabled = false;
@@ -162,51 +185,53 @@ public class StateManager : MonoBehaviour 	//This script organises all the diffe
 		
 	}
 	
-	void DevHacks()	//skip to next PlayerState	//If we add more states, make sure we add functionality here.
+    /// <summary>
+    /// Skip to next EPlayerState.
+    /// If we add more states, make sure we add functionality here.
+    /// </summary>
+	void DevHacks()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			currentPlayerState = PlayerState.Roulette;
+			currentEPlayerState = EPlayerState.Roulette;
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			currentPlayerState = PlayerState.Control;
+			currentEPlayerState = EPlayerState.Control;
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
-			currentPlayerState = PlayerState.Dying;	
+			currentEPlayerState = EPlayerState.Dying;	
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha4))
 		{
-			currentPlayerState = PlayerState.Suicide;
+			currentEPlayerState = EPlayerState.Suicide;
 		}
 		
 		//inputs
-		
-		
 		if (Input.GetButtonDown(gameObject.tag + "Select"))
 		{
-			if (currentPlayerState == PlayerState.Roulette)
+			if (currentEPlayerState == EPlayerState.Roulette)
 			{
-				currentPlayerState = PlayerState.Control;
+				currentEPlayerState = EPlayerState.Control;
 			}
 			else
-			if (currentPlayerState == PlayerState.Control)
+			if (currentEPlayerState == EPlayerState.Control)
 			{
-				currentPlayerState = PlayerState.Dying;
+				currentEPlayerState = EPlayerState.Dying;
 			}
 			else
-			if (currentPlayerState == PlayerState.Dying)
+			if (currentEPlayerState == EPlayerState.Dying)
 			{
-				currentPlayerState = PlayerState.Suicide;
+				currentEPlayerState = EPlayerState.Suicide;
 			}
 			else
-			if (currentPlayerState == PlayerState.Suicide)
+			if (currentEPlayerState == EPlayerState.Suicide)
 			{
-				currentPlayerState = PlayerState.Roulette;
+				currentEPlayerState = EPlayerState.Roulette;
 			}
 		}
 		

@@ -1,18 +1,41 @@
-﻿using UnityEngine;
+﻿/**
+ * File: AirshipDyingBehaviour.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 6/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the death of the player script.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public class AirshipDyingBehaviour : MonoBehaviour // A simple script that sets the behaviour for the falling airship state. 
+/// <summary>
+/// A simple script that sets the behaviour for the falling airship state. 
+/// </summary>
+public class AirshipDyingBehaviour : MonoBehaviour
 {
-	private Rigidbody myRigid;
+    /// <summary>
+    /// How fast the player ship will fall, defaults to the Earth gravitational constant.
+    /// </summary>
 	public float fallAcceleration = 9.8f;
-	
-	public float timerUntilReset = 4.0f;	//How long should the player watch their ship falling until it resets and takes them to the Roulette screen - experiment with this.
-	
-	public AirshipCamBehaviour airshipMainCam;
+
+    /// <summary>
+    /// How long should the player watch their ship falling until it resets and takes them to the Roulette screen - experiment with this.
+    /// </summary>
+    public float timerUntilReset = 4.0f;
+
+    /// <summary>
+    /// Handle to the airship camera script.
+    /// </summary>
+    public AirshipCamBehaviour airshipMainCam;
+
+    // Cached variables
+    private Rigidbody m_myRigid;
 	
 	void Awake()
 	{
-		myRigid = gameObject.GetComponent<Rigidbody>();
+		m_myRigid = gameObject.GetComponent<Rigidbody>();
 	}
 	
 	void Start () 
@@ -20,23 +43,22 @@ public class AirshipDyingBehaviour : MonoBehaviour // A simple script that sets 
 		
 	}
 	
-	
 	void Update()
 	{
-		myRigid.useGravity = true;
-		myRigid.AddForce(Vector3.down * fallAcceleration, ForceMode.Impulse);
+		m_myRigid.useGravity = true;
+		m_myRigid.AddForce(Vector3.down * fallAcceleration, ForceMode.Impulse);
 		
-		//change the camera behaviour;
+		// Change the camera behaviour;
 		airshipMainCam.camFollowPlayer = false;
 		
-		//Time unil the player state resets
+		// Time unil the player state resets
 		timerUntilReset -= Time.deltaTime;
 		
 		if (timerUntilReset < 0.0f)
 		{
-			//reset the camera and change the play state
+			// Reset the camera and change the play state
 			airshipMainCam.camFollowPlayer = true;
-			gameObject.GetComponent<StateManager>().currentPlayerState = PlayerState.Roulette;
+			gameObject.GetComponent<StateManager>().currentEPlayerState = EPlayerState.Roulette;
 		}
 	}
 }
