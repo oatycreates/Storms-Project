@@ -58,7 +58,7 @@ public class AirshipDyingBehaviour : MonoBehaviour
 		{
 			// Reset the camera and change the play state
 			airshipMainCam.camFollowPlayer = true;
-			gameObject.GetComponent<StateManager>().currentEPlayerState = EPlayerState.Roulette;
+			gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Roulette;
 		}
 	}
 }

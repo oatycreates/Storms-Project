@@ -33,7 +33,7 @@ public enum EPlayerState
 [RequireComponent(typeof(TagChildren))]
 public class StateManager : MonoBehaviour
 {
-	public EPlayerState currentEPlayerState;
+	public EPlayerState currentPlayerState;
 	
 	//References to all the different scripts
 	private RouletteBehaviour rouletteScript;
@@ -55,7 +55,7 @@ public class StateManager : MonoBehaviour
 
 	void Start () 
 	{
-		currentEPlayerState = EPlayerState.Roulette;
+		currentPlayerState = EPlayerState.Roulette;
 		
 		rouletteScript = gameObject.GetComponent<RouletteBehaviour>();
 		airshipScript = gameObject.GetComponent<AirshipControlBehaviour>();
@@ -79,7 +79,7 @@ public class StateManager : MonoBehaviour
 		}
 
        // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
-        if (currentEPlayerState == EPlayerState.Roulette)
+        if (currentPlayerState == EPlayerState.Roulette)
 		{
 			// Roulette control
 			rouletteScript.enabled = true;
@@ -107,7 +107,7 @@ public class StateManager : MonoBehaviour
 		}
 
         // Standard player airship control
-		if (currentEPlayerState == EPlayerState.Control)
+		if (currentPlayerState == EPlayerState.Control)
 		{
 			// Standard Physics Control
 			rouletteScript.enabled = false;
@@ -132,7 +132,7 @@ public class StateManager : MonoBehaviour
 		}
 
         // Player has no-control over airship, but it's still affected by forces. Gravity is making the airship fall
-		if (currentEPlayerState == EPlayerState.Dying)
+		if (currentPlayerState == EPlayerState.Dying)
 		{
 			// No Control, gravity makes airship fall
 			rouletteScript.enabled = false;
@@ -158,7 +158,7 @@ public class StateManager : MonoBehaviour
 		}
 
         // Recent addition- this is for the fireship/suicide function - the player has limited control here, needs further experimentation
-		if (currentEPlayerState == EPlayerState.Suicide)
+		if (currentPlayerState == EPlayerState.Suicide)
 		{
 			// Airship behaves like a rocket
 			rouletteScript.enabled = false;
@@ -193,45 +193,45 @@ public class StateManager : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			currentEPlayerState = EPlayerState.Roulette;
+			currentPlayerState = EPlayerState.Roulette;
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			currentEPlayerState = EPlayerState.Control;
+			currentPlayerState = EPlayerState.Control;
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
-			currentEPlayerState = EPlayerState.Dying;	
+			currentPlayerState = EPlayerState.Dying;	
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha4))
 		{
-			currentEPlayerState = EPlayerState.Suicide;
+			currentPlayerState = EPlayerState.Suicide;
 		}
 		
 		//inputs
 		if (Input.GetButtonDown(gameObject.tag + "Select"))
 		{
-			if (currentEPlayerState == EPlayerState.Roulette)
+			if (currentPlayerState == EPlayerState.Roulette)
 			{
-				currentEPlayerState = EPlayerState.Control;
+				currentPlayerState = EPlayerState.Control;
 			}
 			else
-			if (currentEPlayerState == EPlayerState.Control)
+			if (currentPlayerState == EPlayerState.Control)
 			{
-				currentEPlayerState = EPlayerState.Dying;
+				currentPlayerState = EPlayerState.Dying;
 			}
 			else
-			if (currentEPlayerState == EPlayerState.Dying)
+			if (currentPlayerState == EPlayerState.Dying)
 			{
-				currentEPlayerState = EPlayerState.Suicide;
+				currentPlayerState = EPlayerState.Suicide;
 			}
 			else
-			if (currentEPlayerState == EPlayerState.Suicide)
+			if (currentPlayerState == EPlayerState.Suicide)
 			{
-				currentEPlayerState = EPlayerState.Roulette;
+				currentPlayerState = EPlayerState.Roulette;
 			}
 		}
 		

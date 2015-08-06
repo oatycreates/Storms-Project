@@ -84,7 +84,7 @@ public class RouletteSpinWheel : MonoBehaviour // This script manages the 'Spinn
 		//NOTE: Right now- this just triggers the State Manager to change the object from ROULETE to NORMAL CONTROL
 		if (m_myRigid.angularVelocity.x > -1.0f && m_myRigid.angularVelocity.x < 0)
 		{
-			gameObject.transform.parent.transform.GetComponentInParent<StateManager>().currentEPlayerState = EPlayerState.Control;
+			gameObject.transform.parent.transform.GetComponentInParent<StateManager>().currentPlayerState = EPlayerState.Control;
 		}
 		
 	}

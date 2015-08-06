@@ -55,6 +55,6 @@ public class InEditorStuff : MonoBehaviour 	//Everything here is only for ease o
 		}
 		
 		//explain game states
-		canvasText.text = ("State: " + (airshipTopOfHierachy.GetComponent<StateManager>().currentEPlayerState));
+		canvasText.text = ("State: " + (airshipTopOfHierachy.GetComponent<StateManager>().currentPlayerState));
 	}
 }

@@ -66,7 +66,7 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 		
 		if (timerUntilReset < 0.0f)
 		{
-			gameObject.GetComponent<StateManager>().currentEPlayerState = EPlayerState.Roulette;
+			gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Roulette;
 		}
 	}
 	
