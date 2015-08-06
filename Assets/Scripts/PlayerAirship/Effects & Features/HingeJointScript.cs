@@ -75,10 +75,10 @@ public class HingeJointScript : MonoBehaviour
 	{
 		if (axis == HingeAxis.hingeX)
 		{
-			turnValue = hiddenRoll;
+			turnValue = hiddenPitch;
 
 			//Clamp the rotation
-			absRotateAmount = Mathf.Abs (maxRotationDegrees * hiddenRoll);
+			absRotateAmount = Mathf.Abs (maxRotationDegrees * hiddenPitch);
 			//This is more sophisticated since the old prototype script.
 		}
 		else
@@ -92,10 +92,10 @@ public class HingeJointScript : MonoBehaviour
 		else
 		if (axis == HingeAxis.hingeZ)
 		{
-			turnValue = hiddenPitch;
+			turnValue = hiddenRoll;
 
 			//Clamp the rotation
-			absRotateAmount = Mathf.Abs (maxRotationDegrees * hiddenPitch);
+			absRotateAmount = Mathf.Abs (maxRotationDegrees * hiddenRoll);
 		}
 	}
 
