@@ -10,8 +10,11 @@
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// This script rotates the Prison Fortress ship in local space.
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class PrisonFortressRotate : MonoBehaviour 	//This script rotates the Prison Fortress ship in local space
+public class PrisonFortressRotate : MonoBehaviour
 {
     public float rotateForce = 10.0f;
 
