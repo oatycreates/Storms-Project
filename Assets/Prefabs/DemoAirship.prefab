@@ -41,8 +41,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 431456}
   - 65: {fileID: 6579816}
+  - 114: {fileID: 11498728}
   m_Layer: 0
-  m_Name: Base_Collider
+  m_Name: PassengerTray_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,6 +355,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &159008
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 410462}
+  - 65: {fileID: 6575976}
+  m_Layer: 0
+  m_Name: Base_Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &159940
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +596,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &410462
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 440912}
+  m_RootOrder: 0
 --- !u!4 &410670
 Transform:
   m_ObjectHideFlags: 1
@@ -690,11 +719,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 109628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 440912}
-  m_RootOrder: 0
+  m_RootOrder: 5
 --- !u!4 &436464
 Transform:
   m_ObjectHideFlags: 1
@@ -730,11 +759,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 431456}
+  - {fileID: 410462}
   - {fileID: 442588}
   - {fileID: 483562}
   - {fileID: 438356}
   - {fileID: 451852}
+  - {fileID: 431456}
   m_Father: {fileID: 471496}
   m_RootOrder: 0
 --- !u!4 &442588
@@ -1303,6 +1333,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 13, y: 4, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6575976
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159008}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 15, y: 1, z: 25}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6579816
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1310,10 +1352,10 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 109628}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15, y: 1, z: 25}
+  m_Size: {x: 14, y: 5, z: 24}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6580170
 BoxCollider:
@@ -1428,8 +1470,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireParticleEffect: {fileID: 103330}
-  airshipMainCam: {fileID: 11469610}
   spinWheel: {fileID: 11460104}
+  airshipMainCam: {fileID: 11469610}
 --- !u!114 &11444410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1584,11 +1626,11 @@ MonoBehaviour:
   pitchForce: 750
   yawForce: 1000
   rollForce: 500
+  airshipMainCam: {fileID: 11469610}
   roll: 0
   pitch: 0
   yaw: 0
   throttle: 0
-  airshipMainCam: {fileID: 11469610}
 --- !u!114 &11477626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1628,6 +1670,19 @@ MonoBehaviour:
   m_Text: 'Damage Boost
 
 '
+--- !u!114 &11498728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d60cf4045348d641b311de48a24e7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trayPassengerTags:
+  - Passengers
 --- !u!120 &12018728
 LineRenderer:
   m_ObjectHideFlags: 1
