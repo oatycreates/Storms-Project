@@ -22,7 +22,12 @@ public class SpawnPassengers : MonoBehaviour
     /// </summary>
 	public int pooledAmount = 2000;
 	public float spawnRateInSeconds = 1.0f;
-	private float startSpawnRate;
+	private float m_startSpawnRate;
+
+    /// <summary>
+    /// How heavy to make each passenger. Mass in kg.
+    /// </summary>
+    private float m_passengerMass = 0.01f;
 
 	List<GameObject> passengers;
 
@@ -56,7 +61,7 @@ public class SpawnPassengers : MonoBehaviour
 		}
 
         // Save an initial spawnRate
-		startSpawnRate = spawnRateInSeconds;
+		m_startSpawnRate = spawnRateInSeconds;
 	}
 
 	void Update () 
@@ -75,7 +80,7 @@ public class SpawnPassengers : MonoBehaviour
 		{
 			SpawnPassenger();
 
-			spawnRateInSeconds = startSpawnRate; // Reset spawn rate
+			spawnRateInSeconds = m_startSpawnRate; // Reset spawn rate
 
 		}
 
@@ -89,7 +94,7 @@ public class SpawnPassengers : MonoBehaviour
                 {
                     SpawnPassenger();
                     //Reset spawn rate
-                    spawnRateInSeconds = startSpawnRate;
+                    spawnRateInSeconds = m_startSpawnRate;
                 }
             }
         }*/
@@ -115,13 +120,18 @@ public class SpawnPassengers : MonoBehaviour
 				// Use relative space to spawn
                 relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
 
-				// Reset velocity before adding to it
-				passengerRb = passengers[i].GetComponent<Rigidbody>();
+                // Set up player rigidbody
+                passengerRb = passengers[i].GetComponent<Rigidbody>();
+                passengerRb.mass = m_passengerMass;
+
+                // TODO Ignore collision with the spawner colliders and the prison fortress
+
+                // Reset velocity before adding to it
                 passengerRb.velocity = Vector3.zero;
-				passengerRb.angularVelocity = Vector3.zero;
+                passengerRb.angularVelocity = Vector3.zero;
 
                 // Add initial passenger velocity here!	Jump!
-                passengerRb.AddForce(relativeSpace * 10, ForceMode.Impulse);
+                passengerRb.AddForce(relativeSpace * 10.0f * passengerRb.mass, ForceMode.Impulse);
                 
                 // Don't forget this!
 				break;
