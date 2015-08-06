@@ -177,11 +177,11 @@ public class AirshipControlBehaviour : MonoBehaviour
 
         // Roll
         float rollDot = Vector3.Dot(worldUp, shipRight);
-        torque += -rollDot * m_myRigid.transform.forward * rollForce * rollLimitMult;
+        torque += -rollDot * shipForward * rollForce * rollLimitMult;
 
         // Pitch
         float pitchDot = Vector3.Dot(-worldUp, shipForward);
-        torque += -pitchDot * m_myRigid.transform.right * pitchForce * pitchLimitMult;
+        torque += -pitchDot * shipRight * pitchForce * pitchLimitMult;
 
         // Add all the torque forces together
         m_myRigid.AddTorque(torque);
