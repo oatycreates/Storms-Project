@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class InEditorStuff : MonoBehaviour 	//Everything here is only for ease of access, and should only effect stuff in the editor. // We should delete the Entire 'InEditor' branch of the airshipGameobject before master build.
 {
+
 	public Renderer myRenderer;
 	private Color playerColor = Color.magenta;
 	
@@ -28,10 +29,13 @@ public class InEditorStuff : MonoBehaviour 	//Everything here is only for ease o
 	//set color
 		if (myRenderer.enabled == true)
 		{
+			/*
 			if (Application.isEditor == true)
 			{
 				myRenderer.material.color = playerColor;	
 			}
+			*/
+			myRenderer.material.color = playerColor;
 		
 			if (gameObject.tag == "Player1_")
 			{
