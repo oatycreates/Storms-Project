@@ -27,7 +27,7 @@ public class HingeJointScript : MonoBehaviour
 	void Start () 
 	{
 		rotateAmount = 0;
-		maxRotationDegrees = 60.0f;
+		//maxRotationDegrees = 60.0f;
 	}
 
 	void FixedUpdate () 
