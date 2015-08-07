@@ -137,15 +137,17 @@ public class RouletteSpinWheel : MonoBehaviour
         // Slerp into the final position if applicable
         if (targetFinalRotation != Quaternion.identity)
         {
-            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, targetFinalRotation, Time.deltaTime * 10.0f);
+            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, targetFinalRotation, Time.deltaTime * 5.0f);
+            // Stop physics spinning when lerping
+            m_myRigid.angularVelocity = Vector3.zero;
         }
 
         //NOTE: Right now- this just triggers the State Manager to change the object from ROULETE to NORMAL CONTROL
         int selectedIndex = Mathf.RoundToInt(m_myRigid.rotation.eulerAngles.x / 90.0f);
-		if (m_myRigid.angularVelocity.x > -1.0f && m_myRigid.angularVelocity.x < 0)
+        if (!m_rouletteDone && m_myRigid.angularVelocity.x > -1.0f && m_myRigid.angularVelocity.x < 1.0f)
         {
             int roundAngle = Mathf.RoundToInt(m_myRigid.rotation.eulerAngles.x % 90.0f);
-            if (roundAngle >= 88 || roundAngle <= 2)
+            if (roundAngle >= 85 || roundAngle <= 5)
             {
                 // End the roulette state
                 targetFinalRotation = Quaternion.identity;
