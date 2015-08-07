@@ -60,4 +60,9 @@ public class SceneManager : MonoBehaviour
 	{
 		Application.LoadLevel("CreditsScene");
 	}
+	
+	public void SplashScreen()
+	{
+		Application.LoadLevel("SplashScreen");
+	}
 }

@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
 	private AirshipSuicideBehaviour m_fireshipControl;
 	private RouletteBehaviour 		m_rouletteControl;
 
+
 	// TODO We might need to add more script references here as we progress
 	
 	void Start()
@@ -75,5 +76,5 @@ public class InputManager : MonoBehaviour
 		m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
 		m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers);
 		m_fireshipControl.PlayerFireshipInputs(upDown, leftRight);
-	}
+	}	
 }

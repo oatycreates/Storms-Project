@@ -37,8 +37,11 @@ public class MasterCamera : MonoBehaviour
 		if (currentCamera == ECamerasInScene.One)
 		{
 			cam1.enabled = true;
+			if (cam2 != null)
 			cam2.enabled = false;
+			if (cam3 != null)
 			cam3.enabled = false;
+			if (cam4 != null)
 			cam4.enabled = false;
 			
 			cam1.rect = new Rect(0, 0, 1, 1);
@@ -48,7 +51,9 @@ public class MasterCamera : MonoBehaviour
 		{
 			cam1.enabled = true;
 			cam2.enabled = true;
+			if (cam3 != null)
 			cam3.enabled = false;
+			if (cam4 != null)
 			cam4.enabled = false;
 
             // One on top
@@ -62,12 +67,14 @@ public class MasterCamera : MonoBehaviour
 			cam1.enabled = true;
 			cam2.enabled = true;
 			cam3.enabled = true;
+			if (cam4 != null)
 			cam4.enabled = false;
 
             // Cam two top right
 			cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
             cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-			cam3.rect = new Rect(0, 0, 1f, 0.5f);
+			//cam3.rect = new Rect(0, 0, 1f, 0.5f);
+			cam3.rect = new Rect(0.25f, 0f, 0.5f, 0.5f);
 			
 		}	
 		
