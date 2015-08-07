@@ -73,7 +73,8 @@ public class MasterCamera : MonoBehaviour
             // Cam two top right
 			cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
             cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-			cam3.rect = new Rect(0, 0, 1f, 0.5f);
+			//cam3.rect = new Rect(0, 0, 1f, 0.5f);
+			cam3.rect = new Rect(0.25f, 0f, 0.5f, 0.5f);
 			
 		}	
 		
