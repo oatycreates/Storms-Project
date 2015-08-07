@@ -56,10 +56,15 @@ public class AirshipSuicideBehaviour : MonoBehaviour
         m_anim = GetComponent<Animator>();
 	}
 	
-	void Start () 
+	void Start() 
 	{
 		
 	}
+
+    void OnEnable()
+    {
+
+    }
 	
 	void Update()
 	{
@@ -96,9 +101,6 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
         ClampInputs();
-
-        // Spin the propeller
-        m_anim.SetFloat(m_animPropellerMult, animThrottleMult);
 	}
 
     /// <summary>
@@ -121,8 +123,11 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 
         // This finds the 'up' vector.
 		var liftDirection = Vector3.Cross(m_myRigid.velocity, m_myRigid.transform.right).normalized;
-		
-		m_myRigid.AddForce(liftDirection);
+
+        m_myRigid.AddForce(liftDirection);
+
+        // Spin the propeller fast
+        m_anim.SetFloat(m_animPropellerMult, animThrottleMult);
 	}
 
     /// <summary>
