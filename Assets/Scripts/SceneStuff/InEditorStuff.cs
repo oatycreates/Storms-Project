@@ -14,11 +14,11 @@ public class InEditorStuff : MonoBehaviour 	//Everything here is only for ease o
 	void Start()
 	{
 		canvasText = canvasChild.GetComponentInChildren<Text>();
-		
+		/*
 		if (Application.isEditor == false)
 		{
 			canvasChild.SetActive(false);
-		}
+		}*/
 	}
 
 	
