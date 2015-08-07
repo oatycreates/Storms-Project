@@ -47,12 +47,23 @@ public class AirshipControlBehaviour : MonoBehaviour
     public float rollLimitMult = 0.8f;
 
     /// <summary>
+    /// Percentage of the base propeller animation speed to apply when moving. 
+    /// </summary>
+    public float animThrottleMult = 3.0f;
+
+    /// <summary>
     /// Handle to the airship camera script.
     /// </summary>
     public AirshipCamBehaviour airshipMainCam;
 
+    // Animation trigger hashes
+    private int m_animHatchOpen     = Animator.StringToHash("HatchOpen");
+    private int m_animTrapdoorOpen  = Animator.StringToHash("TrapdoorOpen");
+    private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
+
     // Cached variables
     private Rigidbody m_myRigid;
+    private Animator m_anim;
 	
 	[HideInInspector]
 	public float roll;
@@ -66,7 +77,8 @@ public class AirshipControlBehaviour : MonoBehaviour
 	
 	void Awake()
 	{
-		m_myRigid = gameObject.GetComponent<Rigidbody>();
+		m_myRigid = GetComponent<Rigidbody>();
+        m_anim = GetComponent<Animator>();
 	}
 	
 	void Start () 
@@ -90,9 +102,18 @@ public class AirshipControlBehaviour : MonoBehaviour
 		m_myRigid.angularDrag = 2.0f;
 	
 	}
-	
-	
-	public void PlayerInputs(float a_Vertical, float a_Horizontal, float a_camVertical, float a_camHorizontal, float a_triggers)
+
+
+    public void PlayerInputs(
+        float a_Vertical, 
+        float a_Horizontal, 
+        float a_camVertical, 
+        float a_camHorizontal, 
+        float a_triggers, 
+        bool a_faceUp,      // Y - Open hatch
+        bool a_faceDown,    // A - Fire cannon forwards
+        bool a_faceLeft,    // X - Fire broadside left
+        bool a_faceRight)   // B - Fire broadside right
 	{
         roll = 0.25f * a_Horizontal + a_camHorizontal;
 		pitch = a_Vertical;
@@ -101,6 +122,13 @@ public class AirshipControlBehaviour : MonoBehaviour
 		
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
 		ClampInputs();
+
+        // Open/close the hatches
+        m_anim.SetBool(m_animHatchOpen, a_faceUp);
+        m_anim.SetBool(m_animTrapdoorOpen, a_faceUp);
+
+        // Spin the propeller
+        m_anim.SetFloat(m_animPropellerMult, (throttle * (animThrottleMult - 1)) + 1);
 	}
 	
 	void FixedUpdate()

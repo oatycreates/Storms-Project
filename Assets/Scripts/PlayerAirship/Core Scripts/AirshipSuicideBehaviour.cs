@@ -31,19 +31,29 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 	[HideInInspector]
 	public float pitch;
 	[HideInInspector]
-	public float yaw;
+    public float yaw;
+
+    /// <summary>
+    /// Percentage of the base propeller animation speed to apply when moving. 
+    /// </summary>
+    public float animThrottleMult = 10.0f;
 
     /// <summary>
     /// Handle to the airship camera script.
     /// </summary>
-	public AirshipCamBehaviour airshipMainCam;
+    public AirshipCamBehaviour airshipMainCam;
+
+    // Animation trigger hashes
+    private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
 
     // Cached variables
     private Rigidbody m_myRigid;
+    private Animator m_anim;
 	
 	void Awake()
 	{
-		m_myRigid = gameObject.GetComponent<Rigidbody>();
+        m_myRigid = gameObject.GetComponent<Rigidbody>();
+        m_anim = GetComponent<Animator>();
 	}
 	
 	void Start () 
@@ -77,13 +87,18 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 		CalculateTorque();
 	}
 	
-	public void PlayerFireshipInputs(float a_Vertical, float a_Horizontal)
+	public void PlayerFireshipInputs(
+        float a_Vertical,
+        float a_Horizontal)
 	{
 		pitch = a_Vertical;
 		yaw = a_Horizontal;
 
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
         ClampInputs();
+
+        // Spin the propeller
+        m_anim.SetFloat(m_animPropellerMult, animThrottleMult);
 	}
 
     /// <summary>
