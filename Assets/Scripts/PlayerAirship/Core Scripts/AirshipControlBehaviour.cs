@@ -47,9 +47,14 @@ public class AirshipControlBehaviour : MonoBehaviour
     public float rollLimitMult = 0.8f;
 
     /// <summary>
-    /// Percentage of the base propeller animation speed to apply when moving. 
+    /// Percentage of the base propeller animation speed to apply when moving.
     /// </summary>
-    public float animThrottleMult = 3.0f;
+    public float animThrottleMult = 2.5f;
+
+    /// <summary>
+    /// Percentage of the base propeller animation speed to apply when braking.
+    /// </summary>
+    public float animLowThrottleMult = 0.1f;
 
     /// <summary>
     /// Handle to the airship camera script.
@@ -128,7 +133,19 @@ public class AirshipControlBehaviour : MonoBehaviour
         m_anim.SetBool(m_animTrapdoorOpen, a_faceUp);
 
         // Spin the propeller
-        m_anim.SetFloat(m_animPropellerMult, (throttle * (animThrottleMult - 1)) + 1);
+        float origThrottleBounded = throttle * 0.5f + 0.5f; // [-1, 1] to [0, 1]
+        float animThrottle = origThrottleBounded * 2.0f; // [0, 1] to [0, 2], 50% now maps to 100% anim throttle
+        if (animThrottle > 1)
+        {
+            // Scale up to the animation throttle multiplier
+            animThrottle = origThrottleBounded * (animThrottleMult - 1) + 1;
+        }
+        else if (animThrottle < 0.05f)
+        {
+            // Cap to low speed
+            animThrottle = animLowThrottleMult;
+        }
+        m_anim.SetFloat(m_animPropellerMult, animThrottle);
 	}
 	
 	void FixedUpdate()

@@ -45,12 +45,17 @@ public class AirshipDyingBehaviour : MonoBehaviour
     /// </summary>
     public AirshipCamBehaviour airshipMainCam;
 
+    // Animation trigger hashes
+    private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
+
     // Cached variables
     private Rigidbody m_myRigid;
+    private Animator m_anim;
 	
 	void Awake()
 	{
-		m_myRigid = gameObject.GetComponent<Rigidbody>();
+        m_myRigid = GetComponent<Rigidbody>();
+        m_anim = GetComponent<Animator>();
 	}
 
     void Start()
@@ -65,6 +70,9 @@ public class AirshipDyingBehaviour : MonoBehaviour
 	{
         // Explode the ship
         m_myRigid.AddExplosionForce(explosionForce, explosionCentreTrans.position, explosionRadius);
+
+        // Stop the propeller from moving
+        m_anim.SetFloat(m_animPropellerMult, 0.0f);
 	}
 	
 	void Update()
