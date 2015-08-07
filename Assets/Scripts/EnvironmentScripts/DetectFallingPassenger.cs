@@ -8,9 +8,17 @@ public class DetectFallingPassenger : MonoBehaviour
 	[HideInInspector]
 	public int myScore = 50;
 
+	public Color textColour;
+
+	void Start()
+	{
+		textColour = Color.black;
+	}
+
 
 	void Update () 
 	{
+		scoreText.color = textColour;
 		scoreText.text = ("" + myScore);
 	}
 

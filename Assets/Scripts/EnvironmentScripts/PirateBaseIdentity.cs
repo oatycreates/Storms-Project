@@ -28,6 +28,7 @@ public class PirateBaseIdentity : MonoBehaviour
 			teamNumber = 1;
 			myRenderer.material.color = Color.magenta;
 			baseColour = myRenderer.material.color;
+
 		}
 		else
 		if (gameObject.tag == "Player2_")
@@ -56,6 +57,10 @@ public class PirateBaseIdentity : MonoBehaviour
 			Debug.Log("NO TAG!!");
 		}
 
+		//set the colour of text in DetectFallingPassengersScript
+		baseTriggerZone.textColour = myRenderer.material.color;
+
+		//set the score for the ScoreManager script
 		baseScore = baseTriggerZone.myScore;
 	}
 }

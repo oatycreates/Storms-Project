@@ -41,11 +41,10 @@ public class ScoreManager : MonoBehaviour
 
 	void Update()
 	{
+		
+		//Lock the empty base values so that they Cannot 'win'
 		if (e_numberOfBases == ENumberOfPlayers.One)
 		{
-			//baseScore_1 = pirateBase1.baseScore;
-
-			//Lock the empty base values so that they Cannot 'win'
 				baseScore_2 = 50;
 
 				baseScore_3 = 50;
@@ -55,10 +54,6 @@ public class ScoreManager : MonoBehaviour
 		else
 		if (e_numberOfBases == ENumberOfPlayers.Two)
 		{
-				//baseScore_1 = pirateBase1.baseScore;
-				//baseScore_2 = pirateBase2.baseScore;
-
-
 				baseScore_3 = 50;
 
 				baseScore_4 = 50;
@@ -66,26 +61,17 @@ public class ScoreManager : MonoBehaviour
 		else
 		if (e_numberOfBases == ENumberOfPlayers.Three)
 		{
-				//baseScore_1 = pirateBase1.baseScore;
-				//baseScore_2 = pirateBase2.baseScore;
-				//baseScore_3 = pirateBase3.baseScore;
-
 
 				baseScore_4 = 50;
 		}
 		else
 		if (e_numberOfBases == ENumberOfPlayers.Four)
 		{
-
-				//baseScore_1 = pirateBase1.baseScore;
-				//baseScore_2 = pirateBase2.baseScore;
-				//baseScore_3 = pirateBase3.baseScore;
-				//baseScore_4 = pirateBase4.baseScore;
 		}
+
 
 		//Check to see if any base score is less than 0
 
-		//if (baseScore_1 <= 0)
 		if (pirateBase1.baseScore <= 0)
 		{
 			winnerColour = pirateBase1.baseColour;
