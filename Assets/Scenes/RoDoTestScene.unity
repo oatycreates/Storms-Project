@@ -127,10 +127,10 @@ Transform:
   - {fileID: 1813188701}
   - {fileID: 1573049966}
   - {fileID: 1599809125}
-  - {fileID: 1299920528}
   - {fileID: 1432345852}
+  - {fileID: 1299920528}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!4 &83846106 stripped
 Transform:
   m_PrefabParentObject: {fileID: 476198, guid: 59f2443fef21e8e4f9bc64b2f1855589, type: 2}
@@ -327,65 +327,6 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 432590, guid: ff3636f82a6c422478de0e45da1bf4a4, type: 2}
   m_PrefabInternal: {fileID: 1716839265}
---- !u!1001 &776101351
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -116
-      objectReference: {fileID: 0}
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 428446, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 199766, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_Name
-      value: Player_Ship (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 199766, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_TagString
-      value: Player2_
-      objectReference: {fileID: 0}
-    - target: {fileID: 199766, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: ef79b4e6d965fe44eb50166f47ba2d74, type: 2}
-  m_IsPrefabParent: 0
---- !u!20 &776101352 stripped
-Camera:
-  m_PrefabParentObject: {fileID: 2073942, guid: ef79b4e6d965fe44eb50166f47ba2d74,
-    type: 2}
-  m_PrefabInternal: {fileID: 776101351}
 --- !u!1 &789288388
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,9 +354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ec75ec60dfe3c41a22ea1d9c204c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCamera: 1
+  currentCamera: 0
   cam1: {fileID: 843395710}
-  cam2: {fileID: 776101352}
+  cam2: {fileID: 0}
   cam3: {fileID: 0}
   cam4: {fileID: 0}
 --- !u!4 &789288390
@@ -429,7 +370,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1001 &819763506
 Prefab:
   m_ObjectHideFlags: 0
@@ -522,7 +463,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447588, guid: 83e8c0ed7a9f3d343825178e1c175681, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83e8c0ed7a9f3d343825178e1c175681, type: 2}
@@ -572,7 +513,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408110, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11497332, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
       propertyPath: pirateBase1
@@ -593,6 +534,10 @@ Prefab:
     - target: {fileID: 11497332, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
       propertyPath: e_numberOfBases
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191656, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
@@ -648,15 +593,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 445570, guid: a900a106875435442a05516497698f30, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 227
+      value: -76
       objectReference: {fileID: 0}
     - target: {fileID: 445570, guid: a900a106875435442a05516497698f30, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 7
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 445570, guid: a900a106875435442a05516497698f30, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 445570, guid: a900a106875435442a05516497698f30, type: 2}
       propertyPath: m_LocalRotation.x
@@ -676,7 +621,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 445570, guid: a900a106875435442a05516497698f30, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 102160, guid: a900a106875435442a05516497698f30, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a900a106875435442a05516497698f30, type: 2}
@@ -1212,4 +1161,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4

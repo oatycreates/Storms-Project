@@ -17,6 +17,11 @@ using System.Collections;
 /// </summary>
 public class AirshipControlBehaviour : MonoBehaviour
 {	
+	/// <summary>
+	/// Change the mass of the Airship in editor here
+	/// </summary>
+	public float adjustableMass = 100.0f;
+
     /// <summary>
     /// Movement speed of the airship.
     /// Try 50 here and see how we go.
@@ -102,7 +107,8 @@ public class AirshipControlBehaviour : MonoBehaviour
 		m_myRigid.useGravity = false;
 		m_myRigid.isKinematic = false;	// We want physics collisions!
 		
-		m_myRigid.mass = 10.0f;
+		//m_myRigid.mass = 10.0f;
+		m_myRigid.mass = adjustableMass;
 		m_myRigid.drag = 2.0f;
 		m_myRigid.angularDrag = 2.0f;
 	
