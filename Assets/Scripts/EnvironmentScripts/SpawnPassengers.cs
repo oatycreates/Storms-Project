@@ -14,6 +14,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// A script to pool and spawn pirate passengers.
+/// UPDATE: From now on- use the passenger prefab object instead of primitive cubes.
 /// </summary>
 public class SpawnPassengers : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class SpawnPassengers : MonoBehaviour
 
 	List<GameObject> passengers;
 
-	//public GameObject passengerPrefab;
+	public GameObject passengerPrefab;
 
     // Detect player presence
     public float rayCastLength = 50.0f;
@@ -44,16 +45,24 @@ public class SpawnPassengers : MonoBehaviour
 
 		for (int i = 0; i < pooledAmount; i++)
 		{
-			GameObject singlePassenger = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
-			singlePassenger.AddComponent<Rigidbody>();
+			//GameObject singlePassenger = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			//Use the prefab from now on.
+			GameObject singlePassenger = Instantiate(passengerPrefab, gameObject.transform.position, Quaternion.identity)as GameObject;
+			
+			singlePassenger.tag = "Passengers";
+/*
+			singlePassenger.AddComponent<Rigidbody>();			
 			singlePassenger.GetComponent<Rigidbody>().useGravity = true;
 
-			singlePassenger.tag = "Passengers";
 
 			// Add Passenger scripts here
 			singlePassenger.AddComponent<PassengerDestroyScript>();
+			//Add an audiosource before the falling scream script.
+			singlePassenger.AddComponent<AudioSource>();	
+			singlePassenger.AddComponent<FallingScream>();
+*/
 
+			singlePassenger.GetComponent<Rigidbody>().useGravity = true;
 			singlePassenger.SetActive(false);
 			// Add to the passengers list
 			passengers.Add(singlePassenger);
