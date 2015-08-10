@@ -19,6 +19,12 @@ public class PassengerDestroyScript : MonoBehaviour
     /// Kill-Y.
     /// </summary>
 	public float heightTillDeath = -2000.0f;
+	private FallingScream scream;
+	
+	void Start()
+	{
+		scream = gameObject.GetComponent<FallingScream>();
+	}
 	
 	void Update () 
 	{
@@ -28,6 +34,14 @@ public class PassengerDestroyScript : MonoBehaviour
 			{
                 // Check timeout
 				gameObject.SetActive(false);
+				
+				//reset scream
+				if (scream != null)
+				{
+					scream.readyToScream = true;
+					Debug.Log("WOrking");
+				}
+				
 			}
 		}
 	}

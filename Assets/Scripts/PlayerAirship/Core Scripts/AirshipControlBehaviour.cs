@@ -65,6 +65,11 @@ public class AirshipControlBehaviour : MonoBehaviour
     /// Handle to the airship camera script.
     /// </summary>
     public AirshipCamBehaviour airshipMainCam;
+    
+    /// <summary>
+    /// Bounce the input variables to the Audio Controller script under 'Particles and Effects' hierarchy branch.
+    /// </summary>
+    public AirshipAudio audioControl;
 
     // Animation trigger hashes
     private int m_animHatchOpen     = Animator.StringToHash("HatchOpen");
@@ -111,7 +116,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 		m_myRigid.mass = adjustableMass;
 		m_myRigid.drag = 2.0f;
 		m_myRigid.angularDrag = 2.0f;
-	
+		
 	}
 
 
@@ -152,6 +157,7 @@ public class AirshipControlBehaviour : MonoBehaviour
             animThrottle = animLowThrottleMult;
         }
         m_anim.SetFloat(m_animPropellerMult, animThrottle);
+		
 	}
 	
 	void FixedUpdate()
@@ -160,6 +166,12 @@ public class AirshipControlBehaviour : MonoBehaviour
 		ConstantForwardMovement();
 		CalculateTorque();
         CalculateRightingForce();
+        
+		//Pass values to AudioController
+		if (audioControl != null)
+		{
+			audioControl.AudioInputs(pitch, yaw, roll, throttle);
+		}
 
 	}
 	
