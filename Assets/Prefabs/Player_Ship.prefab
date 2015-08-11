@@ -934,6 +934,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &191792
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 479874}
+  - 82: {fileID: 8228554}
+  - 114: {fileID: 11411040}
+  m_Layer: 0
+  m_Name: PlayerEngineAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &191978
 GameObject:
   m_ObjectHideFlags: 1
@@ -1350,6 +1367,7 @@ Transform:
   - {fileID: 482880}
   - {fileID: 466450}
   - {fileID: 485642}
+  - {fileID: 479874}
   m_Father: {fileID: 428446}
   m_RootOrder: 3
 --- !u!4 &444682
@@ -1526,6 +1544,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 468304}
   m_RootOrder: 1
+--- !u!4 &479874
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 444034}
+  m_RootOrder: 4
 --- !u!4 &480126
 Transform:
   m_ObjectHideFlags: 1
@@ -3076,6 +3106,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8228554
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191792}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: .100000001
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!82 &8293750
 AudioSource:
   m_ObjectHideFlags: 1
@@ -3197,6 +3296,20 @@ MonoBehaviour:
   m_Text: 'Speed Boost
 
 '
+--- !u!114 &11411040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 191792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d1bfe0d574f6c4f8b43401a1d1f7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineClip: {fileID: 8300000, guid: 9692aa7feadce304db6f9e2e69bcd59a, type: 3}
+  suicideMode: 0
+  lookToTheStateManager: {fileID: 11485176}
 --- !u!114 &11421736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3280,6 +3393,7 @@ MonoBehaviour:
   animLowThrottleMult: .100000001
   airshipMainCam: {fileID: 11441222}
   audioControl: {fileID: 11477632}
+  engineAudioControl: {fileID: 11411040}
   roll: 0
   pitch: 0
   yaw: 0
@@ -3495,6 +3609,7 @@ MonoBehaviour:
   meshes: {fileID: 158178}
   hinges: {fileID: 129884}
   rouletteHierachy: {fileID: 131426}
+  particlesEffectsHierachy: {fileID: 104832}
 --- !u!114 &11491444
 MonoBehaviour:
   m_ObjectHideFlags: 1

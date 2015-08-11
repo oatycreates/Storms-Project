@@ -70,6 +70,7 @@ public class AirshipControlBehaviour : MonoBehaviour
     /// Bounce the input variables to the Audio Controller script under 'Particles and Effects' hierarchy branch.
     /// </summary>
     public AirshipAudio audioControl;
+    public EngineAudio engineAudioControl;
 
     // Animation trigger hashes
     private int m_animHatchOpen     = Animator.StringToHash("HatchOpen");
@@ -170,9 +171,13 @@ public class AirshipControlBehaviour : MonoBehaviour
 		//Pass values to AudioController
 		if (audioControl != null)
 		{
-			audioControl.AudioInputs(pitch, yaw, roll, throttle);
+			audioControl.AudioInputs(pitch, yaw, roll);
 		}
-
+		
+		if (engineAudioControl != null)
+		{
+			engineAudioControl.AudioInput(throttle);
+		}
 	}
 	
     /// <summary>

@@ -17,18 +17,7 @@ public class AirshipAudio : MonoBehaviour
 	}
 	
 	void Update () 
-	{
-		/*
-		timer -= Time.deltaTime;
-		
-		if (timer < 0.0f)
-		{
-			//Randomise the next sound...
-			RandomMe();
-			timer = 1.0f;
-		}
-		*/
-		
+	{		
 		// If movement is True, play a sound.
 		// If that sound finishes, and movement is Still True, play a new sound.
 		if (movement)
@@ -50,9 +39,8 @@ public class AirshipAudio : MonoBehaviour
 		
 	}
 	
-	public void AudioInputs(float pitch, float yaw, float roll, float speed)
+	public void AudioInputs(float pitch, float yaw, float roll)//, float speed)
 	{
-		//Debug.Log("Pitch: " + pitch + " Yaw: " + yaw + " Roll: " + roll + " Speed: " + speed);
 		if ((pitch != 0) || (yaw != 0) || (roll != 0))
 		{
 			movement = true;
