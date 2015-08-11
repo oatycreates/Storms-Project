@@ -73,8 +73,8 @@ Rigidbody:
   m_GameObject: {fileID: 169638}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
+  m_Drag: .0500000007
+  m_AngularDrag: .100000001
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -185,14 +185,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - {fileID: 8300000, guid: 4ffafd4fa287bae46b8df6f24a9a02f2, type: 3}
-  - {fileID: 8300000, guid: 6fc7bb8fbfa531248b4d104bd3811fee, type: 3}
-  - {fileID: 8300000, guid: 5e8964b191e411449b180c05e1d949fb, type: 3}
-  - {fileID: 8300000, guid: 1867038e8eaa4b34eb969967864b6255, type: 3}
-  - {fileID: 8300000, guid: 1edfc30ec9f8d1e41bccffc9b3e69883, type: 3}
-  - {fileID: 8300000, guid: 57278f276a046754ea28634d7c528535, type: 3}
-  - {fileID: 8300000, guid: dff09aa80eb4f7146baa6030ef4ef939, type: 3}
-  - {fileID: 8300000, guid: c29d0151723e7e54ca119c39a2b9cf97, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   timeFallingBeforeScream: .800000012
   readyToScream: 0
 --- !u!1001 &100100000
@@ -238,6 +238,26 @@ Prefab:
       propertyPath: sounds.Array.data[7]
       value: 
       objectReference: {fileID: 8300000, guid: c29d0151723e7e54ca119c39a2b9cf97, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Drag
+      value: .0500000007
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_AngularDrag
+      value: .100000001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169638}

@@ -61,6 +61,6 @@ public class PirateBaseIdentity : MonoBehaviour
 		baseTriggerZone.textColour = myRenderer.material.color;
 
 		//set the score for the ScoreManager script
-		baseScore = baseTriggerZone.myScore;
+		baseScore = baseTriggerZone.peopleLeftToCatch;
 	}
 }

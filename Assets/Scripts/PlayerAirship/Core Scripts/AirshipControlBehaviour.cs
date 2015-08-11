@@ -89,6 +89,8 @@ public class AirshipControlBehaviour : MonoBehaviour
 	public float yaw;
 	[HideInInspector]
 	public float throttle;
+	[HideInInspector]
+	public bool openHatch;
 	
 	
 	void Awake()
@@ -136,6 +138,9 @@ public class AirshipControlBehaviour : MonoBehaviour
 		pitch = a_Vertical;
 		yaw = a_Horizontal;
 		throttle = a_triggers;
+		
+		//Check buttonPresses
+		openHatch = a_faceUp;
 		
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
 		ClampInputs();

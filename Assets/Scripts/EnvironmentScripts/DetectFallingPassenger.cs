@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class DetectFallingPassenger : MonoBehaviour 
 {
 	public Text scoreText;
-	[HideInInspector]
-	public int myScore = 50;
+	
+	public int peopleLeftToCatch = 50;
 
 	public Color textColour;
 
@@ -19,14 +19,14 @@ public class DetectFallingPassenger : MonoBehaviour
 	void Update () 
 	{
 		scoreText.color = textColour;
-		scoreText.text = ("" + myScore);
+		scoreText.text = ("" + peopleLeftToCatch);
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Passengers")
 		{
-			myScore -= 1;
+			peopleLeftToCatch -= 1;
 			other.gameObject.SetActive(false);
 		}
 	}
