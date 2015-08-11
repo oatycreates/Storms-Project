@@ -21,6 +21,8 @@ public class SpawnPassengers : MonoBehaviour
     /// <summary>
     /// To avoid memory spikes.
     /// </summary>
+    public bool currentlySpawning = false;
+    
 	public int pooledAmount = 2000;
 	public float spawnRateInSeconds = 1.0f;
 	private float m_startSpawnRate;
@@ -85,12 +87,15 @@ public class SpawnPassengers : MonoBehaviour
 		Debug.DrawRay (m_myRay.origin, m_myRay.direction * rayCastLength, Color.green);
 
 
-		if (spawnRateInSeconds < 0)
+		if (currentlySpawning)
 		{
-			SpawnPassenger();
-
-			spawnRateInSeconds = m_startSpawnRate; // Reset spawn rate
-
+			if (spawnRateInSeconds < 0)
+			{
+				SpawnPassenger();
+	
+				spawnRateInSeconds = m_startSpawnRate; // Reset spawn rate
+	
+			}
 		}
 
         /*

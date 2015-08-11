@@ -39,7 +39,6 @@ public class PassengerDestroyScript : MonoBehaviour
 				if (scream != null)
 				{
 					scream.readyToScream = true;
-					Debug.Log("WOrking");
 				}
 				
 			}

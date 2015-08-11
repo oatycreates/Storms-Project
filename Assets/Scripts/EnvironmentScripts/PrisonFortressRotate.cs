@@ -14,16 +14,32 @@ using System.Collections;
 /// This script rotates the Prison Fortress ship in local space.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public class PrisonFortressRotate : MonoBehaviour
 {
     public float rotateForce = 10.0f;
+    
+    public AudioClip hoverNoise;
 
     // Cached variables
     private Rigidbody m_myRigid;
+    private AudioSource mySource;
 
 	void Start () 
 	{
+		//Set physics
 		m_myRigid = gameObject.GetComponent<Rigidbody>();
+		
+		m_myRigid.maxAngularVelocity = 0.1f;
+		
+		//Set audio
+		mySource = gameObject.GetComponent<AudioSource>();
+		
+		mySource.clip = hoverNoise;
+		mySource.volume = 0.05f;
+		//mySource.pitch = 
+		mySource.loop = true;
+		mySource.Play ();		
 	}
 	
 	void FixedUpdate () 
