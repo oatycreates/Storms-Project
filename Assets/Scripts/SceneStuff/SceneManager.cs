@@ -17,28 +17,29 @@ public class SceneManager : MonoBehaviour
 {
 	void Update () 
 	{
-		if (Application.isEditor == true)
-		{
-			if (Input.GetKeyDown(KeyCode.M))
-			{
-				MenuScene();
-			}
+	    if (Application.isEditor == true)
+	    {
+	        if (Input.GetKeyDown(KeyCode.M))
+	        {
+		        MenuScene();
+	        }
 			
-			if (Input.GetKeyDown(KeyCode.G))
-			{
-				GameScene();
-			}
+	        if (Input.GetKeyDown(KeyCode.G))
+	        {
+		        GameScene();
+	        }
 			
-			if (Input.GetKeyDown(KeyCode.C))
-			{
-				CreditsScene();
-			}	
-			
-			if (Input.GetKeyDown(KeyCode.Backspace))
-			{
-				Application.LoadLevel(Application.loadedLevelName);
-			}
-		}
+	        if (Input.GetKeyDown(KeyCode.C))
+	        {
+		        CreditsScene();
+	        }
+        }
+
+        // Reset the level
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            Application.LoadLevel(Application.loadedLevelName);
+        }
 		
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
