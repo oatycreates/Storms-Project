@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+
 /// <summary>
 /// This script keeps track of the Pirate Base and Identity - checks Current Score and Tags.
 /// </summary>
@@ -26,16 +27,13 @@ public class PirateBaseIdentity : MonoBehaviour
 
 	public Renderer myRenderer;
 
-	void Start () 
+	void Start() 
 	{
 		baseColour = Color.clear;
-		
-		baseTriggerZone.peopleLeftToCatch = baseScore;	//Reverse this in the update.
 	}
 
-	void Update () 
+	void Update() 
 	{
-
 		if (gameObject.tag == "Player1_")
 		{
 			teamNumber = 1;
@@ -43,29 +41,25 @@ public class PirateBaseIdentity : MonoBehaviour
 			baseColour = myRenderer.material.color;
 
 		}
-		else
-		if (gameObject.tag == "Player2_")
+		else if (gameObject.tag == "Player2_")
 		{
 			teamNumber = 2;
 			myRenderer.material.color = Color.cyan;
 			baseColour = myRenderer.material.color;
 		}
-		else
-		if (gameObject.tag == "Player3_")
+		else if (gameObject.tag == "Player3_")
 		{
 			teamNumber = 3;
 			myRenderer.material.color = Color.green;
 			baseColour = myRenderer.material.color;
 		}
-		else
-		if (gameObject.tag == "Player4_")
+		else if (gameObject.tag == "Player4_")
 		{
 			teamNumber = 4;
 			myRenderer.material.color = Color.yellow;
 			baseColour = myRenderer.material.color;
 		}
-		else
-		if (gameObject.tag == "Untagged")
+		else if (gameObject.tag == "Untagged")
 		{
 			Debug.Log("NO TAG!!");
 		}
@@ -74,6 +68,14 @@ public class PirateBaseIdentity : MonoBehaviour
 		baseTriggerZone.textColour = myRenderer.material.color;
 
 		// Set the score for the ScoreManager script
-		baseScore = baseTriggerZone.peopleLeftToCatch;
+        baseScore = baseTriggerZone.peopleLeftToCatch;
+        Debug.Log(baseScore);
 	}
+
+    public void ResetPirateBase(int a_baseScore)
+    {
+        // Set score values
+        baseTriggerZone.peopleLeftToCatch = a_baseScore;
+        baseScore = a_baseScore;
+    }
 }
