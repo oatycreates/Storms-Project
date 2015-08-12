@@ -39,7 +39,7 @@ public class SpawnPassengers : MonoBehaviour
     // Detect player presence
     public float rayCastLength = 50.0f;
 	private Ray m_myRay;
-	private RaycastHit m_m_hit;
+	private RaycastHit m_hit;
 
 	void Start () 
 	{
@@ -75,7 +75,7 @@ public class SpawnPassengers : MonoBehaviour
 		m_startSpawnRate = spawnRateInSeconds;
 	}
 
-	void Update () 
+	void Update() 
 	{
         // Count down
 		spawnRateInSeconds -= Time.deltaTime;

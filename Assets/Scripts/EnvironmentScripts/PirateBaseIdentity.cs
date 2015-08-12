@@ -1,6 +1,17 @@
-﻿using UnityEngine;
+﻿/**
+ * File: PirateBaseIdentity.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: This script keeps track of the Pirate Base and Identity - checks Current Score and Tags.
+ **/
+
+using UnityEngine;
 using System.Collections;
-//This script keeps track of the Pirate Base and Identity - checks Current Score and Tags
+/// <summary>
+/// This script keeps track of the Pirate Base and Identity - checks Current Score and Tags.
+/// </summary>
 public class PirateBaseIdentity : MonoBehaviour 
 {
 
@@ -57,10 +68,10 @@ public class PirateBaseIdentity : MonoBehaviour
 			Debug.Log("NO TAG!!");
 		}
 
-		//set the colour of text in DetectFallingPassengersScript
+		// Set the colour of text in DetectFallingPassengersScript
 		baseTriggerZone.textColour = myRenderer.material.color;
 
-		//set the score for the ScoreManager script
+		// Set the score for the ScoreManager script
 		baseScore = baseTriggerZone.peopleLeftToCatch;
 	}
 }

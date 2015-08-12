@@ -1,24 +1,35 @@
-﻿using UnityEngine;
+﻿/**
+ * File: FallingScream.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: This script takes in any number of audio clips, and plays one randomly while a passenger falls.
+ **/
+
+using UnityEngine;
 using System.Collections;
-//This script takes in any number of audio clips, and plays one randomly while a passenger falls.
+/// <summary>
+/// This script takes in any number of audio clips, and plays one randomly while a passenger falls.
+/// </summary>
 [RequireComponent (typeof(AudioSource))]
 public class FallingScream : MonoBehaviour 
 {
-	private AudioSource mySource;
+	private AudioSource m_mySource;
 	public AudioClip[] sounds;
 	public float timeFallingBeforeScream = 0.80f;
-	private float fallTimer = 0.80f;
+	private float m_fallTimer = 0.80f;
 	[HideInInspector]
 	public bool readyToScream = false;
-	//private bool playing = false;
+	//private bool m_playing = false;
 	
 
 	void Start () 
 	{
-		mySource = gameObject.GetComponent<AudioSource>();
+		m_mySource = gameObject.GetComponent<AudioSource>();
 		
 		//SERIOUS!!! THIS CAN'T BE TOO LOUD, OTHERWISE IT'LL LEAVE PEOPLE DEAF
-		mySource.volume = 0.05f;
+		m_mySource.volume = 0.05f;
 		//RandomSound();
 	}
 	
@@ -26,14 +37,14 @@ public class FallingScream : MonoBehaviour
 	{
 		if (readyToScream)
 		{
-			fallTimer -= Time.deltaTime;
+			m_fallTimer -= Time.deltaTime;
 		}
 		
 		// Trigger the scream, once the object has begun to fall.
-		if (fallTimer < 0.0f)
+		if (m_fallTimer < 0.0f)
 		{
 			//Check if audiosource is already playing
-			if (!mySource.isPlaying)
+			if (!m_mySource.isPlaying)
 			{
 			/*
 				if (playing = false)
@@ -47,35 +58,33 @@ public class FallingScream : MonoBehaviour
 		}
 	}
 	
-	void OnCollisionStay(Collision other)
+	void OnCollisionStay(Collision a_other)
 	{
-		if (other.gameObject.tag != "Passengers")
+		if (a_other.gameObject.tag != "Passengers")
 		{
-			mySource.Stop();
+			m_mySource.Stop();
 			readyToScream = false;
 			//Use max time to scream here
-			fallTimer = timeFallingBeforeScream;
+			m_fallTimer = timeFallingBeforeScream;
 			//playing = false;
 		}
 	}
 	
-	void OnCollisionExit(Collision other)
+	void OnCollisionExit(Collision a_other)
 	{
-		if (other.gameObject.tag != "Passengers")
+		if (a_other.gameObject.tag != "Passengers")
 		{
 			readyToScream = true;	
 		}
 	}
 	
-	
 	public void RandomSound()
 	{	
 		//Get a random sound from the list.
-		mySource.clip = sounds[Random.Range(0, sounds.Length)];
+		m_mySource.clip = sounds[Random.Range(0, sounds.Length)];
 		//Give it a random pitch.
-		mySource.pitch = Random.Range(0.7f, 1.5f);
+		m_mySource.pitch = Random.Range(0.7f, 1.5f);
 		//Play the clip
-		mySource.Play ();
+		m_mySource.Play();
 	}
-	
 }

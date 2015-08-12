@@ -1,18 +1,30 @@
-﻿using UnityEngine;
+﻿/**
+ * File: AirshipAudio.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: This script controls the creaks and groans of the wood on the airship as it moves.
+ **/
+
+using UnityEngine;
 using System.Collections;
-//This script controls the creaks and groans of the Wood on the Airship as it moves.
+
+/// <summary>
+/// This script controls the creaks and groans of the wood on the airship as it moves.
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class AirshipAudio : MonoBehaviour 
 {
-	private AudioSource mySource;
+	private AudioSource m_mySource;
 	public AudioClip[] woodenSounds;
 	//private float timer;
-	private bool movement = false;
+	private bool m_movement = false;
 
 	void Start () 
 	{
-		mySource = gameObject.GetComponent<AudioSource>();
-		mySource.volume = 0.20f;
+		m_mySource = gameObject.GetComponent<AudioSource>();
+		m_mySource.volume = 0.20f;
 		RandomMe();
 	}
 	
@@ -20,42 +32,42 @@ public class AirshipAudio : MonoBehaviour
 	{		
 		// If movement is True, play a sound.
 		// If that sound finishes, and movement is Still True, play a new sound.
-		if (movement)
+		if (m_movement)
 		{
 			// If source is Not Playing
-			if (!mySource.isPlaying)
+			if (!m_mySource.isPlaying)
 			{
 				RandomMe();
-				mySource.Play();
+				m_mySource.Play();
 			}
 			
 		}
 		else
-		if (!movement)
+		if (!m_movement)
 		{
-			mySource.Stop();
+			m_mySource.Stop();
 			RandomMe();
 		}
 		
 	}
 	
-	public void AudioInputs(float pitch, float yaw, float roll)//, float speed)
+	public void AudioInputs(float a_pitch, float a_yaw, float a_roll)//, float a_speed)
 	{
-		if ((pitch != 0) || (yaw != 0) || (roll != 0))
+		if ((a_pitch != 0) || (a_yaw != 0) || (a_roll != 0))
 		{
-			movement = true;
+			m_movement = true;
 		}
 		else
 		{
-			movement = false;
+			m_movement = false;
 		}
 	}
 	
 	void RandomMe()
 	{
-		//Random clip from array
-		mySource.clip = woodenSounds[Random.Range(0, woodenSounds.Length)];
-		//Give it a random pitch.
-		mySource.pitch = Random.Range(0.75f, 1.5f);
+		// Random clip from array
+		m_mySource.clip = woodenSounds[Random.Range(0, woodenSounds.Length)];
+		// Give it a random pitch
+		m_mySource.pitch = Random.Range(0.75f, 1.5f);
 	}
 }

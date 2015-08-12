@@ -1,7 +1,19 @@
-﻿using UnityEngine;
+﻿/**
+ * File: DetectFallingPassenger.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: This script detects falling passenger pirates that enter the triggerzone. It deactivates the passengers and adds to player score(by subtracting from regular score).
+ **/
+
+using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;	
-//This script detects falling passenger pirates that enter the triggerzone. It deactivates the passengers and adds to player score(by subtracting from regular score).
+using UnityEngine.UI;
+	
+/// <summary>
+/// This script detects falling passenger pirates that enter the triggerzone. It deactivates the passengers and adds to player score(by subtracting from regular score).
+/// </summary>
 public class DetectFallingPassenger : MonoBehaviour 
 {
 	public Text scoreText;
@@ -22,12 +34,12 @@ public class DetectFallingPassenger : MonoBehaviour
 		scoreText.text = ("" + peopleLeftToCatch);
 	}
 
-	void OnTriggerEnter(Collider other)
+	void OnTriggerEnter(Collider a_other)
 	{
-		if (other.tag == "Passengers")
+		if (a_other.tag == "Passengers")
 		{
 			peopleLeftToCatch -= 1;
-			other.gameObject.SetActive(false);
+			a_other.gameObject.SetActive(false);
 		}
 	}
 }

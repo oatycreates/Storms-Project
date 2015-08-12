@@ -1,56 +1,67 @@
-﻿using UnityEngine;
+﻿/**
+ * File: EngineAudio.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: This script controls the engine volume of the Airship.
+ **/
+
+using UnityEngine;
 using System.Collections;
-//This script controls the engine volume of the Airship.
+/// <summary>
+/// This script controls the engine volume of the Airship.
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class EngineAudio : MonoBehaviour 
 {
-	private AudioSource mySource;
+	private AudioSource m_mySource;
 	public AudioClip engineClip;
 	
-	private float volumeModifier;
-	private float pitchModifier;
+	private float m_volumeModifier;
+	private float m_pitchModifier;
 	
 	[HideInInspector]
 	public bool suicideMode = false;
-	private float lerpSoundSpeed = 0.1f;
+	private float m_lerpSoundSpeed = 0.1f;
 	
 	public StateManager lookToTheStateManager;
 
 	void Awake () 
 	{
-		mySource = gameObject.GetComponent<AudioSource>();
-		mySource.clip = engineClip;
+		m_mySource = gameObject.GetComponent<AudioSource>();
+		m_mySource.clip = engineClip;
 		
 		
-		mySource.loop = true;
+		m_mySource.loop = true;
 	}
 	
 	void Start()
 	{
-		mySource.volume = 0.5f;
-		mySource.pitch = 1.0f;
+		m_mySource.volume = 0.5f;
+		m_mySource.pitch = 1.0f;
 	}
 	
 	void OnEnable()
 	{
 		if (engineClip != null)
 		{
-			mySource.Play();
+			m_mySource.Play();
 		}
 	}
 	
 	void OnDisable()
 	{
-		mySource.Stop();
+		m_mySource.Stop();
 	}
 	
 	void Update () 
 	{
-		volumeModifier = Mathf.Clamp(volumeModifier, 0.2f, 0.4f);
-		pitchModifier = Mathf.Clamp(pitchModifier, 0.5f, 1.5f);
+		m_volumeModifier = Mathf.Clamp(m_volumeModifier, 0.2f, 0.4f);
+		m_pitchModifier = Mathf.Clamp(m_pitchModifier, 0.5f, 1.5f);
 		
 		
-		//Is the airship in suicide mode or not?
+		// Is the airship in suicide mode or not?
 		if (lookToTheStateManager.currentPlayerState == EPlayerState.Suicide)
 		{
 			suicideMode = true;
@@ -62,40 +73,40 @@ public class EngineAudio : MonoBehaviour
 		
 		if (!suicideMode)
 		{
-			mySource.volume = volumeModifier;
-			mySource.pitch = pitchModifier;
+			m_mySource.volume = m_volumeModifier;
+			m_mySource.pitch = m_pitchModifier;
 		}
 		else
 		if (suicideMode)
 		{
-			mySource.volume = Mathf.Lerp(mySource.volume, 1.0f, lerpSoundSpeed);
-			mySource.pitch = Mathf.Lerp(mySource.pitch, 1.8f, lerpSoundSpeed);
+			m_mySource.volume = Mathf.Lerp(m_mySource.volume, 1.0f, m_lerpSoundSpeed);
+			m_mySource.pitch = Mathf.Lerp(m_mySource.pitch, 1.8f, m_lerpSoundSpeed);
 		}
 	}
 	
-	public void AudioInput(float throttle)
+	public void AudioInput(float a_throttle)
 	{
-		if (throttle > 0)
+		if (a_throttle > 0)
 		{
 			//volumeModifier += 0.1f;
 			//pitchModifier += 0.1f;
-			volumeModifier = Mathf.Lerp(volumeModifier, 0.4f, lerpSoundSpeed);
-			pitchModifier = Mathf.Lerp(pitchModifier, 1.5f, lerpSoundSpeed);
+			m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.4f, m_lerpSoundSpeed);
+			m_pitchModifier = Mathf.Lerp(m_pitchModifier, 1.5f, m_lerpSoundSpeed);
 		}
 		else
-		if (throttle < 0)
+		if (a_throttle < 0)
 		{
 			//volumeModifier += 0.1f;
 			//pitchModifier -= 0.1f;
-			volumeModifier = Mathf.Lerp(volumeModifier, 0.4f, lerpSoundSpeed);
-			pitchModifier = Mathf.Lerp(pitchModifier, 0.5f, lerpSoundSpeed);
+			m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.4f, m_lerpSoundSpeed);
+			m_pitchModifier = Mathf.Lerp(m_pitchModifier, 0.5f, m_lerpSoundSpeed);
 		}
 		else
-		if (throttle == 0)
+		if (a_throttle == 0)
 		{
 			//volumeModifier -= 0.1f;
-			volumeModifier = Mathf.Lerp(volumeModifier, 0.2f, lerpSoundSpeed);
-			pitchModifier = Mathf.Lerp(pitchModifier, 1.0f, lerpSoundSpeed);
+			m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.2f, m_lerpSoundSpeed);
+			m_pitchModifier = Mathf.Lerp(m_pitchModifier, 1.0f, m_lerpSoundSpeed);
 		}
 	}
 }

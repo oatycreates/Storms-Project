@@ -2,7 +2,7 @@
  * File: AirshipCamBehaviour.cs
  * Author: Rowan Donaldson
  * Maintainer: Patrick Ferguson
- * Created: 6/08/2015
+ * Created: 12/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
  * Description: Manages the camera's following of each player.
  **/
@@ -24,7 +24,9 @@ public class AirshipCamBehaviour : MonoBehaviour
 	
 	public float camSpeed = 5.0f;
 	
-	// Keep a reference to the start position, so we can reset to the Roulette Position
+	/// <summary>
+    /// Keep a reference to the start position, so we can reset to the roulette position.
+	/// </summary>
 	private Vector3 m_myStartPos;
 	private Quaternion m_myStartRot;
 

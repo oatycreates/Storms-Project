@@ -4,7 +4,8 @@
  * Maintainer: Patrick Ferguson
  * Created: 6/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: Gives the player
+ * Description: This script manages the 'Spinning Wheel' effect on the Roulette Wheel.
+ *              Inputs are passed in from Input Manager script via the Roulette Behaviour State script.
  **/
 
 using UnityEngine;

@@ -1,8 +1,23 @@
-﻿using UnityEngine;
+﻿/**
+ * File: FadeCamWhite.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Manages the cinematic fade-through-white for scene transitions.
+ **/
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public enum NextScene{Menu, Game, Credits, Splash}
+public enum ENextScene
+{
+    Menu, 
+    Game, 
+    Credits, 
+    Splash
+}
 
 //Fade a scene camers TO or FROM white
 public class FadeCamWhite : MonoBehaviour 
@@ -15,24 +30,25 @@ public class FadeCamWhite : MonoBehaviour
 	public float fadeSpeed = 1.5f;
 	
 	public Image whitePanel;
-	private Color panelStartColor;
+	private Color m_panelStartColor;
 	
-	//Switching Scenes
-	public NextScene fadeToThisScene;
-	private SceneManager sceneManagerScript;
+	/// <summary>
+    /// Switching Scenes.
+	/// </summary>
+	public ENextScene fadeToThisScene;
+	private SceneManager m_sceneManagerScript;
 
 
 	void Awake()
 	{
-		sceneManagerScript = gameObject.GetComponentInParent<SceneManager>();
+		m_sceneManagerScript = gameObject.GetComponentInParent<SceneManager>();
 	}
 	
 	void Start()
 	{
-		panelStartColor = whitePanel.color;
+		m_panelStartColor = whitePanel.color;
 	}
 	
-
 	void Update()
 	{
 		if (fadeStart)
@@ -44,10 +60,7 @@ public class FadeCamWhite : MonoBehaviour
 		{
 			EndScene();
 		}
-		
-		//Debug.Log(whitePanel.color.a);
 	}
-	
 	
 	void FadeUp()
 	{
@@ -56,14 +69,14 @@ public class FadeCamWhite : MonoBehaviour
 	
 	void FadeDown()
 	{
-		whitePanel.color = Color.Lerp(whitePanel.color, panelStartColor, fadeSpeed * Time.deltaTime);
+		whitePanel.color = Color.Lerp(whitePanel.color, m_panelStartColor, fadeSpeed * Time.deltaTime);
 	}
 	
  	void StartScene()
  	{
  		FadeUp();
  		
- 		//Find a margin between clear and "Very near clear" - from Unity examples
+ 		// Find a margin between clear and "Very near clear" - from Unity examples
  		if (whitePanel.color.a <= 0.05f)	
  		{	
  			whitePanel.color = Color.clear;
@@ -74,38 +87,38 @@ public class FadeCamWhite : MonoBehaviour
  	
  	void EndScene()
  	{
- 		//make sure the panel is enabled
+ 		// Make sure the panel is enabled
  		whitePanel.gameObject.SetActive(true);
  	
  		FadeDown();
  		
  		if (whitePanel.color.a >= 0.95f)
  		{
- 			//Go to next scene
+ 			// Go to next scene
  			Scene();
  		}
  	}
  	
  	void Scene()
  	{
- 	  	if (fadeToThisScene == NextScene.Menu)
+ 	  	if (fadeToThisScene == ENextScene.Menu)
  	  	{
- 	  		sceneManagerScript.MenuScene();
+ 	  		m_sceneManagerScript.MenuScene();
  	  	}
  	  	else
-		if (fadeToThisScene == NextScene.Game)
+		if (fadeToThisScene == ENextScene.Game)
 		{
-			sceneManagerScript.GameScene();	
+			m_sceneManagerScript.GameScene();	
 		}
 		else
-		if (fadeToThisScene == NextScene.Credits)
+		if (fadeToThisScene == ENextScene.Credits)
 		{
-			sceneManagerScript.CreditsScene();
+			m_sceneManagerScript.CreditsScene();
 		}
 		else
-		if (fadeToThisScene == NextScene.Splash)
+		if (fadeToThisScene == ENextScene.Splash)
 		{
-			sceneManagerScript.SplashScreen();
+			m_sceneManagerScript.SplashScreen();
 		}
  	}
 }

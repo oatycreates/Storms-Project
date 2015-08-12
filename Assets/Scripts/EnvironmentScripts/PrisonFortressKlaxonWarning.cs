@@ -1,34 +1,55 @@
-﻿using UnityEngine;
+﻿/**
+ * File: PrisonFortressKlaxonWarning.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: This script makes a Klaxon sound as a warning, before the Fortress jettisions Prisioners.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public enum FortressStates{state_Dormant, state_Warning, state_Spawning}
+/// <summary>
+/// Existance state of the prison fortress.
+/// </summary>
+public enum EFortressStates
+{
+    Dormant, 
+    Warning, 
+    Spawning
+}
 
-//This script makes a Klaxon sound as a warning, before the Fortress jettisions Prisioners.
+/// <summary>
+/// This script makes a Klaxon sound as a warning, before the Fortress jettisions Prisioners.
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class PrisonFortressKlaxonWarning : MonoBehaviour 
 {
-	public FortressStates fortressState;
+	public EFortressStates fortressState;
 	
 	public float timeBetweenPrisonerDrops = 160.0f;
-	private float timer;
+	private float m_timer;
 	
 	public int numberOfTimesKlaxonShouldSound = 3;
-	private int rememberStartValue;
+	private int m_rememberStartValue;
 	
 	public float timePassengerSpawnFor = 15.0f;
-	private float rememberPassengerTimerValue;
+	private float m_rememberPassengerTimerValue;
 	
 
-	private AudioSource mySource;
+	private AudioSource m_mySource;
 
 	public Light sternLight;
 	public Light hullLight;
-	//Should the lights be increasing or decreasing in intensity.
-	private bool lightUp = false;
+	/// <summary>
+    /// Should the lights be increasing or decreasing in intensity.
+	/// </summary>
+	private bool m_lightUp = false;
 	
 	public AudioClip klaxonSound;
-	private bool warningCanPlay = true;
-	private bool spawningCanPlay = true;
+	private bool m_warningCanPlay = true;
+	private bool m_spawningCanPlay = true;
 	
 	public SpawnPassengers sternPassengerSpawn;
 	public SpawnPassengers hullPassengerSpawn;
@@ -37,57 +58,57 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 	
 	void Start () 
 	{
-		mySource = gameObject.GetComponent<AudioSource>();
-		mySource.volume = 0.3f;	
+		m_mySource = gameObject.GetComponent<AudioSource>();
+		m_mySource.volume = 0.3f;	
 		sternLight.intensity = 0.0f;
 		hullLight.intensity = 0.0f;
-		
-		timer = timeBetweenPrisonerDrops;
-		rememberStartValue = numberOfTimesKlaxonShouldSound;
-		rememberPassengerTimerValue = timePassengerSpawnFor;
+
+		m_timer = timeBetweenPrisonerDrops;
+		m_rememberStartValue = numberOfTimesKlaxonShouldSound;
+		m_rememberPassengerTimerValue = timePassengerSpawnFor;
 	}
 	
 	void Update () 
 	{	
 	 	ClampLights();
 	 	
-	 	timer -= Time.deltaTime;
+	 	m_timer -= Time.deltaTime;
 	 	
-	 	if (timer < 0)
+	 	if (m_timer < 0)
 	 	{
-	 		if (fortressState == FortressStates.state_Dormant)
+	 		if (fortressState == EFortressStates.Dormant)
 	 		{
-	 			fortressState = FortressStates.state_Warning;
+	 			fortressState = EFortressStates.Warning;
 	 		}
 	 	}
 	 
 	 	
-	 	//State Management
-	 	if (fortressState == FortressStates.state_Dormant)
+	 	// State Management
+	 	if (fortressState == EFortressStates.Dormant)
 	 	{
-	 		lightUp = false;
-	 		warningCanPlay = true;
-	 		spawningCanPlay = true;
+	 		m_lightUp = false;
+	 		m_warningCanPlay = true;
+	 		m_spawningCanPlay = true;
 			sternPassengerSpawn.currentlySpawning = false;
 			hullPassengerSpawn.currentlySpawning = false;
-			timePassengerSpawnFor = rememberPassengerTimerValue;
+			timePassengerSpawnFor = m_rememberPassengerTimerValue;
 	 	}
 	 	
 	 	
-	 	if (fortressState == FortressStates.state_Warning)
+	 	if (fortressState == EFortressStates.Warning)
 	 	{
-	 		//Make sure the klaxon doesn't go on forever
+	 		// Make sure the klaxon doesn't go on forever
 			if (numberOfTimesKlaxonShouldSound > 0)
 			{
 	 	
-				 	if (!mySource.isPlaying)
+				 	if (!m_mySource.isPlaying)
 				 	{				 	
-						//This is just to make sure that Warning IS NOT invoked more than once in the update.
-						if (warningCanPlay)
+						// This is just to make sure that Warning IS NOT invoked more than once in the update.
+						if (m_warningCanPlay)
 						{
 				 			Invoke("Warning", 1.0f);
-				 			lightUp = false;
-				 			warningCanPlay = false;
+				 			m_lightUp = false;
+				 			m_warningCanPlay = false;
 						
 							numberOfTimesKlaxonShouldSound -= 1;
 				 		}
@@ -96,32 +117,32 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 		 	else
 		 	if (numberOfTimesKlaxonShouldSound <= 0)
 		 	{	
-		 		//Change state
-		 		fortressState = FortressStates.state_Spawning;
+		 		// Change state
+		 		fortressState = EFortressStates.Spawning;
 		 	}
 	 	}
 	 	
 	 	
-		if (fortressState == FortressStates.state_Spawning)
+		if (fortressState == EFortressStates.Spawning)
 		{
-			warningCanPlay = true;
+			m_warningCanPlay = true;
 			
-			if (spawningCanPlay)
+			if (m_spawningCanPlay)
 			{
 				Invoke("Spawning", 4.5f);
-				spawningCanPlay = false;
+				m_spawningCanPlay = false;
 			}
 		
 			timePassengerSpawnFor -= Time.deltaTime;
 			
 			if (timePassengerSpawnFor < 0)
 			{
-				fortressState = FortressStates.state_Dormant;
-				timer = timeBetweenPrisonerDrops;
+				fortressState = EFortressStates.Dormant;
+				m_timer = timeBetweenPrisonerDrops;
 			}
 		
-			//Reset the number of times the klaxon should sound
-			numberOfTimesKlaxonShouldSound = rememberStartValue;
+			// Reset the number of times the klaxon should sound
+			numberOfTimesKlaxonShouldSound = m_rememberStartValue;
 		}
 	}
 	
@@ -148,45 +169,48 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 			hullLight.intensity = 8.0f;
 		}
 		
-		//Increase or Decrease lights
-		if (lightUp)
+		// Increase or decrease lights
+		if (m_lightUp)
 		{
 			sternLight.intensity += 0.05f;
 			hullLight.intensity += 0.05f;
 		}
 		else
-		if (!lightUp)
+		if (!m_lightUp)
 		{
 			sternLight.intensity -= 0.5f;
 			hullLight.intensity -= 0.5f;
 		}
 	}
 	
-	
-	//Warning is called before Spawning
+	/// <summary>
+    /// Warning is called before Spawning.
+	/// </summary>
 	void Warning()
 	{
-		mySource.clip = klaxonSound;
+		m_mySource.clip = klaxonSound;
 			
 		sternLight.color = Color.red;
 		hullLight.color = Color.red;
 		
-		lightUp = true;
+		m_lightUp = true;
 		
-		mySource.Play();
+		m_mySource.Play();
 		
-		warningCanPlay = true;
+		m_warningCanPlay = true;
 		sternPassengerSpawn.currentlySpawning = false;
 		hullPassengerSpawn.currentlySpawning = false;
 	}
 	
 	
-	//Spawning is called repeatedly for a bit, before returning to Warning
+	/// <summary>
+    /// Spawning is called repeatedly for a bit, before returning to Warning.
+	/// </summary>
 	void Spawning()
 	{	
 		sternLight.color = Color.green;
 		hullLight.color = Color.green;
-		lightUp = true;
+		m_lightUp = true;
 		
 		sternPassengerSpawn.currentlySpawning = true;
 		hullPassengerSpawn.currentlySpawning = true;

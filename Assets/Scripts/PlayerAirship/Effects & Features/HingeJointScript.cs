@@ -1,43 +1,61 @@
-﻿using UnityEngine;
+﻿/**
+ * File: PrisonFortressKlaxonWarning.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 12/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: Make a custom 'hinge' rotation controlled through the Airship's movement.
+ **/
+
+using UnityEngine;
 using System.Collections;
 
-public enum HingeAxis{hingeX, hingeY, hingeZ}
+public enum EHingeAxis
+{
+    hingeX, 
+    hingeY, 
+    hingeZ
+}
 
-//Make a custom 'hinge' rotation controlled through the Airship's movement.
+/// <summary>
+/// Make a custom 'hinge' rotation controlled through the Airship's movement.
+/// </summary>
 public class HingeJointScript : MonoBehaviour 
 {
-	public HingeAxis axis;
+	public EHingeAxis axis;
 
-	private float rotateAmount;
+	private float m_rotateAmount;
 	public float maxRotationDegrees;
-	private float absRotateAmount;
-	private float speed = 1.0f;
+	private float m_absRotateAmount;
+	private float m_speed = 1.0f;
 
 	public AirshipControlBehaviour airshipControlBehaviour;
-	//The hiddenValues is taken from the Airship control behaviour.
-	private float hiddenRoll;
-	private float hiddenYaw;
-	private float hiddenPitch;
+	/// <summary>
+    /// The hiddenValues is taken from the Airship control behaviour.
+	/// </summary>
+	private float m_hiddenRoll;
+	private float m_hiddenYaw;
+	private float m_hiddenPitch;
 
-	//This is a generic value. The axis is determined later
-	private float turnValue;
-
-
+	/// <summary>
+    /// This is a generic value. The axis is determined later.
+	/// </summary>
+	private float m_turnValue;
 
 	void Start () 
 	{
-		rotateAmount = 0;
+		m_rotateAmount = 0;
 		//maxRotationDegrees = 60.0f;
 	}
 
 	void FixedUpdate () 
 	{
-		// Get values from ship movement.
+		// Get values from ship movement
 		if (airshipControlBehaviour != null)
 		{
-			hiddenRoll = airshipControlBehaviour.roll;
-			hiddenYaw = airshipControlBehaviour.yaw;
-			hiddenPitch = airshipControlBehaviour.pitch;
+			m_hiddenRoll = airshipControlBehaviour.roll;
+			m_hiddenYaw = airshipControlBehaviour.yaw;
+			m_hiddenPitch = airshipControlBehaviour.pitch;
 
 		}
 		else
@@ -45,85 +63,77 @@ public class HingeJointScript : MonoBehaviour
 			Debug.Log("No Airship Script Attached");
 		}
 
-		//Run this here, so we know which axis we're working with.
-		GetAxis ();
+		// Run this here, so we know which axis we're working with
+		GetAxis();
 
-
-		if (turnValue > 0)
+		if (m_turnValue > 0)
 		{
-			rotateAmount = Mathf.Lerp(rotateAmount, -absRotateAmount, Time.deltaTime* speed);
+			m_rotateAmount = Mathf.Lerp(m_rotateAmount, -m_absRotateAmount, Time.deltaTime* m_speed);
 		}
-		else
-		if (turnValue < 0)
+		else if (m_turnValue < 0)
 		{
-			rotateAmount = Mathf.Lerp(rotateAmount, absRotateAmount, Time.deltaTime* speed);
+			m_rotateAmount = Mathf.Lerp(m_rotateAmount, m_absRotateAmount, Time.deltaTime* m_speed);
 		}
-		else
-		//Return to normal
-		if (turnValue == 0)
+		else if (Mathf.Approximately(m_turnValue, 0))
 		{
-			rotateAmount = Mathf.Lerp(rotateAmount, 0, Time.deltaTime* speed);
+            // Return to normal
+			m_rotateAmount = Mathf.Lerp(m_rotateAmount, 0, Time.deltaTime* m_speed);
 		}
 	
-
-		SetAxis ();
-
+		SetAxis();
 	}
 
-	//Checking which value we should be looking at
+	/// <summary>
+    /// Checking which value we should be looking at.
+	/// </summary>
 	void GetAxis()
 	{
-		if (axis == HingeAxis.hingeX)
+		if (axis == EHingeAxis.hingeX)
 		{
-			turnValue = hiddenPitch;
+			m_turnValue = m_hiddenPitch;
 
-			//Clamp the rotation
-			absRotateAmount = Mathf.Abs (maxRotationDegrees * hiddenPitch);
-			//This is more sophisticated since the old prototype script.
+			// Clamp the rotation
+			m_absRotateAmount = Mathf.Abs (maxRotationDegrees * m_hiddenPitch);
+			// This is more sophisticated since the old prototype script
 		}
-		else
-		if (axis == HingeAxis.hingeY)
+		else if (axis == EHingeAxis.hingeY)
 		{
-			turnValue = hiddenYaw;
+			m_turnValue = m_hiddenYaw;
 
-			//Clamp the rotation
-			absRotateAmount = Mathf.Abs (maxRotationDegrees * hiddenYaw);
+			// Clamp the rotation
+			m_absRotateAmount = Mathf.Abs (maxRotationDegrees * m_hiddenYaw);
 		}
-		else
-		if (axis == HingeAxis.hingeZ)
+		else if (axis == EHingeAxis.hingeZ)
 		{
-			turnValue = hiddenRoll;
+			m_turnValue = m_hiddenRoll;
 
-			//Clamp the rotation
-			absRotateAmount = Mathf.Abs (maxRotationDegrees * hiddenRoll);
+			// Clamp the rotation
+			m_absRotateAmount = Mathf.Abs (maxRotationDegrees * m_hiddenRoll);
 		}
 	}
 
-
-	//Update the game object rotation based on axis.
+	/// <summary>
+    /// Update the game object rotation based on axis.
+	/// </summary>
 	void SetAxis()
 	{
-
-		//Apply the rotateamount to force
-		
+		// Apply the rotateamount to force
 		float rotateX = gameObject.transform.localEulerAngles.x;
 		float rotateY = gameObject.transform.localEulerAngles.y;
 		float rotateZ = gameObject.transform.localEulerAngles.z;
 
 
-		if (axis == HingeAxis.hingeX)
+		if (axis == EHingeAxis.hingeX)
 		{
-			gameObject.transform.localRotation = Quaternion.Euler (rotateAmount,rotateY, rotateZ);
+			gameObject.transform.localRotation = Quaternion.Euler(m_rotateAmount,rotateY, rotateZ);
 		}
-		else		
-		if (axis == HingeAxis.hingeY)
+		else if (axis == EHingeAxis.hingeY)
 		{
-			gameObject.transform.localRotation = Quaternion.Euler (rotateX, rotateAmount, rotateZ);
+			gameObject.transform.localRotation = Quaternion.Euler(rotateX, m_rotateAmount, rotateZ);
 		}
-		else
-		if (axis == HingeAxis.hingeZ)
+		else if (axis == EHingeAxis.hingeZ)
 		{
-			gameObject.transform.localRotation = Quaternion.Euler (rotateX, rotateY, rotateAmount);
+			gameObject.transform.localRotation = Quaternion.Euler(rotateX, rotateY, m_rotateAmount);
 		}
 	}
 }
