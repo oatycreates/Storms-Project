@@ -203,7 +203,6 @@ public class StateManager : MonoBehaviour
 			m_dyingScript.enabled = false;
 			m_suicideScript.enabled = true;
 			
-			
 			if (colliders != null)
 			{
 				colliders.SetActive(true);
