@@ -68,7 +68,7 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 		m_rememberPassengerTimerValue = timePassengerSpawnFor;
 	}
 	
-	void Update () 
+	void Update() 
 	{	
 	 	ClampLights();
 	 	
