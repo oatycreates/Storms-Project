@@ -25,6 +25,8 @@ public enum ENumberOfPlayers
 public class ScoreManager : MonoBehaviour 
 {
 	public ENumberOfPlayers e_numberOfBases;
+	
+	public int PassengersToWin = 10;
 
 	public Text winText;
 
@@ -33,24 +35,33 @@ public class ScoreManager : MonoBehaviour
 	public PirateBaseIdentity pirateBase3;
 	public PirateBaseIdentity pirateBase4;
 
+/*
 	private int m_baseScore_1;
 	private int m_baseScore_2;
 	private int m_baseScore_3;
 	private int m_baseScore_4;
-
+*/
 	private Color m_winnerColour;
 	private int m_winnerNumber;
-
+	
+	public FadeCamWhite fadeOutScene;
 
 	void Start()
 	{
 		winText.text = " ";
 		m_winnerColour = Color.clear;
+		
+		pirateBase1.baseScore = PassengersToWin;
+		pirateBase2.baseScore = PassengersToWin;
+		pirateBase3.baseScore = PassengersToWin;
+		pirateBase4.baseScore = PassengersToWin;
 	}
 
 	void Update()
 	{
+	
 		// Lock the empty base values so that they cannot 'win'
+		/*
 		if (e_numberOfBases == ENumberOfPlayers.One)
 		{
 			m_baseScore_2 = 50;
@@ -70,42 +81,60 @@ public class ScoreManager : MonoBehaviour
 		{
 
 		}
+		*/
 
-
-		// Check to see if any base score is less than 0
-		if (pirateBase1.baseScore <= 0)
-		{
-			m_winnerColour = pirateBase1.baseColour;
-			m_winnerNumber = pirateBase1.teamNumber;
-			Win(m_winnerNumber, m_winnerColour); 
-		}
-		else if (pirateBase2.baseScore <= 0)
-		{
-			m_winnerColour = pirateBase2.baseColour;
-			m_winnerNumber = pirateBase2.teamNumber;
-			Win(m_winnerNumber, m_winnerColour); 
-		}
-		else if (pirateBase3.baseScore <= 0)
-		{
-			m_winnerColour = pirateBase3.baseColour;
-			m_winnerNumber = pirateBase3.teamNumber;
-			Win(m_winnerNumber, m_winnerColour); 
-		}
-		else if (pirateBase4.baseScore <= 0)
-		{
-			m_winnerColour = pirateBase4.baseColour;
-			m_winnerNumber = pirateBase4.teamNumber;
-			Win(m_winnerNumber, m_winnerColour); 
-		}
+		
+			// Check to see if any base score is less than /equal to 0
+			if (pirateBase1.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase1.baseColour;
+				m_winnerNumber = pirateBase1.teamNumber;
+				Win(m_winnerNumber, m_winnerColour); 
+			}
+			else 
+			if (pirateBase2.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase2.baseColour;
+				m_winnerNumber = pirateBase2.teamNumber;
+				Win(m_winnerNumber, m_winnerColour); 
+			}
+			else 
+			if (pirateBase3.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase3.baseColour;
+				m_winnerNumber = pirateBase3.teamNumber;
+				Win(m_winnerNumber, m_winnerColour); 
+			}
+			else 
+			if (pirateBase4.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase4.baseColour;
+				m_winnerNumber = pirateBase4.teamNumber;
+				Win(m_winnerNumber, m_winnerColour); 
+			}
 	}
 	
 	void Win(float a_playerNumber, Color a_colour)
-	{
+	{	
 		string winner = a_playerNumber.ToString();
 
 		winText.text = ("Player " + winner + " Wins!");
 		winText.color = m_winnerColour;
+		
+		Debug.Log("Player " + winner + " Wins!");
 
 		//fadeOut.fadeEnd = true;
+		if (fadeOutScene != null)
+		{
+			// check to see if the bool is not already true
+			if (!fadeOutScene.fadeStart || !fadeOutScene.fadeEnd)
+			{
+				fadeOutScene.fadeEnd = true;
+			}
+		}
+		else
+		{
+			Debug.Log("No Scene to Fade between. See Screen Fader Script");
+		}
 	}
 }

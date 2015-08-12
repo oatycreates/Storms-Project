@@ -24,6 +24,8 @@ public class PassengerDestroyScript : MonoBehaviour
 	void Start()
 	{
         m_scream = gameObject.GetComponent<FallingScream>();
+        
+        gameObject.transform.tag = "Passengers";
 	}
 	
 	void Update () 

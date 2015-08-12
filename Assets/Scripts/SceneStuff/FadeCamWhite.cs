@@ -16,7 +16,9 @@ public enum ENextScene
     Menu, 
     Game, 
     Credits, 
-    Splash
+    Splash,
+    LoopLevel,
+    TestScene
 }
 
 //Fade a scene camers TO or FROM white
@@ -119,6 +121,16 @@ public class FadeCamWhite : MonoBehaviour
 		if (fadeToThisScene == ENextScene.Splash)
 		{
 			m_sceneManagerScript.SplashScreen();
+		}
+		else
+		if (fadeToThisScene == ENextScene.LoopLevel)
+		{
+			m_sceneManagerScript.LoopCurrentLevel();
+		}
+		else
+		if (fadeToThisScene == ENextScene.TestScene)
+		{
+			m_sceneManagerScript.TestScene();
 		}
  	}
 }

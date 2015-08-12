@@ -857,6 +857,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 490136}
+  - 114: {fileID: 11414572}
   m_Layer: 0
   m_Name: CamPosition
   m_TagString: Untagged
@@ -3199,6 +3200,21 @@ MonoBehaviour:
   engineClip: {fileID: 8300000, guid: 7401d20c91f58fa408d81dbb7ec2f71c, type: 3}
   suicideMode: 0
   lookToTheStateManager: {fileID: 11485176}
+--- !u!114 &11414572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09fd98c6099cdf3448695368b698ddc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 11433090}
+  targetPos: {x: 0, y: -8, z: -8}
+  targetEuler: {x: 0, y: 0, z: 0}
+  speed: 2
 --- !u!114 &11421736
 MonoBehaviour:
   m_ObjectHideFlags: 1
