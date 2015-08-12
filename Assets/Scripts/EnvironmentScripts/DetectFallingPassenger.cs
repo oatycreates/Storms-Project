@@ -17,8 +17,8 @@ using UnityEngine.UI;
 public class DetectFallingPassenger : MonoBehaviour 
 {
 	public Text scoreText;
-	
-	public int peopleLeftToCatch = 50;
+	[HideInInspector]
+	public int peopleLeftToCatch = 100;
 
 	public Color textColour;
 

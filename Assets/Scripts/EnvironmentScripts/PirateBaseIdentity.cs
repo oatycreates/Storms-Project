@@ -29,6 +29,8 @@ public class PirateBaseIdentity : MonoBehaviour
 	void Start () 
 	{
 		baseColour = Color.clear;
+		
+		baseTriggerZone.peopleLeftToCatch = baseScore;	//Reverse this in the update.
 	}
 
 	void Update () 

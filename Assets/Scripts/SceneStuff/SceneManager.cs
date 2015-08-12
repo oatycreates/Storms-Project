@@ -66,4 +66,14 @@ public class SceneManager : MonoBehaviour
 	{
 		Application.LoadLevel("SplashScreen");
 	}
+	
+	public void LoopCurrentLevel()
+	{
+		Application.LoadLevel(Application.loadedLevelName);
+	}
+	
+	public void TestScene()
+	{
+		Application.LoadLevel("RoDoTestScene");
+	}
 }
