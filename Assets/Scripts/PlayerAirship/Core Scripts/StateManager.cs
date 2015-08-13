@@ -52,6 +52,7 @@ public class StateManager : MonoBehaviour
 	public GameObject hinges;
 	public GameObject rouletteHierachy;
 	public GameObject particlesEffectsHierachy;
+	public GameObject weaponsHierachy;
 	
 	/// <summary>
     /// Remember the start position and rotation in world space, so we can return here when the player has died.
@@ -121,6 +122,11 @@ public class StateManager : MonoBehaviour
 			{
 				particlesEffectsHierachy.SetActive(false);
 			}
+			
+			if (weaponsHierachy != null)
+			{
+				weaponsHierachy.SetActive(false);
+			}
 		}
 
         // Standard player airship control
@@ -155,6 +161,11 @@ public class StateManager : MonoBehaviour
 			if (particlesEffectsHierachy != null)
 			{
 				particlesEffectsHierachy.SetActive(true);
+			}
+			
+			if (weaponsHierachy != null)
+			{
+				weaponsHierachy.SetActive(true);
 			}
 		}
 
@@ -192,6 +203,11 @@ public class StateManager : MonoBehaviour
 			{
 				particlesEffectsHierachy.SetActive(true);
 			}
+			
+			if (weaponsHierachy != null)
+			{
+				weaponsHierachy.SetActive(false);
+			}
 		}
 
         // Recent addition- this is for the fireship/suicide function - the player has limited control here, needs further experimentation
@@ -226,6 +242,11 @@ public class StateManager : MonoBehaviour
 			if (particlesEffectsHierachy != null)
 			{
 				particlesEffectsHierachy.SetActive(true);
+			}
+			
+			if (weaponsHierachy != null)
+			{
+				weaponsHierachy.SetActive(false);
 			}
 		}
 		

@@ -4,6 +4,8 @@ using System.Collections;
 //Most of this script was derived from teh Unity Example for transform.rotate
 public class RotateCam : MonoBehaviour 
 {
+	private StateManager referenceStateManager;
+
 	//The rotate cam is the Center GameObject - not the Camera itself.
 	public GameObject rotateCam;
 	
@@ -30,10 +32,11 @@ public class RotateCam : MonoBehaviour
 	public float camDistanceFactor = 15.0f;
 	
 	
-	void Update () 
+	void Start()
 	{
-		
+		referenceStateManager = gameObject.GetComponent<StateManager>();
 	}
+	
 	
 	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal)
 	{
@@ -42,7 +45,10 @@ public class RotateCam : MonoBehaviour
 		
 		Quaternion target =  Quaternion.Euler(tiltAroundX, tiltAroundY, 0);
 		
-		rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
+		if (referenceStateManager.currentPlayerState == EPlayerState.Control)
+		{
+			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
+		}
 		
 		
 		
