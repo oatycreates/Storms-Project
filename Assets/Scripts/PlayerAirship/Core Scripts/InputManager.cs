@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour
 	private AirshipControlBehaviour m_standardControl;
 	private AirshipSuicideBehaviour m_fireshipControl;
 	private RouletteBehaviour 		m_rouletteControl;
+	private RotateCam 				m_rotateCam;
 
 
 	// TODO We might need to add more script references here as we progress
@@ -27,6 +28,7 @@ public class InputManager : MonoBehaviour
 		m_standardControl = gameObject.GetComponent<AirshipControlBehaviour>();
 		m_fireshipControl = gameObject.GetComponent<AirshipSuicideBehaviour>();
 		m_rouletteControl = gameObject.GetComponent<RouletteBehaviour>();
+		m_rotateCam 	 = gameObject.GetComponent<RotateCam>();
 	}
 
     /// <summary>
@@ -74,7 +76,8 @@ public class InputManager : MonoBehaviour
 
         // Send variable data to individual scripts
 		m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
-        m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
+       	m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
 		m_fireshipControl.PlayerFireshipInputs(upDown, leftRight);
+		m_rotateCam.PlayerInputs (camUpDown, camLeftRight, dPadUpDown, dPadLeftRight);
 	}	
 }
