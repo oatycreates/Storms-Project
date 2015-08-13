@@ -187,23 +187,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!1 &118580
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 436792}
-  - 114: {fileID: 11490858}
-  - 65: {fileID: 6597102}
-  m_Layer: 0
-  m_Name: PassengerTray
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
 --- !u!1 &119228
 GameObject:
   m_ObjectHideFlags: 1
@@ -762,21 +745,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &171974
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 435472}
-  m_Layer: 0
-  m_Name: TriggerZones
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
 --- !u!1 &175354
 GameObject:
   m_ObjectHideFlags: 1
@@ -1100,7 +1068,7 @@ Transform:
   m_Children:
   - {fileID: 22449018}
   m_Father: {fileID: 428446}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!4 &404274
 Transform:
   m_ObjectHideFlags: 1
@@ -1240,11 +1208,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199766}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: -400}
+  m_LocalRotation: {x: 0, y: .923879445, z: 0, w: -.382683635}
+  m_LocalPosition: {x: -50, y: 0, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 435472}
   - {fileID: 480126}
   - {fileID: 458800}
   - {fileID: 440868}
@@ -1341,31 +1308,6 @@ Transform:
   - {fileID: 468304}
   m_Father: {fileID: 488120}
   m_RootOrder: 0
---- !u!4 &435472
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 171974}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 436792}
-  m_Father: {fileID: 428446}
-  m_RootOrder: 0
---- !u!4 &436792
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 435472}
-  m_RootOrder: 0
 --- !u!4 &440868
 Transform:
   m_ObjectHideFlags: 1
@@ -1379,7 +1321,7 @@ Transform:
   - {fileID: 490136}
   - {fileID: 473368}
   m_Father: {fileID: 428446}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &442556
 Transform:
   m_ObjectHideFlags: 1
@@ -1393,7 +1335,7 @@ Transform:
   - {fileID: 483018}
   - {fileID: 428480}
   m_Father: {fileID: 428446}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!4 &444034
 Transform:
   m_ObjectHideFlags: 1
@@ -1410,7 +1352,7 @@ Transform:
   - {fileID: 485642}
   - {fileID: 479874}
   m_Father: {fileID: 428446}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!4 &444682
 Transform:
   m_ObjectHideFlags: 1
@@ -1463,7 +1405,7 @@ Transform:
   - {fileID: 431556}
   - {fileID: 408834}
   m_Father: {fileID: 428446}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &459892
 Transform:
   m_ObjectHideFlags: 1
@@ -1551,7 +1493,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156854}
   m_LocalRotation: {x: .0871557519, y: 0, z: 0, w: .99619472}
-  m_LocalPosition: {x: 0, y: 12, z: -25}
+  m_LocalPosition: {x: 0, y: 19, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 440868}
@@ -1602,7 +1544,7 @@ Transform:
   - {fileID: 430122}
   - {fileID: 489708}
   m_Father: {fileID: 428446}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &480622
 Transform:
   m_ObjectHideFlags: 1
@@ -1661,7 +1603,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 165702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 3.5}
+  m_LocalPosition: {x: 0, y: 1, z: 4}
   m_LocalScale: {x: 5, y: 4, z: 5}
   m_Children: []
   m_Father: {fileID: 444034}
@@ -1673,7 +1615,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 164872}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.528, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444034}
@@ -1706,7 +1648,7 @@ Transform:
   - {fileID: 481486}
   - {fileID: 413376}
   m_Father: {fileID: 428446}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!4 &488528
 Transform:
   m_ObjectHideFlags: 1
@@ -1751,7 +1693,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188374}
   m_LocalRotation: {x: .0871557519, y: 0, z: 0, w: .99619472}
-  m_LocalPosition: {x: 0, y: 12, z: -25}
+  m_LocalPosition: {x: -0, y: 19, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 440868}
@@ -1822,7 +1764,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 4000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2828,7 +2770,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199766}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 5
   m_Drag: 2
   m_AngularDrag: 1
   m_UseGravity: 0
@@ -2858,7 +2800,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 5, y: 3, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6524806
 BoxCollider:
@@ -3039,18 +2981,6 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &6597102
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118580}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 3, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8228554
 AudioSource:
@@ -3359,9 +3289,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adjustableMass: 20
   generalSpeed: 100
-  pitchForce: 750
-  yawForce: 1000
-  rollForce: 500
+  pitchForce: 1500
+  yawForce: 1500
+  rollForce: 1000
   pitchLimitMult: .699999988
   rollLimitMult: .800000012
   animThrottleMult: 2.5
@@ -3600,19 +3530,6 @@ MonoBehaviour:
   hinges: {fileID: 129884}
   rouletteHierachy: {fileID: 131426}
   particlesEffectsHierachy: {fileID: 104832}
---- !u!114 &11490858
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 118580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d60cf4045348d641b311de48a24e7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trayPassengerTags:
-  - Passengers
 --- !u!114 &11491444
 MonoBehaviour:
   m_ObjectHideFlags: 1
