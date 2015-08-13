@@ -36,21 +36,26 @@ public class StateManager : MonoBehaviour
 	public EPlayerState currentPlayerState;
 	
 	//References to all the different scripts
-	private RouletteBehaviour rouletteScript;
-	private AirshipControlBehaviour airshipScript;
-	private AirshipDyingBehaviour dyingScript;
-	private AirshipSuicideBehaviour suicideScript;
+	private RouletteBehaviour m_rouletteScript;
+	private AirshipControlBehaviour m_airshipScript;
+	private AirshipDyingBehaviour m_dyingScript;
+	private AirshipSuicideBehaviour m_suicideScript;
 	
-	private InputManager inputManager;	//Good to make sure the airship HAS an input manager.
+    /// <summary>
+    /// Good to make sure the airship HAS an input manager.
+    /// </summary>
+	private InputManager m_inputManager;
 	
-	//References to the different components on the Airship
+	// References to the different components on the airship
 	public GameObject colliders;
 	public GameObject meshes;
 	public GameObject hinges;
 	public GameObject rouletteHierachy;
 	public GameObject particlesEffectsHierachy;
 	
-	//Remember the start position and rotation in world space, so we can return here when the player has died.
+	/// <summary>
+    /// Remember the start position and rotation in world space, so we can return here when the player has died.
+	/// </summary>
 	private Vector3 m_worldStartPos;
 	private Quaternion m_worldStartRotation;
 	
@@ -59,12 +64,12 @@ public class StateManager : MonoBehaviour
 	{
 		currentPlayerState = EPlayerState.Roulette;
 		
-		rouletteScript = gameObject.GetComponent<RouletteBehaviour>();
-		airshipScript = gameObject.GetComponent<AirshipControlBehaviour>();
-		dyingScript = gameObject.GetComponent<AirshipDyingBehaviour>();
-		suicideScript = gameObject.GetComponent<AirshipSuicideBehaviour>();
+		m_rouletteScript = gameObject.GetComponent<RouletteBehaviour>();
+		m_airshipScript = gameObject.GetComponent<AirshipControlBehaviour>();
+		m_dyingScript = gameObject.GetComponent<AirshipDyingBehaviour>();
+		m_suicideScript = gameObject.GetComponent<AirshipSuicideBehaviour>();
 		
-		inputManager = gameObject.GetComponent<InputManager>();
+		m_inputManager = gameObject.GetComponent<InputManager>();
 		
 		// World position & rotation
 		m_worldStartPos = gameObject.transform.position;
@@ -80,16 +85,16 @@ public class StateManager : MonoBehaviour
 			DevHacks();
 		}
 
-       // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
+        // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
         if (currentPlayerState == EPlayerState.Roulette)
 		{
 			// Roulette control
-			rouletteScript.enabled = true;
+			m_rouletteScript.enabled = true;
 			// Reset position
-			rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
-			airshipScript.enabled = false;
-			dyingScript.enabled = false;
-			suicideScript.enabled = false;
+			m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+			m_airshipScript.enabled = false;
+			m_dyingScript.enabled = false;
+			m_suicideScript.enabled = false;
 			
 			// We don't need to see the airship during the roulette wheel
 			if (colliders != null)
@@ -122,10 +127,10 @@ public class StateManager : MonoBehaviour
 		if (currentPlayerState == EPlayerState.Control)
 		{
 			// Standard Physics Control
-			rouletteScript.enabled = false;
-			airshipScript.enabled = true;
-			dyingScript.enabled = false;
-			suicideScript.enabled = false;
+			m_rouletteScript.enabled = false;
+			m_airshipScript.enabled = true;
+			m_dyingScript.enabled = false;
+			m_suicideScript.enabled = false;
 			
 			if (colliders != null)
 			{
@@ -157,10 +162,10 @@ public class StateManager : MonoBehaviour
 		if (currentPlayerState == EPlayerState.Dying)
 		{
 			// No Control, gravity makes airship fall
-			rouletteScript.enabled = false;
-			airshipScript.enabled = false;
-			dyingScript.enabled = true;
-			suicideScript.enabled = false;
+			m_rouletteScript.enabled = false;
+			m_airshipScript.enabled = false;
+			m_dyingScript.enabled = true;
+			m_suicideScript.enabled = false;
 			
 			
 			if (colliders != null)
@@ -193,11 +198,10 @@ public class StateManager : MonoBehaviour
 		if (currentPlayerState == EPlayerState.Suicide)
 		{
 			// Airship behaves like a rocket
-			rouletteScript.enabled = false;
-			airshipScript.enabled = false;
-			dyingScript.enabled = false;
-			suicideScript.enabled = true;
-			
+			m_rouletteScript.enabled = false;
+			m_airshipScript.enabled = false;
+			m_dyingScript.enabled = false;
+			m_suicideScript.enabled = true;
 			
 			if (colliders != null)
 			{
