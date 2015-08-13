@@ -37,7 +37,8 @@ ModelImporter:
     4300006: trapdoor_back_
     4300008: trapdoor_bot_R
     4300010: trapdoor_bot_L
-    7400000: Take 001
+    7400000: Fortress_Open
+    7400002: Fortress_Close
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -58,7 +59,87 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Fortress_Open
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polySurface152
+        weight: 1
+      - path: Propeller_back_L
+        weight: 1
+      - path: Propeller_front_L
+        weight: 1
+      - path: trapdoor_back_
+        weight: 1
+      - path: trapdoor_bot_L
+        weight: 1
+      - path: trapdoor_bot_R
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Fortress_Close
+      takeName: Take 001
+      firstFrame: 30
+      lastFrame: 67
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polySurface152
+        weight: 1
+      - path: Propeller_back_L
+        weight: 1
+      - path: Propeller_front_L
+        weight: 1
+      - path: trapdoor_back_
+        weight: 1
+      - path: trapdoor_bot_L
+        weight: 1
+      - path: trapdoor_bot_R
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

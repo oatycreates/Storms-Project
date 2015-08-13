@@ -18,6 +18,8 @@ using System.Collections.Generic;
 /// </summary>
 public class SpawnPassengers : MonoBehaviour
 {
+	public float initialPassengerForce = 10.0f;
+
     /// <summary>
     /// To avoid memory spikes.
     /// </summary>
@@ -159,7 +161,7 @@ public class SpawnPassengers : MonoBehaviour
                 passengerRb.angularVelocity = Vector3.zero;
 
                 // Add initial passenger velocity here!	Jump!
-                passengerRb.AddForce(relativeSpace * 10.0f * passengerRb.mass, ForceMode.Impulse);
+                passengerRb.AddForce(relativeSpace * initialPassengerForce * passengerRb.mass, ForceMode.Impulse);
                 
                 // Don't forget this!
 				break;
