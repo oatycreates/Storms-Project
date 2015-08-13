@@ -62,7 +62,7 @@ ModelImporter:
     4300016: mast
     4300018: cannons
     4300020: Ship_hull
-    7400000: Take 001
+    7400000: Propeller
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -83,7 +83,57 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Propeller
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back_rail
+        weight: 1
+      - path: balloon_left
+        weight: 1
+      - path: balloon_right
+        weight: 1
+      - path: cannons
+        weight: 1
+      - path: front_balloon
+        weight: 1
+      - path: mast
+        weight: 1
+      - path: rotor
+        weight: 1
+      - path: rudder
+        weight: 1
+      - path: Sail
+        weight: 1
+      - path: Ship_hull
+        weight: 1
+      - path: steering_wheel
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

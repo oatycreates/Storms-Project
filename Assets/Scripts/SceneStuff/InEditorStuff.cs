@@ -20,6 +20,7 @@ public class InEditorStuff : MonoBehaviour
 {
 
 	public Renderer myRenderer;
+	public Renderer myOtherRenderer;
 	private Color m_playerColor = Color.magenta;
 	
 	public GameObject airshipTopOfHierachy;
@@ -69,7 +70,18 @@ public class InEditorStuff : MonoBehaviour
 			{
 				m_playerColor = Color.yellow;
 			}
+			
+			//In case of a second render object
+			if (myOtherRenderer != null)
+			{
+				if (myOtherRenderer.enabled == true)
+				{
+					myOtherRenderer.material.color = m_playerColor;
+				}
+			}
 		}
+		
+		
 		
 		// Explain game states
 		m_canvasText.text = ("State: " + (airshipTopOfHierachy.GetComponent<StateManager>().currentPlayerState));
