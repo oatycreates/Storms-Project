@@ -31,18 +31,23 @@ public class MasterCamera : MonoBehaviour
 	public Camera cam3;
 	public Camera cam4;
 	
-
-	void Update () 
+	void Start()
 	{
 		if (currentCamera == ECamerasInScene.One)
 		{
 			cam1.enabled = true;
 			if (cam2 != null)
-			cam2.enabled = false;
+            {
+                cam2.enabled = false;
+            }
 			if (cam3 != null)
-			cam3.enabled = false;
+            {
+                cam3.enabled = false;
+            }
 			if (cam4 != null)
-			cam4.enabled = false;
+            {
+                cam4.enabled = false;
+            }
 			
 			cam1.rect = new Rect(0, 0, 1, 1);
 		}	
@@ -52,9 +57,13 @@ public class MasterCamera : MonoBehaviour
 			cam1.enabled = true;
 			cam2.enabled = true;
 			if (cam3 != null)
-			cam3.enabled = false;
+            {
+                cam3.enabled = false;
+            }
 			if (cam4 != null)
-			cam4.enabled = false;
+            {
+                cam4.enabled = false;
+            }
 
             // One on top
 			cam1.rect = new Rect(0f, 0.5f, 1f, 0.5f);
@@ -68,7 +77,9 @@ public class MasterCamera : MonoBehaviour
 			cam2.enabled = true;
 			cam3.enabled = true;
 			if (cam4 != null)
-			cam4.enabled = false;
+            {
+                cam4.enabled = false;
+            }
 
             // Cam two top right
 			cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
@@ -92,4 +103,8 @@ public class MasterCamera : MonoBehaviour
 		}	
 	}
 	
+    void Update()
+    {
+
+    }
 }
