@@ -21,11 +21,12 @@ public enum ENextScene
     TestScene
 }
 
-//Fade a scene camers TO or FROM white
+/// <summary>
+/// Fade a scene camers TO or FROM white
+/// </summary>
 public class FadeCamWhite : MonoBehaviour 
 {
-// Most of this was inspired by the Unity Example Tutorials
-
+    // Most of this was inspired by the Unity Example Tutorials
 	public bool fadeStart = true;
 	public bool fadeEnd = false;
 	

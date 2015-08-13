@@ -12,7 +12,7 @@ using System.Collections;
 
 /// <summary>
 /// This script manages everything in the 'Roulette' / 'Lucky Dip' state. This only TRIGGERS the Roulette Spin. 
-/// See Script: "RouletteSpinWheel" under Effects Assets for roulette functions.
+/// See Script: "RouletteSpinWheel" under Effects & Features for roulette functions.
 /// The roulette state DOESN'T naturally 'Time-Out'. Maybe we should include this?
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]

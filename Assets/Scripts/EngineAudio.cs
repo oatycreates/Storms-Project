@@ -9,8 +9,9 @@
 
 using UnityEngine;
 using System.Collections;
+
 /// <summary>
-/// This script controls the engine volume of the Airship.
+/// This script controls the engine volume of the airship.
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class EngineAudio : MonoBehaviour 

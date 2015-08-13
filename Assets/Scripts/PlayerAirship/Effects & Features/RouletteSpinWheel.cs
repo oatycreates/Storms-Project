@@ -13,7 +13,7 @@ using System.Collections;
 
 /// <summary>
 /// This script manages the 'Spinning Wheel' effect on the Roulette Wheel.
-/// Inputs are passed in from Input Manager script via the Roulette Behaviour State script.
+/// Inputs are passed in from InputManager script via the Roulette Behaviour State script.
 /// </summary>
 public class RouletteSpinWheel : MonoBehaviour
 {

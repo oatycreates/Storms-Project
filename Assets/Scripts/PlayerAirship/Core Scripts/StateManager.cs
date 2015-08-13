@@ -4,7 +4,7 @@
  * Maintainer: Patrick Ferguson
  * Created: 6/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: Gives the player something to do when they die. A catch-up mechanic ala Super Mario Kart.
+ * Description: This script organises all the different 'states' the player can be in. If we need to add more states, make sure to do them here.
  **/
 
 using UnityEngine;
@@ -23,7 +23,7 @@ public enum EPlayerState
 
 /// <summary>
 /// This script organises all the different 'States' the player can be in. If we need to add more States, make sure to do them here.
-/// The State Manager will automatically add these 6 scripts - they are Vital to how the airship works.
+/// The State Manager will automatically add these 6 scripts - they are vital to how the airship works.
 /// </summary>
 [RequireComponent(typeof(RouletteBehaviour))]
 [RequireComponent(typeof(AirshipControlBehaviour))]

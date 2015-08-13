@@ -18,7 +18,7 @@ public enum EHingeAxis
 }
 
 /// <summary>
-/// Make a custom 'hinge' rotation controlled through the Airship's movement.
+/// Make a custom 'hinge' rotation controlled through the airship's movement.
 /// </summary>
 public class HingeJointScript : MonoBehaviour 
 {

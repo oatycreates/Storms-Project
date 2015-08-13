@@ -11,8 +11,8 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// Basic lerp follow airship. Don't change the cam height/width/ pixel position here - do that in the master cam controller.
-/// However, we can tell the camera where to go and what positiont to take here.
+/// Basic lerp follow airship. Don't change the cam height/width/pixel position here - do that in the master cam controller.
+/// However, we can tell the camera where to go and what position to take here.
 /// </summary>
 public class AirshipCamBehaviour : MonoBehaviour
 {

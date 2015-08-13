@@ -4,14 +4,14 @@
  * Maintainer: Patrick Ferguson
  * Created: 12/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: This script keeps track of the Pirate Base and Identity - checks Current Score and Tags.
+ * Description: This script keeps track of the pirate base and identity - checks current score and tags.
  **/
 
 using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This script keeps track of the Pirate Base and Identity - checks Current Score and Tags.
+/// This script keeps track of the pirate base and identity - checks current score and tags.
 /// </summary>
 public class PirateBaseIdentity : MonoBehaviour 
 {
