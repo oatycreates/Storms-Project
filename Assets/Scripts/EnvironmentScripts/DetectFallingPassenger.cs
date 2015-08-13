@@ -4,7 +4,7 @@
  * Maintainer: Patrick Ferguson
  * Created: 12/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: This script detects falling passenger pirates that enter the triggerzone. It deactivates the passengers and adds to player score(by subtracting from regular score).
+ * Description: This script detects falling passenger pirates that enter the triggerzone. It deactivates the passengers and adds to player score (by subtracting from regular score).
  **/
 
 using UnityEngine;
@@ -12,7 +12,7 @@ using System.Collections;
 using UnityEngine.UI;
 	
 /// <summary>
-/// This script detects falling passenger pirates that enter the triggerzone. It deactivates the passengers and adds to player score(by subtracting from regular score).
+/// This script detects falling passenger pirates that enter the triggerzone. It deactivates the passengers and adds to player score (by subtracting from regular score).
 /// </summary>
 public class DetectFallingPassenger : MonoBehaviour 
 {

@@ -41,8 +41,19 @@ public class SpawnPassengers : MonoBehaviour
 	private Ray m_myRay;
 	private RaycastHit m_hit;
 
+    // Cached variables
+    private GameObject prisonerHolder = null;
+
 	void Start () 
 	{
+        prisonerHolder = GameObject.FindGameObjectWithTag("PrisonerHolder");
+        if (prisonerHolder == null)
+        {
+            prisonerHolder = new GameObject();
+            prisonerHolder.name = "PrisonerHolder";
+            prisonerHolder.tag = "PrisonerHolder";
+        }
+
 		passengers = new List<GameObject> ();
 
 		for (int i = 0; i < pooledAmount; i++)
@@ -63,9 +74,12 @@ public class SpawnPassengers : MonoBehaviour
 			singlePassenger.AddComponent<AudioSource>();	
 			singlePassenger.AddComponent<FallingScream>();
 */
+            // Hide under a holder prefab to keep the scene tidy
+            singlePassenger.transform.parent = prisonerHolder.transform;
 
 			singlePassenger.GetComponent<Rigidbody>().useGravity = true;
 			singlePassenger.SetActive(false);
+
 			// Add to the passengers list
 			passengers.Add(singlePassenger);
 
