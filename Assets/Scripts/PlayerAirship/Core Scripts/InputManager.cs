@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour
 
         // Send variable data to individual scripts
 		m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
-        m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, faceUp, faceDown, faceLeft, faceRight);
+        m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
 		m_fireshipControl.PlayerFireshipInputs(upDown, leftRight);
 	}	
 }

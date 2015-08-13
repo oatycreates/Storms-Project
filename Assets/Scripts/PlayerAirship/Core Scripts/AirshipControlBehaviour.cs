@@ -129,12 +129,32 @@ public class AirshipControlBehaviour : MonoBehaviour
         float a_camVertical, 
         float a_camHorizontal, 
         float a_triggers, 
+        bool a_bumperLeft,
+        bool a_bumperRight,
         bool a_faceUp,      // Y - Open hatch
         bool a_faceDown,    // A - Fire cannon forwards
         bool a_faceLeft,    // X - Fire broadside left
         bool a_faceRight)   // B - Fire broadside right
 	{
-        roll = 0.25f * a_Horizontal + a_camHorizontal;
+	
+       
+        
+        //Use this to convert buttonpresses to axis input;
+        float rollFloat = 0;
+        
+        if (a_faceLeft)
+        {
+        	rollFloat = -1;
+        }
+        else
+        if (a_faceRight)
+        {
+        	rollFloat = 1;
+        }
+        
+        roll = 0.25f * a_Horizontal + rollFloat;
+        
+		//roll = 0.25f * a_Horizontal + a_camHorizontal;
 		pitch = a_Vertical;
 		yaw = a_Horizontal;
 		throttle = a_triggers;
