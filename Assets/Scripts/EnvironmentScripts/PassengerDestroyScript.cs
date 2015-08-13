@@ -4,14 +4,14 @@
  * Maintainer: Patrick Ferguson
  * Created: 6/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: Kills players beneath kill-Y.
+ * Description: This script deactivates the pirate passengers as soon as they go below a certain height.
  **/
 
 using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This script deactivates the Pirate Passengers as soon as they go below a certain height. The name of this script is a misnomer.
+/// This script deactivates the pirate passengers as soon as they go below a certain height.
 /// </summary>
 public class PassengerDestroyScript : MonoBehaviour
 {
