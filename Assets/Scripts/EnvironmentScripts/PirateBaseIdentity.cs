@@ -69,7 +69,6 @@ public class PirateBaseIdentity : MonoBehaviour
 
 		// Set the score for the ScoreManager script
         baseScore = baseTriggerZone.peopleLeftToCatch;
-        Debug.Log(baseScore);
 	}
 
     public void ResetPirateBase(int a_baseScore)
