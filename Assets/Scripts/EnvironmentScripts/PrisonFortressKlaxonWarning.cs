@@ -4,7 +4,7 @@
  * Maintainer: Patrick Ferguson
  * Created: 12/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: This script makes a Klaxon sound as a warning, before the Fortress jettisions Prisioners.
+ * Description: This script makes a klaxon sound as a warning, before the fortress jettisons prisoners.
  **/
 
 using UnityEngine;
@@ -21,7 +21,7 @@ public enum EFortressStates
 }
 
 /// <summary>
-/// This script makes a Klaxon sound as a warning, before the Fortress jettisions Prisioners.
+/// This script makes a klaxon sound as a warning, before the fortress jettisons prisoners.
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class PrisonFortressKlaxonWarning : MonoBehaviour 

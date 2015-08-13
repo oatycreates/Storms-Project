@@ -11,7 +11,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This is the basic airship control. In time this script will probably be changed a lot.
+/// This is the basic airship control. It manages pitch, yaw, and roll. Syncs up to ship animations. In time this script will probably be changed a lot.
 /// Many of the movement features here were expanded upon and derived from the Unity Standard Vehicle Assets - Plane Controller.
 /// Unlike the old Storms Project, this game moves Non-Kinematic Rigidbodies through Physics (unlike Kinematic Rigidbody via direct control).
 /// </summary>
