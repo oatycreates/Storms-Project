@@ -165,9 +165,11 @@ public class AirshipControlBehaviour : MonoBehaviour
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
 		ClampInputs();
 
+		/*
         // Open/close the hatches
         m_anim.SetBool(m_animHatchOpen, a_faceUp);
         m_anim.SetBool(m_animTrapdoorOpen, a_faceUp);
+        */
 
         // Spin the propeller
         float origThrottleBounded = throttle * 0.5f + 0.5f; // [-1, 1] to [0, 1]

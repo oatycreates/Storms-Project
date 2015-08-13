@@ -23,6 +23,10 @@ public class CannonFire : MonoBehaviour
 	public GameObject cannonBallPrefab;
 	
 	public float cannonBallForce = 50.0f;
+	
+	public GameObject lookAtTarget;
+	
+	private Vector3 relativeForward;
 
 
 	void Start () 
@@ -46,11 +50,14 @@ public class CannonFire : MonoBehaviour
 	
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			Fire();
-		}
+		gameObject.transform.LookAt(lookAtTarget.transform.position);
+		
+		relativeForward = gameObject.transform.TransformDirection(Vector3.forward);
+		
+		Ray ray = new Ray(gameObject.transform.position, relativeForward);
+		Debug.DrawRay(ray.origin, ray.direction * 5, Color.red);
 	}
+	
 	
 	public void Fire()
 	{

@@ -31,14 +31,20 @@ public class RotateCam : MonoBehaviour
 	private float zPos;
 	public float camDistanceFactor = 15.0f;
 	
+	//Link to Cannons
+	public GameObject[] cannons;
+	
+	private enum CannonStates {Front, Port, Starboard};
+	
 	
 	void Start()
 	{
 		referenceStateManager = gameObject.GetComponent<StateManager>();
 	}
+
 	
 	
-	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal)
+	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal, bool fireCannon)
 	{
 		tiltAroundY = -camHorizontal * horizontalTiltAngle * deadZoneFactor;
 		tiltAroundX = -camVertical * verticalTiltAngle * deadZoneFactor;
@@ -49,9 +55,7 @@ public class RotateCam : MonoBehaviour
 		{
 			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
 		}
-		
-		
-		
+
 		
 		//Move lookTarget around.
 		float internalCamYRotation = rotateCam.transform.localEulerAngles.y;
@@ -60,18 +64,25 @@ public class RotateCam : MonoBehaviour
 		
 		if (internalCamYRotation <= 315 && internalCamYRotation > 225)
 		{
-			print ("Left");
+			//print ("Left");
 			//Move the target
 			yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth/2);
 			
 			//Move the cam
 			xPos = Mathf.Lerp(xPos, camPositionFactor, Time.deltaTime * smooth/2);
 			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
+			
+			//Allow CannonFire
+			if (fireCannon)
+			{
+				Cannons(CannonStates.Port);
+			}
+			
 		}
 		else
 		if (internalCamYRotation <= 135 && internalCamYRotation > 45)
 		{
-			print ("Right");
+			//print ("Right");
 			
 			//Move the target
 			yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth/2);
@@ -80,11 +91,18 @@ public class RotateCam : MonoBehaviour
 			//Move the cam
 			xPos = Mathf.Lerp(xPos, -camPositionFactor, Time.deltaTime * smooth/2);
 			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
+			
+			//Allow CannonFire
+			if (fireCannon)
+			{
+				Cannons(CannonStates.Starboard);
+			}
+		
 		}
 		else
 		if ( internalCamYRotation <= 225 && internalCamYRotation > 135)
 		{
-		 	print ("Back");
+		 	//print ("Back");
 			//Move the target
 		 	yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth/2);
 		 	
@@ -95,7 +113,7 @@ public class RotateCam : MonoBehaviour
 		}
 		else
 		{
-			print ("Forward");
+			//print ("Forward");
 			//Move the target
 			yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth/2);
 			
@@ -103,23 +121,57 @@ public class RotateCam : MonoBehaviour
 			//Move the cam
 			xPos = Mathf.Lerp(xPos, 0, Time.deltaTime * smooth/2);
 			zPos = Mathf.Lerp(zPos, 20, Time.deltaTime * smooth/2);
+			
+			//Allow CannonFire
+			if (fireCannon)
+			{
+				Cannons(CannonStates.Front);
+			}
+			
 		}
 		
 		lookyHereTarget.transform.localPosition = new Vector3(lookyHereTarget.transform.localPosition.x, yPos, lookyHereTarget.transform.localPosition.z);
 		camHereTarget.transform.localPosition = new Vector3(xPos, camHereTarget.transform.localPosition.y, -zPos);
-		
-		
-		//For test!
-		if (Application.isEditor)
-		{
-			InEditor(dPadHorizontal, dPadVertical);
-		}
+
 	}
 	
-	void InEditor(float x_axis, float y_axis)
+	void Cannons(CannonStates angle)
 	{
-		//Control Up/Down
+		CannonFire script; 
+	
+		for (int i = 0; i < cannons.Length; i++)
+		{
+			script = cannons[i].GetComponent<CannonFire>();
+			
 		
-		lookyHereTarget.transform.localPosition = new Vector3(lookyHereTarget.transform.localPosition.x, lookyHereTarget.transform.localPosition.y + x_axis, lookyHereTarget.transform.localPosition.z + y_axis);
+			if (angle == CannonStates.Front)
+			{
+				print ("Fore");
+				if(script.cannon == ECannonPos.Forward)
+				{
+					script.Fire();
+				}
+			}
+			else
+			if (angle == CannonStates.Port)
+			{
+				print ("Port");
+				if(script.cannon == ECannonPos.Port)
+				{
+					script.Fire();
+				}
+			}
+			else
+			if (angle == CannonStates.Starboard)
+			{
+				print ("Starboard");
+				if(script.cannon == ECannonPos.Starboard)
+				{
+					script.Fire();	
+				}
+			}
+			
+		}
 	}
+
 }

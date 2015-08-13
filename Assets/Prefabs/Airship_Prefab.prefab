@@ -3405,7 +3405,8 @@ MonoBehaviour:
   cannon: 2
   pooledAmount: 5
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
-  cannonBallForce: 50
+  cannonBallForce: 100
+  lookAtTarget: {fileID: 146936}
 --- !u!114 &11404896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3467,7 +3468,8 @@ MonoBehaviour:
   cannon: 1
   pooledAmount: 5
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
-  cannonBallForce: 50
+  cannonBallForce: 100
+  lookAtTarget: {fileID: 146936}
 --- !u!114 &11413364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3534,6 +3536,14 @@ MonoBehaviour:
   camHereTarget: {fileID: 188948}
   camPositionFactor: 5
   camDistanceFactor: 15
+  cannons:
+  - {fileID: 152726}
+  - {fileID: 139756}
+  - {fileID: 191736}
+  - {fileID: 141670}
+  - {fileID: 189026}
+  - {fileID: 142384}
+  - {fileID: 115276}
 --- !u!114 &11421512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3588,7 +3598,8 @@ MonoBehaviour:
   cannon: 0
   pooledAmount: 5
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
-  cannonBallForce: 50
+  cannonBallForce: 100
+  lookAtTarget: {fileID: 146936}
 --- !u!114 &11428686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3604,7 +3615,8 @@ MonoBehaviour:
   cannon: 1
   pooledAmount: 5
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
-  cannonBallForce: 50
+  cannonBallForce: 100
+  lookAtTarget: {fileID: 146936}
 --- !u!114 &11428984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3702,7 +3714,8 @@ MonoBehaviour:
   cannon: 1
   pooledAmount: 5
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
-  cannonBallForce: 50
+  cannonBallForce: 100
+  lookAtTarget: {fileID: 146936}
 --- !u!114 &11444942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3862,7 +3875,8 @@ MonoBehaviour:
   cannon: 2
   pooledAmount: 5
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
-  cannonBallForce: 50
+  cannonBallForce: 100
+  lookAtTarget: {fileID: 146936}
 --- !u!114 &11465054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3922,7 +3936,8 @@ MonoBehaviour:
   cannon: 2
   pooledAmount: 5
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
-  cannonBallForce: 50
+  cannonBallForce: 100
+  lookAtTarget: {fileID: 146936}
 --- !u!124 &12406868
 Behaviour:
   m_ObjectHideFlags: 1
