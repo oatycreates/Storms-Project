@@ -1,5 +1,5 @@
 ﻿/**
- * File: AirshipCamBehaviour.cs
+ * File: MasterCamera.cs
  * Author: Rowan Donaldson
  * Maintainer: Patrick Ferguson
  * Created: 6/08/2015

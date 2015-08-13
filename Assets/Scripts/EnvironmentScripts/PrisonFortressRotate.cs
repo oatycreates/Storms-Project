@@ -11,7 +11,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This script rotates the Prison Fortress ship in local space.
+/// This script rotates the prison fortress ship in local space.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(AudioSource))]

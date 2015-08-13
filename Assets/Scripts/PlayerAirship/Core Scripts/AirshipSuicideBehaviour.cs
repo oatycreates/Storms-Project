@@ -11,7 +11,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This ship determines how the ship moves once the player has decided to "commit suicide" and play as a kamikazi 'fire ship'.
+/// This ship determines how the ship moves once the player has decided to "commit suicide" and play as a kamikaze 'fire ship'.
 /// Compared to regular movement, this time the airship controls like a missile - the player has less control.
 /// </summary>
 public class AirshipSuicideBehaviour : MonoBehaviour

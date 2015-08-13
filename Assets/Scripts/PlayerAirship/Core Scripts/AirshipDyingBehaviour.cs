@@ -11,7 +11,8 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// A simple script that sets the behaviour for the falling airship state. 
+/// A simple script that sets the behaviour for the falling airship state.
+/// The player's ship will free-fall and the camera will stay in place and look at the ship.
 /// </summary>
 public class AirshipDyingBehaviour : MonoBehaviour
 {
