@@ -34,6 +34,11 @@ public class CannonBallBehaviour : MonoBehaviour
     /// </summary>
     private bool m_disabledCollider = false;
 
+    /// <summary>
+    /// Time the cannon-ball last self-triggered.
+    /// </summary>
+    private float m_lastSelfTriggerTime = 0.0f;
+
 	void OnEnable()
 	{
 		m_timer = 5.0f;
@@ -45,10 +50,10 @@ public class CannonBallBehaviour : MonoBehaviour
     }
 	
 	void Update()
-	{	
+    {
 		m_timer -= Time.deltaTime;
 		
-		if (m_timer < 0)
+		if (m_timer <= 0)
 		{
 			gameObject.SetActive(false);
 		}
@@ -56,7 +61,15 @@ public class CannonBallBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
+        m_lastSelfTriggerTime -= Time.deltaTime;
+        if (m_disabledCollider && m_lastSelfTriggerTime <= 0)
+        {
+            // Re-enable the collider
+            cannonBallCollider.enabled = true;
 
+            // Reset collider disable status
+            m_disabledCollider = false;
+        }
     }
 
     void OnTriggerEnter(Collider a_other)
@@ -64,9 +77,10 @@ public class CannonBallBehaviour : MonoBehaviour
         // Disable collider to prevent self-collision
         if (gameObject.CompareTag(a_other.tag))
         {
-            Debug.Log("BLAH");
             cannonBallCollider.enabled = false;
             m_disabledCollider = true;
+
+            m_lastSelfTriggerTime = 0.25f;
         }
     }
 
@@ -75,22 +89,11 @@ public class CannonBallBehaviour : MonoBehaviour
         // Disable collider to prevent self-collision
         if (gameObject.CompareTag(a_other.tag))
         {
-            Debug.Log("BLAHHH");
             cannonBallCollider.enabled = false;
             m_disabledCollider = true;
-        }
-    }
 
-    void OnTriggerLeave(Collider a_other)
-    {
-        if (m_disabledCollider)
-        {
-            // Re-enable the collider
-            cannonBallCollider.enabled = true;
+            m_lastSelfTriggerTime = 0.25f;
         }
-
-        // Reset collider disable status
-        m_disabledCollider = false;
     }
 
 	/*
