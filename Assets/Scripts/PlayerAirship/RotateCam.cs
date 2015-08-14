@@ -33,15 +33,16 @@ public class RotateCam : MonoBehaviour
 	
 	//Link to Cannons
 	public GameObject[] cannons;
-	
+
+
 	
 	void Start()
 	{
 		referenceStateManager = gameObject.GetComponent<StateManager>();
-	}
-	
 
-	
+	}
+
+
 	
 	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal, bool leftBumper, bool rightBumper)
 	{
@@ -52,8 +53,11 @@ public class RotateCam : MonoBehaviour
 		
 		if (referenceStateManager.currentPlayerState == EPlayerState.Control)
 		{
+
 			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
 		}
+
+
 
 		
 		//Move lookTarget around.
