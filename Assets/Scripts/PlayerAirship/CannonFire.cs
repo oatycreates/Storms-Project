@@ -68,8 +68,6 @@ public class CannonFire : MonoBehaviour
 		Vector3 relativeSpace;
 		Rigidbody rigidBall;
 
-        Debug.Log(cannonBalls.Count);
-
 		for (int i = 0; i < cannonBalls.Count; i++)
 		{
 			// Find only inactive cannonballs
