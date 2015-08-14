@@ -49,27 +49,18 @@ public class AirshipSuicideBehaviour : MonoBehaviour
     // Cached variables
     private Rigidbody m_myRigid;
     private Animator m_anim;
-	
+
 	void Awake()
 	{
         m_myRigid = gameObject.GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
 	}
-	
-	void Start() 
-	{
-		
-	}
 
-    void OnEnable()
-    {
-
-    }
-	
 	void Update()
 	{
 		// Set cam stuff
 		airshipMainCam.camFollowPlayer = true;
+		//airshipMainCam.SuicideCam ();
 	
 		// Turn on particles
 		fireShipParticles.SetActive(true);
