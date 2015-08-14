@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 404286}
   - 33: {fileID: 3349538}
   - 135: {fileID: 13540152}
+  - 65: {fileID: 6529228}
   - 23: {fileID: 2300056}
   - 96: {fileID: 9678130}
   - 54: {fileID: 5441638}
@@ -80,6 +81,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6529228
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8205314
 AudioSource:
   m_ObjectHideFlags: 1
@@ -235,6 +248,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Volume
       value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

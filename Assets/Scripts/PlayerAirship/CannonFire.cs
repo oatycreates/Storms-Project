@@ -28,14 +28,18 @@ public class CannonFire : MonoBehaviour
 	
 	private Vector3 relativeForward;
 
+    // Cached variables
+    private Rigidbody m_shipRB;
 
 	void Start () 
 	{
+        m_shipRB = ParentAirship.GetComponent<Rigidbody>();
+
 		cannonBalls = new List<GameObject>();
 		
 		for (int i = 0; i < pooledAmount; i++)
 		{
-			//Pooled object details
+			// Pooled object details
 			GameObject singleBall = Instantiate(cannonBallPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
 			
 			singleBall.tag = ParentAirship.tag;
@@ -78,7 +82,11 @@ public class CannonFire : MonoBehaviour
 				relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
 				
 				rigidBall = cannonBalls[i].GetComponent<Rigidbody>();
-				
+
+                // Inherit the parent's velocity
+                rigidBall.velocity = m_shipRB.velocity;
+
+                // Fire off the cannonball
 				rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
 				
 				collider = cannonBalls[i].GetComponent<SphereCollider>();
