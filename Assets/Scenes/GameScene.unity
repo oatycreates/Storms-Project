@@ -2755,9 +2755,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 266880470}
+  - 114: {fileID: 266880471}
   m_Layer: 0
   m_Name: Player4Stuff
-  m_TagString: Untagged
+  m_TagString: Player4_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2776,6 +2777,17 @@ Transform:
   - {fileID: 360473020}
   m_Father: {fileID: 0}
   m_RootOrder: 7
+--- !u!114 &266880471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 266880469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 636c3adbacec14e4fbe5fea9e4b1c479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &281056033
 GameObject:
   m_ObjectHideFlags: 0
@@ -9666,9 +9678,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 997567060}
+  - 114: {fileID: 997567061}
   m_Layer: 0
   m_Name: Player1Stuff
-  m_TagString: Untagged
+  m_TagString: Player1_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9687,6 +9700,17 @@ Transform:
   - {fileID: 510630075}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &997567061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 997567059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 636c3adbacec14e4fbe5fea9e4b1c479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1005170776
 GameObject:
   m_ObjectHideFlags: 0
@@ -10178,9 +10202,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1058018058}
+  - 114: {fileID: 1058018059}
   m_Layer: 0
   m_Name: Player2Stuff
-  m_TagString: Untagged
+  m_TagString: Player2_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10199,6 +10224,17 @@ Transform:
   - {fileID: 124233515}
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &1058018059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1058018057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 636c3adbacec14e4fbe5fea9e4b1c479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1058958104 stripped
 Transform:
   m_PrefabParentObject: {fileID: 426350, guid: 790d7dd9dbdfd334d86f4f9a3a1410ca, type: 2}
@@ -15262,9 +15298,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1643784791}
+  - 114: {fileID: 1643784792}
   m_Layer: 0
   m_Name: Player3Stuff
-  m_TagString: Untagged
+  m_TagString: Player3_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15283,6 +15320,17 @@ Transform:
   - {fileID: 540794590}
   m_Father: {fileID: 0}
   m_RootOrder: 6
+--- !u!114 &1643784792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1643784790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 636c3adbacec14e4fbe5fea9e4b1c479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1646222186
 Prefab:
   m_ObjectHideFlags: 0
@@ -18779,6 +18827,14 @@ Prefab:
     - target: {fileID: 8204176, guid: e3091ffa870d8d24b813a5ee86a8a786, type: 2}
       propertyPath: BypassListenerEffects
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415040, guid: e3091ffa870d8d24b813a5ee86a8a786, type: 2}
+      propertyPath: timePassengerSpawnFor
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11415040, guid: e3091ffa870d8d24b813a5ee86a8a786, type: 2}
+      propertyPath: timeBetweenPrisonerDrops
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e3091ffa870d8d24b813a5ee86a8a786, type: 2}
