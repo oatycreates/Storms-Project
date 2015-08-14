@@ -224,7 +224,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 	private void ConstantForwardMovement()
 	{
 		// 				general speed 	half or double general speed	+ 25% of general speed == Always a positive value
-		float speedMod = generalSpeed + (throttle * generalSpeed) + (generalSpeed/4);
+		float speedMod = generalSpeed + (throttle * generalSpeed) /*+ (generalSpeed/4)*/;
 	
 		m_myRigid.AddRelativeForce(Vector3.forward * speedMod , ForceMode.Acceleration);
 
