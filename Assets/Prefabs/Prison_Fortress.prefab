@@ -437,7 +437,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 185346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalPosition: {x: -195.5, y: 150, z: -223}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 443548}
@@ -1178,7 +1178,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 138662}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1190,7 +1190,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115700}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1202,7 +1202,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177398}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1214,7 +1214,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142452}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1226,7 +1226,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127194}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1238,7 +1238,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 191992}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1250,7 +1250,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187180}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1262,7 +1262,7 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 136898}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1499,7 +1499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fortressState: 0
-  timeBetweenPrisonerDrops: 30
+  timeBetweenPrisonerDrops: 15
   numberOfTimesKlaxonShouldSound: 3
   timePassengerSpawnFor: 15
   sternLight: {fileID: 10803438}
@@ -1518,6 +1518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 705e262557a2e0043adcacf8303642dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPassengerForce: 10
   currentlySpawning: 0
   pooledAmount: 350
   spawnRateInSeconds: .100000001
@@ -1534,7 +1535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859f1632d174ba942a0d02591500d99b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateForce: 100
+  rotateForce: 0
   hoverNoise: {fileID: 8300000, guid: d48ec196d20f897498dc24f30cb52a39, type: 3}
 --- !u!114 &11465154
 MonoBehaviour:
@@ -1547,6 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 705e262557a2e0043adcacf8303642dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialPassengerForce: 10
   currentlySpawning: 0
   pooledAmount: 350
   spawnRateInSeconds: .100000001
@@ -1558,7 +1560,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 185546}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: .5
