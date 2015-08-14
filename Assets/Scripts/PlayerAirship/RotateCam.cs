@@ -35,31 +35,28 @@ public class RotateCam : MonoBehaviour
 	public GameObject[] cannons;
 
 
-	
 	void Start()
 	{
 		referenceStateManager = gameObject.GetComponent<StateManager>();
-
 	}
 
 
-	
-	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal, bool leftBumper, bool rightBumper)
+
+	public void PlayerInputs(float camVertical, float camHorizontal, bool leftBumper, bool rightBumper)
 	{
+
 		tiltAroundY = -camHorizontal * horizontalTiltAngle * deadZoneFactor;
 		tiltAroundX = -camVertical * verticalTiltAngle * deadZoneFactor;
 		
 		Quaternion target =  Quaternion.Euler(tiltAroundX, tiltAroundY, 0);
 		
-		if (referenceStateManager.currentPlayerState == EPlayerState.Control)
+		if (referenceStateManager.currentPlayerState == EPlayerState.Control || referenceStateManager.currentPlayerState == EPlayerState.Suicide)
 		{
 
 			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
 		}
 
 
-
-		
 		//Move lookTarget around.
 		float internalCamYRotation = rotateCam.transform.localEulerAngles.y;
 		//Debug.Log(internalCamYRotation);
@@ -135,6 +132,9 @@ public class RotateCam : MonoBehaviour
 		
 		lookyHereTarget.transform.localPosition = new Vector3(lookyHereTarget.transform.localPosition.x, yPos, lookyHereTarget.transform.localPosition.z);
 		camProxyTarget.transform.localPosition = new Vector3(xPos, camProxyTarget.transform.localPosition.y, -zPos);
+	
+
+
 
 	}
 	

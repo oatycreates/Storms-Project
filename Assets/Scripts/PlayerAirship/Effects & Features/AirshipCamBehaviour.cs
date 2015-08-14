@@ -38,7 +38,7 @@ public class AirshipCamBehaviour : MonoBehaviour
       
 		rememberMyParent = gameObject.transform.parent.gameObject;
 		// Detach from parent on start!
-		//gameObject.transform.parent = null;
+		gameObject.transform.parent = null;
 		
 		m_myStartPos = gameObject.transform.position;
 		m_myStartRot = gameObject.transform.rotation;
@@ -58,6 +58,8 @@ public class AirshipCamBehaviour : MonoBehaviour
 		{
 			WatchCam();
 		}
+
+
 
 	}
 	
@@ -80,23 +82,13 @@ public class AirshipCamBehaviour : MonoBehaviour
 
 	}
 
-	/*
+
 	public void SuicideCam()
 	{
+		gameObject.transform.LookAt(camLookTarget.transform.position);
 
-		if (camPosTarget != null)
-		{
-			gameObject.transform.position = rememberMyParent.transform.position;
-		}
-		
-		if (camLookTarget != null)
-		{
-			//gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, camPosTarget.transform.rotation, Time.deltaTime * camLookSpeed);
-			gameObject.transform.LookAt(
-			//gameObject.transform.rotation = camPosTarget.transform.rotation;
-		}
 	}
-	 */
+	 
 	
 	
 	public void WatchCam()
