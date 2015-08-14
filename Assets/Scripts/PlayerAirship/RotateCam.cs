@@ -25,7 +25,7 @@ public class RotateCam : MonoBehaviour
 	
 	//Move the camera directly
 	
-	public GameObject camHereTarget;
+	public GameObject camProxyTarget;
 	private float xPos;
 	public float camPositionFactor = 2.0f;
 	private float zPos;
@@ -41,10 +41,11 @@ public class RotateCam : MonoBehaviour
 	{
 		referenceStateManager = gameObject.GetComponent<StateManager>();
 	}
+	
 
 	
 	
-	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal, bool fireCannon)
+	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal, bool leftBumper, bool rightBumper)
 	{
 		tiltAroundY = -camHorizontal * horizontalTiltAngle * deadZoneFactor;
 		tiltAroundX = -camVertical * verticalTiltAngle * deadZoneFactor;
@@ -73,7 +74,7 @@ public class RotateCam : MonoBehaviour
 			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (fireCannon)
+			if (leftBumper || rightBumper)
 			{
 				Cannons(CannonStates.Port);
 			}
@@ -93,7 +94,7 @@ public class RotateCam : MonoBehaviour
 			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (fireCannon)
+			if (leftBumper || rightBumper)
 			{
 				Cannons(CannonStates.Starboard);
 			}
@@ -123,7 +124,7 @@ public class RotateCam : MonoBehaviour
 			zPos = Mathf.Lerp(zPos, 20, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (fireCannon)
+			if (leftBumper || rightBumper)
 			{
 				Cannons(CannonStates.Front);
 			}
@@ -131,7 +132,7 @@ public class RotateCam : MonoBehaviour
 		}
 		
 		lookyHereTarget.transform.localPosition = new Vector3(lookyHereTarget.transform.localPosition.x, yPos, lookyHereTarget.transform.localPosition.z);
-		camHereTarget.transform.localPosition = new Vector3(xPos, camHereTarget.transform.localPosition.y, -zPos);
+		camProxyTarget.transform.localPosition = new Vector3(xPos, camProxyTarget.transform.localPosition.y, -zPos);
 
 	}
 	
@@ -173,5 +174,5 @@ public class RotateCam : MonoBehaviour
 			
 		}
 	}
-
+	
 }

@@ -78,6 +78,6 @@ public class InputManager : MonoBehaviour
 		m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
        	m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
 		m_fireshipControl.PlayerFireshipInputs(upDown, leftRight);
-		m_rotateCam.PlayerInputs (camUpDown, camLeftRight, dPadUpDown, dPadLeftRight, faceDown);
+		m_rotateCam.PlayerInputs (camUpDown, camLeftRight, dPadUpDown, dPadLeftRight, bumperLeft, bumperRight);
 	}	
 }

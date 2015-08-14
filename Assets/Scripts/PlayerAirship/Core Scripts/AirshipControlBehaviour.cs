@@ -92,7 +92,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 	[HideInInspector]
 	public bool openHatch;
 	
-	
+
 	void Awake()
 	{
 		m_myRigid = GetComponent<Rigidbody>();

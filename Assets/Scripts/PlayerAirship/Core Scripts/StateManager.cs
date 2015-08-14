@@ -167,6 +167,7 @@ public class StateManager : MonoBehaviour
 			{
 				weaponsHierachy.SetActive(true);
 			}
+
 		}
 
         // Player has no-control over airship, but it's still affected by forces. Gravity is making the airship fall
@@ -249,7 +250,7 @@ public class StateManager : MonoBehaviour
 				weaponsHierachy.SetActive(false);
 			}
 		}
-		
+
 	}
 	
     /// <summary>
