@@ -61,7 +61,7 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 	{
 		// Set cam stuff
 		airshipMainCam.camFollowPlayer = true;
-		//airshipMainCam.SuicideCam ();
+		airshipMainCam.SuicideCam();
 	
 		// Turn on particles
 		fireShipParticles.SetActive(true);

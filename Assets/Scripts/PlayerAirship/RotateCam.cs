@@ -52,7 +52,6 @@ public class RotateCam : MonoBehaviour
 		
 		if (referenceStateManager.currentPlayerState == EPlayerState.Control || referenceStateManager.currentPlayerState == EPlayerState.Suicide)
 		{
-
 			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
 		}
 

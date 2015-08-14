@@ -19,11 +19,18 @@ public class AirshipCamBehaviour : MonoBehaviour
 	[HideInInspector]
 	public bool camFollowPlayer = true;
 
-	public GameObject camPosTarget;
-	public GameObject camLookTarget;
-	
-	public float camMoveSpeed = 5.0f;
-	public float camLookSpeed = 5.0f;
+	public Transform camPosTarget;
+	public Transform camLookTarget;
+
+    /// <summary>
+    /// Used to slerp look direction.
+    /// </summary>
+    public float camLookSmooth = 2.0f;
+
+    /// <summary>
+    /// Used to lerp cam pos.
+    /// </summary>
+    public float camPosSmooth = 2.0f;
 	
 	/// <summary>
     /// Keep a reference to the start position, so we can reset to the roulette position.
@@ -31,20 +38,28 @@ public class AirshipCamBehaviour : MonoBehaviour
 	private Vector3 m_myStartPos;
 	private Quaternion m_myStartRot;
 
-	private GameObject rememberMyParent;
+    // Cached variables
+    Transform m_trans;
 
 	void Start () 
 	{
-      
-		rememberMyParent = gameObject.transform.parent.gameObject;
+        GameObject camHolder = GameObject.Find("CamHolder");
+        if (camHolder == null)
+        {
+            camHolder = new GameObject();
+            camHolder.name = "CamHolder";
+        }
+
+        m_trans = transform;
+
 		// Detach from parent on start!
-		gameObject.transform.parent = null;
-		
-		m_myStartPos = gameObject.transform.position;
-		m_myStartRot = gameObject.transform.rotation;
+        m_trans.SetParent(camHolder.transform, true);
+
+		m_myStartPos = m_trans.position;
+		m_myStartRot = m_trans.rotation;
 
 
-		gameObject.transform.localPosition = Vector3.zero;
+		m_trans.localPosition = Vector3.zero;
 	}
 	
 	void Update () 
@@ -53,31 +68,25 @@ public class AirshipCamBehaviour : MonoBehaviour
 		{
 			FollowCam();
 		}
-		else
-		if (!camFollowPlayer)
+		else if (!camFollowPlayer)
 		{
 			WatchCam();
 		}
-
-
-
 	}
 	
 	public void FollowCam()
 	{
 		if (camPosTarget != null)
 		{
-			//gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, camPosTarget.transform.position, Time.deltaTime * camMoveSpeed);
-			gameObject.transform.position = rememberMyParent.transform.position;
-			//gameObject.transform.rotation = rememberMyParent.transform.rotation;
+            // TODO Fix lerping
+            //m_trans.position = Vector3.Lerp(m_trans.position, camPosTarget.position, Time.deltaTime * camPosSmooth);
+            m_trans.position = camPosTarget.position;
 		}
-		
-		
-		
+
 		if (camLookTarget != null)
 		{
-			//gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, camPosTarget.transform.rotation, Time.deltaTime * camLookSpeed);
-			gameObject.transform.LookAt(camPosTarget.transform.position);
+            Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
 		}
 
 	}
@@ -85,19 +94,18 @@ public class AirshipCamBehaviour : MonoBehaviour
 
 	public void SuicideCam()
 	{
-		gameObject.transform.LookAt(camLookTarget.transform.position);
-
+        Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+        m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
 	}
 	 
 	
 	
 	public void WatchCam()
 	{
-		gameObject.transform.parent = null;
-				
 		if (camLookTarget != null)
 		{
-			gameObject.transform.LookAt(camLookTarget.transform.position);
+            Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
 		}
 	}
 
@@ -107,14 +115,11 @@ public class AirshipCamBehaviour : MonoBehaviour
     /// </summary>
 	public void RouletteCam()
 	{
-		gameObject.transform.parent = rememberMyParent.transform;
-		//gameObject.transform.position = rememberMyParent.transform.position;
-		//gameObject.transform.rotation = rememberMyParent.transform.rotation;
-		gameObject.transform.LookAt(camPosTarget.transform.position);
+		//m_trans.parent = rememberMyParent.transform;
+		//m_trans.LookAt(camPosTarget.transform.position);
 
-
-		gameObject.transform.position = m_myStartPos;
-		gameObject.transform.rotation = m_myStartRot;
+		m_trans.position = m_myStartPos;
+		m_trans.rotation = m_myStartRot;
 	}
 
 

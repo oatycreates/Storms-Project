@@ -947,7 +947,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 425390}
   m_Layer: 0
-  m_Name: RotateCam
+  m_Name: Rotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1171,7 +1171,6 @@ GameObject:
   - 20: {fileID: 2069098}
   - 124: {fileID: 12475972}
   - 92: {fileID: 9239488}
-  - 114: {fileID: 11456174}
   - 114: {fileID: 11430190}
   m_Layer: 0
   m_Name: Camera
@@ -1784,7 +1783,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 109424}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: -20}
+  m_LocalPosition: {x: 0, y: 10, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 433946}
@@ -3559,7 +3558,7 @@ MonoBehaviour:
   horizontalTiltAngle: 360
   verticalTiltAngle: 180
   smooth: 10
-  deadZoneFactor: .5
+  deadZoneFactor: .25
   lookyHereTarget: {fileID: 146936}
   targetHeightFactor: 5
   camProxyTarget: {fileID: 109424}
@@ -3699,10 +3698,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camFollowPlayer: 1
-  camPosTarget: {fileID: 109424}
-  camLookTarget: {fileID: 146936}
-  camMoveSpeed: 15
-  camLookSpeed: 5
+  camPosTarget: {fileID: 457030}
+  camLookTarget: {fileID: 481600}
+  camLookSmooth: 2
+  camPosSmooth: 25
 --- !u!114 &11432028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3865,18 +3864,6 @@ MonoBehaviour:
   targetPos: {x: 0, y: 7, z: -1}
   targetEuler: {x: 0, y: 0, z: 0}
   speed: 2
---- !u!114 &11456174
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 188948}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8a28aabd2f8d949953fca1d4f8e823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lookTarget: {fileID: 146936}
 --- !u!114 &11458418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3936,8 +3923,8 @@ MonoBehaviour:
   camFollowPlayer: 1
   camPosTarget: {fileID: 144660}
   camLookTarget: {fileID: 158488}
-  camMoveSpeed: 5
-  camLookSpeed: 5
+  camLookSmooth: 2
+  camPosSmooth: 2
 --- !u!114 &11471642
 MonoBehaviour:
   m_ObjectHideFlags: 1
