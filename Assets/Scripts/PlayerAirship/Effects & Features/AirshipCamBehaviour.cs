@@ -85,17 +85,19 @@ public class AirshipCamBehaviour : MonoBehaviour
 
 		if (camLookTarget != null)
 		{
-            Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+            //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+            //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+            m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
 		}
 
 	}
 
 
 	public void SuicideCam()
-	{
-        Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-        m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+    {
+        //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+        //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+        m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
 	}
 	 
 	
@@ -103,9 +105,10 @@ public class AirshipCamBehaviour : MonoBehaviour
 	public void WatchCam()
 	{
 		if (camLookTarget != null)
-		{
-            Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-            m_trans.localRotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+        {
+            //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+            //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+            m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
 		}
 	}
 
