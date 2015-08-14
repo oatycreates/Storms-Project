@@ -30,7 +30,8 @@ public class PrisonFortressRotate : MonoBehaviour
 		//Set physics
 		m_myRigid = gameObject.GetComponent<Rigidbody>();
 		
-		m_myRigid.maxAngularVelocity = 0.1f;
+		//m_myRigid.maxAngularVelocity = 0.1f;
+		m_myRigid.maxAngularVelocity = 0.0f; //undo this later
 		
 		//Set audio
 		mySource = gameObject.GetComponent<AudioSource>();
