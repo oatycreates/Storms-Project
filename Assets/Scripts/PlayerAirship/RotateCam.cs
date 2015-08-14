@@ -34,8 +34,6 @@ public class RotateCam : MonoBehaviour
 	//Link to Cannons
 	public GameObject[] cannons;
 	
-	private enum CannonStates {Front, Port, Starboard};
-	
 	
 	void Start()
 	{
@@ -76,7 +74,7 @@ public class RotateCam : MonoBehaviour
 			//Allow CannonFire
 			if (leftBumper || rightBumper)
 			{
-				Cannons(CannonStates.Port);
+				Cannons(ECannonPos.Port);
 			}
 			
 		}
@@ -96,7 +94,7 @@ public class RotateCam : MonoBehaviour
 			//Allow CannonFire
 			if (leftBumper || rightBumper)
 			{
-				Cannons(CannonStates.Starboard);
+				Cannons(ECannonPos.Starboard);
 			}
 		
 		}
@@ -126,7 +124,7 @@ public class RotateCam : MonoBehaviour
 			//Allow CannonFire
 			if (leftBumper || rightBumper)
 			{
-				Cannons(CannonStates.Front);
+				Cannons(ECannonPos.Forward);
 			}
 			
 		}
@@ -136,43 +134,19 @@ public class RotateCam : MonoBehaviour
 
 	}
 	
-	void Cannons(CannonStates angle)
+	void Cannons(ECannonPos a_angle)
 	{
 		CannonFire script; 
 	
 		for (int i = 0; i < cannons.Length; i++)
 		{
 			script = cannons[i].GetComponent<CannonFire>();
-			
-		
-			if (angle == CannonStates.Front)
+
+            // Fire the cannons situated in the requested direction
+			if (a_angle == script.cannon)
 			{
-				print ("Fore");
-				if(script.cannon == ECannonPos.Forward)
-				{
-					script.Fire();
-				}
+				script.Fire();
 			}
-			else
-			if (angle == CannonStates.Port)
-			{
-				print ("Port");
-				if(script.cannon == ECannonPos.Port)
-				{
-					script.Fire();
-				}
-			}
-			else
-			if (angle == CannonStates.Starboard)
-			{
-				print ("Starboard");
-				if(script.cannon == ECannonPos.Starboard)
-				{
-					script.Fire();	
-				}
-			}
-			
 		}
 	}
-	
 }
