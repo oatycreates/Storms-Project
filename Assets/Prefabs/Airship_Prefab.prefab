@@ -86,6 +86,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &109424
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 457030}
+  m_Layer: 0
+  m_Name: CamProxyPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &111984
 GameObject:
   m_ObjectHideFlags: 1
@@ -1157,6 +1172,7 @@ GameObject:
   - 124: {fileID: 12475972}
   - 92: {fileID: 9239488}
   - 114: {fileID: 11456174}
+  - 114: {fileID: 11430190}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1452,7 +1468,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 481600}
-  - {fileID: 433946}
+  - {fileID: 457030}
   m_Father: {fileID: 433604}
   m_RootOrder: 2
 --- !u!4 &426040
@@ -1513,11 +1529,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 425390}
-  m_RootOrder: 1
+  m_Father: {fileID: 457030}
+  m_RootOrder: 0
 --- !u!4 &434640
 Transform:
   m_ObjectHideFlags: 1
@@ -1761,6 +1777,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 452984}
   m_RootOrder: 17
+--- !u!4 &457030
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 109424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: -20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 433946}
+  m_Father: {fileID: 425390}
+  m_RootOrder: 1
 --- !u!4 &457198
 Transform:
   m_ObjectHideFlags: 1
@@ -1817,8 +1846,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158488}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: .923879445, z: 0, w: -.382683635}
+  m_LocalPosition: {x: -50, y: 50, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452984}
@@ -2195,7 +2224,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -3401,9 +3430,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc962ce286ed2694eb965394af04c172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentAirship: {fileID: 158488}
+  parentAirship: {fileID: 158488}
   cannon: 2
-  pooledAmount: 5
+  pooledAmount: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
@@ -3423,7 +3452,7 @@ MonoBehaviour:
   explosionForce: 10
   explosionRadius: 3
   explosionCentreTrans: {fileID: 437454}
-  airshipMainCam: {fileID: 11465054}
+  airshipMainCam: {fileID: 11430190}
 --- !u!114 &11408378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3464,9 +3493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc962ce286ed2694eb965394af04c172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentAirship: {fileID: 158488}
+  parentAirship: {fileID: 158488}
   cannon: 1
-  pooledAmount: 5
+  pooledAmount: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
@@ -3500,7 +3529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireParticleEffect: {fileID: 166076}
   spinWheel: {fileID: 11432028}
-  airshipMainCam: {fileID: 11465054}
+  airshipMainCam: {fileID: 11430190}
 --- !u!114 &11418694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3533,7 +3562,7 @@ MonoBehaviour:
   deadZoneFactor: .5
   lookyHereTarget: {fileID: 146936}
   targetHeightFactor: 5
-  camHereTarget: {fileID: 188948}
+  camProxyTarget: {fileID: 109424}
   camPositionFactor: 5
   camDistanceFactor: 15
   cannons:
@@ -3594,9 +3623,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc962ce286ed2694eb965394af04c172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentAirship: {fileID: 158488}
+  parentAirship: {fileID: 158488}
   cannon: 0
-  pooledAmount: 5
+  pooledAmount: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
@@ -3611,9 +3640,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc962ce286ed2694eb965394af04c172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentAirship: {fileID: 158488}
+  parentAirship: {fileID: 158488}
   cannon: 1
-  pooledAmount: 5
+  pooledAmount: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
@@ -3650,7 +3679,7 @@ MonoBehaviour:
   rollLimitMult: .800000012
   animThrottleMult: 2.5
   animLowThrottleMult: .100000001
-  airshipMainCam: {fileID: 11465054}
+  airshipMainCam: {fileID: 11430190}
   audioControl: {fileID: 11413364}
   engineAudioControl: {fileID: 11445410}
   roll: 0
@@ -3658,6 +3687,22 @@ MonoBehaviour:
   yaw: 0
   throttle: 0
   openHatch: 0
+--- !u!114 &11430190
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f7f20f7b1d93a429b5073381852e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camFollowPlayer: 1
+  camPosTarget: {fileID: 109424}
+  camLookTarget: {fileID: 146936}
+  camMoveSpeed: 15
+  camLookSpeed: 5
 --- !u!114 &11432028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3710,9 +3755,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc962ce286ed2694eb965394af04c172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentAirship: {fileID: 158488}
+  parentAirship: {fileID: 158488}
   cannon: 1
-  pooledAmount: 5
+  pooledAmount: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
@@ -3776,7 +3821,7 @@ MonoBehaviour:
   pitch: 0
   yaw: 0
   animThrottleMult: 10
-  airshipMainCam: {fileID: 11465054}
+  airshipMainCam: {fileID: 11430190}
 --- !u!114 &11451094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3826,7 +3871,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188948}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8a28aabd2f8d949953fca1d4f8e823, type: 3}
   m_Name: 
@@ -3871,9 +3916,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc962ce286ed2694eb965394af04c172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentAirship: {fileID: 158488}
+  parentAirship: {fileID: 158488}
   cannon: 2
-  pooledAmount: 5
+  pooledAmount: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
@@ -3891,7 +3936,8 @@ MonoBehaviour:
   camFollowPlayer: 1
   camPosTarget: {fileID: 144660}
   camLookTarget: {fileID: 158488}
-  camSpeed: 5
+  camMoveSpeed: 5
+  camLookSpeed: 5
 --- !u!114 &11471642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3932,9 +3978,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc962ce286ed2694eb965394af04c172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentAirship: {fileID: 158488}
+  parentAirship: {fileID: 158488}
   cannon: 2
-  pooledAmount: 5
+  pooledAmount: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}

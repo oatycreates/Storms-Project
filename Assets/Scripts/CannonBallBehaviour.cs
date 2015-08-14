@@ -1,26 +1,100 @@
-﻿using UnityEngine;
+﻿/**
+ * File: CannonBallBehaviour.cs
+ * Author: Rowan Donaldson
+ * Maintainer: Patrick Ferguson
+ * Created: 14/08/2015
+ * Copyright: (c) 2015 Team Storms, All Rights Reserved.
+ * Description: This has all the behaviour for the cannonballs.
+ **/
+
+using UnityEngine;
 using System.Collections;
-//This has all the behaviour for the cannonballs.
-//[RequireComponent(typeof(AudioSource))]
-//[RequireComponent(typeof(SphereCollider))]
+
+/// <summary>
+/// This has all the behaviour for the cannonballs.
+/// </summary>
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(SphereCollider))]
 public class CannonBallBehaviour : MonoBehaviour 
 {
-	private float timer;
+    /// <summary>
+    /// Physical collider for the cannon ball.
+    /// </summary>
+    public Collider cannonBallCollider;
+
+    /// <summary>
+    /// For ignoring collisions with the owner's player ship & own base.
+    /// </summary>
+    public Collider selfCollisionTrigger;
+
+	private float m_timer;
+
+    /// <summary>
+    /// Whether the collider has been disabled.
+    /// </summary>
+    private bool m_disabledCollider = false;
+
+    /// <summary>
+    /// Time the cannon-ball last self-triggered.
+    /// </summary>
+    private float m_lastSelfTriggerTime = 0.0f;
 
 	void OnEnable()
 	{
-		timer = 5.0f;
+		m_timer = 5.0f;
 	}
+
+    void Start()
+    {
+
+    }
 	
 	void Update()
-	{	
-		timer -= Time.deltaTime;
+    {
+		m_timer -= Time.deltaTime;
 		
-		if (timer < 0)
+		if (m_timer <= 0)
 		{
 			gameObject.SetActive(false);
 		}
-	}	
+	}
+
+    void FixedUpdate()
+    {
+        m_lastSelfTriggerTime -= Time.deltaTime;
+        if (m_disabledCollider && m_lastSelfTriggerTime <= 0)
+        {
+            // Re-enable the collider
+            cannonBallCollider.enabled = true;
+
+            // Reset collider disable status
+            m_disabledCollider = false;
+        }
+    }
+
+    void OnTriggerEnter(Collider a_other)
+    {
+        // Disable collider to prevent self-collision
+        if (gameObject.CompareTag(a_other.tag))
+        {
+            cannonBallCollider.enabled = false;
+            m_disabledCollider = true;
+
+            m_lastSelfTriggerTime = 0.25f;
+        }
+    }
+
+    void OnTriggerStay(Collider a_other)
+    {
+        // Disable collider to prevent self-collision
+        if (gameObject.CompareTag(a_other.tag))
+        {
+            cannonBallCollider.enabled = false;
+            m_disabledCollider = true;
+
+            m_lastSelfTriggerTime = 0.25f;
+        }
+    }
 
 	/*
 	private AudioSource mySource;

@@ -12,11 +12,11 @@ public enum ECannonPos
 //This script pools the cannonball prefab objects, and fires them when triggerd.
 public class CannonFire : MonoBehaviour 
 {
-	public GameObject ParentAirship;
+	public GameObject parentAirship;
 
 	public ECannonPos cannon;
 	
-	public int pooledAmount = 3;
+	public int pooledAmount = 1;
 	
 	List<GameObject> cannonBalls;
 	
@@ -28,18 +28,22 @@ public class CannonFire : MonoBehaviour
 	
 	private Vector3 relativeForward;
 
+    // Cached variables
+    private Rigidbody m_shipRB;
 
 	void Start () 
 	{
+        m_shipRB = parentAirship.GetComponent<Rigidbody>();
+
 		cannonBalls = new List<GameObject>();
 		
 		for (int i = 0; i < pooledAmount; i++)
 		{
-			//Pooled object details
+			// Pooled object details
 			GameObject singleBall = Instantiate(cannonBallPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
-			
-			singleBall.tag = ParentAirship.tag;
-			singleBall.GetComponent<SphereCollider>().isTrigger = true;
+
+            // Tag the cannonball
+			singleBall.tag = parentAirship.tag;
 			
 			singleBall.SetActive(false);
 			
@@ -63,8 +67,7 @@ public class CannonFire : MonoBehaviour
 	{
 		Vector3 relativeSpace;
 		Rigidbody rigidBall;
-		SphereCollider collider;
-	
+
 		for (int i = 0; i < cannonBalls.Count; i++)
 		{
 			// Find only inactive cannonballs
@@ -78,11 +81,12 @@ public class CannonFire : MonoBehaviour
 				relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
 				
 				rigidBall = cannonBalls[i].GetComponent<Rigidbody>();
-				
+
+                // Inherit the parent's velocity
+                rigidBall.velocity = m_shipRB.velocity;
+
+                // Fire off the cannonball
 				rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
-				
-				collider = cannonBalls[i].GetComponent<SphereCollider>();
-				collider.isTrigger = true;
 				
 				//Don't forget! Every once in a while, you deserve a...
 				break;

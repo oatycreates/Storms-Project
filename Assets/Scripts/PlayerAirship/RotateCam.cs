@@ -25,7 +25,7 @@ public class RotateCam : MonoBehaviour
 	
 	//Move the camera directly
 	
-	public GameObject camHereTarget;
+	public GameObject camProxyTarget;
 	private float xPos;
 	public float camPositionFactor = 2.0f;
 	private float zPos;
@@ -33,30 +33,30 @@ public class RotateCam : MonoBehaviour
 	
 	//Link to Cannons
 	public GameObject[] cannons;
-	
-	private enum CannonStates {Front, Port, Starboard};
-	
-	
+
+
 	void Start()
 	{
 		referenceStateManager = gameObject.GetComponent<StateManager>();
 	}
 
-	
-	
-	public void PlayerInputs(float camVertical, float camHorizontal, float dPadVertical, float dPadHorizontal, bool fireCannon)
+
+
+	public void PlayerInputs(float camVertical, float camHorizontal, bool leftBumper, bool rightBumper)
 	{
+
 		tiltAroundY = -camHorizontal * horizontalTiltAngle * deadZoneFactor;
 		tiltAroundX = -camVertical * verticalTiltAngle * deadZoneFactor;
 		
 		Quaternion target =  Quaternion.Euler(tiltAroundX, tiltAroundY, 0);
 		
-		if (referenceStateManager.currentPlayerState == EPlayerState.Control)
+		if (referenceStateManager.currentPlayerState == EPlayerState.Control || referenceStateManager.currentPlayerState == EPlayerState.Suicide)
 		{
+
 			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
 		}
 
-		
+
 		//Move lookTarget around.
 		float internalCamYRotation = rotateCam.transform.localEulerAngles.y;
 		//Debug.Log(internalCamYRotation);
@@ -73,9 +73,9 @@ public class RotateCam : MonoBehaviour
 			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (fireCannon)
+			if (leftBumper || rightBumper)
 			{
-				Cannons(CannonStates.Port);
+				Cannons(ECannonPos.Port);
 			}
 			
 		}
@@ -93,9 +93,9 @@ public class RotateCam : MonoBehaviour
 			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (fireCannon)
+			if (leftBumper || rightBumper)
 			{
-				Cannons(CannonStates.Starboard);
+				Cannons(ECannonPos.Starboard);
 			}
 		
 		}
@@ -123,55 +123,34 @@ public class RotateCam : MonoBehaviour
 			zPos = Mathf.Lerp(zPos, 20, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (fireCannon)
+			if (leftBumper || rightBumper)
 			{
-				Cannons(CannonStates.Front);
+				Cannons(ECannonPos.Forward);
 			}
 			
 		}
 		
 		lookyHereTarget.transform.localPosition = new Vector3(lookyHereTarget.transform.localPosition.x, yPos, lookyHereTarget.transform.localPosition.z);
-		camHereTarget.transform.localPosition = new Vector3(xPos, camHereTarget.transform.localPosition.y, -zPos);
+		camProxyTarget.transform.localPosition = new Vector3(xPos, camProxyTarget.transform.localPosition.y, -zPos);
+	
+
+
 
 	}
 	
-	void Cannons(CannonStates angle)
+	void Cannons(ECannonPos a_angle)
 	{
 		CannonFire script; 
 	
 		for (int i = 0; i < cannons.Length; i++)
 		{
 			script = cannons[i].GetComponent<CannonFire>();
-			
-		
-			if (angle == CannonStates.Front)
+
+            // Fire the cannons situated in the requested direction
+			if (a_angle == script.cannon)
 			{
-				print ("Fore");
-				if(script.cannon == ECannonPos.Forward)
-				{
-					script.Fire();
-				}
+				script.Fire();
 			}
-			else
-			if (angle == CannonStates.Port)
-			{
-				print ("Port");
-				if(script.cannon == ECannonPos.Port)
-				{
-					script.Fire();
-				}
-			}
-			else
-			if (angle == CannonStates.Starboard)
-			{
-				print ("Starboard");
-				if(script.cannon == ECannonPos.Starboard)
-				{
-					script.Fire();	
-				}
-			}
-			
 		}
 	}
-
 }
