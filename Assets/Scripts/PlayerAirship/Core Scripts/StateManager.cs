@@ -63,7 +63,8 @@ public class StateManager : MonoBehaviour
 
 	void Start () 
 	{
-		currentPlayerState = EPlayerState.Roulette;
+		//currentPlayerState = EPlayerState.Roulette;
+		currentPlayerState = EPlayerState.Control;
 		
 		m_rouletteScript = gameObject.GetComponent<RouletteBehaviour>();
 		m_airshipScript = gameObject.GetComponent<AirshipControlBehaviour>();
@@ -256,12 +257,14 @@ public class StateManager : MonoBehaviour
     /// <summary>
     /// Skip to next EPlayerState.
     /// If we add more states, make sure we add functionality here.
+    // We've intentionally left out Roulette for the Time being...........
     /// </summary>
 	void DevHacks()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			currentPlayerState = EPlayerState.Roulette;
+			//currentPlayerState = EPlayerState.Roulette;
+			currentPlayerState = EPlayerState.Control;
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -299,7 +302,8 @@ public class StateManager : MonoBehaviour
 			else
 			if (currentPlayerState == EPlayerState.Suicide)
 			{
-				currentPlayerState = EPlayerState.Roulette;
+				//currentPlayerState = EPlayerState.Roulette;
+				currentPlayerState = EPlayerState.Control;
 			}
 		}
 		
