@@ -42,6 +42,8 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 
 	public Light sternLight;
 	public Light hullLight;
+	
+	public float maxLightIntensity = 4.0f;
 	/// <summary>
     /// Should the lights be increasing or decreasing in intensity.
 	/// </summary>
@@ -154,9 +156,9 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 			sternLight.intensity = 0.0f;
 		}
 		
-		if (sternLight.intensity > 8.0f)
+		if (sternLight.intensity > maxLightIntensity)
 		{
-			sternLight.intensity = 8.0f;
+			sternLight.intensity = maxLightIntensity;
 		}
 		
 		if (hullLight.intensity < 0.0f)
@@ -164,9 +166,9 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 			hullLight.intensity = 0.0f;
 		}
 		
-		if (hullLight.intensity > 8.0f)
+		if (hullLight.intensity > maxLightIntensity)
 		{
-			hullLight.intensity = 8.0f;
+			hullLight.intensity = maxLightIntensity;
 		}
 		
 		// Increase or decrease lights
