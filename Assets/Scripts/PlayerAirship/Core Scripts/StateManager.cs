@@ -136,7 +136,10 @@ public class StateManager : MonoBehaviour
 			// Standard Physics Control
 			m_rouletteScript.enabled = false;
 			m_airshipScript.enabled = true;
+			m_dyingScript.ResetTimer();
 			m_dyingScript.enabled = false;
+			
+			m_suicideScript.ResetTimer();
 			m_suicideScript.enabled = false;
 			
 			if (colliders != null)
@@ -297,7 +300,7 @@ public class StateManager : MonoBehaviour
 			else
 			if (currentPlayerState == EPlayerState.Dying)
 			{
-				currentPlayerState = EPlayerState.Suicide;
+				//currentPlayerState = EPlayerState.Suicide;
 			}
 			else
 			if (currentPlayerState == EPlayerState.Suicide)
@@ -306,6 +309,17 @@ public class StateManager : MonoBehaviour
 				currentPlayerState = EPlayerState.Control;
 			}
 		}
+		
+		//Hacky!! Make auto stall an option
+		if (Input.GetButtonUp(gameObject.tag + "Select"))
+		{
+			if (currentPlayerState == EPlayerState.Dying)
+			{
+				//currentPlayerState = EPlayerState.Control;
+				currentPlayerState = EPlayerState.Suicide;
+			}
+		}
+		
 		
 		if (Input.GetButtonDown(gameObject.tag + "Start"))
 		{

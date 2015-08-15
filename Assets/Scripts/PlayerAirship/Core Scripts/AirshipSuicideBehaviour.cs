@@ -22,6 +22,7 @@ public class AirshipSuicideBehaviour : MonoBehaviour
     /// How long untill the player defaults back to the roulette selection screen?
     /// </summary>
 	public float timerUntilReset = 15.0f;
+	private float hiddenResetValue;
 	
 	//Less inputs than the standard airship controller
 	public float pitchForce = 1000.0f;
@@ -56,6 +57,11 @@ public class AirshipSuicideBehaviour : MonoBehaviour
         m_myRigid = gameObject.GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
 	}
+	
+	void Start()
+	{
+		hiddenResetValue = timerUntilReset;
+	}
 
 	void Update()
 	{
@@ -73,7 +79,9 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 		
 		if (timerUntilReset < 0.0f)
 		{
-			gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Roulette;
+			//haha try sending the airship back into control mode
+			//gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Roulette;
+			gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Control;
 		}
 	}
 	
@@ -137,5 +145,11 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 
         // Add all the torque forces together
 		m_myRigid.AddTorque(torque);
+	}
+	
+	public void ResetTimer()
+	{
+		timerUntilReset = hiddenResetValue;
+		fireShipParticles.SetActive(false);
 	}
 }

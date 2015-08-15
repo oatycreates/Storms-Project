@@ -3476,7 +3476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallAcceleration: 100
-  timerUntilReset: 15
+  timerUntilReset: 5
   explosionForce: 10
   explosionRadius: 3
   explosionCentreTrans: {fileID: 437454}
@@ -3653,7 +3653,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bcba98d1216bd7448763bf92aa2e67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  airshipStateManager: {fileID: 11472904}
   myController: {fileID: 11429062}
+  mySuicideController: {fileID: 11447676}
   camLerpSpeed: 2
   distanceOne: -25
   distanceTwo: -10
@@ -3844,7 +3846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireShipParticles: {fileID: 166076}
-  timerUntilReset: 15
+  timerUntilReset: 2
   pitchForce: 2000
   yawForce: 500
   pitch: 0

@@ -4,7 +4,9 @@ using System.Collections;
 public class Cam_DollyForward : MonoBehaviour 
 {
 	//Get movement
+	public StateManager airshipStateManager;
 	public AirshipControlBehaviour myController;
+	public AirshipSuicideBehaviour mySuicideController;
 	
 	private float forwardSpeed;
 
@@ -21,7 +23,20 @@ public class Cam_DollyForward : MonoBehaviour
 	{
 		myLocalZ = gameObject.transform.localPosition.z;
 	
-		forwardSpeed = myController.throttle;
+		//check which state Im in
+		if (airshipStateManager.currentPlayerState == EPlayerState.Control)
+		{
+			forwardSpeed = myController.throttle;
+		}
+		else
+		if (airshipStateManager.currentPlayerState == EPlayerState.Suicide)
+		{
+			forwardSpeed = -0.5f;	//Make the camera move back a bit.
+		}
+		else
+		{
+			forwardSpeed = 0;
+		}
 	
 		if (forwardSpeed < 0)
 		{
