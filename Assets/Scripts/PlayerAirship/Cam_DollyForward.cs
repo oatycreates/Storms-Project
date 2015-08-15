@@ -68,7 +68,7 @@ public class Cam_DollyForward : MonoBehaviour
 	
 	void SlideBack()
 	{
-		myLocalZ = Mathf.Lerp(myLocalZ, distanceTwo, Time.deltaTime * camLerpSpeed);
+		myLocalZ = Mathf.Lerp(myLocalZ, distanceTwo, Time.deltaTime * camLerpSpeed/2);
 	}
 	
 	
