@@ -9,6 +9,9 @@ public class RotateCam : MonoBehaviour
 	//The rotate cam is the Center GameObject - not the Camera itself.
 	public GameObject rotateCam;
 	
+	public bool invertUpDown = false;
+	public bool invertLeftRight = false;
+	
 	public float horizontalTiltAngle = 360.0f;
 	public float verticalTiltAngle = 90.0f;
 	public float smooth = 2.0f;
@@ -45,8 +48,20 @@ public class RotateCam : MonoBehaviour
 	public void PlayerInputs(float camVertical, float camHorizontal, bool leftBumper, bool rightBumper)
 	{
 
-		tiltAroundY = -camHorizontal * horizontalTiltAngle * deadZoneFactor;
-		tiltAroundX = -camVertical * verticalTiltAngle * deadZoneFactor;
+		tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
+		tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
+		
+		if (invertUpDown)
+		{
+			tiltAroundX *= -1;
+		}
+		
+		if (invertLeftRight)
+		{
+			
+			tiltAroundY *= -1;
+		}
+		
 		
 		Quaternion target =  Quaternion.Euler(tiltAroundX, tiltAroundY, 0);
 		
