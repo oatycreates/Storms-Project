@@ -472,8 +472,6 @@ public class StateManager : MonoBehaviour
 					currentPlayerState = EPlayerState.Suicide;
 					
 					m_suicideScript.timerUntilReset = timer;
-					
-					Debug.Log(timer);
 				}
 			}
 		}
