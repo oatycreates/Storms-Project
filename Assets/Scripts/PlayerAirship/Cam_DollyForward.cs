@@ -11,12 +11,18 @@ public class Cam_DollyForward : MonoBehaviour
 	private float forwardSpeed;
 
 	private float myLocalZ;	
+	private float myStartZ;
 	
 	public float camLerpSpeed = 25.0f;
 	
 	public float distanceOne = -25.0f;
 	
 	public float distanceTwo = - 10.0f;
+
+	void Start()
+	{
+		myStartZ = gameObject.transform.localPosition.z;
+	}
 
 	
 	void Update () 
@@ -63,7 +69,7 @@ public class Cam_DollyForward : MonoBehaviour
 	
 	void ReturnToNormal()
 	{
-		myLocalZ = Mathf.Lerp(myLocalZ, 0.0f, Time.deltaTime * camLerpSpeed);
+		myLocalZ = Mathf.Lerp(myLocalZ, myStartZ, Time.deltaTime * camLerpSpeed);
 	}
 	
 	void SlideBack()

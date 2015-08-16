@@ -36,20 +36,78 @@ public class RotateCam : MonoBehaviour
 	
 	//Link to Cannons
 	public GameObject[] cannons;
-
+	
+	//Fix cam to position
+	public float camTurnMultiplier = 1.0f;
+	public float totalVert = 0;
+	public float totalHori = 0;
+	
 
 	void Start()
 	{
 		referenceStateManager = gameObject.GetComponent<StateManager>();
 	}
 
-
-
-	public void PlayerInputs(float camVertical, float camHorizontal, bool leftBumper, bool rightBumper)
+	public void ResetCamRotation()
 	{
+		totalHori = 0;
+		totalVert = 0;
+	}
+	
+	void Update()
+	{
+		//Clamp the totalVert values
+		totalVert = Mathf.Clamp(totalVert, -1.25f, 1.25f);
+		totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
+	}
 
-		tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
-		tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
+	public void PlayerInputs(float camVertical, float camHorizontal, float triggerAxis, bool leftBumper, bool rightBumper, bool leftClick, bool rightClick)
+	{
+		//Reset on click
+		if (leftClick || rightClick)
+		{
+			ResetCamRotation();
+		}
+		
+		//Reset on accelerate
+		if (triggerAxis > 0)
+		{
+			//Check for direct cam input first
+			if (camHorizontal == 0 || camVertical == 0)
+			{
+				ResetCamRotation();
+			}
+		}		
+		
+	
+		//Lock up/down
+		if (camVertical > 0)
+		{
+			totalVert -= 0.01f * camTurnMultiplier;
+		}	
+		
+		if (camVertical < 0)
+		{
+			totalVert += 0.01f * camTurnMultiplier;
+		}
+		
+		//Lock left/right
+		if (camHorizontal > 0)
+		{
+			totalHori += 0.01f * camTurnMultiplier;
+		}
+		
+		if (camHorizontal < 0)
+		{	
+			totalHori -= 0.01f * camTurnMultiplier;
+		}
+
+
+		tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
+		tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
+		
+		//tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
+		//tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
 		
 		if (invertUpDown)
 		{
@@ -148,9 +206,8 @@ public class RotateCam : MonoBehaviour
 		camProxyTarget.transform.localPosition = new Vector3(xPos, camProxyTarget.transform.localPosition.y, -zPos);
 	
 
-
-
 	}
+	
 	
 	void Cannons(ECannonPos a_angle)
     {
