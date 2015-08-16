@@ -68,8 +68,10 @@ public class PirateBaseIdentity : MonoBehaviour
 		}
 
         // Set the flag's colour
-        flagRenderer.material.color = baseColour;
-        flagBackRenderer.material.color = baseColour;
+        Color flagColour = baseColour;
+        flagColour.a *= 0.75f;
+        flagRenderer.material.color = flagColour;
+        flagBackRenderer.material.color = flagColour;
 
 		// Set the colour of text in DetectFallingPassengersScript
 		baseTriggerZone.textColour = myRenderer.material.color;
