@@ -166,7 +166,7 @@ public class StateManager : MonoBehaviour
             // We don't need to see the airship during the roulette wheel
             if (colliders != null)
             {
-                colliders.SetActive(false);
+                colliders.SetActive(true);
             }
 
             if (meshes != null)
