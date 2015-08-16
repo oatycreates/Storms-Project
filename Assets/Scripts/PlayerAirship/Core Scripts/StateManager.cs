@@ -116,7 +116,7 @@ public class StateManager : MonoBehaviour
         // Before the round begins, have a 'press any button to join' prompt
         if (currentPlayerState == EPlayerState.Pregame)
         {
-
+            PregameUpdate();
         }
 		
         // The player airship is not being used while the roulette wheel is spinning, the airship is deactivated
@@ -144,6 +144,84 @@ public class StateManager : MonoBehaviour
 		}
 
 	}
+
+    private void PregameUpdate()
+    {
+        if (GetAnyButtonDownMyPlayer())
+        {
+            // Switch to the next state
+            currentPlayerState = EPlayerState.Control;
+        }
+        else
+        {
+            // Continue the waiting state
+
+            m_rouletteScript.enabled = false;
+            // Reset position
+            m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+            m_airshipScript.enabled = false;
+            m_dyingScript.enabled = false;
+            m_suicideScript.enabled = false;
+
+            // We don't need to see the airship during the roulette wheel
+            if (colliders != null)
+            {
+                colliders.SetActive(false);
+            }
+
+            if (meshes != null)
+            {
+                meshes.SetActive(true);
+            }
+
+            if (hinges != null)
+            {
+                hinges.SetActive(true);
+            }
+
+            if (rouletteHierachy != null)
+            {
+                rouletteHierachy.SetActive(false);
+            }
+
+            if (particlesEffectsHierachy != null)
+            {
+                particlesEffectsHierachy.SetActive(false);
+            }
+
+            if (weaponsHierachy != null)
+            {
+                weaponsHierachy.SetActive(false);
+            }
+        }
+    }
+
+    private bool GetAnyButtonDownMyPlayer()
+    {
+        string cntPrefix = gameObject.tag;
+
+        // Check if any button is down
+        if (Input.GetButton(cntPrefix + "Start")        ||
+            Input.GetButton(cntPrefix + "Select")       || 
+            Input.GetButton(cntPrefix + "FaceDown")     ||
+            Input.GetButton(cntPrefix + "FaceUp")       ||
+            Input.GetButton(cntPrefix + "FaceLeft")     ||
+            Input.GetButton(cntPrefix + "FaceRight")    || 
+            Input.GetButton(cntPrefix + "BumperLeft")   ||
+            Input.GetButton(cntPrefix + "BumperRight")  ||
+            Input.GetButton(cntPrefix + "Triggers")     ||
+            Input.GetButton(cntPrefix + "ClickLeft")    ||
+            Input.GetButton(cntPrefix + "ClickRight")   ||
+            Input.GetAxisRaw(cntPrefix + "Horizontal")      != 0 ||
+            Input.GetAxisRaw(cntPrefix + "Vertical")        != 0 ||
+            Input.GetAxisRaw(cntPrefix + "CamHorizontal")   != 0 ||
+            Input.GetAxisRaw(cntPrefix + "CamVertical")     != 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     private void SuicideUpdate()
     {
