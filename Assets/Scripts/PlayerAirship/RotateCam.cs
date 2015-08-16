@@ -223,18 +223,20 @@ public class RotateCam : MonoBehaviour
 	}
 	
 	void Cannons(ECannonPos a_angle)
-	{
-		CannonFire script; 
+    {
+        // NOTE - Disable cannon fire for now
+
+        /*CannonFire script; 
 	
-		for (int i = 0; i < cannons.Length; i++)
-		{
-			script = cannons[i].GetComponent<CannonFire>();
+        for (int i = 0; i < cannons.Length; i++)
+        {
+            script = cannons[i].GetComponent<CannonFire>();
 
             // Fire the cannons situated in the requested direction
-			if (a_angle == script.cannon)
-			{
-				script.Fire();
-			}
-		}
+            if (a_angle == script.cannon)
+            {
+                script.Fire();
+            }
+        }*/
 	}
 }
