@@ -27,7 +27,7 @@ public class PirateBaseIdentity : MonoBehaviour
 
 	public Renderer myRenderer;
 
-    public LineRenderer identityBeam;
+    public Renderer flagRenderer;
 
 	void Start() 
 	{
@@ -46,8 +46,8 @@ public class PirateBaseIdentity : MonoBehaviour
 		else if (gameObject.tag == "Player2_")
 		{
 			teamNumber = 2;
-            myRenderer.material.color = Color.cyan;
-            baseColour = myRenderer.material.color;
+			myRenderer.material.color = Color.cyan;
+			baseColour = myRenderer.material.color;
 		}
 		else if (gameObject.tag == "Player3_")
 		{
@@ -64,10 +64,10 @@ public class PirateBaseIdentity : MonoBehaviour
 		else if (gameObject.tag == "Untagged")
 		{
 			Debug.Log("NO TAG!!");
-        }
+		}
 
-        // Set the identity beam's colours
-        identityBeam.SetColors(baseColour, baseColour);
+        // Set the flag's colour
+        flagRenderer.material.color = baseColour;
 
 		// Set the colour of text in DetectFallingPassengersScript
 		baseTriggerZone.textColour = myRenderer.material.color;
