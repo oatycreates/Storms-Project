@@ -66,7 +66,7 @@ public class PassengerTray : MonoBehaviour
     {
         Vector3 currShipVel = m_shipRb.velocity;
 
-        // Only start appling velocity forces when the player starts moving, this avoids passengers in the first tick being launched
+        // Only start applying velocity forces when the player starts moving, this avoids passengers in the first tick being launched
         if (!m_hasStarted && currShipVel.magnitude > 0)
         {
             m_hasStarted = true;
