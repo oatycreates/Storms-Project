@@ -94,7 +94,7 @@ public class StateManager : MonoBehaviour
 			DevHacks();
 		//}
 		
-		//Make the player commit to the STALL
+		// Make the player commit to the STALL
 		if (currentPlayerState == EPlayerState.Dying)
 		{
 			stallCommit -= Time.deltaTime;
@@ -109,7 +109,7 @@ public class StateManager : MonoBehaviour
 			escapeStall = false;
 		}
 		
-		//Anti spam funciton for stall
+		// Anti-spam function for stall
 		timeBetweenStall -= Time.deltaTime;
 		
         // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
@@ -348,17 +348,17 @@ public class StateManager : MonoBehaviour
 			}
 		}
 		
-		//Stop spamming stall
+		// Stop spamming stall
 		if (currentPlayerState == EPlayerState.Dying || currentPlayerState == EPlayerState.Suicide || currentPlayerState == EPlayerState.Roulette)
 		{
 			timeBetweenStall = 5.0f;
 		}
 		
-		//Hacky!! Make auto stall an option
+		// Hacky!! Make auto stall an option
 		if (currentPlayerState == EPlayerState.Dying)
 		{
 		
-			//If the button is not down, but the player is allowed to escape the stall anyway.
+			// If the button is not down, but the player is allowed to escape the stall anyway.
 			if (!Input.GetButton(gameObject.tag + "Select"))
 			{
 				if (escapeStall)
