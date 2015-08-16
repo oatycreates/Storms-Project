@@ -82,10 +82,10 @@ public class StateManager : MonoBehaviour
 	void Update () 
 	{
         // Hehehe
-		if (Application.isEditor == true)
-		{
+		//if (Application.isEditor == true)
+		//{
 			DevHacks();
-		}
+		//}
 
         // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
         if (currentPlayerState == EPlayerState.Roulette)
