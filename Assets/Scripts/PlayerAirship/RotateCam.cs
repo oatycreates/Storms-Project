@@ -39,8 +39,8 @@ public class RotateCam : MonoBehaviour
 	
 	//Fix cam to position
 	public float camTurnMultiplier = 1.0f;
-	private float totalVert = 0;
-	private float totalHori = 0;
+	public float totalVert = 0;
+	public float totalHori = 0;
 	
 
 	void Start()
@@ -50,10 +50,15 @@ public class RotateCam : MonoBehaviour
 
 	public void ResetCamRotation()
 	{
-		//totalHori = Mathf.Lerp(totalHori, 0, Time.deltaTime * 3);
-		//totalVert = Mathf.Lerp(totalVert, 0, Time.deltaTime * 3);
 		totalHori = 0;
 		totalVert = 0;
+	}
+	
+	void Update()
+	{
+		//Clamp the totalVert values
+		totalVert = Mathf.Clamp(totalVert, -1.25f, 1.25f);
+		totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
 	}
 
 	public void PlayerInputs(float camVertical, float camHorizontal, float triggerAxis, bool leftBumper, bool rightBumper, bool leftClick, bool rightClick)
@@ -65,20 +70,6 @@ public class RotateCam : MonoBehaviour
 		}
 		
 		//Reset on accelerate
-		/*
-		if (triggerAxis > 0)
-		{
-			if (!movingForward)
-			{
-				ResetCamRotation();
-			}
-			movingForward = true;
-		}
-		else
-		{
-			movingForward = false;
-		}*/
-		
 		if (triggerAxis > 0)
 		{
 			//Check for direct cam input first
@@ -86,10 +77,7 @@ public class RotateCam : MonoBehaviour
 			{
 				ResetCamRotation();
 			}
-		}
-		
-		//If Ship is reversing, make cam rotate speed slow down.
-		
+		}		
 		
 	
 		//Lock up/down
@@ -218,9 +206,8 @@ public class RotateCam : MonoBehaviour
 		camProxyTarget.transform.localPosition = new Vector3(xPos, camProxyTarget.transform.localPosition.y, -zPos);
 	
 
-
-
 	}
+	
 	
 	void Cannons(ECannonPos a_angle)
     {
