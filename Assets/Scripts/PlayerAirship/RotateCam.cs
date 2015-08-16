@@ -36,20 +36,90 @@ public class RotateCam : MonoBehaviour
 	
 	//Link to Cannons
 	public GameObject[] cannons;
-
+	
+	//Fix cam to position
+	public float camTurnMultiplier = 1.0f;
+	private float totalVert = 0;
+	private float totalHori = 0;
+	
 
 	void Start()
 	{
 		referenceStateManager = gameObject.GetComponent<StateManager>();
 	}
 
-
-
-	public void PlayerInputs(float camVertical, float camHorizontal, bool leftBumper, bool rightBumper)
+	public void ResetCamRotation()
 	{
+		//totalHori = Mathf.Lerp(totalHori, 0, Time.deltaTime * 3);
+		//totalVert = Mathf.Lerp(totalVert, 0, Time.deltaTime * 3);
+		totalHori = 0;
+		totalVert = 0;
+	}
 
-		tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
-		tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
+	public void PlayerInputs(float camVertical, float camHorizontal, float triggerAxis, bool leftBumper, bool rightBumper, bool leftClick, bool rightClick)
+	{
+		//Reset on click
+		if (leftClick || rightClick)
+		{
+			ResetCamRotation();
+		}
+		
+		//Reset on accelerate
+		/*
+		if (triggerAxis > 0)
+		{
+			if (!movingForward)
+			{
+				ResetCamRotation();
+			}
+			movingForward = true;
+		}
+		else
+		{
+			movingForward = false;
+		}*/
+		
+		if (triggerAxis > 0)
+		{
+			//Check for direct cam input first
+			if (camHorizontal == 0 || camVertical == 0)
+			{
+				ResetCamRotation();
+			}
+		}
+		
+		//If Ship is reversing, make cam rotate speed slow down.
+		
+		
+	
+		//Lock up/down
+		if (camVertical > 0)
+		{
+			totalVert -= 0.01f * camTurnMultiplier;
+		}	
+		
+		if (camVertical < 0)
+		{
+			totalVert += 0.01f * camTurnMultiplier;
+		}
+		
+		//Lock left/right
+		if (camHorizontal > 0)
+		{
+			totalHori += 0.01f * camTurnMultiplier;
+		}
+		
+		if (camHorizontal < 0)
+		{	
+			totalHori -= 0.01f * camTurnMultiplier;
+		}
+
+
+		tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
+		tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
+		
+		//tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
+		//tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
 		
 		if (invertUpDown)
 		{
