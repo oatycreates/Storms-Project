@@ -15,6 +15,7 @@ using System.Collections;
 /// </summary>
 public enum EPlayerState
 {
+    Pregame, 
     Roulette, 
     Control, 
     Dying, 
@@ -70,7 +71,7 @@ public class StateManager : MonoBehaviour
 	void Start () 
 	{
 		//currentPlayerState = EPlayerState.Roulette;
-		currentPlayerState = EPlayerState.Control;
+        currentPlayerState = EPlayerState.Pregame;
 		
 		m_rouletteScript = gameObject.GetComponent<RouletteBehaviour>();
 		m_airshipScript = gameObject.GetComponent<AirshipControlBehaviour>();
@@ -111,176 +112,200 @@ public class StateManager : MonoBehaviour
 		
 		// Anti-spam function for stall
 		timeBetweenStall -= Time.deltaTime;
+
+        // Before the round begins, have a 'press any button to join' prompt
+        if (currentPlayerState == EPlayerState.Pregame)
+        {
+
+        }
 		
-        // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
+        // The player airship is not being used while the roulette wheel is spinning, the airship is deactivated
         if (currentPlayerState == EPlayerState.Roulette)
 		{
-			// Roulette control
-			m_rouletteScript.enabled = true;
-			// Reset position
-			m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
-			m_airshipScript.enabled = false;
-			m_dyingScript.enabled = false;
-			m_suicideScript.enabled = false;
-			
-			// We don't need to see the airship during the roulette wheel
-			if (colliders != null)
-			{
-				colliders.SetActive(false);
-			}
-			
-			if (meshes != null)
-			{
-				meshes.SetActive(false);
-			}
-
-			if (hinges != null)
-			{
-				hinges.SetActive(false);
-			}
-
-			if (rouletteHierachy != null)
-			{
-				rouletteHierachy.SetActive(true);
-			}
-			
-			if (particlesEffectsHierachy != null)
-			{
-				particlesEffectsHierachy.SetActive(false);
-			}
-			
-			if (weaponsHierachy != null)
-			{
-				weaponsHierachy.SetActive(false);
-			}
+            RouletteUpdate();
 		}
 
         // Standard player airship control
 		if (currentPlayerState == EPlayerState.Control)
 		{
-			// Standard Physics Control
-			m_rouletteScript.enabled = false;
-			m_airshipScript.enabled = true;
-			//m_dyingScript.ResetTimer();
-			m_dyingScript.enabled = false;
-			
-			m_suicideScript.ResetTimer();
-			m_suicideScript.enabled = false;
-			
-			if (colliders != null)
-			{
-				colliders.SetActive(true);
-			}
-			
-			if (meshes != null)
-			{
-				meshes.SetActive(true);
-			}
-
-			if (hinges != null)
-			{
-				hinges.SetActive(true);
-			}
-			
-			if (rouletteHierachy != null)
-			{
-				rouletteHierachy.SetActive(false);
-			}
-			
-			if (particlesEffectsHierachy != null)
-			{
-				particlesEffectsHierachy.SetActive(true);
-			}
-			
-			if (weaponsHierachy != null)
-			{
-				weaponsHierachy.SetActive(true);
-			}
-
+            ControlUpdate();
 		}
 
         // Player has no-control over airship, but it's still affected by forces. Gravity is making the airship fall
 		if (currentPlayerState == EPlayerState.Dying)
 		{
-			// No Control, gravity makes airship fall
-			m_rouletteScript.enabled = false;
-			m_airshipScript.enabled = false;
-			m_dyingScript.enabled = true;
-			m_suicideScript.enabled = false;
-			
-			
-			if (colliders != null)
-			{
-				colliders.SetActive(true);
-			}
-			
-			if (meshes != null)
-			{
-				meshes.SetActive(true);
-			}
-
-			if (hinges != null)
-			{
-				hinges.SetActive(true);
-			}
-			
-			if (rouletteHierachy != null)
-			{
-				rouletteHierachy.SetActive(false);
-			}
-			
-			if (particlesEffectsHierachy != null)
-			{
-				particlesEffectsHierachy.SetActive(true);
-			}
-			
-			if (weaponsHierachy != null)
-			{
-				weaponsHierachy.SetActive(false);
-			}
+            DyingUpdate();
 		}
 
         // Recent addition- this is for the fireship/suicide function - the player has limited control here, needs further experimentation
 		if (currentPlayerState == EPlayerState.Suicide)
 		{
-			// Airship behaves like a rocket
-			m_rouletteScript.enabled = false;
-			m_airshipScript.enabled = false;
-			m_dyingScript.enabled = false;
-			m_suicideScript.enabled = true;
-			
-			if (colliders != null)
-			{
-				colliders.SetActive(true);
-			}
-			
-			if (meshes != null)
-			{
-				meshes.SetActive(true);
-			}
-
-			if (hinges != null)
-			{
-				hinges.SetActive(true);
-			}
-			
-			if (rouletteHierachy != null)
-			{
-				rouletteHierachy.SetActive(false);
-			}
-			
-			if (particlesEffectsHierachy != null)
-			{
-				particlesEffectsHierachy.SetActive(true);
-			}
-			
-			if (weaponsHierachy != null)
-			{
-				weaponsHierachy.SetActive(false);
-			}
+            SuicideUpdate();
 		}
 
 	}
+
+    private void SuicideUpdate()
+    {
+        // Airship behaves like a rocket
+        m_rouletteScript.enabled = false;
+        m_airshipScript.enabled = false;
+        m_dyingScript.enabled = false;
+        m_suicideScript.enabled = true;
+
+        if (colliders != null)
+        {
+            colliders.SetActive(true);
+        }
+
+        if (meshes != null)
+        {
+            meshes.SetActive(true);
+        }
+
+        if (hinges != null)
+        {
+            hinges.SetActive(true);
+        }
+
+        if (rouletteHierachy != null)
+        {
+            rouletteHierachy.SetActive(false);
+        }
+
+        if (particlesEffectsHierachy != null)
+        {
+            particlesEffectsHierachy.SetActive(true);
+        }
+
+        if (weaponsHierachy != null)
+        {
+            weaponsHierachy.SetActive(false);
+        }
+    }
+
+    private void DyingUpdate()
+    {
+        // No Control, gravity makes airship fall
+        m_rouletteScript.enabled = false;
+        m_airshipScript.enabled = false;
+        m_dyingScript.enabled = true;
+        m_suicideScript.enabled = false;
+
+        if (colliders != null)
+        {
+            colliders.SetActive(true);
+        }
+
+        if (meshes != null)
+        {
+            meshes.SetActive(true);
+        }
+
+        if (hinges != null)
+        {
+            hinges.SetActive(true);
+        }
+
+        if (rouletteHierachy != null)
+        {
+            rouletteHierachy.SetActive(false);
+        }
+
+        if (particlesEffectsHierachy != null)
+        {
+            particlesEffectsHierachy.SetActive(true);
+        }
+
+        if (weaponsHierachy != null)
+        {
+            weaponsHierachy.SetActive(false);
+        }
+    }
+
+    private void ControlUpdate()
+    {
+        // Standard Physics Control
+        m_rouletteScript.enabled = false;
+        m_airshipScript.enabled = true;
+        //m_dyingScript.ResetTimer();
+        m_dyingScript.enabled = false;
+
+        m_suicideScript.ResetTimer();
+        m_suicideScript.enabled = false;
+
+        if (colliders != null)
+        {
+            colliders.SetActive(true);
+        }
+
+        if (meshes != null)
+        {
+            meshes.SetActive(true);
+        }
+
+        if (hinges != null)
+        {
+            hinges.SetActive(true);
+        }
+
+        if (rouletteHierachy != null)
+        {
+            rouletteHierachy.SetActive(false);
+        }
+
+        if (particlesEffectsHierachy != null)
+        {
+            particlesEffectsHierachy.SetActive(true);
+        }
+
+        if (weaponsHierachy != null)
+        {
+            weaponsHierachy.SetActive(true);
+        }
+    }
+
+    private void RouletteUpdate()
+    {
+        // Roulette control
+        m_rouletteScript.enabled = true;
+        // Reset position
+        m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+        m_airshipScript.enabled = false;
+        m_dyingScript.enabled = false;
+        m_suicideScript.enabled = false;
+
+        // We don't need to see the airship during the roulette wheel
+        if (colliders != null)
+        {
+            colliders.SetActive(false);
+        }
+
+        if (meshes != null)
+        {
+            meshes.SetActive(false);
+        }
+
+        if (hinges != null)
+        {
+            hinges.SetActive(false);
+        }
+
+        if (rouletteHierachy != null)
+        {
+            rouletteHierachy.SetActive(true);
+        }
+
+        if (particlesEffectsHierachy != null)
+        {
+            particlesEffectsHierachy.SetActive(false);
+        }
+
+        if (weaponsHierachy != null)
+        {
+            weaponsHierachy.SetActive(false);
+        }
+    }
 	
     /// <summary>
     /// Skip to next EPlayerState.
