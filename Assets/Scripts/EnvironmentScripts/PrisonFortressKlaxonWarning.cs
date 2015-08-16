@@ -56,8 +56,6 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 	public SpawnPassengers sternPassengerSpawn;
 	public SpawnPassengers hullPassengerSpawn;
 	
-	
-	
 	void Start () 
 	{
 		m_mySource = gameObject.GetComponent<AudioSource>();
@@ -191,9 +189,12 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 	void Warning()
 	{
 		m_mySource.clip = klaxonSound;
-			
-		sternLight.color = Color.red;
-		hullLight.color = Color.red;
+		
+        Color stateColour = Color.red;
+		sternLight.color = stateColour;
+		hullLight.color = stateColour;
+
+        UpdateSpawnerLaserColour(stateColour);
 		
 		m_lightUp = true;
 		
@@ -203,16 +204,35 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 		sternPassengerSpawn.currentlySpawning = false;
 		hullPassengerSpawn.currentlySpawning = false;
 	}
+
+    private void UpdateSpawnerLaserColour(Color a_baseColour)
+    {
+        Color laserColour = a_baseColour;
+        if (sternPassengerSpawn.spawnHelperLaser != null)
+        {
+            laserColour.a = sternPassengerSpawn.GetSpawnLaserAlpha();
+            sternPassengerSpawn.spawnHelperLaser.SetColors(laserColour, laserColour);
+        }
+        if (hullPassengerSpawn.spawnHelperLaser != null)
+        {
+            laserColour.a = hullPassengerSpawn.GetSpawnLaserAlpha();
+            hullPassengerSpawn.spawnHelperLaser.SetColors(laserColour, laserColour);
+        }
+    }
 	
 	
 	/// <summary>
     /// Spawning is called repeatedly for a bit, before returning to Warning.
 	/// </summary>
 	void Spawning()
-	{	
-		sternLight.color = Color.green;
-		hullLight.color = Color.green;
-		m_lightUp = true;
+    {
+        Color stateColour = Color.green;
+        sternLight.color = stateColour;
+        hullLight.color = stateColour;
+        m_lightUp = true;
+
+        // Update spawn laser colour
+        UpdateSpawnerLaserColour(stateColour);
 		
 		sternPassengerSpawn.currentlySpawning = true;
 		hullPassengerSpawn.currentlySpawning = true;

@@ -3150,6 +3150,8 @@ MonoBehaviour:
   pooledAmount: 350
   spawnRateInSeconds: .100000001
   passengerPrefab: {fileID: 169638, guid: 79d83c9293d94454bbc67968fd5c36b1, type: 2}
+  spawnHelperLaser: {fileID: 12094386}
+  spawnLaserAlpha: .200000003
   rayCastLength: 50
 --- !u!114 &11428138
 MonoBehaviour:
@@ -3180,6 +3182,8 @@ MonoBehaviour:
   pooledAmount: 350
   spawnRateInSeconds: .100000001
   passengerPrefab: {fileID: 169638, guid: 79d83c9293d94454bbc67968fd5c36b1, type: 2}
+  spawnHelperLaser: {fileID: 0}
+  spawnLaserAlpha: .200000003
   rayCastLength: 50
 --- !u!120 &12094386
 LineRenderer:
@@ -3213,10 +3217,10 @@ LineRenderer:
     endWidth: 3
     m_StartColor:
       serializedVersion: 2
-      rgba: 838861055
+      rgba: 503316735
     m_EndColor:
       serializedVersion: 2
-      rgba: 838861055
+      rgba: 503316735
   m_UseWorldSpace: 0
 --- !u!136 &13604020
 CapsuleCollider:

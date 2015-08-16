@@ -38,6 +38,9 @@ public class SpawnPassengers : MonoBehaviour
 
 	public GameObject passengerPrefab;
 
+    public LineRenderer spawnHelperLaser;
+    public float spawnLaserAlpha = 1.0f;
+
     // Detect player presence
     public float rayCastLength = 50.0f;
 	private Ray m_myRay;
@@ -168,4 +171,9 @@ public class SpawnPassengers : MonoBehaviour
 			}
 		}
 	}
+
+    public float GetSpawnLaserAlpha()
+    {
+        return spawnLaserAlpha;
+    }
 }
