@@ -30,6 +30,8 @@ public class PirateBaseIdentity : MonoBehaviour
     public Renderer flagRenderer;
     public Renderer flagBackRenderer;
 
+    public LineRenderer dropzoneLineRenderer;
+
 	void Start() 
 	{
 		baseColour = Color.clear;
@@ -72,6 +74,11 @@ public class PirateBaseIdentity : MonoBehaviour
         flagColour.a *= 0.75f;
         flagRenderer.material.color = flagColour;
         flagBackRenderer.material.color = flagColour;
+
+        // Set the drop-zone's colour
+        Color dropzoneColour = baseColour;
+        dropzoneColour.a *= 0.2f;
+        dropzoneLineRenderer.SetColors(dropzoneColour, dropzoneColour);
 
 		// Set the colour of text in DetectFallingPassengersScript
 		baseTriggerZone.textColour = myRenderer.material.color;
