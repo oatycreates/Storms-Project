@@ -60,6 +60,12 @@ public class StateManager : MonoBehaviour
 	private Vector3 m_worldStartPos;
 	private Quaternion m_worldStartRotation;
 	
+	private float stallCommit = 1.0f;
+	private bool escapeStall = false;
+	
+	[HideInInspector]
+	public float timeBetweenStall = 5.0f;
+	
 
 	void Start () 
 	{
@@ -76,17 +82,36 @@ public class StateManager : MonoBehaviour
 		// World position & rotation
 		m_worldStartPos = gameObject.transform.position;
 		m_worldStartRotation = gameObject.transform.rotation;
+
 	}
 	
 	
 	void Update () 
-	{
+	{	
         // Hehehe
 		//if (Application.isEditor == true)
 		//{
 			DevHacks();
 		//}
-
+		
+		//Make the player commit to the STALL
+		if (currentPlayerState == EPlayerState.Dying)
+		{
+			stallCommit -= Time.deltaTime;
+		}
+		
+		if (stallCommit < 0)
+		{
+			escapeStall = true;
+		}
+		else
+		{
+			escapeStall = false;
+		}
+		
+		//Anti spam funciton for stall
+		timeBetweenStall -= Time.deltaTime;
+		
         // The player airship is not being used while the roulette wheel is spinning. (Airship is deactivated).
         if (currentPlayerState == EPlayerState.Roulette)
 		{
@@ -136,7 +161,7 @@ public class StateManager : MonoBehaviour
 			// Standard Physics Control
 			m_rouletteScript.enabled = false;
 			m_airshipScript.enabled = true;
-			m_dyingScript.ResetTimer();
+			//m_dyingScript.ResetTimer();
 			m_dyingScript.enabled = false;
 			
 			m_suicideScript.ResetTimer();
@@ -285,6 +310,8 @@ public class StateManager : MonoBehaviour
 			currentPlayerState = EPlayerState.Suicide;
 		}
 		
+		//Old code- consider removing
+		/*
 		//inputs
 		if (Input.GetButtonDown(gameObject.tag + "Select"))
 		{
@@ -309,15 +336,49 @@ public class StateManager : MonoBehaviour
 				currentPlayerState = EPlayerState.Control;
 			}
 		}
+		*/
+		if (currentPlayerState == EPlayerState.Control)
+		{
+			if (Input.GetButtonDown(gameObject.tag + "Select"))
+			{
+				if (timeBetweenStall < 0)
+				{
+					currentPlayerState = EPlayerState.Dying;
+				}
+			}
+		}
+		
+		//Stop spamming stall
+		if (currentPlayerState == EPlayerState.Dying || currentPlayerState == EPlayerState.Suicide || currentPlayerState == EPlayerState.Roulette)
+		{
+			timeBetweenStall = 5.0f;
+		}
 		
 		//Hacky!! Make auto stall an option
-		if (Input.GetButtonUp(gameObject.tag + "Select"))
+		if (currentPlayerState == EPlayerState.Dying)
 		{
-			if (currentPlayerState == EPlayerState.Dying)
+		
+			//If the button is not down, but the player is allowed to escape the stall anyway.
+			if (!Input.GetButton(gameObject.tag + "Select"))
 			{
-				//currentPlayerState = EPlayerState.Control;
-				currentPlayerState = EPlayerState.Suicide;
+				if (escapeStall)
+				{
+					//Take a Stall value and pass it into the suicide script.
+					float timer = m_dyingScript.timerUntilBoost;
+				
+					currentPlayerState = EPlayerState.Suicide;
+					
+					m_suicideScript.timerUntilReset = timer;
+					
+					Debug.Log(timer);
+				}
 			}
+		}
+		
+		if (currentPlayerState == EPlayerState.Control)
+		{
+			//Then player is not stalling
+			stallCommit = 1.0f;
 		}
 		
 		

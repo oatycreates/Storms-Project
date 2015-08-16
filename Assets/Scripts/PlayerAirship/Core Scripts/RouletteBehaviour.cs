@@ -50,7 +50,7 @@ public class RouletteBehaviour : MonoBehaviour
 		
 		// Reset the values on the other scripts- this way, they'll be ready the next time we need them
 		gameObject.GetComponent<AirshipSuicideBehaviour>().timerUntilReset = 15.0f;
-		gameObject.GetComponent<AirshipDyingBehaviour>().timerUntilReset = 4.0f;
+		gameObject.GetComponent<AirshipDyingBehaviour>().timerUntilBoost = 4.0f;
 		
 	}
 	

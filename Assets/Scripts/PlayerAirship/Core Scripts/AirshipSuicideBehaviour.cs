@@ -21,7 +21,8 @@ public class AirshipSuicideBehaviour : MonoBehaviour
     /// <summary>
     /// How long untill the player defaults back to the roulette selection screen?
     /// </summary>
-	public float timerUntilReset = 15.0f;
+    [HideInInspector]
+	public float timerUntilReset = 0;
 	private float hiddenResetValue;
 	
 	//Less inputs than the standard airship controller

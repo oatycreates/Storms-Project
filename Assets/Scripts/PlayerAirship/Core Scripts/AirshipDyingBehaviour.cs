@@ -24,8 +24,8 @@ public class AirshipDyingBehaviour : MonoBehaviour
     /// <summary>
     /// How long should the player watch their ship falling until it resets and takes them to the Roulette screen - experiment with this.
     /// </summary>
-    public float timerUntilReset = 4.0f;
-    private float hiddenValueReset;
+    [HideInInspector]
+    public float timerUntilBoost = 0.0f;
 
     /// <summary>
     /// How hard to explode the ship's contents away.
@@ -67,7 +67,7 @@ public class AirshipDyingBehaviour : MonoBehaviour
             Debug.LogError("The explosion centre transform is not set!");
         }
         
-        hiddenValueReset = timerUntilReset;
+        timerUntilBoost = 0.0f;
     }
 	
 	void OnEnable()
@@ -77,6 +77,9 @@ public class AirshipDyingBehaviour : MonoBehaviour
 
         // Stop the propeller from moving
         m_anim.SetFloat(m_animPropellerMult, 0.0f);
+        
+        //Reset the timer
+        timerUntilBoost = 0.0f;
 	}
 	
 	void Update()
@@ -88,9 +91,14 @@ public class AirshipDyingBehaviour : MonoBehaviour
 		airshipMainCam.camFollowPlayer = false;
 		
 		// Time unil the player state resets
-		timerUntilReset -= Time.deltaTime;
 		
-		if (timerUntilReset < 0.0f)
+		if (timerUntilBoost < 10.0f)
+		{
+			timerUntilBoost += Time.deltaTime;
+		}
+		
+		/*
+		if (timerUntilBoost < 0.0f)
 		{
 			// Reset the camera and change the play state
 			airshipMainCam.camFollowPlayer = true;
@@ -98,10 +106,12 @@ public class AirshipDyingBehaviour : MonoBehaviour
 			//Skip Roulette for now - go to suicide or control
 			gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Suicide;
 		}
+		*/
 	}
 	
+	/*
 	public void ResetTimer()
 	{
-		timerUntilReset = hiddenValueReset;
-	}
+		timerUntilBoost = hiddenValueReset;
+	}*/
 }
