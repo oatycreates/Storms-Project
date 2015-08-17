@@ -331,6 +331,7 @@ GameObject:
   - 4: {fileID: 450782}
   - 33: {fileID: 3320702}
   - 23: {fileID: 2386198}
+  - 114: {fileID: 11461980}
   m_Layer: 0
   m_Name: Door_Top_Right
   m_TagString: Untagged
@@ -812,6 +813,7 @@ GameObject:
   - 4: {fileID: 413974}
   - 33: {fileID: 3319984}
   - 23: {fileID: 2337832}
+  - 114: {fileID: 11419508}
   m_Layer: 0
   m_Name: Door_Bot_Right
   m_TagString: Untagged
@@ -1051,6 +1053,7 @@ GameObject:
   - 4: {fileID: 458852}
   - 33: {fileID: 3348284}
   - 23: {fileID: 2307238}
+  - 114: {fileID: 11433896}
   m_Layer: 0
   m_Name: Door_Top_Left
   m_TagString: Untagged
@@ -1302,6 +1305,7 @@ GameObject:
   - 4: {fileID: 482610}
   - 33: {fileID: 3311730}
   - 23: {fileID: 2316652}
+  - 114: {fileID: 11471064}
   m_Layer: 0
   m_Name: Door_Bot_Left
   m_TagString: Untagged
@@ -4171,6 +4175,20 @@ MonoBehaviour:
   axis: 1
   maxRotationDegrees: 45
   airshipControlBehaviour: {fileID: 11429062}
+--- !u!114 &11419508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393f8057718b1e949b6aa322ebecc1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRotationInDegrees: 90
+  controller: {fileID: 11429062}
+  flipDirection: 0
 --- !u!114 &11421384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4349,6 +4367,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rouletteEndWait: .5
   rotatorJoint: {fileID: 160232}
+--- !u!114 &11433896
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393f8057718b1e949b6aa322ebecc1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRotationInDegrees: 90
+  controller: {fileID: 11429062}
+  flipDirection: 1
 --- !u!114 &11436902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4511,6 +4543,20 @@ MonoBehaviour:
   m_Text: 'Health Boost
 
 '
+--- !u!114 &11461980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393f8057718b1e949b6aa322ebecc1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRotationInDegrees: 90
+  controller: {fileID: 11429062}
+  flipDirection: 0
 --- !u!114 &11463058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4528,6 +4574,20 @@ MonoBehaviour:
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
+--- !u!114 &11471064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 393f8057718b1e949b6aa322ebecc1fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRotationInDegrees: 90
+  controller: {fileID: 11429062}
+  flipDirection: 1
 --- !u!114 &11471642
 MonoBehaviour:
   m_ObjectHideFlags: 1
