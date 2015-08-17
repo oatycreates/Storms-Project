@@ -89,7 +89,8 @@ ModelImporter:
     4300026: Door_Bot_Left
     4300028: Door_Bot_Right
     4300030: Door_Top_Right
-    7400000: Take 001
+    7400000: Open
+    7400002: Close
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -110,7 +111,131 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Open
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 15
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back_rail
+        weight: 1
+      - path: balloon_left
+        weight: 1
+      - path: balloon_right
+        weight: 1
+      - path: cannons
+        weight: 1
+      - path: front_balloon
+        weight: 1
+      - path: mast
+        weight: 1
+      - path: Middle_Platform
+        weight: 1
+      - path: rotor
+        weight: 1
+      - path: rudder
+        weight: 1
+      - path: Sail
+        weight: 1
+      - path: Ship_Hull
+        weight: 1
+      - path: Steering_Wheel
+        weight: 1
+      - path: Trap_Doors
+        weight: 1
+      - path: Trap_Doors/Door_Bot_Left
+        weight: 1
+      - path: Trap_Doors/Door_Bot_Right
+        weight: 1
+      - path: Trap_Doors/Door_Top_Left
+        weight: 1
+      - path: Trap_Doors/Door_Top_Right
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Close
+      takeName: Take 001
+      firstFrame: 16
+      lastFrame: 31
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: back_rail
+        weight: 1
+      - path: balloon_left
+        weight: 1
+      - path: balloon_right
+        weight: 1
+      - path: cannons
+        weight: 1
+      - path: front_balloon
+        weight: 1
+      - path: mast
+        weight: 1
+      - path: Middle_Platform
+        weight: 1
+      - path: rotor
+        weight: 1
+      - path: rudder
+        weight: 1
+      - path: Sail
+        weight: 1
+      - path: Ship_Hull
+        weight: 1
+      - path: Steering_Wheel
+        weight: 1
+      - path: Trap_Doors
+        weight: 1
+      - path: Trap_Doors/Door_Bot_Left
+        weight: 1
+      - path: Trap_Doors/Door_Bot_Right
+        weight: 1
+      - path: Trap_Doors/Door_Top_Left
+        weight: 1
+      - path: Trap_Doors/Door_Top_Right
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []

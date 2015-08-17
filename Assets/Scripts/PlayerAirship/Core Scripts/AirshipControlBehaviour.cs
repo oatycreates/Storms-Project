@@ -160,7 +160,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 		throttle = a_triggers;
 		
 		//Check buttonPresses
-		openHatch = a_faceUp;
+		openHatch = (a_faceUp || a_faceDown);
 		
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
 		ClampInputs();

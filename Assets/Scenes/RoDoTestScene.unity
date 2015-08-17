@@ -359,7 +359,7 @@ Transform:
   - {fileID: 33152083}
   - {fileID: 688195463}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1001 &688195461
 Prefab:
   m_ObjectHideFlags: 0
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCamera: 0
-  cam1: {fileID: 1578433602}
+  cam1: {fileID: 1109678144}
   cam2: {fileID: 0}
   cam3: {fileID: 0}
   cam4: {fileID: 0}
@@ -528,7 +528,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!81 &789288391
 AudioListener:
   m_ObjectHideFlags: 0
@@ -536,7 +536,7 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 789288388}
   m_Enabled: 1
---- !u!1001 &1112967025
+--- !u!1001 &1017549849
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -573,11 +573,16 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 464424, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
   m_IsPrefabParent: 0
+--- !u!20 &1109678144 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2069098, guid: 326e40a1a64984b429262974b7cdcb6f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1017549849}
 --- !u!1001 &1176850533
 Prefab:
   m_ObjectHideFlags: 0
@@ -760,11 +765,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
   m_IsPrefabParent: 0
---- !u!20 &1578433602 stripped
-Camera:
-  m_PrefabParentObject: {fileID: 2069098, guid: 326e40a1a64984b429262974b7cdcb6f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1112967025}
 --- !u!1001 &1656772493
 Prefab:
   m_ObjectHideFlags: 0
@@ -866,4 +866,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
