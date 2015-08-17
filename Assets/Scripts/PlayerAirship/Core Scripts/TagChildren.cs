@@ -18,12 +18,13 @@ public class TagChildren : MonoBehaviour
 {
 	void Start()
 	{
-		foreach (Transform child in gameObject.transform)
+        Transform[] transChilds = gameObject.GetComponentsInChildren<Transform>();
+        foreach (Transform child in transChilds)
 		{
             // Make the child tag == my tag
 			child.gameObject.tag = gameObject.tag;
             // Recurse
-			child.gameObject.AddComponent<TagChildren>();
+			//child.gameObject.AddComponent<TagChildren>();
 		}
 	}
 }
