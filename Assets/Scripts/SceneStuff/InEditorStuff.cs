@@ -91,5 +91,9 @@ public class InEditorStuff : MonoBehaviour
             // Explain game states
             m_canvasText.text = ("State: " + (m_stateManager.GetPlayerState()));
         }
+        else
+        {
+            m_canvasText.text = "";
+        }
 	}
 }
