@@ -70,14 +70,14 @@ public class RotateCam : MonoBehaviour
 		}
 		
 		//Reset on accelerate
-		if (triggerAxis > 0)
+		/*if (triggerAxis > 0)
 		{
 			//Check for direct cam input first
 			if (camHorizontal == 0 || camVertical == 0)
 			{
 				ResetCamRotation();
 			}
-		}		
+		}*/
 		
 	
 		//Lock up/down
