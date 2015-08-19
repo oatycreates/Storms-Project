@@ -57,11 +57,15 @@ public class RouletteSpinWheel : MonoBehaviour
     private Transform m_rotatorTrans;
     private StateManager m_parentStateManager = null;
 
+    void Awake()
+    {
+        m_trans = transform;
+        m_myRigid = GetComponent<Rigidbody>();
+    }
+
     void Start()
     {
         m_rotatorTrans = rotatorJoint.transform;
-        m_trans = transform;
-        m_myRigid = GetComponent<Rigidbody>();
     }
 
 	void OnEnable() 
