@@ -267,8 +267,11 @@ public class AirshipControlBehaviour : MonoBehaviour
         // Handle worse when laden
         float handleMod = CalcHandlingMassMult();
 
-        torque += handleMod * -pitch * m_myRigid.transform.right * pitchForce;
-        torque += handleMod * yaw * m_myRigid.transform.up * yawForce;
+        // Reverse 
+        float reverseMult = throttle < 0 ? -1 : 1;
+
+        torque += handleMod * -pitch * reverseMult * m_myRigid.transform.right * pitchForce;
+        torque += handleMod * yaw * reverseMult * m_myRigid.transform.up * yawForce;
         torque += handleMod * -roll * m_myRigid.transform.forward * rollForce;
 
         // Add all the torque forces together
@@ -276,7 +279,7 @@ public class AirshipControlBehaviour : MonoBehaviour
 	}
 
     /// <summary>
-    /// Attempts to auto-level the player's ship. Counters roll moreso than pitch, ignores yaw.
+    /// Attempts to auto-level the player's ship. Counters roll more-so than pitch, ignores yaw.
     /// </summary>
     private void CalculateRightingForce()
     {
