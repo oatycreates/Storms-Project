@@ -57,11 +57,8 @@ public class Temp_TrapdoorScript : MonoBehaviour
 	
 	void SetAxis()
 	{
-		float rotateX = gameObject.transform.localEulerAngles.x;
-		float rotateY = gameObject.transform.localEulerAngles.y;
-		//float rotateZ = gameObject.transform.localEulerAngles.z;
-
-        m_trans.localRotation = Quaternion.Euler(rotateX, rotateY, rotateAmount);
+        Vector3 localRot = m_trans.localEulerAngles;
+        m_trans.localRotation = Quaternion.Euler(localRot.x, localRot.y, rotateAmount);
 	}
 	
 }
