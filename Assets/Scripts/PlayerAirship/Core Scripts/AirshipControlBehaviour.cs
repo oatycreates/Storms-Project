@@ -26,7 +26,12 @@ public class AirshipControlBehaviour : MonoBehaviour
     /// Movement speed of the airship.
     /// Try 50 here and see how we go.
     /// </summary>
-	public float generalSpeed = 50.0f;
+	public float generalSpeed = 200.0f;
+
+    /// <summary>
+    /// Speed multiplier for the reverse throttle value.
+    /// </summary>
+    public float reverseSpeedMult = 0.5f;
 
     /// <summary>
     /// How much pitching the vehicle will affect its facing.
@@ -136,10 +141,7 @@ public class AirshipControlBehaviour : MonoBehaviour
         bool a_faceLeft,    // X - Fire broadside left
         bool a_faceRight)   // B - Fire broadside right
 	{
-	
-       
-        
-        //Use this to convert buttonpresses to axis input;
+        // Use this to convert buttonpresses to axis input;
         float rollFloat = 0;
         
         if (a_faceLeft)
@@ -172,19 +174,16 @@ public class AirshipControlBehaviour : MonoBehaviour
         */
 
         // Spin the propeller
-        float origThrottleBounded = throttle * 0.5f + 0.5f; // [-1, 1] to [0, 1]
-        float animThrottle = origThrottleBounded * 2.0f; // [0, 1] to [0, 2], 50% now maps to 100% anim throttle
+        float animThrottle = throttle * 2.0f; // [-1, 1] to [-2, 2], 50% now maps to 100% anim throttle
+        float animThrottleSign = animThrottle >= 0 ? 1 : -1;
+        animThrottle = Mathf.Abs(animThrottle);
         if (animThrottle > 1)
         {
             // Scale up to the animation throttle multiplier
-            animThrottle = origThrottleBounded * (animThrottleMult - 1) + 1;
+            float boundedThrottle = animThrottle * 0.5f + 0.5f;
+            animThrottle = boundedThrottle * (animThrottleMult - 1) + 1;
         }
-        else if (animThrottle < 0.05f)
-        {
-            // Cap to low speed
-            animThrottle = animLowThrottleMult;
-        }
-        m_anim.SetFloat(m_animPropellerMult, animThrottle);
+        m_anim.SetFloat(m_animPropellerMult, animThrottleSign * animThrottle);
 		
 	}
 	
@@ -224,8 +223,14 @@ public class AirshipControlBehaviour : MonoBehaviour
 	private void ConstantForwardMovement()
 	{
 		// 				general speed 	half or double general speed	+ 25% of general speed == Always a positive value
-		float speedMod = generalSpeed + (throttle * generalSpeed) /*+ (generalSpeed/4)*/;
+		float speedMod = (throttle * generalSpeed) /*+ (generalSpeed/4)*/;
 	
+        if (throttle < 0)
+        {
+            // Slow down reversing
+            speedMod *= reverseSpeedMult;
+        }
+
 		m_myRigid.AddRelativeForce(Vector3.forward * speedMod , ForceMode.Acceleration);
 
         // This finds the 'up' vector. It was a cool trick from The Standard Vehicle Assets
