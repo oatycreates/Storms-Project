@@ -29,10 +29,16 @@ public class RouletteBehaviour : MonoBehaviour
 
     // Cached variables
     private Rigidbody m_myRigid;
+    private Transform m_trans;
+    private AirshipSuicideBehaviour m_suicideBehaviour;
+    private AirshipDyingBehaviour m_dyingBehaviour;
 
 	void Awake()
 	{
-		m_myRigid = gameObject.GetComponent<Rigidbody>();
+		m_myRigid = GetComponent<Rigidbody>();
+        m_trans = transform;
+        m_suicideBehaviour = GetComponent<AirshipSuicideBehaviour>();
+        m_dyingBehaviour = GetComponent<AirshipDyingBehaviour>();
 	}
 
 	
@@ -49,14 +55,13 @@ public class RouletteBehaviour : MonoBehaviour
 		m_myRigid.angularVelocity = Vector3.zero;
 		
 		// Reset the values on the other scripts- this way, they'll be ready the next time we need them
-		gameObject.GetComponent<AirshipSuicideBehaviour>().timerUntilReset = 15.0f;
-		gameObject.GetComponent<AirshipDyingBehaviour>().timerUntilBoost = 4.0f;
-		
+        m_suicideBehaviour.timerUntilReset = 15.0f;
+        m_dyingBehaviour.timerUntilBoost = 4.0f;
 	}
 	
 	public void PlayerInput(bool a_stopWheel, bool a_SpinFaster)
 	{	
-		// Pass these values directly into the spinwheel script
+		// Pass these values directly into the spin-wheel script
 		if (spinWheel != null)	
 		{
 			spinWheel.ChangeSpeed(a_stopWheel, a_SpinFaster);
@@ -75,8 +80,8 @@ public class RouletteBehaviour : MonoBehaviour
 	public void ResetPosition(Vector3 a_pos, Quaternion a_rot)
 	{
         // Set world position and rotation
-		gameObject.transform.position = a_pos;
-		gameObject.transform.rotation = a_rot;
+		m_trans.position = a_pos;
+		m_trans.rotation = a_rot;
 
         // Reset the cam position as well!
         airshipMainCam.RouletteCam();
