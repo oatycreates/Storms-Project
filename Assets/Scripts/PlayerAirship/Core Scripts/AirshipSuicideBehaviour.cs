@@ -19,7 +19,7 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 	public GameObject fireShipParticles;
 	
     /// <summary>
-    /// How long untill the player defaults back to the roulette selection screen?
+    /// How long until the player defaults back to the roulette selection screen?
     /// </summary>
     [HideInInspector]
 	public float timerUntilReset = 0;
@@ -82,7 +82,7 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 		if (timerUntilReset < 0.0f)
 		{
 			// Try sending the airship back into control mode
-            m_stateManager.SetPlayerState(EPlayerState.Roulette);
+            //m_stateManager.SetPlayerState(EPlayerState.Roulette);
 			m_stateManager.SetPlayerState(EPlayerState.Control);
 		}
 	}
@@ -152,6 +152,9 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 	public void ResetTimer()
 	{
 		timerUntilReset = hiddenResetValue;
-		fireShipParticles.SetActive(false);
+        if (fireShipParticles.activeSelf)
+        {
+            fireShipParticles.SetActive(false);
+        }
 	}
 }
