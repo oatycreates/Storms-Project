@@ -24,7 +24,6 @@ public class FallingScream : MonoBehaviour
 	public bool readyToScream = false;
 	//private bool m_playing = false;
 	
-
 	void Start () 
 	{
 		m_mySource = gameObject.GetComponent<AudioSource>();
@@ -41,10 +40,10 @@ public class FallingScream : MonoBehaviour
 			m_fallTimer -= Time.deltaTime;
 		}
 		
-		// Trigger the scream, once the object has begun to fall.
+		// Trigger the scream, once the object has begun to fall
 		if (m_fallTimer < 0.0f)
 		{
-			//Check if audiosource is already playing
+			// Check if audio source is already playing
 			if (!m_mySource.isPlaying)
 			{
 			/*
@@ -65,7 +64,7 @@ public class FallingScream : MonoBehaviour
 		{
 			m_mySource.Stop();
 			readyToScream = false;
-			//Use max time to scream here
+			// Use max time to scream here
 			m_fallTimer = timeFallingBeforeScream;
 			//playing = false;
 		}
@@ -81,11 +80,11 @@ public class FallingScream : MonoBehaviour
 	
 	public void RandomSound()
 	{	
-		//Get a random sound from the list.
+		// Get a random sound from the list
 		m_mySource.clip = sounds[Random.Range(0, sounds.Length)];
-		//Give it a random pitch.
+		// Give it a random pitch
 		m_mySource.pitch = Random.Range(0.7f, 1.5f);
-		//Play the clip
+		// Play the clip
 		m_mySource.Play();
 	}
 }
