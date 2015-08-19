@@ -38,12 +38,17 @@ public class PassengerTray : MonoBehaviour
     /// <summary>
     /// Set to true when the players ship actually starts moving.
     /// </summary>
-    bool m_hasStarted = false;
+    private bool m_hasStarted = false;
 
     /// <summary>
     /// Start mass of the ship. 
     /// </summary>
-    float m_shipStartMass = 0;
+    private float m_shipStartMass = 0;
+
+    /// <summary>
+    /// Number of things in the tray that match the passenger tags.
+    /// </summary>
+    private int m_numInTray = 0;
 
     // Cached variables
     private Rigidbody m_shipRb;
@@ -89,8 +94,11 @@ public class PassengerTray : MonoBehaviour
         }
         else
         {
-            // Reset the mass
-            m_shipRb.mass = m_shipStartMass;
+            //Debug.Log(m_shipRb.mass + " " + m_shipStartMass);
+
+            // Set the mass
+            m_shipRb.mass = m_shipStartMass + m_numInTray * prisonerMassAdd;
+            m_numInTray = 0;
         }
 
         if (m_hasStarted)
@@ -119,10 +127,7 @@ public class PassengerTray : MonoBehaviour
                 rb.AddForce(m_currShipAccel, ForceMode.Acceleration);
 
                 // Cumulate mass
-                if (m_shipStartMass != 0)
-                {
-                    m_shipRb.mass += prisonerMassAdd;
-                }
+                ++m_numInTray;
             }
         }
     }
