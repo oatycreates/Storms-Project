@@ -41,7 +41,12 @@ public class AirshipCamBehaviour : MonoBehaviour
     // Cached variables
     Transform m_trans;
 
-	void Start () 
+    void Awake()
+    {
+        m_trans = transform;
+    }
+
+	void Start() 
 	{
         GameObject camHolder = GameObject.Find("CamHolder");
         if (camHolder == null)
@@ -50,14 +55,11 @@ public class AirshipCamBehaviour : MonoBehaviour
             camHolder.name = "CamHolder";
         }
 
-        m_trans = transform;
-
 		// Detach from parent on start!
         m_trans.SetParent(camHolder.transform, true);
 
 		m_myStartPos = m_trans.position;
 		m_myStartRot = m_trans.rotation;
-
 
 		m_trans.localPosition = Vector3.zero;
 	}
@@ -99,8 +101,6 @@ public class AirshipCamBehaviour : MonoBehaviour
         //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
         m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
 	}
-	 
-	
 	
 	public void WatchCam()
 	{
@@ -111,7 +111,6 @@ public class AirshipCamBehaviour : MonoBehaviour
             m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
 		}
 	}
-
 
     /// <summary>
     /// Reset the camera back for the roulette state.
@@ -124,6 +123,4 @@ public class AirshipCamBehaviour : MonoBehaviour
 		m_trans.position = m_myStartPos;
 		m_trans.rotation = m_myStartRot;
 	}
-
-
 }
