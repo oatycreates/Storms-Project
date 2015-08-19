@@ -54,23 +54,24 @@ public class InEditorStuff : MonoBehaviour
 			}
 			*/
 			myRenderer.material.color = m_playerColor;
-		
-			if (gameObject.tag == "Player1_")
+
+            string myTag = tag;
+			if (myTag == "Player1_")
 			{
 				m_playerColor = Color.magenta;
 			}
 			
-			if (gameObject.tag == "Player2_")
+			if (myTag == "Player2_")
 			{
 				m_playerColor = Color.cyan;
 			}
 			
-			if (gameObject.tag == "Player3_")
+			if (myTag == "Player3_")
 			{
 				m_playerColor = Color.green;
 			}
 			
-			if (gameObject.tag == "Player4_")
+			if (myTag == "Player4_")
 			{
 				m_playerColor = Color.yellow;
 			}
