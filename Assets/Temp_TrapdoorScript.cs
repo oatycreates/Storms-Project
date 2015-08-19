@@ -15,6 +15,13 @@ public class Temp_TrapdoorScript : MonoBehaviour
 	
 	private float turnValue;
 
+    // Cached variables
+    private Transform m_trans;
+
+    void Awake()
+    {
+        m_trans = transform;
+    }
 
 	void Start () 
 	{
@@ -26,42 +33,35 @@ public class Temp_TrapdoorScript : MonoBehaviour
 		if (controller != null)
 		{
 			buttonPressed = controller.openHatch;
-			//Debug.Log(buttonPressed);
 		}
 
-		
 		if (buttonPressed)
 		{	
 			if (!flipDirection)
 			{
 				rotateAmount = Mathf.Lerp(rotateAmount, maxRotationInDegrees, Time.deltaTime * speed);
 			}
-			else
-			if (flipDirection)
+			else if (flipDirection)
 			{
 				rotateAmount = Mathf.Lerp(rotateAmount, -maxRotationInDegrees, Time.deltaTime * speed);
 			}	
 		}
-		else
-		//Return to normal
-		if (!buttonPressed)
-		{
+		else if (!buttonPressed)
+        {
+            //Return to normal
 			rotateAmount = Mathf.Lerp(rotateAmount, 0, Time.deltaTime * speed);
 		}
 		
-		
 		SetAxis();
 	}
-	
 	
 	void SetAxis()
 	{
 		float rotateX = gameObject.transform.localEulerAngles.x;
 		float rotateY = gameObject.transform.localEulerAngles.y;
 		//float rotateZ = gameObject.transform.localEulerAngles.z;
-		
-		gameObject.transform.localRotation = Quaternion.Euler(rotateX, rotateY, rotateAmount);
-		
+
+        m_trans.localRotation = Quaternion.Euler(rotateX, rotateY, rotateAmount);
 	}
 	
 }

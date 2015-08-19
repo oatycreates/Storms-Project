@@ -41,11 +41,18 @@ public class RotateCam : MonoBehaviour
 	public float totalVert = 0;
 	public float totalHori = 0;
 	
+    // Cached variables
+    private Transform camRotTrans;
+    private Transform lookTarTrans;
+    private Transform camProxyTrans;
 
 	void Start()
 	{
         // Cache variables
 		m_referenceStateManager = GetComponent<StateManager>();
+        camRotTrans = rotateCam.transform;
+        lookTarTrans = lookyHereTarget.transform;
+        camProxyTrans = camProxyTarget.transform;
 	}
 
 	public void ResetCamRotation()
@@ -61,42 +68,42 @@ public class RotateCam : MonoBehaviour
 		totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
 	}
 
-	public void PlayerInputs(float camVertical, float camHorizontal, float triggerAxis, bool leftBumper, bool rightBumper, bool leftClick, bool rightClick)
+	public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
 	{
 		// Reset on click
-		if (leftClick || rightClick)
+		if (a_leftClick || a_rightClick)
 		{
 			ResetCamRotation();
 		}
 		
-		//Reset on accelerate
-		if (triggerAxis > 0)
+		// Reset on accelerate
+		if (a_triggerAxis > 0)
 		{
-			//Check for direct cam input first
-			if (camHorizontal == 0 && camVertical == 0)
+			// Check for direct cam input first
+			if (a_camHorizontal == 0 && a_camVertical == 0)
 			{
 				ResetCamRotation();
 			}
 		}
 	
-		//Lock up/down
-		if (camVertical > 0)
+		// Lock up/down
+		if (a_camVertical > 0)
 		{
 			totalVert -= 0.01f * camTurnMultiplier;
 		}	
 		
-		if (camVertical < 0)
+		if (a_camVertical < 0)
 		{
 			totalVert += 0.01f * camTurnMultiplier;
 		}
 		
-		//Lock left/right
-		if (camHorizontal > 0)
+		// Lock left/right
+		if (a_camHorizontal > 0)
 		{
 			totalHori += 0.01f * camTurnMultiplier;
 		}
 		
-		if (camHorizontal < 0)
+		if (a_camHorizontal < 0)
 		{	
 			totalHori -= 0.01f * camTurnMultiplier;
 		}
@@ -124,12 +131,11 @@ public class RotateCam : MonoBehaviour
 		
 		if (m_referenceStateManager.currentPlayerState == EPlayerState.Control || m_referenceStateManager.currentPlayerState == EPlayerState.Suicide)
 		{
-			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
+			camRotTrans.localRotation = Quaternion.Slerp(camRotTrans.localRotation, target, Time.deltaTime * smooth);
 		}
 
-
 		//Move lookTarget around.
-		float internalCamYRotation = rotateCam.transform.localEulerAngles.y;
+		float internalCamYRotation = camRotTrans.localEulerAngles.y;
 		//Debug.Log(internalCamYRotation);
 	
 		
@@ -144,14 +150,13 @@ public class RotateCam : MonoBehaviour
 			m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (leftBumper || rightBumper)
+			if (a_leftBumper || a_rightBumper)
 			{
 				Cannons(ECannonPos.Port);
 			}
 			
 		}
-		else
-		if (internalCamYRotation <= 135 && internalCamYRotation > 45)
+		else if (internalCamYRotation <= 135 && internalCamYRotation > 45)
 		{
 			//print ("Right");
 			
@@ -164,14 +169,13 @@ public class RotateCam : MonoBehaviour
 			m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (leftBumper || rightBumper)
+			if (a_leftBumper || a_rightBumper)
 			{
 				Cannons(ECannonPos.Starboard);
 			}
 		
 		}
-		else
-		if ( internalCamYRotation <= 225 && internalCamYRotation > 135)
+		else if ( internalCamYRotation <= 225 && internalCamYRotation > 135)
 		{
 		 	//print ("Back");
 			//Move the target
@@ -194,19 +198,16 @@ public class RotateCam : MonoBehaviour
 			m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
-			if (leftBumper || rightBumper)
+			if (a_leftBumper || a_rightBumper)
 			{
 				Cannons(ECannonPos.Forward);
 			}
 			
 		}
 		
-		lookyHereTarget.transform.localPosition = new Vector3(lookyHereTarget.transform.localPosition.x, yPos, lookyHereTarget.transform.localPosition.z);
-		camProxyTarget.transform.localPosition = new Vector3(m_xPos, camProxyTarget.transform.localPosition.y, -m_zPos);
-	
-
+		lookTarTrans.localPosition = new Vector3(lookTarTrans.localPosition.x, yPos, lookTarTrans.localPosition.z);
+		camProxyTrans.localPosition = new Vector3(m_xPos, camProxyTrans.localPosition.y, -m_zPos);
 	}
-	
 	
 	void Cannons(ECannonPos a_angle)
     {

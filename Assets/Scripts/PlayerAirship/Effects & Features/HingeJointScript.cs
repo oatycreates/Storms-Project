@@ -42,7 +42,15 @@ public class HingeJointScript : MonoBehaviour
 	/// </summary>
 	private float m_turnValue;
 
-	void Start () 
+    // Cached variables
+    private Transform m_trans;
+
+    void Awake()
+    {
+        m_trans = transform;
+    }
+
+	void Start() 
 	{
 		m_rotateAmount = 0;
 		//maxRotationDegrees = 60.0f;
@@ -93,7 +101,7 @@ public class HingeJointScript : MonoBehaviour
 			m_turnValue = m_hiddenPitch;
 
 			// Clamp the rotation
-			m_absRotateAmount = Mathf.Abs (maxRotationDegrees * m_hiddenPitch);
+			m_absRotateAmount = Mathf.Abs(maxRotationDegrees * m_hiddenPitch);
 			// This is more sophisticated since the old prototype script
 		}
 		else if (axis == EHingeAxis.hingeY)
@@ -101,14 +109,14 @@ public class HingeJointScript : MonoBehaviour
 			m_turnValue = m_hiddenYaw;
 
 			// Clamp the rotation
-			m_absRotateAmount = Mathf.Abs (maxRotationDegrees * m_hiddenYaw);
+			m_absRotateAmount = Mathf.Abs(maxRotationDegrees * m_hiddenYaw);
 		}
 		else if (axis == EHingeAxis.hingeZ)
 		{
 			m_turnValue = m_hiddenRoll;
 
 			// Clamp the rotation
-			m_absRotateAmount = Mathf.Abs (maxRotationDegrees * m_hiddenRoll);
+			m_absRotateAmount = Mathf.Abs(maxRotationDegrees * m_hiddenRoll);
 		}
 	}
 
@@ -117,23 +125,19 @@ public class HingeJointScript : MonoBehaviour
 	/// </summary>
 	void SetAxis()
 	{
-		// Apply the rotateamount to force
-		float rotateX = gameObject.transform.localEulerAngles.x;
-		float rotateY = gameObject.transform.localEulerAngles.y;
-		float rotateZ = gameObject.transform.localEulerAngles.z;
-
-
+		// Apply the rotateAmount to force
+        Vector3 localRot = m_trans.localEulerAngles;
 		if (axis == EHingeAxis.hingeX)
 		{
-			gameObject.transform.localRotation = Quaternion.Euler(m_rotateAmount,rotateY, rotateZ);
+            m_trans.localRotation = Quaternion.Euler(m_rotateAmount, localRot.y, localRot.z);
 		}
 		else if (axis == EHingeAxis.hingeY)
 		{
-			gameObject.transform.localRotation = Quaternion.Euler(rotateX, m_rotateAmount, rotateZ);
+            m_trans.localRotation = Quaternion.Euler(localRot.x, m_rotateAmount, localRot.z);
 		}
 		else if (axis == EHingeAxis.hingeZ)
 		{
-			gameObject.transform.localRotation = Quaternion.Euler(rotateX, rotateY, m_rotateAmount);
+            m_trans.localRotation = Quaternion.Euler(localRot.x, localRot.y, m_rotateAmount);
 		}
 	}
 }
