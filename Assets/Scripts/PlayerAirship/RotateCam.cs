@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 //This script takes input from the input manager, and passes the movement into an empty game object with an attached camera.
-//Most of this script was derived from teh Unity Example for transform.rotate
+//Most of this script was derived from the Unity Example for transform.rotate
 public class RotateCam : MonoBehaviour 
 {
-	private StateManager referenceStateManager;
+	private StateManager m_referenceStateManager;
 
-	//The rotate cam is the Center GameObject - not the Camera itself.
+	// The rotate cam is the centre GameObject - not the Camera itself.
 	public GameObject rotateCam;
 	
 	public bool invertUpDown = false;
@@ -17,27 +17,26 @@ public class RotateCam : MonoBehaviour
 	public float smooth = 2.0f;
 	public float deadZoneFactor = 0.25f;
 	
-	private float tiltAroundY;
-	private float tiltAroundX;
+	private float m_tiltAroundY;
+	private float m_tiltAroundX;
 	
-	//Move the target object
+	// Move the target object
 	
 	public GameObject lookyHereTarget;
 	public float targetHeightFactor = 5.0f;
 	private float yPos = 0;
 	
-	//Move the camera directly
-	
+	// Move the camera directly
 	public GameObject camProxyTarget;
-	private float xPos;
+	private float m_xPos;
 	public float camPositionFactor = 2.0f;
-	private float zPos;
+	private float m_zPos;
 	public float camDistanceFactor = 15.0f;
-	
-	//Link to Cannons
+
+	// Link to Cannons
 	public GameObject[] cannons;
 	
-	//Fix cam to position
+	// Fix cam to position
 	public float camTurnMultiplier = 1.0f;
 	public float totalVert = 0;
 	public float totalHori = 0;
@@ -45,7 +44,8 @@ public class RotateCam : MonoBehaviour
 
 	void Start()
 	{
-		referenceStateManager = gameObject.GetComponent<StateManager>();
+        // Cache variables
+		m_referenceStateManager = GetComponent<StateManager>();
 	}
 
 	public void ResetCamRotation()
@@ -56,29 +56,28 @@ public class RotateCam : MonoBehaviour
 	
 	void Update()
 	{
-		//Clamp the totalVert values
+		// Clamp the totalVert values
 		totalVert = Mathf.Clamp(totalVert, -1.25f, 1.25f);
 		totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
 	}
 
 	public void PlayerInputs(float camVertical, float camHorizontal, float triggerAxis, bool leftBumper, bool rightBumper, bool leftClick, bool rightClick)
 	{
-		//Reset on click
+		// Reset on click
 		if (leftClick || rightClick)
 		{
 			ResetCamRotation();
 		}
 		
 		//Reset on accelerate
-		/*if (triggerAxis > 0)
+		if (triggerAxis > 0)
 		{
 			//Check for direct cam input first
-			if (camHorizontal == 0 || camVertical == 0)
+			if (camHorizontal == 0 && camVertical == 0)
 			{
 				ResetCamRotation();
 			}
-		}*/
-		
+		}
 	
 		//Lock up/down
 		if (camVertical > 0)
@@ -103,27 +102,27 @@ public class RotateCam : MonoBehaviour
 		}
 
 
-		tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
-		tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
+		m_tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
+		m_tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
 		
 		//tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
 		//tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
 		
 		if (invertUpDown)
 		{
-			tiltAroundX *= -1;
+			m_tiltAroundX *= -1;
 		}
 		
 		if (invertLeftRight)
 		{
 			
-			tiltAroundY *= -1;
+			m_tiltAroundY *= -1;
 		}
 		
 		
-		Quaternion target =  Quaternion.Euler(tiltAroundX, tiltAroundY, 0);
+		Quaternion target =  Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
 		
-		if (referenceStateManager.currentPlayerState == EPlayerState.Control || referenceStateManager.currentPlayerState == EPlayerState.Suicide)
+		if (m_referenceStateManager.currentPlayerState == EPlayerState.Control || m_referenceStateManager.currentPlayerState == EPlayerState.Suicide)
 		{
 			rotateCam.transform.localRotation = Quaternion.Slerp(rotateCam.transform.localRotation, target, Time.deltaTime * smooth);
 		}
@@ -141,8 +140,8 @@ public class RotateCam : MonoBehaviour
 			yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth/2);
 			
 			//Move the cam
-			xPos = Mathf.Lerp(xPos, camPositionFactor, Time.deltaTime * smooth/2);
-			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
+			m_xPos = Mathf.Lerp(m_xPos, camPositionFactor, Time.deltaTime * smooth/2);
+			m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
 			if (leftBumper || rightBumper)
@@ -161,8 +160,8 @@ public class RotateCam : MonoBehaviour
 			
 			
 			//Move the cam
-			xPos = Mathf.Lerp(xPos, -camPositionFactor, Time.deltaTime * smooth/2);
-			zPos = Mathf.Lerp(zPos, camDistanceFactor, Time.deltaTime * smooth/2);
+			m_xPos = Mathf.Lerp(m_xPos, -camPositionFactor, Time.deltaTime * smooth/2);
+			m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
 			if (leftBumper || rightBumper)
@@ -180,8 +179,8 @@ public class RotateCam : MonoBehaviour
 		 	
 		 	
 			//Move the cam
-			xPos = Mathf.Lerp(xPos, 0, Time.deltaTime * smooth/2);
-			zPos = Mathf.Lerp(zPos, 20, Time.deltaTime * smooth/2);
+			m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth/2);
+			m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth/2);
 		}
 		else
 		{
@@ -191,8 +190,8 @@ public class RotateCam : MonoBehaviour
 			
 			
 			//Move the cam
-			xPos = Mathf.Lerp(xPos, 0, Time.deltaTime * smooth/2);
-			zPos = Mathf.Lerp(zPos, 20, Time.deltaTime * smooth/2);
+			m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth/2);
+			m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth/2);
 			
 			//Allow CannonFire
 			if (leftBumper || rightBumper)
@@ -203,7 +202,7 @@ public class RotateCam : MonoBehaviour
 		}
 		
 		lookyHereTarget.transform.localPosition = new Vector3(lookyHereTarget.transform.localPosition.x, yPos, lookyHereTarget.transform.localPosition.z);
-		camProxyTarget.transform.localPosition = new Vector3(xPos, camProxyTarget.transform.localPosition.y, -zPos);
+		camProxyTarget.transform.localPosition = new Vector3(m_xPos, camProxyTarget.transform.localPosition.y, -m_zPos);
 	
 
 	}
