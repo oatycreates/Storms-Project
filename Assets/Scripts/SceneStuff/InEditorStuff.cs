@@ -27,9 +27,13 @@ public class InEditorStuff : MonoBehaviour
 	public GameObject canvasChild;
 	private Text m_canvasText;
 	
+    // Cached variables
+    StateManager m_stateManager;
+
 	void Start()
 	{
-		m_canvasText = canvasChild.GetComponentInChildren<Text>();
+        m_canvasText = canvasChild.GetComponentInChildren<Text>();
+        m_stateManager = airshipTopOfHierachy.GetComponent<StateManager>();
 		/*
 		if (Application.isEditor == false)
 		{
@@ -80,10 +84,11 @@ public class InEditorStuff : MonoBehaviour
 				}
 			}
 		}
-		
-		
-		
-		// Explain game states
-		m_canvasText.text = ("State: " + (airshipTopOfHierachy.GetComponent<StateManager>().currentPlayerState));
+	    
+        if (Application.isEditor)
+        {
+            // Explain game states
+            m_canvasText.text = ("State: " + (m_stateManager.GetPlayerState()));
+        }
 	}
 }
