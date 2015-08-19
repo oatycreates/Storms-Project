@@ -21,6 +21,11 @@ public class PassengerTray : MonoBehaviour
     public string[] trayPassengerTags = {"Passengers"};
 
     /// <summary>
+    /// Mass to add to the ship per prisoner in the body.
+    /// </summary>
+    public float prisonerMassAdd = 0.1f;
+
+    /// <summary>
     /// Cumulative ship acceleration for the tick.
     /// </summary>
     private Vector3 m_currShipAccel = Vector3.zero;
@@ -33,7 +38,12 @@ public class PassengerTray : MonoBehaviour
     /// <summary>
     /// Set to true when the players ship actually starts moving.
     /// </summary>
-    bool m_hasStarted;
+    bool m_hasStarted = false;
+
+    /// <summary>
+    /// Start mass of the ship. 
+    /// </summary>
+    float m_shipStartMass = 0;
 
     // Cached variables
     private Rigidbody m_shipRb;
@@ -49,6 +59,7 @@ public class PassengerTray : MonoBehaviour
 
         // Cache variables
         m_shipRb = gameObject.GetComponentInParent<Rigidbody>();
+        m_shipStartMass = 0;
 	}
 	
 	/// <summary>
@@ -70,6 +81,16 @@ public class PassengerTray : MonoBehaviour
         if (!m_hasStarted && currShipVel.magnitude > 0)
         {
             m_hasStarted = true;
+        }
+
+        if (m_shipStartMass == 0)
+        {
+            m_shipStartMass = m_shipRb.mass;
+        }
+        else
+        {
+            // Reset the mass
+            m_shipRb.mass = m_shipStartMass;
         }
 
         if (m_hasStarted)
@@ -94,7 +115,14 @@ public class PassengerTray : MonoBehaviour
             Rigidbody rb = a_other.GetComponent<Rigidbody>();
             if (rb != null)
             {
+                // Add force
                 rb.AddForce(m_currShipAccel, ForceMode.Acceleration);
+
+                // Cumulate mass
+                if (m_shipStartMass != 0)
+                {
+                    m_shipRb.mass += prisonerMassAdd;
+                }
             }
         }
     }

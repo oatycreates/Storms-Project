@@ -77,6 +77,11 @@ public class AirshipControlBehaviour : MonoBehaviour
     public AirshipAudio audioControl;
     public EngineAudio engineAudioControl;
 
+    /// <summary>
+    /// Cached mass for the ship at the start of the game.
+    /// </summary>
+    private float m_startShipMass = 0;
+
     // Animation trigger hashes
     private int m_animHatchOpen     = Animator.StringToHash("HatchOpen");
     private int m_animTrapdoorOpen  = Animator.StringToHash("TrapdoorOpen");
@@ -102,6 +107,8 @@ public class AirshipControlBehaviour : MonoBehaviour
 	{
 		m_myRigid = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
+        m_myRigid.mass = adjustableMass;
+        m_startShipMass = adjustableMass;
 	}
 	
 	void Start () 
@@ -121,7 +128,6 @@ public class AirshipControlBehaviour : MonoBehaviour
 		m_myRigid.isKinematic = false;	// We want physics collisions!
 		
 		//m_myRigid.mass = 10.0f;
-		m_myRigid.mass = adjustableMass;
 		m_myRigid.drag = 2.0f;
 		m_myRigid.angularDrag = 2.0f;
 		
@@ -231,6 +237,9 @@ public class AirshipControlBehaviour : MonoBehaviour
             speedMod *= reverseSpeedMult;
         }
 
+        // Slow down when laden
+        speedMod *= CalcHandlingMassMult();
+
 		m_myRigid.AddRelativeForce(Vector3.forward * speedMod , ForceMode.Acceleration);
 
         // This finds the 'up' vector. It was a cool trick from The Standard Vehicle Assets
@@ -239,18 +248,28 @@ public class AirshipControlBehaviour : MonoBehaviour
 		m_myRigid.AddForce(liftDirection);
 	}
 
+    /// <summary>
+    /// Calculates the multiplier for ship handling values (throttle, roll, pitch, yaw, etc.).
+    /// </summary>
+    /// <returns>Throttle multiplier, apply that to each quantity.</returns>
+    private float CalcHandlingMassMult()
+    {
+        return m_startShipMass / m_myRigid.mass;
+    }
+
 	/// <summary>
 	/// Calculates the rotation forces on the ship, see the standard assets example for more.
 	/// </summary>
 	private void CalculateTorque()
 	{
-		var torque = Vector3.zero;
-		
-		torque += -pitch * m_myRigid.transform.right * pitchForce;	
-		
-		torque += yaw * m_myRigid.transform.up * yawForce;
-		
-		torque += -roll * m_myRigid.transform.forward * rollForce;
+        var torque = Vector3.zero;
+
+        // Handle worse when laden
+        float handleMod = CalcHandlingMassMult();
+
+        torque += handleMod * -pitch * m_myRigid.transform.right * pitchForce;
+        torque += handleMod * yaw * m_myRigid.transform.up * yawForce;
+        torque += handleMod * -roll * m_myRigid.transform.forward * rollForce;
 
         // Add all the torque forces together
 		m_myRigid.AddTorque(torque);
