@@ -51,12 +51,13 @@ public class AirshipSuicideBehaviour : MonoBehaviour
     // Cached variables
     private Rigidbody m_myRigid;
     private Animator m_anim;
-
+    private StateManager m_stateManager;
 
 	void Awake()
 	{
         m_myRigid = gameObject.GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
+        m_stateManager = GetComponent<StateManager>();
 	}
 	
 	void Start()
@@ -75,14 +76,14 @@ public class AirshipSuicideBehaviour : MonoBehaviour
 		
 		m_myRigid.useGravity = false;		
 		
-		// Time unil the player state resets
+		// Time until the player state resets
 		timerUntilReset -= Time.deltaTime;
 		
 		if (timerUntilReset < 0.0f)
 		{
-			//haha try sending the airship back into control mode
-			//gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Roulette;
-			gameObject.GetComponent<StateManager>().currentPlayerState = EPlayerState.Control;
+			// Try sending the airship back into control mode
+            m_stateManager.SetPlayerState(EPlayerState.Roulette);
+			m_stateManager.SetPlayerState(EPlayerState.Control);
 		}
 	}
 	

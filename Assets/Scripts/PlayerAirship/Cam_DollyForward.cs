@@ -30,14 +30,15 @@ public class Cam_DollyForward : MonoBehaviour
 		myLocalZ = gameObject.transform.localPosition.z;
 	
 		//check which state Im in
-		if (airshipStateManager.currentPlayerState == EPlayerState.Control)
+        EPlayerState currState = airshipStateManager.GetPlayerState();
+        if (currState == EPlayerState.Control)
 		{
 			forwardSpeed = myController.throttle;
 		}
-		else
-		if (airshipStateManager.currentPlayerState == EPlayerState.Suicide)
+        else if (currState == EPlayerState.Suicide)
 		{
-			forwardSpeed = -0.5f;	//Make the camera move back a bit.
+            // Make the camera move back a bit
+            forwardSpeed = -0.5f;
 		}
 		else
 		{
@@ -48,13 +49,11 @@ public class Cam_DollyForward : MonoBehaviour
 		{
 			SlideForward();
 		}
-		else
-		if (forwardSpeed == 0)
+		else if (forwardSpeed == 0)
 		{
 			ReturnToNormal();
 		}
-		else
-		if (forwardSpeed > 0)
+		else if (forwardSpeed > 0)
 		{
 			SlideBack();
 		}

@@ -128,8 +128,9 @@ public class RotateCam : MonoBehaviour
 		
 		
 		Quaternion target =  Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
-		
-		if (m_referenceStateManager.currentPlayerState == EPlayerState.Control || m_referenceStateManager.currentPlayerState == EPlayerState.Suicide)
+
+        EPlayerState currState = m_referenceStateManager.GetPlayerState();
+        if (currState == EPlayerState.Control || currState == EPlayerState.Suicide)
 		{
 			camRotTrans.localRotation = Quaternion.Slerp(camRotTrans.localRotation, target, Time.deltaTime * smooth);
 		}

@@ -55,25 +55,28 @@ public class RouletteSpinWheel : MonoBehaviour
     private Rigidbody m_myRigid;
     private Transform m_trans;
     private Transform m_rotatorTrans;
+    private StateManager m_parentStateManager = null;
 
     void Start()
     {
         m_rotatorTrans = rotatorJoint.transform;
         m_trans = transform;
+        m_myRigid = GetComponent<Rigidbody>();
     }
 
 	void OnEnable() 
 	{
+        if (m_parentStateManager == null)
+        {
+            m_parentStateManager = gameObject.transform.parent.transform.GetComponentInParent<StateManager>();
+        }
 
 		// Reset Position
-		gameObject.transform.localPosition = Vector3.zero;
-		gameObject.transform.localRotation = Quaternion.Euler(Vector3.zero);
-		gameObject.transform.localScale = new Vector3(4, 1, 1);	// Try not to change these
+        m_trans.localPosition = Vector3.zero;
+        m_trans.localRotation = Quaternion.Euler(Vector3.zero);
+        m_trans.localScale = new Vector3(4, 1, 1);	// Try not to change these
 	
-		// Set/Reset physics components
-		m_myRigid = gameObject.GetComponent<Rigidbody>();
-		// Set Components of the rigidbody in the start.
-		
+		// Set Components of the rigidbody at the start
 		m_myRigid.isKinematic = false;
 		m_myRigid.useGravity = false;
 		
@@ -91,7 +94,7 @@ public class RouletteSpinWheel : MonoBehaviour
         m_currEndWait = rouletteEndWait;
         m_rouletteDone = false;
 		
-		//Make the wheel spin
+		// Make the wheel spin
 		Spin();
 	}
 	
@@ -204,7 +207,7 @@ public class RouletteSpinWheel : MonoBehaviour
         ApplyBuff(currBuff);
 
         // Switch to the gameplay state
-        gameObject.transform.parent.transform.GetComponentInParent<StateManager>().currentPlayerState = EPlayerState.Control;
+        m_parentStateManager.SetPlayerState(EPlayerState.Control);
     }
 
     /// <summary>

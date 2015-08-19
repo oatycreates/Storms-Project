@@ -63,7 +63,7 @@ public class EngineAudio : MonoBehaviour
 		
 		
 		// Is the airship in suicide mode or not?
-		if (lookToTheStateManager.currentPlayerState == EPlayerState.Suicide)
+		if (lookToTheStateManager.GetPlayerState() == EPlayerState.Suicide)
 		{
 			suicideMode = true;
 		}

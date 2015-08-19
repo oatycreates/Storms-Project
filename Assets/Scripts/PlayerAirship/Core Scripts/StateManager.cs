@@ -65,27 +65,37 @@ public class StateManager : MonoBehaviour
 	private bool escapeStall = false;
 	
 	[HideInInspector]
-	public float timeBetweenStall = 5.0f;
-	
+    public float timeBetweenStall = 5.0f;
 
-	void Start () 
+    /// <summary>
+    /// State of the player last tick, used to detect state changes.
+    /// </summary>
+    private EPlayerState m_lastState;
+
+    // Cached variables
+    private Transform m_trans;
+
+    void Awake()
+    {
+        m_trans = transform;
+    }
+
+	void Start() 
 	{
 		//currentPlayerState = EPlayerState.Roulette;
         currentPlayerState = EPlayerState.Pregame;
 		
-		m_rouletteScript = gameObject.GetComponent<RouletteBehaviour>();
-		m_airshipScript = gameObject.GetComponent<AirshipControlBehaviour>();
-		m_dyingScript = gameObject.GetComponent<AirshipDyingBehaviour>();
-		m_suicideScript = gameObject.GetComponent<AirshipSuicideBehaviour>();
+		m_rouletteScript = GetComponent<RouletteBehaviour>();
+		m_airshipScript = GetComponent<AirshipControlBehaviour>();
+		m_dyingScript = GetComponent<AirshipDyingBehaviour>();
+		m_suicideScript = GetComponent<AirshipSuicideBehaviour>();
 		
-		m_inputManager = gameObject.GetComponent<InputManager>();
+		m_inputManager = GetComponent<InputManager>();
 		
 		// World position & rotation
-		m_worldStartPos = gameObject.transform.position;
-		m_worldStartRotation = gameObject.transform.rotation;
-
+		m_worldStartPos = m_trans.position;
+		m_worldStartRotation = m_trans.rotation;
 	}
-	
 	
 	void Update () 
 	{	
@@ -142,57 +152,48 @@ public class StateManager : MonoBehaviour
 		{
             SuicideUpdate();
 		}
-
 	}
 
-    private void PregameUpdate()
+    public EPlayerState GetPlayerState()
     {
-        if (GetAnyButtonDownMyPlayer())
+        return currentPlayerState;
+    }
+
+    public void SetPlayerState(EPlayerState a_state)
+    {
+        currentPlayerState = a_state;
+        switch (a_state)
         {
-            // Switch to the next state
-            currentPlayerState = EPlayerState.Control;
-        }
-        else
-        {
-            // Continue the waiting state
-
-            m_rouletteScript.enabled = false;
-            // Reset position
-            m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
-            m_airshipScript.enabled = false;
-            m_dyingScript.enabled = false;
-            m_suicideScript.enabled = false;
-
-            // We don't need to see the airship during the roulette wheel
-            if (colliders != null)
-            {
-                colliders.SetActive(true);
-            }
-
-            if (meshes != null)
-            {
-                meshes.SetActive(true);
-            }
-
-            if (hinges != null)
-            {
-                hinges.SetActive(true);
-            }
-
-            if (rouletteHierachy != null)
-            {
-                rouletteHierachy.SetActive(false);
-            }
-
-            if (particlesEffectsHierachy != null)
-            {
-                particlesEffectsHierachy.SetActive(false);
-            }
-
-            if (weaponsHierachy != null)
-            {
-                weaponsHierachy.SetActive(false);
-            }
+            case EPlayerState.Pregame:
+                {
+                    ChangeToPregame();
+                    break;
+                }
+            case EPlayerState.Roulette:
+                {
+                    ChangeToRoulette();
+                    break;
+                }
+            case EPlayerState.Control:
+                {
+                    ChangeToControl();
+                    break;
+                }
+            case EPlayerState.Dying:
+                {
+                    ChangeToDying();
+                    break;
+                }
+            case EPlayerState.Suicide:
+                {
+                    ChangeToSuicide();
+                    break;
+                }
+            default:
+                {
+                    Debug.LogWarning("Changing to unknown state!");
+                    break;
+                }
         }
     }
 
@@ -201,21 +202,21 @@ public class StateManager : MonoBehaviour
         string cntPrefix = gameObject.tag;
 
         // Check if any button is down
-        if (Input.GetButton(cntPrefix + "Start")       ||
-            Input.GetButton(cntPrefix + "Select")      || 
-            Input.GetButton(cntPrefix + "FaceDown")    ||
-            Input.GetButton(cntPrefix + "FaceUp")      ||
-            Input.GetButton(cntPrefix + "FaceLeft")    ||
-            Input.GetButton(cntPrefix + "FaceRight")   || 
-            Input.GetButton(cntPrefix + "BumperLeft")  ||
+        if (Input.GetButton(cntPrefix + "Start") ||
+            Input.GetButton(cntPrefix + "Select") ||
+            Input.GetButton(cntPrefix + "FaceDown") ||
+            Input.GetButton(cntPrefix + "FaceUp") ||
+            Input.GetButton(cntPrefix + "FaceLeft") ||
+            Input.GetButton(cntPrefix + "FaceRight") ||
+            Input.GetButton(cntPrefix + "BumperLeft") ||
             Input.GetButton(cntPrefix + "BumperRight") ||
-            Input.GetButton(cntPrefix + "ClickLeft")   ||
-            Input.GetButton(cntPrefix + "ClickRight")  ||
-            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Triggers"))      >= 0.25f ||
-            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Horizontal"))    >= 0.25f ||
-            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Vertical"))      >= 0.25f ||
+            Input.GetButton(cntPrefix + "ClickLeft") ||
+            Input.GetButton(cntPrefix + "ClickRight") ||
+            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Triggers")) >= 0.25f ||
+            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Horizontal")) >= 0.25f ||
+            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Vertical")) >= 0.25f ||
             Mathf.Abs(Input.GetAxisRaw(cntPrefix + "CamHorizontal")) >= 0.25f ||
-            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "CamVertical"))   >= 0.25f)
+            Mathf.Abs(Input.GetAxisRaw(cntPrefix + "CamVertical")) >= 0.25f)
         {
             return true;
         }
@@ -223,7 +224,77 @@ public class StateManager : MonoBehaviour
         return false;
     }
 
+    private void PregameUpdate()
+    {
+        if (GetAnyButtonDownMyPlayer())
+        {
+            // Switch to the next state
+            currentPlayerState = EPlayerState.Control;
+        }
+    }
+
     private void SuicideUpdate()
+    {
+        
+    }
+
+    private void DyingUpdate()
+    {
+
+    }
+
+    private void ControlUpdate()
+    {
+
+    }
+
+    private void RouletteUpdate()
+    {
+
+    }
+
+    private void ChangeToPregame()
+    {
+        m_rouletteScript.enabled = false;
+        // Reset position
+        m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+        m_airshipScript.enabled = false;
+        m_dyingScript.enabled = false;
+        m_suicideScript.enabled = false;
+
+        // We don't need to see the airship during the roulette wheel
+        if (colliders != null)
+        {
+            colliders.SetActive(true);
+        }
+
+        if (meshes != null)
+        {
+            meshes.SetActive(true);
+        }
+
+        if (hinges != null)
+        {
+            hinges.SetActive(true);
+        }
+
+        if (rouletteHierachy != null)
+        {
+            rouletteHierachy.SetActive(false);
+        }
+
+        if (particlesEffectsHierachy != null)
+        {
+            particlesEffectsHierachy.SetActive(false);
+        }
+
+        if (weaponsHierachy != null)
+        {
+            weaponsHierachy.SetActive(false);
+        }
+    }
+
+    private void ChangeToSuicide()
     {
         // Airship behaves like a rocket
         m_rouletteScript.enabled = false;
@@ -262,7 +333,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    private void DyingUpdate()
+    private void ChangeToDying()
     {
         // No Control, gravity makes airship fall
         m_rouletteScript.enabled = false;
@@ -301,8 +372,9 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    private void ControlUpdate()
+    private void ChangeToControl()
     {
+
         // Standard Physics Control
         m_rouletteScript.enabled = false;
         m_airshipScript.enabled = true;
@@ -343,7 +415,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    private void RouletteUpdate()
+    private void ChangeToRoulette()
     {
         // Roulette control
         m_rouletteScript.enabled = true;
