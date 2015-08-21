@@ -231,9 +231,9 @@ public class AirshipControlBehaviour : MonoBehaviour
 		// 				general speed 	half or double general speed	+ 25% of general speed == Always a positive value
 		float speedMod = (throttle * generalSpeed) /*+ (generalSpeed/4)*/;
 	
-        if (throttle < 0)
+        if (throttle < 0 && m_myRigid.velocity.sqrMagnitude < 0)
         {
-            // Slow down reversing
+            // Slow down when reversing
             speedMod *= reverseSpeedMult;
         }
 
@@ -268,7 +268,11 @@ public class AirshipControlBehaviour : MonoBehaviour
         float handleMod = CalcHandlingMassMult();
 
         // Reverse 
-        float reverseMult = throttle < 0 ? -1 : 1;
+        float reverseMult = 1;
+        if (throttle < 0 && m_myRigid.velocity.sqrMagnitude < 0)
+        {
+            reverseMult = -1;
+        }
 
         torque += handleMod * -pitch * reverseMult * m_myRigid.transform.right * pitchForce;
         torque += handleMod * yaw * reverseMult * m_myRigid.transform.up * yawForce;
