@@ -856,6 +856,7 @@ GameObject:
   - 114: {fileID: 11413722}
   - 114: {fileID: 11472904}
   - 114: {fileID: 11421384}
+  - 114: {fileID: 11470350}
   m_Layer: 0
   m_Name: Airship_Prefab
   m_TagString: Player1_
@@ -4674,6 +4675,28 @@ MonoBehaviour:
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
   lookAtTarget: {fileID: 146936}
+--- !u!114 &11470350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482ce800254132449a2e6f9f47072e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destructableParts:
+  - partObject: {fileID: 111452}
+    partType: 1
+    breakVelocity: 30
+    partMass: 5
+    cached_breakVelocitySqr: 0
+  - partObject: {fileID: 151136}
+    partType: 2
+    breakVelocity: 30
+    partMass: 5
+    cached_breakVelocitySqr: 0
 --- !u!114 &11471064
 MonoBehaviour:
   m_ObjectHideFlags: 1
