@@ -26,6 +26,11 @@ public class PassengerTray : MonoBehaviour
     public float prisonerMassAdd = 0.1f;
 
     /// <summary>
+    /// Mass to add to the ship as a result of part mass changes.
+    /// </summary>
+    public float shipPartMassAdd = 0.0f;
+
+    /// <summary>
     /// Cumulative ship acceleration for the tick.
     /// </summary>
     private Vector3 m_currShipAccel = Vector3.zero;
@@ -61,10 +66,11 @@ public class PassengerTray : MonoBehaviour
         // Zero variables
         m_currShipAccel = Vector3.zero;
         m_lastShipVel = Vector3.zero;
+        shipPartMassAdd = 0.0f;
 
         // Cache variables
         m_shipRb = gameObject.GetComponentInParent<Rigidbody>();
-        m_shipStartMass = 0;
+        m_shipStartMass = 0.0f;
 	}
 	
 	/// <summary>
@@ -97,7 +103,7 @@ public class PassengerTray : MonoBehaviour
             //Debug.Log(m_shipRb.mass + " " + m_shipStartMass);
 
             // Set the mass
-            m_shipRb.mass = m_shipStartMass + m_numInTray * prisonerMassAdd;
+            m_shipRb.mass = m_shipStartMass + shipPartMassAdd + m_numInTray * prisonerMassAdd;
             m_numInTray = 0;
         }
 

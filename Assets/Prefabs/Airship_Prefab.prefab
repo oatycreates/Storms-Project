@@ -135,6 +135,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &110866
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 459400}
+  - 65: {fileID: 6581086}
+  m_Layer: 0
+  m_Name: Mast_Triggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &111452
 GameObject:
   m_ObjectHideFlags: 1
@@ -1533,6 +1549,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 0
+--- !u!1 &199728
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 432710}
+  - 65: {fileID: 6571918}
+  m_Layer: 0
+  m_Name: Mast_Triggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400596
 Transform:
   m_ObjectHideFlags: 1
@@ -1809,7 +1841,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 484414}
-  m_RootOrder: 8
+  m_RootOrder: 7
+--- !u!4 &432710
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 464770}
+  m_RootOrder: 2
 --- !u!4 &433604
 Transform:
   m_ObjectHideFlags: 1
@@ -1860,7 +1904,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 484414}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!4 &437448
 Transform:
   m_ObjectHideFlags: 1
@@ -2159,6 +2203,18 @@ Transform:
   - {fileID: 457166}
   m_Father: {fileID: 469124}
   m_RootOrder: 2
+--- !u!4 &459400
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 464770}
+  m_RootOrder: 1
 --- !u!4 &460010
 Transform:
   m_ObjectHideFlags: 1
@@ -2226,7 +2282,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 474678}
+  - {fileID: 459400}
+  - {fileID: 432710}
   m_Father: {fileID: 484414}
   m_RootOrder: 3
 --- !u!4 &465954
@@ -2371,8 +2430,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 484414}
-  m_RootOrder: 6
+  m_Father: {fileID: 464770}
+  m_RootOrder: 0
 --- !u!4 &477416
 Transform:
   m_ObjectHideFlags: 1
@@ -2486,7 +2545,6 @@ Transform:
   - {fileID: 464770}
   - {fileID: 426592}
   - {fileID: 497968}
-  - {fileID: 474678}
   - {fileID: 436278}
   - {fileID: 428940}
   m_Father: {fileID: 464424}
@@ -3893,6 +3951,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6571918
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6575256
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -3928,6 +3998,18 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6581086
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110866}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 12, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6599906
 BoxCollider:
@@ -4426,6 +4508,7 @@ MonoBehaviour:
   trayPassengerTags:
   - Passengers
   prisonerMassAdd: .25
+  shipPartMassAdd: 0
 --- !u!114 &11429062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4690,12 +4773,17 @@ MonoBehaviour:
   - partObject: {fileID: 111452}
     partType: 1
     breakVelocity: 30
-    partMass: 5
+    partMass: -5
     cached_breakVelocitySqr: 0
   - partObject: {fileID: 151136}
     partType: 2
     breakVelocity: 30
-    partMass: 5
+    partMass: -5
+    cached_breakVelocitySqr: 0
+  - partObject: {fileID: 198500}
+    partType: 3
+    breakVelocity: 50
+    partMass: 1
     cached_breakVelocitySqr: 0
 --- !u!114 &11471064
 MonoBehaviour:

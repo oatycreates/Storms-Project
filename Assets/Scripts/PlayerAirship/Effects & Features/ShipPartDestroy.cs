@@ -58,12 +58,14 @@ public class ShipPartDestroy : MonoBehaviour
     public ShipPart[] destructableParts;
 
     // Cached variables
-    private Rigidbody m_shipRB = null;
+    private Rigidbody m_rb = null;
+    private PassengerTray m_shipTray = null;
     private float m_breakVelSqr = 0;
 
     void Awake()
     {
-        m_shipRB = GetComponent<Rigidbody>();
+        m_shipTray = GetComponentInChildren<PassengerTray>();
+        m_rb = GetComponent<Rigidbody>();
     }
 
 	/// <summary>
@@ -88,43 +90,82 @@ public class ShipPartDestroy : MonoBehaviour
     /// <param name="a_colInfo">Collision information.</param>
     void OnCollisionEnter(Collision a_colInfo)
     {
-        EvaluatePartCollision(a_colInfo);
-    }
-
-    private void EvaluatePartCollision(Collision a_colInfo)
-    {
-        Collider[] childColliders;
         foreach (ContactPoint contact in a_colInfo.contacts)
         {
-            Debug.Log("Colliding with: " + contact.thisCollider.transform.parent.name + ", other: " + contact.otherCollider.transform.parent.name);
-            foreach (ShipPart part in destructableParts)
+            EvaluatePartCollision(contact.thisCollider, a_colInfo.relativeVelocity.sqrMagnitude);
+        }
+    }
+
+    /// <summary>
+    /// Called when a trigger enter begins to objects.
+    /// </summary>
+    /// <param name="a_col">Other collider.</param>
+    void OnTriggerEnter(Collider a_col)
+    {
+        // Only destroy the part if a player is colliding with us
+        if (a_col.tag.Contains("Player"))
+        {
+            Rigidbody rbOther = a_col.GetComponentInParent<Rigidbody>();
+            if (rbOther != null)
             {
-                childColliders = part.partObject.GetComponentsInChildren<Collider>();
-                foreach (Collider col in childColliders)
+                // Work out relative collision velocity
+                float velDiffSqr = (m_rb.velocity - rbOther.velocity).sqrMagnitude;
+
+                // Run on the other ship because OnTriggerEnter only allows us to get the other component, not our own collider
+                ShipPartDestroy scriptOther = a_col.GetComponentInParent<ShipPartDestroy>();
+                if (scriptOther != null)
                 {
-                    // Check if the collision actually involves the part
-                    if (contact.thisCollider == col)
-                    {
-                        Debug.Log("Colliding with: " + col + ", part : " + part.partObject.name);
-                        // Cache part squared velocity
-                        if (Mathf.Approximately(part.cached_breakVelocitySqr, 0))
-                        {
-                            part.cached_breakVelocitySqr = part.breakVelocity * part.breakVelocity;
-                        }
-
-                        Debug.Log(a_colInfo.relativeVelocity.magnitude);
-
-                        // Break the part if the collision is fast enough
-                        if (!IsPartDestroyed(part) && a_colInfo.relativeVelocity.sqrMagnitude >= part.cached_breakVelocitySqr)
-                        {
-                            BreakPart(part);
-                        }
-
-                        // Collision has evaluated, return back to OnCollisionEnter
-                        return;
-                    }
+                    scriptOther.EvaluatePartCollision(a_col, velDiffSqr);
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="a_colInfo">Collision information</param>
+    private void EvaluatePartCollision(Collider a_col, float a_colVelSqr)
+    {
+        // Find the part being collided with
+        Collider[] childColliders;
+        foreach (ShipPart part in destructableParts)
+        {
+            childColliders = part.partObject.GetComponentsInChildren<Collider>();
+            foreach (Collider col in childColliders)
+            {
+                // Check if the collision actually involves the part
+                if (col == a_col)
+                {
+                    //Debug.Log("Colliding with: " + col + ", part : " + part.partObject.name);
+                    //Debug.Log(colVelSqr);
+
+                    ApplyPartCollision(part, a_colVelSqr);
+
+                    // Collision has evaluated, return back to OnCollisionEnter
+                    return;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Actually applies the collision to the part, shares this method with the trigger system.
+    /// </summary>
+    /// <param name="a_part">Ship part collision.</param>
+    /// <param name="a_colVelSqr">Squared collision velocity.</param>
+    private void ApplyPartCollision(ShipPart a_part, float a_colVelSqr)
+    {
+        // Cache part squared velocity
+        if (Mathf.Approximately(a_part.cached_breakVelocitySqr, 0))
+        {
+            a_part.cached_breakVelocitySqr = a_part.breakVelocity * a_part.breakVelocity;
+        }
+
+        // Break the part if the collision is fast enough
+        if (!IsPartDestroyed(a_part) && a_colVelSqr >= a_part.cached_breakVelocitySqr)
+        {
+            BreakPart(a_part);
         }
     }
 
@@ -151,7 +192,7 @@ public class ShipPartDestroy : MonoBehaviour
             Debug.Log("Repair! " + name);
 
             // Make the mass change to the parent
-            m_shipRB.mass += a_part.partMass;
+            m_shipTray.shipPartMassAdd += a_part.partMass;
 
             // Re-enable the part
             a_part.partObject.SetActive(true);
@@ -167,7 +208,7 @@ public class ShipPartDestroy : MonoBehaviour
         Debug.Log("Break! " + name);
 
         // Make the mass change to the parent
-        m_shipRB.mass -= a_part.partMass;
+        m_shipTray.shipPartMassAdd -= a_part.partMass;
 
         // Disable the part
         a_part.partObject.SetActive(false);
