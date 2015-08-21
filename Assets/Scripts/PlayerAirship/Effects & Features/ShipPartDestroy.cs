@@ -90,9 +90,13 @@ public class ShipPartDestroy : MonoBehaviour
     /// <param name="a_colInfo">Collision information.</param>
     void OnCollisionEnter(Collision a_colInfo)
     {
-        foreach (ContactPoint contact in a_colInfo.contacts)
+        // Ignore losing parts to prisoners
+        if (!a_colInfo.transform.tag.Contains("Passengers"))
         {
-            EvaluatePartCollision(contact.thisCollider, a_colInfo.relativeVelocity.sqrMagnitude);
+            foreach (ContactPoint contact in a_colInfo.contacts)
+            {
+                EvaluatePartCollision(contact.thisCollider, a_colInfo.relativeVelocity.sqrMagnitude);
+            }
         }
     }
 
@@ -102,8 +106,8 @@ public class ShipPartDestroy : MonoBehaviour
     /// <param name="a_col">Other collider.</param>
     void OnTriggerEnter(Collider a_col)
     {
-        // Only destroy the part if a player is colliding with us
-        if (a_col.tag.Contains("Player"))
+        // Ignore losing parts to prisoners
+        if (!a_col.tag.Contains("Passengers"))
         {
             Rigidbody rbOther = a_col.GetComponentInParent<Rigidbody>();
             if (rbOther != null)
