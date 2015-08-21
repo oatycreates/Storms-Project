@@ -40,6 +40,19 @@ public class RotateCam : MonoBehaviour
 	public float camTurnMultiplier = 1.0f;
 	public float totalVert = 0;
 	public float totalHori = 0;
+
+    /// <summary>
+    /// Time to wait before beginning to interp the camera back when moving,
+    /// </summary>
+    public float movingCamResetTime = 1.5f;
+    /// <summary>
+    /// Lerp speed for resetting the camera
+    /// </summary>
+    public float camResetMoveSpeed = 3.0f;
+    /// <summary>
+    /// For resetting the camera when moving a few seconds after the last look.
+    /// </summary>
+    private float m_lastCamLookTime = 0;
 	
     // Cached variables
     private Transform camRotTrans;
@@ -55,10 +68,29 @@ public class RotateCam : MonoBehaviour
         camProxyTrans = camProxyTarget.transform;
 	}
 
-	public void ResetCamRotation()
+	public void ResetCamRotation(bool a_snap)
 	{
-		totalHori = 0;
-		totalVert = 0;
+        if (a_snap)
+        {
+            totalHori = 0;
+            totalVert = 0;
+        }
+        else
+        {
+            // Interp the look back to neutral
+            totalHori = Mathf.Lerp(totalHori, 0, camResetMoveSpeed * Time.deltaTime);
+            totalVert = Mathf.Lerp(totalVert, 0, camResetMoveSpeed * Time.deltaTime);
+
+            // Snap the last leg
+            if (Mathf.Abs(totalHori) < 0.01f)
+            {
+                totalHori = 0;
+            }
+            if (Mathf.Abs(totalVert) < 0.01f)
+            {
+                totalVert = 0;
+            }
+        }
 	}
 	
 	void Update()
@@ -69,21 +101,19 @@ public class RotateCam : MonoBehaviour
 	}
 
 	public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
-	{
+    {
 		// Reset on click
 		if (a_leftClick || a_rightClick)
 		{
-			ResetCamRotation();
+			ResetCamRotation(true);
 		}
 		
-		// Reset on accelerate
-		if (a_triggerAxis > 0)
+		// Reset on accelerate only a few seconds after the last input
+        m_lastCamLookTime -= Time.deltaTime;
+        if (a_triggerAxis > 0 && m_lastCamLookTime < 0)
 		{
-			// Check for direct cam input first
-			if (a_camHorizontal == 0 && a_camVertical == 0)
-			{
-				ResetCamRotation();
-			}
+            // Check for direct cam input first
+            ResetCamRotation(false);
 		}
 	
 		// Lock up/down
@@ -108,6 +138,11 @@ public class RotateCam : MonoBehaviour
 			totalHori -= 0.01f * camTurnMultiplier;
 		}
 
+        // Record last camera movement time for when to reset the looking
+        if (!Mathf.Approximately(a_camHorizontal, 0) || !Mathf.Approximately(a_camVertical, 0))
+        {
+            m_lastCamLookTime = movingCamResetTime;
+        }
 
 		m_tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
 		m_tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
