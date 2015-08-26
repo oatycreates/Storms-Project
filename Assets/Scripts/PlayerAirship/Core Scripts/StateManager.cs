@@ -38,7 +38,7 @@ public class StateManager : MonoBehaviour
 {
 	private EPlayerState m_currentPlayerState;
 	
-	//References to all the different scripts
+	// References to all the different state scripts
 	private RouletteBehaviour m_rouletteScript;
 	private AirshipControlBehaviour m_airshipScript;
     private AirshipDyingBehaviour m_dyingScript;
@@ -76,13 +76,15 @@ public class StateManager : MonoBehaviour
     private EPlayerState m_lastState;
 
     // Cached variables
-    private Transform m_trans;
-    private Rigidbody m_rb;
+    private Transform m_trans = null;
+    private Rigidbody m_rb = null;
+    private ShipPartDestroy m_shipParts = null;
 
     void Awake()
     {
         m_trans = transform;
         m_rb = GetComponent<Rigidbody>();
+        m_shipParts = GetComponent<ShipPartDestroy>();
 
         m_rouletteScript = GetComponent<RouletteBehaviour>();
         m_airshipScript = GetComponent<AirshipControlBehaviour>();
@@ -290,6 +292,9 @@ public class StateManager : MonoBehaviour
         // Reset velocity
         m_rb.velocity = Vector3.zero;
         m_rb.angularVelocity = Vector3.zero;
+
+        // Repair the player ship
+        m_shipParts.RepairAllParts();
 
         // We don't need to see the airship during the roulette wheel
         if (colliders != null)

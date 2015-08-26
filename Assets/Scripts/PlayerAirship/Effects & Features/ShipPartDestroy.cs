@@ -195,6 +195,17 @@ public class ShipPartDestroy : MonoBehaviour
     }
 
     /// <summary>
+    /// Repairs all of the destructible parts on the ship.
+    /// </summary>
+    public void RepairAllParts()
+    {
+        foreach (ShipPart part in destructableParts)
+        {
+            RepairPart(part);
+        }
+    }
+
+    /// <summary>
     /// Re-enables the part, returns mass and thus restores control to the ship.
     /// </summary>
     /// <param name="a_part">The part to test</param>
@@ -202,7 +213,7 @@ public class ShipPartDestroy : MonoBehaviour
     {
         // TODO Build part repair system
 
-        if (!IsPartDestroyed(a_part))
+        if (IsPartDestroyed(a_part))
         {
             Debug.Log("Repair! " + name);
 
