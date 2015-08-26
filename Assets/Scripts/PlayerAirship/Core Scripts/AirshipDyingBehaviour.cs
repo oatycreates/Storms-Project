@@ -19,12 +19,12 @@ public class AirshipDyingBehaviour : MonoBehaviour
     /// <summary>
     /// How fast the player ship will fall, defaults to the Earth gravitational constant.
     /// </summary>
-    public float fallAcceleration = 9.8f;
+    public float fallAcceleration = 100.0f;
 
     /// <summary>
     /// How long should the player watch their ship falling until it resets and takes them to the Roulette screen - experiment with this.
     /// </summary>
-    public float timerUntilReset = 0.0f;
+    public float timerUntilReset = 4.0f;
 
     /// <summary>
     /// How hard to explode the ship's contents away.
@@ -86,13 +86,18 @@ public class AirshipDyingBehaviour : MonoBehaviour
 
         //Reset the timer
         m_resetTimer = timerUntilReset;
+
+        //m_myRigid.useGravity = true;
+    }
+
+    void FixedUpdate()
+    {
+        // Add downwards acceleration
+        m_myRigid.AddForce(Vector3.down * fallAcceleration, ForceMode.Impulse);
     }
 
     void Update()
     {
-        m_myRigid.useGravity = true;
-        m_myRigid.AddForce(Vector3.down * fallAcceleration, ForceMode.Impulse);
-
         // Change the camera behaviour;
         airshipMainCam.camFollowPlayer = false;
 
@@ -102,7 +107,7 @@ public class AirshipDyingBehaviour : MonoBehaviour
             m_resetTimer -= Time.deltaTime;
         }
 
-        if (m_resetTimer < 0.0f)
+        if (m_resetTimer <= 0.0f)
         {
             // Reset the camera and change the play state
             airshipMainCam.camFollowPlayer = true;

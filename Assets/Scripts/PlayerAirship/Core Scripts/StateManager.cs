@@ -1,7 +1,7 @@
 ﻿/**
  * File: RoulletteBehaviour.cs
  * Author: Rowan Donaldson
- * Maintainer: Patrick Ferguson
+ * Maintainer: Patrick FergusonAirshi
  * Created: 6/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
  * Description: This script organises all the different 'states' the player can be in. If we need to add more states, make sure to do them here.
@@ -30,6 +30,7 @@ public enum EPlayerState
 [RequireComponent(typeof(RouletteBehaviour))]
 [RequireComponent(typeof(AirshipControlBehaviour))]
 [RequireComponent(typeof(AirshipDyingBehaviour))]
+[RequireComponent(typeof(AirshipStallingBehaviour))]
 [RequireComponent(typeof(AirshipSuicideBehaviour))]
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(TagChildren))]
@@ -274,12 +275,15 @@ public class StateManager : MonoBehaviour
 
     private void ChangeToPregame()
     {
+        // Disable all scripts
         m_rouletteScript.enabled = false;
+        m_airshipScript.enabled  = false;
+        m_dyingScript.enabled    = false;
+        m_stallingScript.enabled = false;
+        m_suicideScript.enabled  = false;
+
         // Reset position
         m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
-        m_airshipScript.enabled = false;
-        m_dyingScript.enabled = false;
-        m_suicideScript.enabled = false;
 
         // We don't need to see the airship during the roulette wheel
         if (colliders != null)
@@ -317,9 +321,10 @@ public class StateManager : MonoBehaviour
     {
         // Airship behaves like a rocket
         m_rouletteScript.enabled = false;
-        m_airshipScript.enabled = false;
-        m_dyingScript.enabled = false;
-        m_suicideScript.enabled = true;
+        m_airshipScript.enabled  = false;
+        m_dyingScript.enabled    = false;
+        m_stallingScript.enabled = false;
+        m_suicideScript.enabled  = true;
 
         if (colliders != null)
         {
@@ -356,9 +361,10 @@ public class StateManager : MonoBehaviour
     {
         // No Control, gravity makes airship fall
         m_rouletteScript.enabled = false;
-        m_airshipScript.enabled = false;
-        m_dyingScript.enabled = true;
-        m_suicideScript.enabled = false;
+        m_airshipScript.enabled  = false;
+        m_dyingScript.enabled    = true;
+        m_stallingScript.enabled = false;
+        m_suicideScript.enabled  = false;
 
         if (colliders != null)
         {
@@ -395,9 +401,10 @@ public class StateManager : MonoBehaviour
     {
         // No Control, gravity makes airship fall
         m_rouletteScript.enabled = false;
-        m_airshipScript.enabled = false;
-        m_dyingScript.enabled = true;
-        m_suicideScript.enabled = false;
+        m_airshipScript.enabled  = false;
+        m_dyingScript.enabled    = false;
+        m_stallingScript.enabled = true;
+        m_suicideScript.enabled  = false;
 
         if (colliders != null)
         {
@@ -434,11 +441,10 @@ public class StateManager : MonoBehaviour
     {
         // Standard Physics Control
         m_rouletteScript.enabled = false;
-        m_airshipScript.enabled = true;
-        //m_dyingScript.ResetTimer();
-        m_dyingScript.enabled = false;
-
-        m_suicideScript.enabled = false;
+        m_airshipScript.enabled  = true;
+        m_dyingScript.enabled    = false;
+        m_stallingScript.enabled = false;
+        m_suicideScript.enabled  = false;
 
         if (colliders != null)
         {
@@ -475,11 +481,13 @@ public class StateManager : MonoBehaviour
     {
         // Roulette control
         m_rouletteScript.enabled = true;
+        m_airshipScript.enabled  = false;
+        m_dyingScript.enabled    = false;
+        m_stallingScript.enabled = false;
+        m_suicideScript.enabled  = false;
+
         // Reset position
         m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
-        m_airshipScript.enabled = false;
-        m_dyingScript.enabled = false;
-        m_suicideScript.enabled = false;
 
         // We don't need to see the airship during the roulette wheel
         if (colliders != null)
