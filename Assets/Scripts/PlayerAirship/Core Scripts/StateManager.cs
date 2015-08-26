@@ -302,36 +302,7 @@ public class StateManager : MonoBehaviour
         // Revert the ship back to the start
         ResetPlayerShip();
 
-        // We don't need to see the airship during the roulette wheel
-        if (colliders != null)
-        {
-            colliders.SetActive(true);
-        }
-
-        if (meshes != null)
-        {
-            meshes.SetActive(true);
-        }
-
-        if (hinges != null)
-        {
-            hinges.SetActive(true);
-        }
-
-        if (rouletteHierachy != null)
-        {
-            rouletteHierachy.SetActive(false);
-        }
-
-        if (particlesEffectsHierachy != null)
-        {
-            particlesEffectsHierachy.SetActive(false);
-        }
-
-        if (weaponsHierachy != null)
-        {
-            weaponsHierachy.SetActive(false);
-        }
+        ToggleShipParts(true, true, true, false, false, false);
     }
 
     private void ChangeToSuicide()
@@ -341,37 +312,9 @@ public class StateManager : MonoBehaviour
         m_airshipScript.enabled  = false;
         m_dyingScript.enabled    = false;
         m_stallingScript.enabled = false;
-        m_suicideScript.enabled  = true;
+        m_suicideScript.enabled = true;
 
-        if (colliders != null)
-        {
-            colliders.SetActive(true);
-        }
-
-        if (meshes != null)
-        {
-            meshes.SetActive(true);
-        }
-
-        if (hinges != null)
-        {
-            hinges.SetActive(true);
-        }
-
-        if (rouletteHierachy != null)
-        {
-            rouletteHierachy.SetActive(false);
-        }
-
-        if (particlesEffectsHierachy != null)
-        {
-            particlesEffectsHierachy.SetActive(true);
-        }
-
-        if (weaponsHierachy != null)
-        {
-            weaponsHierachy.SetActive(false);
-        }
+        ToggleShipParts(true, true, true, false, true, false);
     }
 
     private void ChangeToDying()
@@ -381,37 +324,9 @@ public class StateManager : MonoBehaviour
         m_airshipScript.enabled  = false;
         m_dyingScript.enabled    = true;
         m_stallingScript.enabled = false;
-        m_suicideScript.enabled  = false;
+        m_suicideScript.enabled = false;
 
-        if (colliders != null)
-        {
-            colliders.SetActive(true);
-        }
-
-        if (meshes != null)
-        {
-            meshes.SetActive(true);
-        }
-
-        if (hinges != null)
-        {
-            hinges.SetActive(true);
-        }
-
-        if (rouletteHierachy != null)
-        {
-            rouletteHierachy.SetActive(false);
-        }
-
-        if (particlesEffectsHierachy != null)
-        {
-            particlesEffectsHierachy.SetActive(true);
-        }
-
-        if (weaponsHierachy != null)
-        {
-            weaponsHierachy.SetActive(false);
-        }
+        ToggleShipParts(true, true, true, false, true, false);
     }
 
     private void ChangeToStalling()
@@ -421,37 +336,9 @@ public class StateManager : MonoBehaviour
         m_airshipScript.enabled  = false;
         m_dyingScript.enabled    = false;
         m_stallingScript.enabled = true;
-        m_suicideScript.enabled  = false;
+        m_suicideScript.enabled = false;
 
-        if (colliders != null)
-        {
-            colliders.SetActive(true);
-        }
-
-        if (meshes != null)
-        {
-            meshes.SetActive(true);
-        }
-
-        if (hinges != null)
-        {
-            hinges.SetActive(true);
-        }
-
-        if (rouletteHierachy != null)
-        {
-            rouletteHierachy.SetActive(false);
-        }
-
-        if (particlesEffectsHierachy != null)
-        {
-            particlesEffectsHierachy.SetActive(true);
-        }
-
-        if (weaponsHierachy != null)
-        {
-            weaponsHierachy.SetActive(false);
-        }
+        ToggleShipParts(true, true, true, false, true, false);
     }
 
     private void ChangeToControl()
@@ -463,35 +350,7 @@ public class StateManager : MonoBehaviour
         m_stallingScript.enabled = false;
         m_suicideScript.enabled  = false;
 
-        if (colliders != null)
-        {
-            colliders.SetActive(true);
-        }
-
-        if (meshes != null)
-        {
-            meshes.SetActive(true);
-        }
-
-        if (hinges != null)
-        {
-            hinges.SetActive(true);
-        }
-
-        if (rouletteHierachy != null)
-        {
-            rouletteHierachy.SetActive(false);
-        }
-
-        if (particlesEffectsHierachy != null)
-        {
-            particlesEffectsHierachy.SetActive(true);
-        }
-
-        if (weaponsHierachy != null)
-        {
-            weaponsHierachy.SetActive(true);
-        }
+        ToggleShipParts(true, true, true, false, true, true);
     }
 
     private void ChangeToRoulette()
@@ -507,34 +366,48 @@ public class StateManager : MonoBehaviour
         ResetPlayerShip();
 
         // We don't need to see the airship during the roulette wheel
+        ToggleShipParts(false, false, false, true, false, false);
+    }
+
+    /// <summary>
+    /// Toggles the ship's component parts and sub-children for the current state.
+    /// </summary>
+    /// <param name="a_colEnable">Whether to enable the collider hierarchy.</param>
+    /// <param name="a_meshEnable">Whether to enable the mesh hierarchy.</param>
+    /// <param name="a_hingesEnable">Whether to enable the hinges hierarchy.</param>
+    /// <param name="a_rouletteEnable">Whether to enable the roulette hierarchy.</param>
+    /// <param name="a_particlesEnable">Whether to enable the particles hierarchy.</param>
+    /// <param name="a_weaponsEnable">Whether to enable the weapons hierarchy.</param>
+    private void ToggleShipParts(bool a_colEnable, bool a_meshEnable, bool a_hingesEnable, bool a_rouletteEnable, bool a_particlesEnable, bool a_weaponsEnable)
+    {
         if (colliders != null)
         {
-            colliders.SetActive(false);
+            colliders.SetActive(a_colEnable);
         }
 
         if (meshes != null)
         {
-            meshes.SetActive(false);
+            meshes.SetActive(a_meshEnable);
         }
 
         if (hinges != null)
         {
-            hinges.SetActive(false);
+            hinges.SetActive(a_hingesEnable);
         }
 
         if (rouletteHierachy != null)
         {
-            rouletteHierachy.SetActive(true);
+            rouletteHierachy.SetActive(a_rouletteEnable);
         }
 
         if (particlesEffectsHierachy != null)
         {
-            particlesEffectsHierachy.SetActive(false);
+            particlesEffectsHierachy.SetActive(a_particlesEnable);
         }
 
         if (weaponsHierachy != null)
         {
-            weaponsHierachy.SetActive(false);
+            weaponsHierachy.SetActive(a_weaponsEnable);
         }
     }
 	
