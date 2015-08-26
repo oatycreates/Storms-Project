@@ -77,10 +77,12 @@ public class StateManager : MonoBehaviour
 
     // Cached variables
     private Transform m_trans;
+    private Rigidbody m_rb;
 
     void Awake()
     {
         m_trans = transform;
+        m_rb = GetComponent<Rigidbody>();
 
         m_rouletteScript = GetComponent<RouletteBehaviour>();
         m_airshipScript = GetComponent<AirshipControlBehaviour>();
@@ -284,6 +286,10 @@ public class StateManager : MonoBehaviour
 
         // Reset position
         m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+
+        // Reset velocity
+        m_rb.velocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
 
         // We don't need to see the airship during the roulette wheel
         if (colliders != null)
