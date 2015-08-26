@@ -16,9 +16,10 @@ using System.Collections;
 public enum EPlayerState
 {
     Pregame, 
-    Roulette, 
-    Control, 
+    Roulette,
+    Control,
     Dying, 
+    Stalling, 
     Suicide
 };
 
@@ -39,7 +40,8 @@ public class StateManager : MonoBehaviour
 	//References to all the different scripts
 	private RouletteBehaviour m_rouletteScript;
 	private AirshipControlBehaviour m_airshipScript;
-	private AirshipDyingBehaviour m_dyingScript;
+    private AirshipDyingBehaviour m_dyingScript;
+    private AirshipStallingBehaviour m_stallingScript;
 	private AirshipSuicideBehaviour m_suicideScript;
 	
     /// <summary>
@@ -82,6 +84,7 @@ public class StateManager : MonoBehaviour
         m_rouletteScript = GetComponent<RouletteBehaviour>();
         m_airshipScript = GetComponent<AirshipControlBehaviour>();
         m_dyingScript = GetComponent<AirshipDyingBehaviour>();
+        m_stallingScript = GetComponent<AirshipStallingBehaviour>();
         m_suicideScript = GetComponent<AirshipSuicideBehaviour>();
 
         m_inputManager = GetComponent<InputManager>();
@@ -102,11 +105,11 @@ public class StateManager : MonoBehaviour
         // Hehehe
 		//if (Application.isEditor == true)
 		//{
-			DevHacks();
+		DevHacks();
 		//}
 		
 		// Make the player commit to the STALL
-		if (m_currentPlayerState == EPlayerState.Dying)
+        if (m_currentPlayerState == EPlayerState.Stalling)
 		{
 			stallCommit -= Time.deltaTime;
 		}
@@ -145,7 +148,13 @@ public class StateManager : MonoBehaviour
 		if (m_currentPlayerState == EPlayerState.Dying)
 		{
             DyingUpdate();
-		}
+        }
+
+        // Player has no-control over airship, but it's still affected by forces. Gravity is making the airship fall
+        if (m_currentPlayerState == EPlayerState.Stalling)
+        {
+            StallingUpdate();
+        }
 
         // Recent addition- this is for the fireship/suicide function - the player has limited control here, needs further experimentation
 		if (m_currentPlayerState == EPlayerState.Suicide)
@@ -182,6 +191,11 @@ public class StateManager : MonoBehaviour
             case EPlayerState.Dying:
                 {
                     ChangeToDying();
+                    break;
+                }
+            case EPlayerState.Stalling:
+                {
+                    ChangeToStalling();
                     break;
                 }
             case EPlayerState.Suicide:
@@ -239,6 +253,11 @@ public class StateManager : MonoBehaviour
     }
 
     private void DyingUpdate()
+    {
+
+    }
+
+    private void StallingUpdate()
     {
 
     }
@@ -334,6 +353,45 @@ public class StateManager : MonoBehaviour
     }
 
     private void ChangeToDying()
+    {
+        // No Control, gravity makes airship fall
+        m_rouletteScript.enabled = false;
+        m_airshipScript.enabled = false;
+        m_dyingScript.enabled = true;
+        m_suicideScript.enabled = false;
+
+        if (colliders != null)
+        {
+            colliders.SetActive(true);
+        }
+
+        if (meshes != null)
+        {
+            meshes.SetActive(true);
+        }
+
+        if (hinges != null)
+        {
+            hinges.SetActive(true);
+        }
+
+        if (rouletteHierachy != null)
+        {
+            rouletteHierachy.SetActive(false);
+        }
+
+        if (particlesEffectsHierachy != null)
+        {
+            particlesEffectsHierachy.SetActive(true);
+        }
+
+        if (weaponsHierachy != null)
+        {
+            weaponsHierachy.SetActive(false);
+        }
+    }
+
+    private void ChangeToStalling()
     {
         // No Control, gravity makes airship fall
         m_rouletteScript.enabled = false;
@@ -476,9 +534,14 @@ public class StateManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha3))
 		{
             SetPlayerState(EPlayerState.Dying);
-		}
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SetPlayerState(EPlayerState.Stalling);
+        }
 		
-		if (Input.GetKeyDown(KeyCode.Alpha4))
+		if (Input.GetKeyDown(KeyCode.Alpha5))
 		{
             SetPlayerState(EPlayerState.Suicide);
 		}
@@ -516,19 +579,19 @@ public class StateManager : MonoBehaviour
 			{
 				if (timeBetweenStall < 0)
 				{
-                    SetPlayerState(EPlayerState.Dying);
+                    SetPlayerState(EPlayerState.Stalling);
 				}
 			}
 		}
 		
 		// Stop spamming stall
-		if (m_currentPlayerState == EPlayerState.Dying || m_currentPlayerState == EPlayerState.Suicide || m_currentPlayerState == EPlayerState.Roulette)
+		if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide || m_currentPlayerState == EPlayerState.Roulette)
 		{
 			timeBetweenStall = 5.0f;
 		}
 		
 		// Hacky!! Make auto stall an option
-		if (m_currentPlayerState == EPlayerState.Dying)
+        if (m_currentPlayerState == EPlayerState.Stalling)
 		{
 		
 			// If the button is not down, but the player is allowed to escape the stall anyway.
@@ -537,7 +600,7 @@ public class StateManager : MonoBehaviour
 				if (escapeStall)
 				{
 					//Take a Stall value and pass it into the suicide script.
-					float timer = m_dyingScript.timerUntilBoost;
+					float timer = m_stallingScript.timerUntilBoost;
 
                     SetPlayerState(EPlayerState.Suicide);
 					

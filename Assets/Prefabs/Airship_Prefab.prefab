@@ -867,6 +867,7 @@ GameObject:
   - 114: {fileID: 11471642}
   - 114: {fileID: 11424416}
   - 114: {fileID: 11404896}
+  - 114: {fileID: 11487712}
   - 114: {fileID: 11429062}
   - 54: {fileID: 5448276}
   - 114: {fileID: 11413722}
@@ -4404,6 +4405,8 @@ MonoBehaviour:
   camTurnMultiplier: 3
   totalVert: 0
   totalHori: 0
+  movingCamResetTime: 1.5
+  camResetMoveSpeed: 3
 --- !u!114 &11421512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4856,6 +4859,23 @@ MonoBehaviour:
   camLookTarget: {fileID: 481600}
   camLookSmooth: 2
   camPosSmooth: 25
+--- !u!114 &11487712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d17f70a60fb1d428d273a6b8b2e03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallAcceleration: 9.80000019
+  timerUntilReset: 0
+  explosionForce: 10
+  explosionRadius: 3
+  explosionCentreTrans: {fileID: 437454}
+  airshipMainCam: {fileID: 11476918}
 --- !u!114 &11493030
 MonoBehaviour:
   m_ObjectHideFlags: 1

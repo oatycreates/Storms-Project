@@ -30,15 +30,17 @@ public class RouletteBehaviour : MonoBehaviour
     // Cached variables
     private Rigidbody m_myRigid;
     private Transform m_trans;
-    private AirshipSuicideBehaviour m_suicideBehaviour;
     private AirshipDyingBehaviour m_dyingBehaviour;
+    private AirshipStallingBehaviour m_stallingBehaviour;
+    private AirshipSuicideBehaviour m_suicideBehaviour;
 
 	void Awake()
 	{
 		m_myRigid = GetComponent<Rigidbody>();
         m_trans = transform;
-        m_suicideBehaviour = GetComponent<AirshipSuicideBehaviour>();
         m_dyingBehaviour = GetComponent<AirshipDyingBehaviour>();
+        m_stallingBehaviour = GetComponent<AirshipStallingBehaviour>();
+        m_suicideBehaviour = GetComponent<AirshipSuicideBehaviour>();
 	}
 
 	
@@ -56,7 +58,7 @@ public class RouletteBehaviour : MonoBehaviour
 		
 		// Reset the values on the other scripts- this way, they'll be ready the next time we need them
         m_suicideBehaviour.timerUntilReset = 15.0f;
-        m_dyingBehaviour.timerUntilBoost = 4.0f;
+        m_stallingBehaviour.timerUntilBoost = 4.0f;
 	}
 	
 	public void PlayerInput(bool a_stopWheel, bool a_SpinFaster)

@@ -57,15 +57,26 @@ public class ShipPartDestroy : MonoBehaviour
     /// </summary>
     public ShipPart[] destructableParts;
 
+    /// <summary>
+    /// For testing the player death.
+    /// </summary>
+    private bool m_balLeftDest = false;
+    /// <summary>
+    /// For testing the player death.
+    /// </summary>
+    private bool m_balRightDest = false;
+
     // Cached variables
     private Rigidbody m_rb = null;
     private PassengerTray m_shipTray = null;
+    private StateManager m_shipStates = null;
     private float m_breakVelSqr = 0;
 
     void Awake()
     {
-        m_shipTray = GetComponentInChildren<PassengerTray>();
         m_rb = GetComponent<Rigidbody>();
+        m_shipTray = GetComponentInChildren<PassengerTray>();
+        m_shipStates = GetComponent<StateManager>();
     }
 
 	/// <summary>
@@ -200,6 +211,9 @@ public class ShipPartDestroy : MonoBehaviour
 
             // Re-enable the part
             a_part.partObject.SetActive(true);
+
+            // Clear the destroyed flag
+            ClearPartDestroyFlags(a_part);
         }
     }
 
@@ -216,5 +230,45 @@ public class ShipPartDestroy : MonoBehaviour
 
         // Disable the part
         a_part.partObject.SetActive(false);
+
+        // For testing ship death
+        TestShipDestroyed(a_part);
+    }
+
+    /// <summary>
+    /// Clears the conditions necessary for ship destruction.
+    /// </summary>
+    /// <param name="a_part">Ship part being repaired.</param>
+    private void ClearPartDestroyFlags(ShipPart a_part)
+    {
+        if (a_part.partType == EShipPartType.LEFT_BALLOON)
+        {
+            m_balLeftDest = false;
+        }
+        else if (a_part.partType == EShipPartType.RIGHT_BALLOON)
+        {
+            m_balRightDest = false;
+        }
+    }
+
+    /// <summary>
+    /// Tests the conditions necessary for ship destruction.
+    /// </summary>
+    /// <param name="a_part">Ship part being destroyed.</param>
+    private void TestShipDestroyed(ShipPart a_part)
+    {
+        if (a_part.partType == EShipPartType.LEFT_BALLOON)
+        {
+            m_balLeftDest = true;
+        }
+        else if (a_part.partType == EShipPartType.RIGHT_BALLOON)
+        {
+            m_balRightDest = true;
+        }
+        if (m_balLeftDest && m_balRightDest)
+        {
+            // Kill the player
+            m_shipStates.SetPlayerState(EPlayerState.Dying);
+        }
     }
 }
