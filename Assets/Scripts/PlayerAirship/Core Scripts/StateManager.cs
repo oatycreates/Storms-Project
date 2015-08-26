@@ -277,15 +277,8 @@ public class StateManager : MonoBehaviour
 
     }
 
-    private void ChangeToPregame()
+    private void ResetPlayerShip()
     {
-        // Disable all scripts
-        m_rouletteScript.enabled = false;
-        m_airshipScript.enabled  = false;
-        m_dyingScript.enabled    = false;
-        m_stallingScript.enabled = false;
-        m_suicideScript.enabled  = false;
-
         // Reset position
         m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
 
@@ -295,6 +288,19 @@ public class StateManager : MonoBehaviour
 
         // Repair the player ship
         m_shipParts.RepairAllParts();
+    }
+
+    private void ChangeToPregame()
+    {
+        // Disable all scripts
+        m_rouletteScript.enabled = false;
+        m_airshipScript.enabled  = false;
+        m_dyingScript.enabled    = false;
+        m_stallingScript.enabled = false;
+        m_suicideScript.enabled  = false;
+
+        // Revert the ship back to the start
+        ResetPlayerShip();
 
         // We don't need to see the airship during the roulette wheel
         if (colliders != null)
@@ -495,10 +501,10 @@ public class StateManager : MonoBehaviour
         m_airshipScript.enabled  = false;
         m_dyingScript.enabled    = false;
         m_stallingScript.enabled = false;
-        m_suicideScript.enabled  = false;
+        m_suicideScript.enabled = false;
 
-        // Reset position
-        m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+        // Revert the ship back to the start
+        ResetPlayerShip();
 
         // We don't need to see the airship during the roulette wheel
         if (colliders != null)
