@@ -103,7 +103,7 @@ public class AirshipStallingBehaviour : MonoBehaviour
 		}
 		
 		/*
-		if (timerUntilBoost < 0.0f)
+		if (timerUntilBoost <= 0.0f)
 		{
 			// Reset the camera and change the play state
 			airshipMainCam.camFollowPlayer = true;
