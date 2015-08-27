@@ -88,7 +88,8 @@ public class AirshipControlBehaviour : MonoBehaviour
     private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
 
     // Cached variables
-    private Rigidbody m_myRigid;
+    private Rigidbody m_myRigid;        // Rigidbody of player
+    private Transform m_rigidTrans;     // Transform for above rigidbody
     private Animator m_anim;
 	
 	[HideInInspector]
@@ -102,13 +103,16 @@ public class AirshipControlBehaviour : MonoBehaviour
 	[HideInInspector]
 	public bool openHatch;
 	
-
 	void Awake()
 	{
-		m_myRigid = GetComponent<Rigidbody>();
-        m_anim = GetComponent<Animator>();
-        m_myRigid.mass = adjustableMass;
+        // Get Rigidbody variables
+		m_myRigid       = GetComponent<Rigidbody>();
+        m_rigidTrans    = m_myRigid.transform;
+
+        m_myRigid.mass  = adjustableMass;
         m_startShipMass = adjustableMass;
+
+        m_anim = GetComponent<Animator>();
 	}
 	
 	void Start () 
@@ -133,7 +137,6 @@ public class AirshipControlBehaviour : MonoBehaviour
 		
 	}
 
-
     public void PlayerInputs(
         float a_Vertical, 
         float a_Horizontal, 
@@ -154,20 +157,32 @@ public class AirshipControlBehaviour : MonoBehaviour
         {
         	rollFloat = -1;
         }
-        else
-        if (a_faceRight)
+        else if (a_faceRight)
         {
         	rollFloat = 1;
         }
         
-        roll = 0.25f * a_Horizontal + rollFloat;
-        
 		//roll = 0.25f * a_Horizontal + a_camHorizontal;
-		pitch = a_Vertical;
-		yaw = a_Horizontal;
-		throttle = a_triggers;
+        roll        = 0.25f * a_Horizontal + rollFloat;
+		pitch       = a_Vertical;
+        throttle    = a_triggers;
+
+        // Reverse yaw if play is moving backwards
+        if (a_triggers < 0)
+        {
+            // Ensure player is actually moving backwards
+            if (Vector3.Dot(m_myRigid.velocity, m_rigidTrans.forward) < 0)
+            {
+                yaw = a_Horizontal;
+            }
+        }
+        else
+        {
+            // Player is moving forwards, or reverse trigger not held
+            yaw = a_Horizontal;
+        }
 		
-		//Check buttonPresses
+		// Check buttonPresses
 		openHatch = (a_faceUp || a_faceDown);
 		
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
@@ -190,7 +205,6 @@ public class AirshipControlBehaviour : MonoBehaviour
             animThrottle = boundedThrottle * (animThrottleMult - 1) + 1;
         }
         m_anim.SetFloat(m_animPropellerMult, animThrottleSign * animThrottle);
-		
 	}
 	
 	void FixedUpdate()
