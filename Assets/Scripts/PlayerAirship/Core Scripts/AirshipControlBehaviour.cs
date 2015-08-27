@@ -101,7 +101,6 @@ public class AirshipControlBehaviour : MonoBehaviour
     public EngineAudio engineAudioControl;
 
     /// <summary>
-
     /// Reference to rudder joint script, for inversing
     /// rudder rotation while reversing
     /// </summary>
