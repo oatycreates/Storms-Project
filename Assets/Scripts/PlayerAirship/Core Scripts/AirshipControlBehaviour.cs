@@ -101,8 +101,7 @@ public class AirshipControlBehaviour : MonoBehaviour
     public EngineAudio engineAudioControl;
 
     /// <summary>
-    /// Reference to rudder joint script, for inversing
-    /// rudder rotation while reversing
+    /// Reference to rudder joint script, for inversing rudder rotation while reversing.
     /// </summary>
     public HingeJointScript rudderJoint;
 
@@ -355,11 +354,17 @@ public class AirshipControlBehaviour : MonoBehaviour
         // Roll as if the only balloon left is pulling up
         if (leftBallDest && !rightBallDest)
         {
+            // Make the player still able to roll all the way
+            roll *= 1.5f;
+
             // Right balloon pulling up, left popped
             roll -= leftBallPopVal;
         }
         else if (!leftBallDest && rightBallDest)
         {
+            // Make the player still able to roll all the way
+            roll *= 1.5f;
+
             // Left balloon pulling up, right popped
             roll += rightBallPopVal;
         }
