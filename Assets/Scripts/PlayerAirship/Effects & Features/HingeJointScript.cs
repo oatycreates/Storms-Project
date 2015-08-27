@@ -40,7 +40,9 @@ public class HingeJointScript : MonoBehaviour
 	/// <summary>
     /// This is a generic value. The axis is determined later.
 	/// </summary>
-	private float m_turnValue;
+    private float m_turnValue;
+
+    public bool isRudderJoint = false;
 
     // Cached variables
     private Transform m_trans;
@@ -56,7 +58,7 @@ public class HingeJointScript : MonoBehaviour
 		//maxRotationDegrees = 60.0f;
 	}
 
-	void FixedUpdate () 
+	void FixedUpdate() 
 	{
 		// Get values from ship movement
 		if (airshipControlBehaviour != null)
@@ -64,7 +66,6 @@ public class HingeJointScript : MonoBehaviour
 			m_hiddenRoll = airshipControlBehaviour.roll;
 			m_hiddenYaw = airshipControlBehaviour.yaw;
 			m_hiddenPitch = airshipControlBehaviour.pitch;
-
 		}
 		else
 		{
@@ -110,6 +111,15 @@ public class HingeJointScript : MonoBehaviour
 
 			// Clamp the rotation
 			m_absRotateAmount = Mathf.Abs(maxRotationDegrees * m_hiddenYaw);
+
+            if (isRudderJoint)
+            {
+                if (airshipControlBehaviour.isReversing)
+                {
+                    // Inverse rudder target rotation when reversing
+                    m_absRotateAmount *= -1.0f;
+                }
+            }
 		}
 		else if (axis == EHingeAxis.hingeZ)
 		{

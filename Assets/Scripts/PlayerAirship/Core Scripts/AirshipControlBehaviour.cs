@@ -78,6 +78,12 @@ public class AirshipControlBehaviour : MonoBehaviour
     public EngineAudio engineAudioControl;
 
     /// <summary>
+    /// Reference to rudder joint script, for inversing
+    /// rudder rotation while reversing
+    /// </summary>
+    public HingeJointScript rudderJoint;
+
+    /// <summary>
     /// Cached mass for the ship at the start of the game.
     /// </summary>
     private float m_startShipMass = 0;
@@ -88,9 +94,18 @@ public class AirshipControlBehaviour : MonoBehaviour
     private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
 
     // Cached variables
-    private Rigidbody m_myRigid;        // Rigidbody of player
-    private Transform m_rigidTrans;     // Transform for above rigidbody
+    private Rigidbody m_myRigid;            // Rigidbody of player
+    private Transform m_rigidTrans;         // Transform for above rigidbody
     private Animator m_anim;
+
+    public bool isReversing
+    {
+        get
+        {
+            return m_isReversing;
+        }
+    }
+    private bool m_isReversing = false;
 	
 	[HideInInspector]
 	public float roll;
@@ -173,6 +188,7 @@ public class AirshipControlBehaviour : MonoBehaviour
             // Ensure player is actually moving backwards
             if (Vector3.Dot(m_myRigid.velocity, m_rigidTrans.forward) < 0)
             {
+                m_isReversing = true;
                 yaw = a_Horizontal;
             }
         }
@@ -180,6 +196,7 @@ public class AirshipControlBehaviour : MonoBehaviour
         {
             // Player is moving forwards, or reverse trigger not held
             yaw = a_Horizontal;
+            m_isReversing = false;
         }
 		
 		// Check buttonPresses
