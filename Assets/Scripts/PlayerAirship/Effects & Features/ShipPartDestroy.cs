@@ -49,6 +49,7 @@ public class ShipPartDestroy : MonoBehaviour
         /// </summary>
         public float partMass = 5;
 
+        [HideInInspector]
         // Cached variables, these don't have to be updated by hand
         public float cached_breakVelocitySqr = 0;
     }
@@ -185,6 +186,25 @@ public class ShipPartDestroy : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns whether a part of the input type is still active.
+    /// </summary>
+    /// <param name="a_type">Ship part type.</param>
+    /// <returns>True if destroyed, false if a part is not.</returns>
+    public bool IsPartTypeDestroyed(EShipPartType a_type)
+    {
+        bool partActive = false;
+        foreach (ShipPart part in destructableParts)
+        {
+            // If any part is still around, return true
+            if (part.partType == a_type && !IsPartDestroyed(part))
+            {
+                partActive = true;
+            }
+        }
+        return !partActive;
+    }
+
+    /// <summary>
     /// Returns whether the part has been destroyed.
     /// </summary>
     /// <param name="a_part">The part to test</param>
@@ -232,7 +252,7 @@ public class ShipPartDestroy : MonoBehaviour
     /// Breaks the part, takes mass and hampers control to the ship.
     /// </summary>
     /// <param name="a_part">The part to test</param>
-    private void BreakPart(ShipPart a_part)
+    public void BreakPart(ShipPart a_part)
     {
         Debug.Log("Break! " + name);
 

@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// This is the basic airship control. It manages pitch, yaw, and roll. Syncs up to ship animations. In time this script will probably be changed a lot.
@@ -16,7 +17,29 @@ using System.Collections;
 /// Unlike the old Storms Project, this game moves Non-Kinematic Rigidbodies through Physics (unlike Kinematic Rigidbody via direct control).
 /// </summary>
 public class AirshipControlBehaviour : MonoBehaviour
-{	
+{
+    /// <summary>
+    /// A collection object to contain the impact that losing/damaging a part has on the ship.
+    /// </summary>
+    [System.Serializable]
+    public class ShipPartInputConnection
+    {
+        /// <summary>
+        /// What the part is, affects how the ship's handling will be hampered.
+        /// </summary>
+        public ShipPartDestroy.EShipPartType partType = ShipPartDestroy.EShipPartType.INVALID;
+        /// <summary>
+        /// Primary multiplier for the control value this part alters.
+        /// E.g. Losing the balloons hampers roll amounts.
+        /// </summary>
+        public float partValueMult = 1.0f;
+        /// <summary>
+        /// Secondary multiplier for any auxiliary control value this part alters.
+        /// E.g. Losing the balloons also causes this amount of constant input in that given direction.
+        /// </summary>
+        public float partAuxValueMult = 1.0f;
+    }
+
 	/// <summary>
 	/// Change the mass of the Airship in editor here
 	/// </summary>
@@ -78,6 +101,11 @@ public class AirshipControlBehaviour : MonoBehaviour
     public EngineAudio engineAudioControl;
 
     /// <summary>
+    /// Multiplier values for when various ship parts get destroyed.
+    /// </summary>
+    public ShipPartInputConnection[] shipPartConns;
+
+    /// <summary>
     /// Cached mass for the ship at the start of the game.
     /// </summary>
     private float m_startShipMass = 0;
@@ -88,8 +116,9 @@ public class AirshipControlBehaviour : MonoBehaviour
     private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
 
     // Cached variables
-    private Rigidbody m_myRigid;
-    private Animator m_anim;
+    private Rigidbody m_myRigid = null;
+    private Animator m_anim = null;
+    private ShipPartDestroy m_shipPartDestroy = null;
 	
 	[HideInInspector]
 	public float roll;
@@ -101,12 +130,12 @@ public class AirshipControlBehaviour : MonoBehaviour
 	public float throttle;
 	[HideInInspector]
 	public bool openHatch;
-	
 
 	void Awake()
 	{
 		m_myRigid = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
+        m_shipPartDestroy = GetComponent<ShipPartDestroy>();
         m_myRigid.mass = adjustableMass;
         m_startShipMass = adjustableMass;
 	}
@@ -240,7 +269,13 @@ public class AirshipControlBehaviour : MonoBehaviour
         // Slow down when laden
         speedMod *= CalcHandlingMassMult();
 
-		m_myRigid.AddRelativeForce(Vector3.forward * speedMod , ForceMode.Acceleration);
+        // Slow down when mast is gone
+        float tempNotUsed = 0.0f;
+        float mastSpeedMult = 0.0f;
+        GetPartInputMults(ShipPartDestroy.EShipPartType.MAST, out mastSpeedMult, out tempNotUsed);
+        speedMod *= (1.0f - mastSpeedMult);
+
+		m_myRigid.AddRelativeForce(Vector3.forward * speedMod, ForceMode.Acceleration);
 
         // This finds the 'up' vector. It was a cool trick from The Standard Vehicle Assets
 		var liftDirection = Vector3.Cross(m_myRigid.velocity, m_myRigid.transform.right).normalized;
@@ -265,7 +300,7 @@ public class AirshipControlBehaviour : MonoBehaviour
         var torque = Vector3.zero;
 
         // Handle worse when laden
-        float handleMod = CalcHandlingMassMult();
+        float handleMod = 1.0f; // CalcHandlingMassMult();
 
         // Reverse 
         float reverseMult = 1;
@@ -274,9 +309,31 @@ public class AirshipControlBehaviour : MonoBehaviour
             reverseMult = -1;
         }
 
+        // Part damage modifiers
+        float tempNotUsed = 0.0f;
+        float leftBallRollMult = 0.0f, leftBallPopVal = 0.0f,
+            rightBallRollMult = 0.0f, rightBallPopVal = 0.0f;
+        bool leftBallDest  = GetPartInputMults(ShipPartDestroy.EShipPartType.LEFT_BALLOON, out leftBallRollMult, out leftBallPopVal);
+        bool rightBallDest = GetPartInputMults(ShipPartDestroy.EShipPartType.RIGHT_BALLOON, out rightBallRollMult, out rightBallPopVal);
+        
+        float rudderYawMult = 0.0f;
+        GetPartInputMults(ShipPartDestroy.EShipPartType.RUDDER, out rudderYawMult, out tempNotUsed);
+
+        // Roll as if the only balloon left is pulling up
+        if (leftBallDest && !rightBallDest)
+        {
+            // Right balloon pulling up, left popped
+            roll -= leftBallPopVal;
+        }
+        else if (!leftBallDest && rightBallDest)
+        {
+            // Left balloon pulling up, right popped
+            roll += rightBallPopVal;
+        }
+
         torque += handleMod * -pitch * reverseMult * m_myRigid.transform.right * pitchForce;
-        torque += handleMod * yaw * reverseMult * m_myRigid.transform.up * yawForce;
-        torque += handleMod * -roll * m_myRigid.transform.forward * rollForce;
+        torque += handleMod * yaw * (1.0f - rudderYawMult) * reverseMult * m_myRigid.transform.up * yawForce;
+        torque += handleMod * -roll * (1.0f - leftBallRollMult - rightBallRollMult) * m_myRigid.transform.forward * rollForce;
 
         // Add all the torque forces together
 		m_myRigid.AddTorque(torque);
@@ -304,5 +361,32 @@ public class AirshipControlBehaviour : MonoBehaviour
 
         // Add all the torque forces together
         m_myRigid.AddTorque(torque);
+    }
+
+    /// <summary>
+    /// Returns the part input multipliers for the input ship part type.
+    /// </summary>
+    /// <param name="a_partType">Part type to find.</param>
+    /// <param name="ao_primMult">Primary input multiplier. E.g. Balloon affecting roll.</param>
+    /// <param name="ao_auxMult">Auxiliary input multiplier. E.g. Balloon causing constant roll input.</param>
+    /// <returns>True if the part has been destroyed, false if not.</returns>
+    private bool GetPartInputMults(ShipPartDestroy.EShipPartType a_partType, out float ao_primMult, out float ao_auxMult)
+    {
+        ao_primMult = 0;
+        ao_auxMult = 0;
+        if (m_shipPartDestroy.IsPartTypeDestroyed(a_partType))
+        {
+            foreach (ShipPartInputConnection part in shipPartConns)
+            {
+                // Part of the same type?
+                if (part.partType == a_partType)
+                {
+                    ao_primMult = part.partValueMult;
+                    ao_auxMult = part.partAuxValueMult;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
