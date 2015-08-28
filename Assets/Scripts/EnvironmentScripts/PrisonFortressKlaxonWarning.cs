@@ -55,6 +55,8 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 	
 	public SpawnPassengers sternPassengerSpawn;
 	public SpawnPassengers hullPassengerSpawn;
+
+	private Color orange;
 	
 	void Start () 
 	{
@@ -66,6 +68,8 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 		m_timer = timeBetweenPrisonerDrops;
 		m_rememberStartValue = numberOfTimesKlaxonShouldSound;
 		m_rememberPassengerTimerValue = timePassengerSpawnFor;
+
+		orange = new Color (1f, 0.75f, 0f);
 	}
 	
 	void Update() 
@@ -190,7 +194,7 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 	{
 		m_mySource.clip = klaxonSound;
 		
-        Color stateColour = Color.red;
+		Color stateColour = orange; //now Orange
 		sternLight.color = stateColour;
 		hullLight.color = stateColour;
 
@@ -226,7 +230,7 @@ public class PrisonFortressKlaxonWarning : MonoBehaviour
 	/// </summary>
 	void Spawning()
     {
-        Color stateColour = Color.green;
+		Color stateColour = Color.red;
         sternLight.color = stateColour;
         hullLight.color = stateColour;
         m_lightUp = true;
