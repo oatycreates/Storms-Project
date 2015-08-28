@@ -12,6 +12,10 @@ public class HealPointBehaviour : MonoBehaviour
 			{
 				other.transform.root.gameObject.GetComponent<ShipPartDestroy>().RepairAllParts();
 			}
+			else
+			{
+				other.transform.root.gameObject.GetComponentInChildren<ShipPartDestroy>().RepairAllParts();
+			}
 
 		}
 	}
