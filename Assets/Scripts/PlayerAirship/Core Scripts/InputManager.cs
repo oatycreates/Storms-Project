@@ -19,23 +19,29 @@ public class InputManager : MonoBehaviour
 	private AirshipSuicideBehaviour m_fireshipControl;
 	private RouletteBehaviour 		m_rouletteControl;
 	private RotateCam 				m_rotateCam;
+    private ShuntingController      m_shuntingControl;
 
+    // TODO: We might need to add more script references here as we progress
 
-	// TODO We might need to add more script references here as we progress
-	
+    public void Awake()
+    {
+        m_standardControl   = GetComponent<AirshipControlBehaviour>();
+        m_fireshipControl   = GetComponent<AirshipSuicideBehaviour>();
+        m_rouletteControl   = GetComponent<RouletteBehaviour>();
+        m_rotateCam         = GetComponent<RotateCam>();
+        m_shuntingControl   = GetComponent<ShuntingController>();
+    }
+
 	void Start()
 	{
-		m_standardControl = gameObject.GetComponent<AirshipControlBehaviour>();
-		m_fireshipControl = gameObject.GetComponent<AirshipSuicideBehaviour>();
-		m_rouletteControl = gameObject.GetComponent<RouletteBehaviour>();
-		m_rotateCam 	 = gameObject.GetComponent<RotateCam>();
+		
 	}
 
     /// <summary>
     /// This input stuff was all figured out in an old script called 'TempDebugScript'.
     /// It's clever, because it determines which input to look for based off the player tag.
     /// </summary>
-	void FixedUpdate () 
+	void FixedUpdate() 
 	{
 #region Axis Input
 		// Left Stick Input	- One Stick to Determine Movement
@@ -78,6 +84,7 @@ public class InputManager : MonoBehaviour
 		m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
        	m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
 		m_fireshipControl.PlayerFireshipInputs(upDown, leftRight);
-		m_rotateCam.PlayerInputs (camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, clickLeft, clickRight);
+		m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, clickLeft, clickRight);
+        m_shuntingControl.PlayerInputs(bumperLeft, bumperRight);
 	}	
 }
