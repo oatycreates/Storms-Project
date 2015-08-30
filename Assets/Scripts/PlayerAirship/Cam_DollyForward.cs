@@ -17,7 +17,7 @@ namespace ProjectStorms
     /// </summary>
     public class Cam_DollyForward : MonoBehaviour
     {
-        //Get movement
+        // Get movement
         public StateManager airshipStateManager;
         public AirshipControlBehaviour myController;
         public AirshipSuicideBehaviour mySuicideController;
@@ -33,17 +33,25 @@ namespace ProjectStorms
 
         public float distanceTwo = -10.0f;
 
+        // Cached variables
+        private Transform m_trans = null;
+
+        void Awake()
+        {
+            m_trans = transform;
+        }
+
         void Start()
         {
-            myStartZ = gameObject.transform.localPosition.z;
+            myStartZ = m_trans.localPosition.z;
         }
 
 
         void Update()
         {
-            myLocalZ = gameObject.transform.localPosition.z;
+            myLocalZ = m_trans.localPosition.z;
 
-            //check which state Im in
+            // Check which state Im in
             EPlayerState currState = airshipStateManager.GetPlayerState();
             if (currState == EPlayerState.Control)
             {
@@ -72,7 +80,7 @@ namespace ProjectStorms
                 SlideBack();
             }
 
-            gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, myLocalZ);
+            m_trans.localPosition = new Vector3(m_trans.localPosition.x, m_trans.localPosition.y, myLocalZ);
         }
 
         void SlideForward()
