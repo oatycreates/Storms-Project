@@ -23,18 +23,25 @@ namespace ProjectStorms
         public float heightTillDeath = -2000.0f;
         private FallingScream m_scream;
 
+        // Cached variables
+        private Transform m_trans;
+
+        void Awake()
+        {
+            m_trans = transform;
+            m_scream = GetComponent<FallingScream>();
+        }
+
         void Start()
         {
-            m_scream = gameObject.GetComponent<FallingScream>();
-
-            gameObject.transform.tag = "Passengers";
+            m_trans.tag = "Passengers";
         }
 
         void Update()
         {
             if (gameObject.activeInHierarchy)
             {
-                if (gameObject.transform.position.y < heightTillDeath)
+                if (m_trans.position.y < heightTillDeath)
                 {
                     // Check timeout
                     gameObject.SetActive(false);
