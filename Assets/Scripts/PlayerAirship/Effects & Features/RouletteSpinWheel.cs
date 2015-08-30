@@ -79,7 +79,7 @@ namespace ProjectStorms
         {
             if (m_parentStateManager == null)
             {
-                m_parentStateManager = gameObject.transform.parent.transform.GetComponentInParent<StateManager>();
+                m_parentStateManager = m_trans.GetComponentInParent<StateManager>();
             }
 
             // Reset Position

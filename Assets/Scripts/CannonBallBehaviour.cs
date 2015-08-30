@@ -185,7 +185,7 @@ namespace ProjectStorms
             }
 		
             // Or if the cannonball has somehow fallen too far
-            if (gameObject.transform.position.y < -2000)
+            if (m_trans.position.y < -2000)
             {
                 gameObject.SetActive(false);
             }
@@ -214,7 +214,7 @@ namespace ProjectStorms
                 //Leave an impact
                 if (other.gameObject.GetComponent<Rigidbody>() != null)
                 {
-                    other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(5, gameObject.transform.position, 5.0f);
+                    other.gameObject.GetComponent<Rigidbody>().AddExplosionForce(5, m_trans.position, 5.0f);
                 }
 			
 			
