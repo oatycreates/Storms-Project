@@ -4266,6 +4266,7 @@ MonoBehaviour:
   timerUntilBoost: 4
   explosionForce: 10
   explosionRadius: 3
+  stallYRevertMult: .899999976
   explosionCentreTrans: {fileID: 437454}
   airshipMainCam: {fileID: 11476918}
 --- !u!114 &11408378
@@ -4541,6 +4542,8 @@ MonoBehaviour:
   audioControl: {fileID: 11413364}
   engineAudioControl: {fileID: 11445410}
   rudderJoint: {fileID: 11418694}
+  stallY: 1000
+  killY: -2000
   shipPartConns:
   - partType: 1
     partValueMult: 0

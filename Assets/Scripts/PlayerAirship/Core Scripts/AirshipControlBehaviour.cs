@@ -106,6 +106,16 @@ public class AirshipControlBehaviour : MonoBehaviour
     public HingeJointScript rudderJoint;
 
     /// <summary>
+    /// If the player ship goes above this, they will stall.
+    /// </summary>
+    public float stallY = 1000.0f;
+
+    /// <summary>
+    /// If the player ship goes below this, they will die.
+    /// </summary>
+    public float killY = -2000.0f;
+
+    /// <summary>
     /// Multiplier values for when various ship parts get destroyed.
     /// </summary>
     public ShipPartInputConnection[] shipPartConns;
@@ -121,10 +131,12 @@ public class AirshipControlBehaviour : MonoBehaviour
     private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
 
     // Cached variables
-    private Rigidbody m_myRigid;            // Rigidbody of player
-    private Transform m_rigidTrans;         // Transform for above rigidbody
-    private Animator m_anim;
+    private Rigidbody m_myRigid = null;            // Rigidbody of player
+    private Transform m_trans = null;         // Transform for above rigidbody
+    private Animator m_anim = null;
     private ShipPartDestroy m_shipPartDestroy = null;
+    private StateManager m_shipStates = null;
+    private AirshipStallingBehaviour m_shipStallScript = null;
 
     public bool isReversing
     {
@@ -149,15 +161,15 @@ public class AirshipControlBehaviour : MonoBehaviour
 	{
         // Get Rigidbody variables
 		m_myRigid       = GetComponent<Rigidbody>();
-        m_rigidTrans    = m_myRigid.transform;
+        m_trans         = transform;
 
         m_myRigid.mass  = adjustableMass;
         m_startShipMass = adjustableMass;
 
         m_anim = GetComponent<Animator>();
         m_shipPartDestroy = GetComponent<ShipPartDestroy>();
-        m_myRigid.mass = adjustableMass;
-        m_startShipMass = adjustableMass;
+        m_shipStallScript = GetComponent<AirshipStallingBehaviour>();
+        m_shipStates = GetComponent<StateManager>();
 	}
 	
 	void Start () 
@@ -179,8 +191,28 @@ public class AirshipControlBehaviour : MonoBehaviour
 		//m_myRigid.mass = 10.0f;
 		m_myRigid.drag = 2.0f;
 		m_myRigid.angularDrag = 2.0f;
-		
+
+        TestVerticalLimits();
 	}
+
+    private void TestVerticalLimits()
+    {
+        // Stall above stallY if moving up
+        if (m_trans.position.y > stallY && m_myRigid.velocity.y > 0)
+        {
+            m_shipStates.SetPlayerState(EPlayerState.Stalling);
+            if (m_shipStallScript != null)
+            {
+                m_shipStallScript.SetAboveStallY(stallY);
+            }
+        }
+
+        // Kill below killY if moving down
+        if (m_trans.position.y < killY && m_myRigid.velocity.y < 0)
+        {
+            m_shipStates.SetPlayerState(EPlayerState.Dying);
+        }
+    }
 
     public void PlayerInputs(
         float a_Vertical, 
@@ -216,7 +248,7 @@ public class AirshipControlBehaviour : MonoBehaviour
         if (a_triggers < 0)
         {
             // Ensure player is actually moving backwards
-            if (Vector3.Dot(m_myRigid.velocity, m_rigidTrans.forward) < 0)
+            if (Vector3.Dot(m_myRigid.velocity, m_trans.forward) < 0)
             {
                 m_isReversing = true;
                 yaw = a_Horizontal;
