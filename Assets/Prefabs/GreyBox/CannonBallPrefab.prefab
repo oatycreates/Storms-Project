@@ -220,6 +220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cannonBallCollider: {fileID: 13540152}
   selfCollisionTrigger: {fileID: 6529228}
+  cannonBallLifetime: 5
+  endScale: {x: 12, y: 12, z: 12}
 --- !u!135 &13540152
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -260,6 +262,18 @@ Prefab:
       value: 
       objectReference: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511,
         type: 2}
+    - target: {fileID: 0}
+      propertyPath: endScale.x
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: endScale.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: endScale.z
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 128906}

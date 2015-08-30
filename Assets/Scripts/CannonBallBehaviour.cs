@@ -27,7 +27,20 @@ public class CannonBallBehaviour : MonoBehaviour
     /// </summary>
     public Collider selfCollisionTrigger;
 
-	private float m_timer;
+    /// <summary>
+    /// How long the cannonballs should live for.
+    /// </summary>
+    public float cannonBallLifetime = 5.0f;
+
+    /// <summary>
+    /// Scale of the cannonball at the end of its lifetime.
+    /// </summary>
+    public Vector3 endScale = new Vector3(12, 12, 12);
+
+    /// <summary>
+    /// How long the cannonball has left in seconds before it expires.
+    /// </summary>
+	private float m_timer = 0.0f;
 
     /// <summary>
     /// Whether the collider has been disabled.
@@ -39,10 +52,24 @@ public class CannonBallBehaviour : MonoBehaviour
     /// </summary>
     private float m_lastSelfTriggerTime = 0.0f;
 
+    // Cached variables
+    private Transform m_trans = null;
+    private Vector3 m_startScale = Vector3.one;
+
+    void Awake()
+    {
+        m_trans = transform;
+        m_startScale = m_trans.localScale;
+    }
+
 	void OnEnable()
 	{
-		m_timer = 5.0f;
+        // Begin the cannonball's life
+        m_timer = cannonBallLifetime;
         
+        // Revert the cannonball scale
+        m_trans.localScale = m_startScale;
+
         // Make the cannonball collider start disabled to prevent collision with the player's own ship
         SetCannBallColEnabled(false);
 	}
@@ -56,6 +83,10 @@ public class CannonBallBehaviour : MonoBehaviour
     {
 		m_timer -= Time.deltaTime;
 		
+        // Scale the cannonball
+        float lifeProg = Mathf.Min((cannonBallLifetime - m_timer) / cannonBallLifetime, 1.0f);
+        m_trans.localScale = Vector3.Lerp(m_startScale, endScale, lifeProg);
+
         // For the cannonball expiring
 		if (m_timer <= 0)
 		{
