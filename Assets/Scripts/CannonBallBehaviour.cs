@@ -42,6 +42,9 @@ public class CannonBallBehaviour : MonoBehaviour
 	void OnEnable()
 	{
 		m_timer = 5.0f;
+        
+        // Make the cannonball collider start disabled to prevent collision with the player's own ship
+        SetCannBallColEnabled(false);
 	}
 
     void Start()
@@ -53,6 +56,7 @@ public class CannonBallBehaviour : MonoBehaviour
     {
 		m_timer -= Time.deltaTime;
 		
+        // For the cannonball expiring
 		if (m_timer <= 0)
 		{
 			gameObject.SetActive(false);
@@ -65,10 +69,7 @@ public class CannonBallBehaviour : MonoBehaviour
         if (m_disabledCollider && m_lastSelfTriggerTime <= 0)
         {
             // Re-enable the collider
-            cannonBallCollider.enabled = true;
-
-            // Reset collider disable status
-            m_disabledCollider = false;
+            SetCannBallColEnabled(true);
         }
     }
 
@@ -77,10 +78,7 @@ public class CannonBallBehaviour : MonoBehaviour
         // Disable collider to prevent self-collision
         if (gameObject.CompareTag(a_other.tag))
         {
-            cannonBallCollider.enabled = false;
-            m_disabledCollider = true;
-
-            m_lastSelfTriggerTime = 0.25f;
+            SetCannBallColEnabled(false);
         }
     }
 
@@ -89,9 +87,22 @@ public class CannonBallBehaviour : MonoBehaviour
         // Disable collider to prevent self-collision
         if (gameObject.CompareTag(a_other.tag))
         {
-            cannonBallCollider.enabled = false;
-            m_disabledCollider = true;
+            SetCannBallColEnabled(false);
+        }
+    }
 
+    /// <summary>
+    /// Sets whether the cannonball collider is active.
+    /// </summary>
+    /// <param name="a_colEnable">True if active, false if not.</param>
+    private void SetCannBallColEnabled(bool a_colEnable)
+    {
+        cannonBallCollider.enabled = a_colEnable;
+        m_disabledCollider = !a_colEnable;
+
+        // Make the collider take time to re-enable
+        if (!a_colEnable)
+        {
             m_lastSelfTriggerTime = 0.25f;
         }
     }
