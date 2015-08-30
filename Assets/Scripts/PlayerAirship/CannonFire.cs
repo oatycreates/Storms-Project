@@ -38,7 +38,7 @@ namespace ProjectStorms
         /// <summary>
         /// Minimum time between shots.
         /// </summary>
-        public float shotCooldown = 2.6f;
+        public float shotCooldown = 2.51f;
 
         /// <summary>
         /// How many cannonballs to pool per cannon.
@@ -127,6 +127,7 @@ namespace ProjectStorms
             Rigidbody rigidBall = null;
             Transform transBall = null;
             GameObject goBall = null;
+            TrailRenderer trailBall = null;
 
             if (m_currShotCooldown <= 0)
             {
@@ -151,6 +152,11 @@ namespace ProjectStorms
 
                         // Inherit the parent's velocity
                         rigidBall.velocity = m_shipRB.velocity;
+
+                        // Toggle the trail renderer to prevent it from snapping to the new position
+                        trailBall = goBall.GetComponent<TrailRenderer>();
+                        trailBall.enabled = false;
+                        trailBall.enabled = true;
 
                         // Fire off the cannonball
                         rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
