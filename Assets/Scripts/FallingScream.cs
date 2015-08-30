@@ -26,10 +26,13 @@ namespace ProjectStorms
         public bool readyToScream = false;
         //private bool m_playing = false;
 
-        void Start()
+        void Awake()
         {
             m_mySource = gameObject.GetComponent<AudioSource>();
+        }
 
+        void Start()
+        {
             //SERIOUS!!! THIS CAN'T BE TOO LOUD, OTHERWISE IT'LL LEAVE PEOPLE DEAF
             m_mySource.volume = 0.05f;
             //RandomSound();
@@ -49,12 +52,12 @@ namespace ProjectStorms
                 if (!m_mySource.isPlaying)
                 {
                     /*
-                        if (playing = false)
-                        {
-                            RandomSound();
-                            playing = true;
-                        }
-                        */
+                    if (playing = false)
+                    {
+                        RandomSound();
+                        playing = true;
+                    }
+                    */
                     RandomSound();
                 }
             }
@@ -62,7 +65,7 @@ namespace ProjectStorms
 
         void OnCollisionStay(Collision a_other)
         {
-            if (a_other.gameObject.tag != "Passengers")
+            if (a_other.tag != "Passengers")
             {
                 m_mySource.Stop();
                 readyToScream = false;
@@ -74,7 +77,7 @@ namespace ProjectStorms
 
         void OnCollisionExit(Collision a_other)
         {
-            if (a_other.gameObject.tag != "Passengers")
+            if (a_other.tag != "Passengers")
             {
                 readyToScream = true;
             }
