@@ -105,7 +105,7 @@ namespace ProjectStorms
         void OnCollisionEnter(Collision a_colInfo)
         {
             // Ignore losing parts to prisoners
-            if (!a_colInfo.transform.tag.Contains("Passengers"))
+            if (!a_colInfo.gameObject.tag.Contains("Passengers"))
             {
                 foreach (ContactPoint contact in a_colInfo.contacts)
                 {
@@ -233,12 +233,9 @@ namespace ProjectStorms
         /// <param name="a_part">The part to test</param>
         public void RepairPart(ShipPart a_part)
         {
-            // TODO Build part repair system
-
+            // Only repair the part if it is destroyed
             if (IsPartDestroyed(a_part))
             {
-                Debug.Log("Repair! " + name);
-
                 // Make the mass change to the parent
                 m_shipTray.shipPartMassAdd += a_part.partMass;
 
@@ -256,8 +253,6 @@ namespace ProjectStorms
         /// <param name="a_part">The part to test</param>
         public void BreakPart(ShipPart a_part)
         {
-            Debug.Log("Break! " + name);
-
             // Make the mass change to the parent
             m_shipTray.shipPartMassAdd -= a_part.partMass;
 
