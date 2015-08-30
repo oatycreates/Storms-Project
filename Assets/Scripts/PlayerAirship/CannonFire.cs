@@ -43,9 +43,11 @@ namespace ProjectStorms
 
         // Cached variables
         private Rigidbody m_shipRB;
+        private Transform m_trans = null;
 
         void Awake()
         {
+            m_trans = transform;
             m_shipRB = parentAirship.GetComponent<Rigidbody>();
 
             cannonBalls = new List<GameObject>();
@@ -53,7 +55,7 @@ namespace ProjectStorms
             for (int i = 0; i < pooledAmount; i++)
             {
                 // Pooled object details
-                GameObject singleBall = Instantiate(cannonBallPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+                GameObject singleBall = Instantiate(cannonBallPrefab, m_trans.position, Quaternion.identity) as GameObject;
 
                 // Tag the cannonball
                 singleBall.tag = parentAirship.tag;
@@ -72,11 +74,11 @@ namespace ProjectStorms
 
         void Update()
         {
-            gameObject.transform.LookAt(lookAtTarget.transform.position);
+            m_trans.LookAt(lookAtTarget.transform.position);
 
-            relativeForward = gameObject.transform.TransformDirection(Vector3.forward);
+            relativeForward = m_trans.TransformDirection(Vector3.forward);
 
-            Ray ray = new Ray(gameObject.transform.position, relativeForward);
+            Ray ray = new Ray(m_trans.position, relativeForward);
             Debug.DrawRay(ray.origin, ray.direction * 5, Color.red);
         }
 
@@ -91,12 +93,12 @@ namespace ProjectStorms
                 // Find only inactive cannonballs
                 if (!cannonBalls[i].activeInHierarchy)
                 {
-                    cannonBalls[i].transform.position = gameObject.transform.position;
+                    cannonBalls[i].transform.position = m_trans.position;
                     cannonBalls[i].transform.rotation = Quaternion.identity;
 
                     cannonBalls[i].SetActive(true);
 
-                    relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
+                    relativeSpace = m_trans.TransformDirection(Vector3.forward);
 
                     rigidBall = cannonBalls[i].GetComponent<Rigidbody>();
 
