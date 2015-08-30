@@ -49,16 +49,22 @@ namespace ProjectStorms
         private RaycastHit m_hit;
 
         // Cached variables
-        private GameObject prisonerHolder = null;
+        private GameObject m_prisonerHolder = null;
+        private Transform m_trans = null;
+
+        void Awake()
+        {
+            m_trans = transform;
+        }
 
         void Start()
         {
-            prisonerHolder = GameObject.FindGameObjectWithTag("PrisonerHolder");
-            if (prisonerHolder == null)
+            m_prisonerHolder = GameObject.FindGameObjectWithTag("PrisonerHolder");
+            if (m_prisonerHolder == null)
             {
-                prisonerHolder = new GameObject();
-                prisonerHolder.name = "PrisonerHolder";
-                prisonerHolder.tag = "PrisonerHolder";
+                m_prisonerHolder = new GameObject();
+                m_prisonerHolder.name = "PrisonerHolder";
+                m_prisonerHolder.tag = "PrisonerHolder";
             }
 
             passengers = new List<GameObject>();
@@ -67,7 +73,7 @@ namespace ProjectStorms
             {
                 //GameObject singlePassenger = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 //Use the prefab from now on.
-                GameObject singlePassenger = Instantiate(passengerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+                GameObject singlePassenger = Instantiate(passengerPrefab, m_trans.position, Quaternion.identity) as GameObject;
 
                 singlePassenger.tag = "Passengers";
                 /*
@@ -82,7 +88,7 @@ namespace ProjectStorms
                             singlePassenger.AddComponent<FallingScream>();
                 */
                 // Hide under a holder prefab to keep the scene tidy
-                singlePassenger.transform.parent = prisonerHolder.transform;
+                singlePassenger.transform.parent = m_prisonerHolder.transform;
 
                 singlePassenger.GetComponent<Rigidbody>().useGravity = true;
                 singlePassenger.SetActive(false);
@@ -102,11 +108,10 @@ namespace ProjectStorms
             spawnRateInSeconds -= Time.deltaTime;
 
             // From world space to local space
-            Vector3 relativeSpace = gameObject.transform.TransformDirection(Vector3.down);
+            Vector3 relativeSpace = m_trans.TransformDirection(Vector3.down);
 
-            m_myRay = new Ray(gameObject.transform.position, relativeSpace);
+            m_myRay = new Ray(m_trans.position, relativeSpace);
             Debug.DrawRay(m_myRay.origin, m_myRay.direction * rayCastLength, Color.green);
-
 
             if (currentlySpawning)
             {
@@ -115,7 +120,6 @@ namespace ProjectStorms
                     SpawnPassenger();
 
                     spawnRateInSeconds = m_startSpawnRate; // Reset spawn rate
-
                 }
             }
 
@@ -147,13 +151,13 @@ namespace ProjectStorms
                 // Search for inactive passengers
                 if (!passengers[i].activeInHierarchy)
                 {
-                    passengers[i].transform.position = gameObject.transform.position;
+                    passengers[i].transform.position = m_trans.position;
                     passengers[i].transform.rotation = Quaternion.identity;
 
                     passengers[i].SetActive(true);
 
                     // Use relative space to spawn
-                    relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
+                    relativeSpace = m_trans.TransformDirection(Vector3.forward);
 
                     // Set up player rigidbody
                     passengerRb = passengers[i].GetComponent<Rigidbody>();
