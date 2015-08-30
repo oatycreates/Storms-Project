@@ -22,11 +22,24 @@ namespace ProjectStorms
         private float distanceToTarget;
         private Ray myRay;
 
+        // Cached variables
+        private Transform m_trans = null;
+        private Transform m_tarTrans = null;
+
+        void Awake()
+        {
+            m_trans = transform;
+            m_tarTrans = lookTarget.transform;
+        }
+
+        void Start()
+        {
+
+        }
 
         void Update()
         {
-            gameObject.transform.LookAt(lookTarget.transform.position);
-
+            m_trans.LookAt(m_tarTrans.position);
 
             DebugMe();
         }
@@ -34,12 +47,12 @@ namespace ProjectStorms
 
         void DebugMe()
         {
-            //Raycast
-            distanceToTarget = Vector3.Distance(lookTarget.transform.position, gameObject.transform.position);
+            // Raycast
+            distanceToTarget = Vector3.Distance(m_tarTrans.position, m_trans.position);
 
-            Vector3 relativeForward = gameObject.transform.TransformDirection(Vector3.forward);
+            Vector3 relativeForward = m_trans.TransformDirection(Vector3.forward);
 
-            myRay = new Ray(gameObject.transform.position, relativeForward);
+            myRay = new Ray(m_trans.position, relativeForward);
 
             Debug.DrawRay(myRay.origin, myRay.direction * distanceToTarget, Color.green);
         }
