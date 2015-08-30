@@ -60,9 +60,13 @@ namespace ProjectStorms
 
         private Color orange;
 
+        void Awake()
+        {
+            m_mySource = GetComponent<AudioSource>();
+        }
+
         void Start()
         {
-            m_mySource = gameObject.GetComponent<AudioSource>();
             m_mySource.volume = 0.3f;
             sternLight.intensity = 0.0f;
             hullLight.intensity = 0.0f;
@@ -80,6 +84,7 @@ namespace ProjectStorms
 
             m_timer -= Time.deltaTime;
 
+            // Check if it is time to begin dropping passengers
             if (m_timer < 0)
             {
                 if (fortressState == EFortressStates.Dormant)
@@ -88,8 +93,15 @@ namespace ProjectStorms
                 }
             }
 
+            // State management
+            UpdateFortressStates();
+        }
 
-            // State Management
+        /// <summary>
+        /// State management for the prison fortress.
+        /// </summary>
+        private void UpdateFortressStates()
+        {
             if (fortressState == EFortressStates.Dormant)
             {
                 m_lightUp = false;
@@ -99,7 +111,6 @@ namespace ProjectStorms
                 hullPassengerSpawn.currentlySpawning = false;
                 timePassengerSpawnFor = m_rememberPassengerTimerValue;
             }
-
 
             if (fortressState == EFortressStates.Warning)
             {
@@ -120,14 +131,12 @@ namespace ProjectStorms
                         }
                     }
                 }
-                else
-                    if (numberOfTimesKlaxonShouldSound <= 0)
-                    {
-                        // Change state
-                        fortressState = EFortressStates.Spawning;
-                    }
+                else if (numberOfTimesKlaxonShouldSound <= 0)
+                {
+                    // Change state
+                    fortressState = EFortressStates.Spawning;
+                }
             }
-
 
             if (fortressState == EFortressStates.Spawning)
             {
@@ -151,7 +160,6 @@ namespace ProjectStorms
                 numberOfTimesKlaxonShouldSound = m_rememberStartValue;
             }
         }
-
 
         void ClampLights()
         {
@@ -196,7 +204,7 @@ namespace ProjectStorms
         {
             m_mySource.clip = klaxonSound;
 
-            Color stateColour = orange; //now Orange
+            Color stateColour = orange; // Now Orange
             sternLight.color = stateColour;
             hullLight.color = stateColour;
 
@@ -225,7 +233,6 @@ namespace ProjectStorms
                 hullPassengerSpawn.spawnHelperLaser.SetColors(laserColour, laserColour);
             }
         }
-
 
         /// <summary>
         /// Spawning is called repeatedly for a bit, before returning to Warning.
