@@ -262,7 +262,7 @@ public class AirshipControlBehaviour : MonoBehaviour
         }
 		
 		// Check buttonPresses
-		openHatch = (a_faceUp || a_faceDown);
+        openHatch = a_faceDown;//(a_faceUp || a_faceDown);
 		
         // Keep the inputs in reasonable ranges, see the standard asset examples for more
 		ClampInputs();

@@ -100,7 +100,7 @@ public class RotateCam : MonoBehaviour
 		totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
 	}
 
-	public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
+	public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceUp, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
     {
 		// Reset on click
 		if (a_leftClick || a_rightClick)
@@ -185,8 +185,8 @@ public class RotateCam : MonoBehaviour
 			m_xPos = Mathf.Lerp(m_xPos, camPositionFactor, Time.deltaTime * smooth/2);
 			m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
-			//Allow CannonFire
-			if (a_leftBumper || a_rightBumper)
+			// Allow CannonFire
+            if (a_faceUp)
 			{
 				Cannons(ECannonPos.Port);
 			}
@@ -196,16 +196,16 @@ public class RotateCam : MonoBehaviour
 		{
 			//print ("Right");
 			
-			//Move the target
+			// Move the target
 			yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth/2);
 			
 			
-			//Move the cam
+			// Move the cam
 			m_xPos = Mathf.Lerp(m_xPos, -camPositionFactor, Time.deltaTime * smooth/2);
 			m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth/2);
 			
-			//Allow CannonFire
-			if (a_leftBumper || a_rightBumper)
+			// Allow CannonFire
+            if (a_faceUp)
 			{
 				Cannons(ECannonPos.Starboard);
 			}
@@ -214,27 +214,27 @@ public class RotateCam : MonoBehaviour
 		else if ( internalCamYRotation <= 225 && internalCamYRotation > 135)
 		{
 		 	//print ("Back");
-			//Move the target
+			// Move the target
 		 	yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth/2);
 		 	
 		 	
-			//Move the cam
+			// Move the cam
 			m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth/2);
 			m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth/2);
 		}
 		else
 		{
 			//print ("Forward");
-			//Move the target
+			// Move the target
 			yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth/2);
 			
 			
-			//Move the cam
+			// Move the cam
 			m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth/2);
 			m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth/2);
 			
-			//Allow CannonFire
-			if (a_leftBumper || a_rightBumper)
+			// Allow CannonFire
+            if (a_faceUp)
 			{
 				Cannons(ECannonPos.Forward);
 			}
