@@ -17,7 +17,7 @@ namespace ProjectStorms
     /// </summary>
     public class CamLookDirection : MonoBehaviour
     {
-        public GameObject lookTarget;
+        public GameObject optionalLookTarget;
 
         private float distanceToTarget;
         private Ray myRay;
@@ -29,19 +29,21 @@ namespace ProjectStorms
         void Awake()
         {
             m_trans = transform;
-            m_tarTrans = lookTarget.transform;
-        }
-
-        void Start()
-        {
-
+            
+            if (m_tarTrans != null)
+            {
+            	m_tarTrans = optionalLookTarget.transform;
+            }
         }
 
         void Update()
         {
-            m_trans.LookAt(m_tarTrans.position);
-
-            DebugMe();
+        	if (m_tarTrans != null)
+        	{
+            	m_trans.LookAt(m_tarTrans.position);
+            	
+				DebugMe();
+            }
         }
 
 

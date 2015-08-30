@@ -51,10 +51,11 @@ namespace ProjectStorms
         // Cached variables
         private GameObject m_prisonerHolder = null;
         private Transform m_trans = null;
+        
 
         void Awake()
         {
-            m_trans = transform;
+            m_trans = transform; 
         }
 
         void Start()

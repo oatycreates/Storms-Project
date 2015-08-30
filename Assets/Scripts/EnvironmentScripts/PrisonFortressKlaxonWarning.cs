@@ -59,10 +59,23 @@ namespace ProjectStorms
         public SpawnPassengers hullPassengerSpawn;
 
         private Color orange;
+        
+		
+		//Animation references
+		private Animator prisonAnim = null;
+		private bool open = false;
+		
+		//LineRenderer reference;
+		public LineRenderer myLaser;
 
         void Awake()
         {
             m_mySource = GetComponent<AudioSource>();
+            
+            //Get the animator
+            prisonAnim = gameObject.transform.root.gameObject.GetComponent<Animator>();
+ 
+ 			LaserOff();
         }
 
         void Start()
@@ -76,6 +89,7 @@ namespace ProjectStorms
             m_rememberPassengerTimerValue = timePassengerSpawnFor;
 
             orange = new Color(1f, 0.75f, 0f);
+
         }
 
         void Update()
@@ -136,6 +150,22 @@ namespace ProjectStorms
                     // Change state
                     fortressState = EFortressStates.Spawning;
                 }
+                
+                //animation
+				if (prisonAnim != null)
+				{
+					if (!prisonAnim.GetCurrentAnimatorStateInfo(0).IsName("OpenTrapdoor"))
+					{
+						prisonAnim.SetBool("Spawning", true);
+					}
+				}
+				
+				if (myLaser != null)
+				{
+					//Delay the laser to give the trapdoor time to open.
+					Invoke("LaserOn", 1.75f);
+				}
+			
             }
 
             if (fortressState == EFortressStates.Spawning)
@@ -154,10 +184,27 @@ namespace ProjectStorms
                 {
                     fortressState = EFortressStates.Dormant;
                     m_timer = timeBetweenPrisonerDrops;
+                    
+					//animation
+					if (prisonAnim != null)
+					{
+						if (!prisonAnim.GetCurrentAnimatorStateInfo(0).IsName("OpenTrapdoor"))
+						{
+							prisonAnim.SetBool("Spawning", false);
+						}
+					}
+					
+					if (myLaser != null)
+					{
+						LaserOff ();
+					}
+				
                 }
 
                 // Reset the number of times the klaxon should sound
                 numberOfTimesKlaxonShouldSound = m_rememberStartValue;
+                
+                
             }
         }
 
@@ -218,6 +265,17 @@ namespace ProjectStorms
             sternPassengerSpawn.currentlySpawning = false;
             hullPassengerSpawn.currentlySpawning = false;
         }
+	
+		private void LaserOff()
+		{
+			myLaser.enabled = false;
+		}
+		
+		private void LaserOn()
+		{
+			myLaser.enabled = true;
+		}
+
 
         private void UpdateSpawnerLaserColour(Color a_baseColour)
         {
