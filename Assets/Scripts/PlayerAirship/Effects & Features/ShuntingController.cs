@@ -74,7 +74,7 @@ namespace ProjectStorms
             }
             else
             {
-                // Tick cooldown timer
+                // Tick cool-down timer
                 m_currentCoolTime += Time.deltaTime;
             }
         }

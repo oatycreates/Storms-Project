@@ -89,7 +89,6 @@ namespace ProjectStorms
             }
         }
 
-
         void FixedUpdate()
         {
             Rocket();

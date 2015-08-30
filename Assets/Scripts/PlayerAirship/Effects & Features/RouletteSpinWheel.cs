@@ -157,7 +157,7 @@ namespace ProjectStorms
                 m_myRigid.angularVelocity = Vector3.zero;
             }
 
-            //NOTE: Right now- this just triggers the State Manager to change the object from ROULETE to NORMAL CONTROL
+            // NOTE: Right now this just triggers the State Manager to change the object from ROULETE to NORMAL CONTROL
             int selectedIndex = Mathf.RoundToInt(m_myRigid.rotation.eulerAngles.x / 90.0f);
             if (!m_rouletteDone && m_myRigid.angularVelocity.x > -1.0f && m_myRigid.angularVelocity.x < 1.0f)
             {

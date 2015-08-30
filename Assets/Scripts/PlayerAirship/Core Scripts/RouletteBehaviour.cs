@@ -45,7 +45,6 @@ namespace ProjectStorms
             m_suicideBehaviour = GetComponent<AirshipSuicideBehaviour>();
         }
 
-
         void Update()
         {
             // Set cam stuff

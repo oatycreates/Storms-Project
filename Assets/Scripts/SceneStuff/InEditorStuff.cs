@@ -43,7 +43,6 @@ namespace ProjectStorms
             }*/
         }
 
-
         void Update()
         {
             // Set color

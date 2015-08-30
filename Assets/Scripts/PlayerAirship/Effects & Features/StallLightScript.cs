@@ -25,7 +25,7 @@ namespace ProjectStorms
 
         void Start()
         {
-            myLight = gameObject.GetComponent<Light>();
+            myLight = GetComponent<Light>();
             myLight.color = Color.red;
         }
 
@@ -37,11 +37,10 @@ namespace ProjectStorms
             {
                 myLight.color = Color.red;
             }
-            else
-                if (checkStateManager <= 0)
-                {
-                    myLight.color = Color.green;
-                }
+            else if (checkStateManager <= 0)
+            {
+                myLight.color = Color.green;
+            }
         }
     } 
 }
