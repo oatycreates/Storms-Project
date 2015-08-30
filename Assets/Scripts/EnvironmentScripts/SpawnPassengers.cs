@@ -4,7 +4,7 @@
  * Maintainer: Patrick Ferguson
  * Created: 6/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: Manages the spawning and pooling of pasengers.
+ * Description: Manages the spawning and pooling of passengers.
  **/
 
 using UnityEngine;
@@ -12,168 +12,171 @@ using System.Collections;
 // For lists
 using System.Collections.Generic;
 
-/// <summary>
-/// A script to pool and spawn pirate passengers.
-/// UPDATE: From now on- use the passenger prefab object instead of primitive cubes.
-/// </summary>
-public class SpawnPassengers : MonoBehaviour
+namespace ProjectStorms
 {
-	public float initialPassengerForce = 10.0f;
-
     /// <summary>
-    /// To avoid memory spikes.
+    /// A script to pool and spawn pirate passengers.
+    /// UPDATE: From now on- use the passenger prefab object instead of primitive cubes.
     /// </summary>
-    public bool currentlySpawning = false;
-    
-	public int pooledAmount = 2000;
-	public float spawnRateInSeconds = 1.0f;
-	private float m_startSpawnRate;
+    public class SpawnPassengers : MonoBehaviour
+    {
+        public float initialPassengerForce = 10.0f;
 
-    /// <summary>
-    /// How heavy to make each passenger. Mass in kg.
-    /// </summary>
-    private float m_passengerMass = 0.01f;
+        /// <summary>
+        /// To avoid memory spikes.
+        /// </summary>
+        public bool currentlySpawning = false;
 
-	List<GameObject> passengers;
+        public int pooledAmount = 2000;
+        public float spawnRateInSeconds = 1.0f;
+        private float m_startSpawnRate;
 
-	public GameObject passengerPrefab;
+        /// <summary>
+        /// How heavy to make each passenger. Mass in kg.
+        /// </summary>
+        private float m_passengerMass = 0.01f;
 
-    public LineRenderer spawnHelperLaser;
-    public float spawnLaserAlpha = 1.0f;
+        List<GameObject> passengers;
 
-    // Detect player presence
-    public float rayCastLength = 50.0f;
-	private Ray m_myRay;
-	private RaycastHit m_hit;
+        public GameObject passengerPrefab;
 
-    // Cached variables
-    private GameObject prisonerHolder = null;
+        public LineRenderer spawnHelperLaser;
+        public float spawnLaserAlpha = 1.0f;
 
-	void Start () 
-	{
-        prisonerHolder = GameObject.FindGameObjectWithTag("PrisonerHolder");
-        if (prisonerHolder == null)
+        // Detect player presence
+        public float rayCastLength = 50.0f;
+        private Ray m_myRay;
+        private RaycastHit m_hit;
+
+        // Cached variables
+        private GameObject prisonerHolder = null;
+
+        void Start()
         {
-            prisonerHolder = new GameObject();
-            prisonerHolder.name = "PrisonerHolder";
-            prisonerHolder.tag = "PrisonerHolder";
+            prisonerHolder = GameObject.FindGameObjectWithTag("PrisonerHolder");
+            if (prisonerHolder == null)
+            {
+                prisonerHolder = new GameObject();
+                prisonerHolder.name = "PrisonerHolder";
+                prisonerHolder.tag = "PrisonerHolder";
+            }
+
+            passengers = new List<GameObject>();
+
+            for (int i = 0; i < pooledAmount; i++)
+            {
+                //GameObject singlePassenger = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                //Use the prefab from now on.
+                GameObject singlePassenger = Instantiate(passengerPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+
+                singlePassenger.tag = "Passengers";
+                /*
+                            singlePassenger.AddComponent<Rigidbody>();			
+                            singlePassenger.GetComponent<Rigidbody>().useGravity = true;
+
+
+                            // Add Passenger scripts here
+                            singlePassenger.AddComponent<PassengerDestroyScript>();
+                            //Add an audiosource before the falling scream script.
+                            singlePassenger.AddComponent<AudioSource>();	
+                            singlePassenger.AddComponent<FallingScream>();
+                */
+                // Hide under a holder prefab to keep the scene tidy
+                singlePassenger.transform.parent = prisonerHolder.transform;
+
+                singlePassenger.GetComponent<Rigidbody>().useGravity = true;
+                singlePassenger.SetActive(false);
+
+                // Add to the passengers list
+                passengers.Add(singlePassenger);
+
+            }
+
+            // Save an initial spawnRate
+            m_startSpawnRate = spawnRateInSeconds;
         }
 
-		passengers = new List<GameObject> ();
-
-		for (int i = 0; i < pooledAmount; i++)
-		{
-			//GameObject singlePassenger = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			//Use the prefab from now on.
-			GameObject singlePassenger = Instantiate(passengerPrefab, gameObject.transform.position, Quaternion.identity)as GameObject;
-			
-			singlePassenger.tag = "Passengers";
-/*
-			singlePassenger.AddComponent<Rigidbody>();			
-			singlePassenger.GetComponent<Rigidbody>().useGravity = true;
-
-
-			// Add Passenger scripts here
-			singlePassenger.AddComponent<PassengerDestroyScript>();
-			//Add an audiosource before the falling scream script.
-			singlePassenger.AddComponent<AudioSource>();	
-			singlePassenger.AddComponent<FallingScream>();
-*/
-            // Hide under a holder prefab to keep the scene tidy
-            singlePassenger.transform.parent = prisonerHolder.transform;
-
-			singlePassenger.GetComponent<Rigidbody>().useGravity = true;
-			singlePassenger.SetActive(false);
-
-			// Add to the passengers list
-			passengers.Add(singlePassenger);
-
-		}
-
-        // Save an initial spawnRate
-		m_startSpawnRate = spawnRateInSeconds;
-	}
-
-	void Update() 
-	{
-        // Count down
-		spawnRateInSeconds -= Time.deltaTime;
-
-        // From world space to local space
-		Vector3 relativeSpace = gameObject.transform.TransformDirection (Vector3.down);
-
-		m_myRay = new Ray (gameObject.transform.position, relativeSpace);
-		Debug.DrawRay (m_myRay.origin, m_myRay.direction * rayCastLength, Color.green);
-
-
-		if (currentlySpawning)
-		{
-			if (spawnRateInSeconds < 0)
-			{
-				SpawnPassenger();
-	
-				spawnRateInSeconds = m_startSpawnRate; // Reset spawn rate
-	
-			}
-		}
-
-        /*
-        // Fire a ray
-        if (Physics.Raycast(m_myRay, out m_hit, rayCastLength))
+        void Update()
         {
-            if (m_hit.collider.gameObject.tag == "Player1_" || m_hit.collider.gameObject.tag == "Player2_"  || m_hit.collider.gameObject.tag == "Player3_" || m_hit.collider.gameObject.tag == "Player4_" )
+            // Count down
+            spawnRateInSeconds -= Time.deltaTime;
+
+            // From world space to local space
+            Vector3 relativeSpace = gameObject.transform.TransformDirection(Vector3.down);
+
+            m_myRay = new Ray(gameObject.transform.position, relativeSpace);
+            Debug.DrawRay(m_myRay.origin, m_myRay.direction * rayCastLength, Color.green);
+
+
+            if (currentlySpawning)
             {
                 if (spawnRateInSeconds < 0)
                 {
                     SpawnPassenger();
-                    //Reset spawn rate
-                    spawnRateInSeconds = m_startSpawnRate;
+
+                    spawnRateInSeconds = m_startSpawnRate; // Reset spawn rate
+
                 }
             }
-        }*/
-    }
 
-	void SpawnPassenger()
-    {
-        // Variables for loop
-        Vector3 relativeSpace;
-        Rigidbody passengerRb;
+            /*
+            // Fire a ray
+            if (Physics.Raycast(m_myRay, out m_hit, rayCastLength))
+            {
+                if (m_hit.collider.gameObject.tag == "Player1_" || m_hit.collider.gameObject.tag == "Player2_"  || m_hit.collider.gameObject.tag == "Player3_" || m_hit.collider.gameObject.tag == "Player4_" )
+                {
+                    if (spawnRateInSeconds < 0)
+                    {
+                        SpawnPassenger();
+                        //Reset spawn rate
+                        spawnRateInSeconds = m_startSpawnRate;
+                    }
+                }
+            }*/
+        }
 
-        // Loop through, find first non-active player
-		for (int i = 0; i < passengers.Count; i++)
-		{
-            // Search for inactive passengers
-			if (!passengers[i].activeInHierarchy)
-			{
-				passengers[i].transform.position = gameObject.transform.position;
-				passengers[i].transform.rotation = Quaternion.identity;
+        void SpawnPassenger()
+        {
+            // Variables for loop
+            Vector3 relativeSpace;
+            Rigidbody passengerRb;
 
-				passengers[i].SetActive(true);
+            // Loop through, find first non-active player
+            for (int i = 0; i < passengers.Count; i++)
+            {
+                // Search for inactive passengers
+                if (!passengers[i].activeInHierarchy)
+                {
+                    passengers[i].transform.position = gameObject.transform.position;
+                    passengers[i].transform.rotation = Quaternion.identity;
 
-				// Use relative space to spawn
-                relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
+                    passengers[i].SetActive(true);
 
-                // Set up player rigidbody
-                passengerRb = passengers[i].GetComponent<Rigidbody>();
-                passengerRb.mass = m_passengerMass;
+                    // Use relative space to spawn
+                    relativeSpace = gameObject.transform.TransformDirection(Vector3.forward);
 
-                // TODO Ignore collision with the spawner colliders and the prison fortress
+                    // Set up player rigidbody
+                    passengerRb = passengers[i].GetComponent<Rigidbody>();
+                    passengerRb.mass = m_passengerMass;
 
-                // Reset velocity before adding to it
-                passengerRb.velocity = Vector3.zero;
-                passengerRb.angularVelocity = Vector3.zero;
+                    // TODO Ignore collision with the spawner colliders and the prison fortress
 
-                // Add initial passenger velocity here!	Jump!
-                passengerRb.AddForce(relativeSpace * initialPassengerForce * passengerRb.mass, ForceMode.Impulse);
-                
-                // Don't forget this!
-				break;
-			}
-		}
-	}
+                    // Reset velocity before adding to it
+                    passengerRb.velocity = Vector3.zero;
+                    passengerRb.angularVelocity = Vector3.zero;
 
-    public float GetSpawnLaserAlpha()
-    {
-        return spawnLaserAlpha;
-    }
+                    // Add initial passenger velocity here!	Jump!
+                    passengerRb.AddForce(relativeSpace * initialPassengerForce * passengerRb.mass, ForceMode.Impulse);
+
+                    // Don't forget this!
+                    break;
+                }
+            }
+        }
+
+        public float GetSpawnLaserAlpha()
+        {
+            return spawnLaserAlpha;
+        }
+    } 
 }

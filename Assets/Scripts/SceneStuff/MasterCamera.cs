@@ -10,101 +10,104 @@
 using UnityEngine;
 using System.Collections;
 
-public enum ECamerasInScene
+namespace ProjectStorms
 {
-    One, 
-    Two, 
-    Three, 
-    Four
-};
-
-/// <summary>
-/// A very important script. This sets the camera's screen width/height depending on the number of players.
-/// For now, this has to be set manually.
-/// </summary>
-public class MasterCamera : MonoBehaviour
-{
-	public ECamerasInScene currentCamera;
-	
-	public Camera cam1;
-	public Camera cam2;
-	public Camera cam3;
-	public Camera cam4;
-	
-	void Start()
-	{
-		if (currentCamera == ECamerasInScene.One)
-		{
-			cam1.enabled = true;
-			if (cam2 != null)
-            {
-                cam2.enabled = false;
-            }
-			if (cam3 != null)
-            {
-                cam3.enabled = false;
-            }
-			if (cam4 != null)
-            {
-                cam4.enabled = false;
-            }
-			
-			cam1.rect = new Rect(0, 0, 1, 1);
-		}	
-		
-		if (currentCamera == ECamerasInScene.Two)
-		{
-			cam1.enabled = true;
-			cam2.enabled = true;
-			if (cam3 != null)
-            {
-                cam3.enabled = false;
-            }
-			if (cam4 != null)
-            {
-                cam4.enabled = false;
-            }
-
-            // One on top
-			cam1.rect = new Rect(0f, 0.5f, 1f, 0.5f);
-			cam2.rect = new Rect(0, 0.0f, 1f, 0.5f);
-			
-		}	
-		
-		if (currentCamera == ECamerasInScene.Three)
-		{
-			cam1.enabled = true;
-			cam2.enabled = true;
-			cam3.enabled = true;
-			if (cam4 != null)
-            {
-                cam4.enabled = false;
-            }
-
-            // Cam two top right
-			cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
-            cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-			//cam3.rect = new Rect(0, 0, 1f, 0.5f);
-			cam3.rect = new Rect(0.25f, 0f, 0.5f, 0.5f);
-			
-		}	
-		
-		if (currentCamera == ECamerasInScene.Four)
-		{
-			cam1.enabled = true;
-			cam2.enabled = true;
-			cam3.enabled = true;
-			cam4.enabled = true;
-			
-			cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
-			cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-			cam3.rect = new Rect(0f, 0f, 0.5f, 0.5f);
-			cam4.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
-		}	
-	}
-	
-    void Update()
+    public enum ECamerasInScene
     {
+        One,
+        Two,
+        Three,
+        Four
+    };
 
-    }
+    /// <summary>
+    /// A very important script. This sets the camera's screen width/height depending on the number of players.
+    /// For now, this has to be set manually.
+    /// </summary>
+    public class MasterCamera : MonoBehaviour
+    {
+        public ECamerasInScene currentCamera;
+
+        public Camera cam1;
+        public Camera cam2;
+        public Camera cam3;
+        public Camera cam4;
+
+        void Start()
+        {
+            if (currentCamera == ECamerasInScene.One)
+            {
+                cam1.enabled = true;
+                if (cam2 != null)
+                {
+                    cam2.enabled = false;
+                }
+                if (cam3 != null)
+                {
+                    cam3.enabled = false;
+                }
+                if (cam4 != null)
+                {
+                    cam4.enabled = false;
+                }
+
+                cam1.rect = new Rect(0, 0, 1, 1);
+            }
+
+            if (currentCamera == ECamerasInScene.Two)
+            {
+                cam1.enabled = true;
+                cam2.enabled = true;
+                if (cam3 != null)
+                {
+                    cam3.enabled = false;
+                }
+                if (cam4 != null)
+                {
+                    cam4.enabled = false;
+                }
+
+                // One on top
+                cam1.rect = new Rect(0f, 0.5f, 1f, 0.5f);
+                cam2.rect = new Rect(0, 0.0f, 1f, 0.5f);
+
+            }
+
+            if (currentCamera == ECamerasInScene.Three)
+            {
+                cam1.enabled = true;
+                cam2.enabled = true;
+                cam3.enabled = true;
+                if (cam4 != null)
+                {
+                    cam4.enabled = false;
+                }
+
+                // Cam two top right
+                cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                //cam3.rect = new Rect(0, 0, 1f, 0.5f);
+                cam3.rect = new Rect(0.25f, 0f, 0.5f, 0.5f);
+
+            }
+
+            if (currentCamera == ECamerasInScene.Four)
+            {
+                cam1.enabled = true;
+                cam2.enabled = true;
+                cam3.enabled = true;
+                cam4.enabled = true;
+
+                cam1.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
+                cam2.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+                cam3.rect = new Rect(0f, 0f, 0.5f, 0.5f);
+                cam4.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+            }
+        }
+
+        void Update()
+        {
+
+        }
+    } 
 }

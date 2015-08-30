@@ -10,91 +10,94 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// This script keeps track of the pirate base and identity - checks current score and tags.
-/// </summary>
-public class PirateBaseIdentity : MonoBehaviour 
+namespace ProjectStorms
 {
-
-	public DetectFallingPassenger baseTriggerZone;
-
-	[HideInInspector]
-	public int baseScore;
-	[HideInInspector]
-	public int teamNumber;
-	[HideInInspector]
-	public Color baseColour;
-
-	public Renderer myRenderer;
-
-    public Renderer flagRenderer;
-    public Renderer flagBackRenderer;
-    private float m_flagAlpha = 1.0f;
-
-    public LineRenderer dropzoneLineRenderer;
-    public float dropZoneAlpha = 1.0f;
-
-	void Start() 
-	{
-		baseColour = Color.clear;
-
-        m_flagAlpha = flagRenderer.material.color.a;
-	}
-
-	void Update() 
-	{
-		if (gameObject.tag == "Player1_")
-		{
-			teamNumber = 1;
-			myRenderer.material.color = Color.magenta;
-			baseColour = myRenderer.material.color;
-
-		}
-		else if (gameObject.tag == "Player2_")
-		{
-			teamNumber = 2;
-			myRenderer.material.color = Color.cyan;
-			baseColour = myRenderer.material.color;
-		}
-		else if (gameObject.tag == "Player3_")
-		{
-			teamNumber = 3;
-			myRenderer.material.color = Color.green;
-			baseColour = myRenderer.material.color;
-		}
-		else if (gameObject.tag == "Player4_")
-		{
-			teamNumber = 4;
-			myRenderer.material.color = Color.yellow;
-			baseColour = myRenderer.material.color;
-		}
-		else if (gameObject.tag == "Untagged")
-		{
-			Debug.Log("NO TAG!!");
-		}
-
-        // Set the flag's colour
-        Color flagColour = baseColour;
-        flagColour.a = m_flagAlpha;
-        flagRenderer.material.color = flagColour;
-        flagBackRenderer.material.color = flagColour;
-
-        // Set the drop-zone's colour
-        Color dropzoneColour = baseColour;
-        dropzoneColour.a = dropZoneAlpha;
-        dropzoneLineRenderer.SetColors(dropzoneColour, dropzoneColour);
-
-		// Set the colour of text in DetectFallingPassengersScript
-		baseTriggerZone.textColour = myRenderer.material.color;
-
-		// Set the score for the ScoreManager script
-        baseScore = baseTriggerZone.peopleLeftToCatch;
-	}
-
-    public void ResetPirateBase(int a_baseScore)
+    /// <summary>
+    /// This script keeps track of the pirate base and identity - checks current score and tags.
+    /// </summary>
+    public class PirateBaseIdentity : MonoBehaviour
     {
-        // Set score values
-        baseTriggerZone.peopleLeftToCatch = a_baseScore;
-        baseScore = a_baseScore;
-    }
+
+        public DetectFallingPassenger baseTriggerZone;
+
+        [HideInInspector]
+        public int baseScore;
+        [HideInInspector]
+        public int teamNumber;
+        [HideInInspector]
+        public Color baseColour;
+
+        public Renderer myRenderer;
+
+        public Renderer flagRenderer;
+        public Renderer flagBackRenderer;
+        private float m_flagAlpha = 1.0f;
+
+        public LineRenderer dropzoneLineRenderer;
+        public float dropZoneAlpha = 1.0f;
+
+        void Start()
+        {
+            baseColour = Color.clear;
+
+            m_flagAlpha = flagRenderer.material.color.a;
+        }
+
+        void Update()
+        {
+            if (gameObject.tag == "Player1_")
+            {
+                teamNumber = 1;
+                myRenderer.material.color = Color.magenta;
+                baseColour = myRenderer.material.color;
+
+            }
+            else if (gameObject.tag == "Player2_")
+            {
+                teamNumber = 2;
+                myRenderer.material.color = Color.cyan;
+                baseColour = myRenderer.material.color;
+            }
+            else if (gameObject.tag == "Player3_")
+            {
+                teamNumber = 3;
+                myRenderer.material.color = Color.green;
+                baseColour = myRenderer.material.color;
+            }
+            else if (gameObject.tag == "Player4_")
+            {
+                teamNumber = 4;
+                myRenderer.material.color = Color.yellow;
+                baseColour = myRenderer.material.color;
+            }
+            else if (gameObject.tag == "Untagged")
+            {
+                Debug.Log("NO TAG!!");
+            }
+
+            // Set the flag's colour
+            Color flagColour = baseColour;
+            flagColour.a = m_flagAlpha;
+            flagRenderer.material.color = flagColour;
+            flagBackRenderer.material.color = flagColour;
+
+            // Set the drop-zone's colour
+            Color dropzoneColour = baseColour;
+            dropzoneColour.a = dropZoneAlpha;
+            dropzoneLineRenderer.SetColors(dropzoneColour, dropzoneColour);
+
+            // Set the colour of text in DetectFallingPassengersScript
+            baseTriggerZone.textColour = myRenderer.material.color;
+
+            // Set the score for the ScoreManager script
+            baseScore = baseTriggerZone.peopleLeftToCatch;
+        }
+
+        public void ResetPirateBase(int a_baseScore)
+        {
+            // Set score values
+            baseTriggerZone.peopleLeftToCatch = a_baseScore;
+            baseScore = a_baseScore;
+        }
+    } 
 }

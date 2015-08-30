@@ -12,88 +12,91 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-/// <summary>
-/// Everything here is only for ease of access, and should only effect stuff in the editor.
-/// We should delete the Entire 'InEditor' branch of the airshipGameobject before master build.
-/// </summary>
-public class InEditorStuff : MonoBehaviour
+namespace ProjectStorms
 {
+    /// <summary>
+    /// Everything here is only for ease of access, and should only effect stuff in the editor.
+    /// We should delete the Entire 'InEditor' branch of the airshipGameobject before master build.
+    /// </summary>
+    public class InEditorStuff : MonoBehaviour
+    {
 
-	public Renderer myRenderer;
-	public Renderer myOtherRenderer;
-	private Color m_playerColor = Color.magenta;
-	
-	public GameObject airshipTopOfHierachy;
-	public GameObject canvasChild;
-	private Text m_canvasText;
-	
-    // Cached variables
-    StateManager m_stateManager;
+        public Renderer myRenderer;
+        public Renderer myOtherRenderer;
+        private Color m_playerColor = Color.magenta;
 
-	void Start()
-	{
-        m_canvasText = canvasChild.GetComponentInChildren<Text>();
-        m_stateManager = airshipTopOfHierachy.GetComponent<StateManager>();
-		/*
-		if (Application.isEditor == false)
-		{
-			canvasChild.SetActive(false);
-		}*/
-	}
+        public GameObject airshipTopOfHierachy;
+        public GameObject canvasChild;
+        private Text m_canvasText;
 
-	
-	void Update () 
-	{
-	    // Set color
-		if (myRenderer.enabled == true)
-		{
-			/*
-			if (Application.isEditor == true)
-			{
-				myRenderer.material.color = playerColor;	
-			}
-			*/
-			myRenderer.material.color = m_playerColor;
+        // Cached variables
+        StateManager m_stateManager;
 
-            string myTag = tag;
-			if (myTag == "Player1_")
-			{
-				m_playerColor = Color.magenta;
-			}
-			
-			if (myTag == "Player2_")
-			{
-				m_playerColor = Color.cyan;
-			}
-			
-			if (myTag == "Player3_")
-			{
-				m_playerColor = Color.green;
-			}
-			
-			if (myTag == "Player4_")
-			{
-				m_playerColor = Color.yellow;
-			}
-			
-			//In case of a second render object
-			if (myOtherRenderer != null)
-			{
-				if (myOtherRenderer.enabled == true)
-				{
-					myOtherRenderer.material.color = m_playerColor;
-				}
-			}
-		}
-	    
-        if (Application.isEditor)
+        void Start()
         {
-            // Explain game states
-            m_canvasText.text = ("State: " + (m_stateManager.GetPlayerState()));
+            m_canvasText = canvasChild.GetComponentInChildren<Text>();
+            m_stateManager = airshipTopOfHierachy.GetComponent<StateManager>();
+            /*
+            if (Application.isEditor == false)
+            {
+                canvasChild.SetActive(false);
+            }*/
         }
-        else
+
+
+        void Update()
         {
-            m_canvasText.text = "";
+            // Set color
+            if (myRenderer.enabled == true)
+            {
+                /*
+                if (Application.isEditor == true)
+                {
+                    myRenderer.material.color = playerColor;	
+                }
+                */
+                myRenderer.material.color = m_playerColor;
+
+                string myTag = tag;
+                if (myTag == "Player1_")
+                {
+                    m_playerColor = Color.magenta;
+                }
+
+                if (myTag == "Player2_")
+                {
+                    m_playerColor = Color.cyan;
+                }
+
+                if (myTag == "Player3_")
+                {
+                    m_playerColor = Color.green;
+                }
+
+                if (myTag == "Player4_")
+                {
+                    m_playerColor = Color.yellow;
+                }
+
+                //In case of a second render object
+                if (myOtherRenderer != null)
+                {
+                    if (myOtherRenderer.enabled == true)
+                    {
+                        myOtherRenderer.material.color = m_playerColor;
+                    }
+                }
+            }
+
+            if (Application.isEditor)
+            {
+                // Explain game states
+                m_canvasText.text = ("State: " + (m_stateManager.GetPlayerState()));
+            }
+            else
+            {
+                m_canvasText.text = "";
+            }
         }
-	}
+    } 
 }

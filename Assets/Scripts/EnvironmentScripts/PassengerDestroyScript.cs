@@ -10,40 +10,44 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// This script deactivates the pirate passengers as soon as they go below a certain height.
-/// </summary>
-public class PassengerDestroyScript : MonoBehaviour
+namespace ProjectStorms
 {
     /// <summary>
-    /// Kill-Y.
+    /// This script deactivates the pirate passengers as soon as they go below a certain height.
     /// </summary>
-	public float heightTillDeath = -2000.0f;
-	private FallingScream m_scream;
-	
-	void Start()
-	{
-        m_scream = gameObject.GetComponent<FallingScream>();
-        
-        gameObject.transform.tag = "Passengers";
-	}
-	
-	void Update () 
-	{
-		if (gameObject.activeInHierarchy)
-		{
-			if (gameObject.transform.position.y < heightTillDeath)
-			{
-                // Check timeout
-				gameObject.SetActive(false);
-				
-				// Reset scream
-                if (m_scream != null)
-				{
-                    m_scream.readyToScream = true;
-				}
-				
-			}
-		}
-	}
+    public class PassengerDestroyScript : MonoBehaviour
+    {
+        /// <summary>
+        /// Kill-Y.
+        /// </summary>
+        public float heightTillDeath = -2000.0f;
+        private FallingScream m_scream;
+
+        void Start()
+        {
+            m_scream = gameObject.GetComponent<FallingScream>();
+
+            gameObject.transform.tag = "Passengers";
+        }
+
+        void Update()
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                if (gameObject.transform.position.y < heightTillDeath)
+                {
+                    // Check timeout
+                    gameObject.SetActive(false);
+
+                    // Reset scream
+                    if (m_scream != null)
+                    {
+                        m_scream.readyToScream = true;
+                    }
+
+                }
+            }
+        }
+    }
+
 }

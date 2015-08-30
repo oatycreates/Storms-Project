@@ -10,117 +10,120 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Basic lerp follow airship. Don't change the cam height/width/pixel position here - do that in the master cam controller.
-/// However, we can tell the camera where to go and what position to take here.
-/// </summary>
-public class AirshipCamBehaviour : MonoBehaviour
+namespace ProjectStorms
 {
-	[HideInInspector]
-	public bool camFollowPlayer = true;
-
-	public Transform camPosTarget;
-	public Transform camLookTarget;
-
     /// <summary>
-    /// Used to slerp look direction.
+    /// Basic lerp follow airship. Don't change the cam height/width/pixel position here - do that in the master cam controller.
+    /// However, we can tell the camera where to go and what position to take here.
     /// </summary>
-    public float camLookSmooth = 2.0f;
-
-    /// <summary>
-    /// Used to lerp cam pos.
-    /// </summary>
-    public float camPosSmooth = 2.0f;
-	
-	/// <summary>
-    /// Keep a reference to the start position, so we can reset to the roulette position.
-	/// </summary>
-	private Vector3 m_myStartPos;
-	private Quaternion m_myStartRot;
-
-    // Cached variables
-    Transform m_trans;
-
-    void Awake()
+    public class AirshipCamBehaviour : MonoBehaviour
     {
-        m_trans = transform;
-    }
+        [HideInInspector]
+        public bool camFollowPlayer = true;
 
-	void Start() 
-	{
-        GameObject camHolder = GameObject.Find("CamHolder");
-        if (camHolder == null)
+        public Transform camPosTarget;
+        public Transform camLookTarget;
+
+        /// <summary>
+        /// Used to slerp look direction.
+        /// </summary>
+        public float camLookSmooth = 2.0f;
+
+        /// <summary>
+        /// Used to lerp cam pos.
+        /// </summary>
+        public float camPosSmooth = 2.0f;
+
+        /// <summary>
+        /// Keep a reference to the start position, so we can reset to the roulette position.
+        /// </summary>
+        private Vector3 m_myStartPos;
+        private Quaternion m_myStartRot;
+
+        // Cached variables
+        Transform m_trans;
+
+        void Awake()
         {
-            camHolder = new GameObject();
-            camHolder.name = "CamHolder";
+            m_trans = transform;
         }
 
-		// Detach from parent on start!
-        m_trans.SetParent(camHolder.transform, true);
+        void Start()
+        {
+            GameObject camHolder = GameObject.Find("CamHolder");
+            if (camHolder == null)
+            {
+                camHolder = new GameObject();
+                camHolder.name = "CamHolder";
+            }
 
-		m_myStartPos = m_trans.position;
-		m_myStartRot = m_trans.rotation;
+            // Detach from parent on start!
+            m_trans.SetParent(camHolder.transform, true);
 
-		m_trans.localPosition = Vector3.zero;
-	}
-	
-	void Update () 
-	{
-		if (camFollowPlayer)
-		{
-			FollowCam();
-		}
-		else if (!camFollowPlayer)
-		{
-			WatchCam();
-		}
-	}
-	
-	public void FollowCam()
-	{
-		if (camPosTarget != null)
-		{
-            // TODO Fix lerping
-            //m_trans.position = Vector3.Lerp(m_trans.position, camPosTarget.position, Time.deltaTime * camPosSmooth);
-            m_trans.position = camPosTarget.position;
-		}
+            m_myStartPos = m_trans.position;
+            m_myStartRot = m_trans.rotation;
 
-		if (camLookTarget != null)
-		{
-            //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-            //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
-            m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-		}
+            m_trans.localPosition = Vector3.zero;
+        }
 
-	}
+        void Update()
+        {
+            if (camFollowPlayer)
+            {
+                FollowCam();
+            }
+            else if (!camFollowPlayer)
+            {
+                WatchCam();
+            }
+        }
+
+        public void FollowCam()
+        {
+            if (camPosTarget != null)
+            {
+                // TODO Fix lerping
+                //m_trans.position = Vector3.Lerp(m_trans.position, camPosTarget.position, Time.deltaTime * camPosSmooth);
+                m_trans.position = camPosTarget.position;
+            }
+
+            if (camLookTarget != null)
+            {
+                //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+                //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+                m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+            }
+
+        }
 
 
-	public void SuicideCam()
-    {
-        //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-        //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
-        m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-	}
-	
-	public void WatchCam()
-	{
-		if (camLookTarget != null)
+        public void SuicideCam()
         {
             //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
             //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
             m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-		}
-	}
+        }
 
-    /// <summary>
-    /// Reset the camera back for the roulette state.
-    /// </summary>
-	public void RouletteCam()
-	{
-		//m_trans.parent = rememberMyParent.transform;
-		//m_trans.LookAt(camPosTarget.transform.position);
+        public void WatchCam()
+        {
+            if (camLookTarget != null)
+            {
+                //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+                //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
+                m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+            }
+        }
 
-		m_trans.position = m_myStartPos;
-		m_trans.rotation = m_myStartRot;
-	}
+        /// <summary>
+        /// Reset the camera back for the roulette state.
+        /// </summary>
+        public void RouletteCam()
+        {
+            //m_trans.parent = rememberMyParent.transform;
+            //m_trans.LookAt(camPosTarget.transform.position);
+
+            m_trans.position = m_myStartPos;
+            m_trans.rotation = m_myStartRot;
+        }
+    } 
 }

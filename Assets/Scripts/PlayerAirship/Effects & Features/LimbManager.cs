@@ -10,15 +10,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class LimbManager : MonoBehaviour 
+namespace ProjectStorms
 {
-	void Start () 
-	{
-	
-	}
+    public class LimbManager : MonoBehaviour
+    {
+        void Start()
+        {
 
-	void Update () 
-	{
-	
-	}
+        }
+
+        void Update()
+        {
+
+        }
+    } 
 }

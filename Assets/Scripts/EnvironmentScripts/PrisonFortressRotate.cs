@@ -10,41 +10,44 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// This script rotates the prison fortress ship in local space.
-/// </summary>
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(AudioSource))]
-public class PrisonFortressRotate : MonoBehaviour
+namespace ProjectStorms
 {
-    public float rotateForce = 10.0f;
-    
-    public AudioClip hoverNoise;
+    /// <summary>
+    /// This script rotates the prison fortress ship in local space.
+    /// </summary>
+    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(AudioSource))]
+    public class PrisonFortressRotate : MonoBehaviour
+    {
+        public float rotateForce = 10.0f;
 
-    // Cached variables
-    private Rigidbody m_myRigid;
-    private AudioSource mySource;
+        public AudioClip hoverNoise;
 
-	void Start () 
-	{
-		//Set physics
-		m_myRigid = gameObject.GetComponent<Rigidbody>();
-		
-		//m_myRigid.maxAngularVelocity = 0.1f;
-		m_myRigid.maxAngularVelocity = 0.0f; //undo this later
-		
-		//Set audio
-		mySource = gameObject.GetComponent<AudioSource>();
-		
-		mySource.clip = hoverNoise;
-		mySource.volume = 0.05f;
-		//mySource.pitch = 
-		mySource.loop = true;
-		mySource.Play ();		
-	}
-	
-	void FixedUpdate () 
-	{
-		m_myRigid.AddRelativeTorque(Vector3.up * rotateForce);
-	}
+        // Cached variables
+        private Rigidbody m_myRigid;
+        private AudioSource mySource;
+
+        void Start()
+        {
+            //Set physics
+            m_myRigid = gameObject.GetComponent<Rigidbody>();
+
+            //m_myRigid.maxAngularVelocity = 0.1f;
+            m_myRigid.maxAngularVelocity = 0.0f; //undo this later
+
+            //Set audio
+            mySource = gameObject.GetComponent<AudioSource>();
+
+            mySource.clip = hoverNoise;
+            mySource.volume = 0.05f;
+            //mySource.pitch = 
+            mySource.loop = true;
+            mySource.Play();
+        }
+
+        void FixedUpdate()
+        {
+            m_myRigid.AddRelativeTorque(Vector3.up * rotateForce);
+        }
+    } 
 }

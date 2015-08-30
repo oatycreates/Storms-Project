@@ -10,20 +10,23 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Skip to next scene from game menu.
-/// </summary>
-public class PressAnyButton : MonoBehaviour 
+namespace ProjectStorms
 {
-	public FadeCamWhite fader;
+    /// <summary>
+    /// Skip to next scene from game menu.
+    /// </summary>
+    public class PressAnyButton : MonoBehaviour
+    {
+        public FadeCamWhite fader;
 
-	void Update()
-	{
-		if (Input.anyKeyDown)
-		{
-			// Fade out to next scene
-			fader.fadeStart = false;
-			fader.fadeEnd = true;
-		}
-	}
+        void Update()
+        {
+            if (Input.anyKeyDown)
+            {
+                // Fade out to next scene
+                fader.fadeStart = false;
+                fader.fadeEnd = true;
+            }
+        }
+    } 
 }

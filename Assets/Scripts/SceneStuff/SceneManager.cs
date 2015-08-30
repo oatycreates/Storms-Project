@@ -10,70 +10,73 @@
 using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// This script changes the current scene, level, or room.
-/// </summary>
-public class SceneManager : MonoBehaviour
+namespace ProjectStorms
 {
-	void Update () 
-	{
-	    if (Application.isEditor == true)
-	    {
-	        if (Input.GetKeyDown(KeyCode.M))
-	        {
-		        MenuScene();
-	        }
-			
-	        if (Input.GetKeyDown(KeyCode.G))
-	        {
-		        GameScene();
-	        }
-			
-	        if (Input.GetKeyDown(KeyCode.C))
-	        {
-		        CreditsScene();
-	        }
+    /// <summary>
+    /// This script changes the current scene, level, or room.
+    /// </summary>
+    public class SceneManager : MonoBehaviour
+    {
+        void Update()
+        {
+            if (Application.isEditor == true)
+            {
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    MenuScene();
+                }
+
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    GameScene();
+                }
+
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    CreditsScene();
+                }
+            }
+
+            // Reset the level
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                Application.LoadLevel(Application.loadedLevelName);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
 
-        // Reset the level
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        public void MenuScene()
+        {
+            Application.LoadLevel("MenuScene");
+        }
+
+        public void GameScene()
+        {
+            Application.LoadLevel("GameScene");
+        }
+
+        public void CreditsScene()
+        {
+            Application.LoadLevel("CreditsScene");
+        }
+
+        public void SplashScreen()
+        {
+            Application.LoadLevel("SplashScreen");
+        }
+
+        public void LoopCurrentLevel()
         {
             Application.LoadLevel(Application.loadedLevelName);
         }
-		
-		if (Input.GetKeyDown(KeyCode.Escape))
-		{
-			Application.Quit();
-		}
-	}
-	
-	public void MenuScene()
-	{
-		Application.LoadLevel("MenuScene");
-	}
-	
-	public void GameScene()
-	{
-		Application.LoadLevel("GameScene");
-	}
-	
-	public void CreditsScene()
-	{
-		Application.LoadLevel("CreditsScene");
-	}
-	
-	public void SplashScreen()
-	{
-		Application.LoadLevel("SplashScreen");
-	}
-	
-	public void LoopCurrentLevel()
-	{
-		Application.LoadLevel(Application.loadedLevelName);
-	}
-	
-	public void TestScene()
-	{
-		Application.LoadLevel("RoDoTestScene");
-	}
+
+        public void TestScene()
+        {
+            Application.LoadLevel("RoDoTestScene");
+        }
+    } 
 }
