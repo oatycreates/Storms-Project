@@ -65,7 +65,7 @@ namespace ProjectStorms
 
         void OnCollisionStay(Collision a_other)
         {
-            if (a_other.tag != "Passengers")
+            if (a_other.gameObject.tag != "Passengers")
             {
                 m_mySource.Stop();
                 readyToScream = false;
@@ -77,7 +77,7 @@ namespace ProjectStorms
 
         void OnCollisionExit(Collision a_other)
         {
-            if (a_other.tag != "Passengers")
+            if (a_other.gameObject.tag != "Passengers")
             {
                 readyToScream = true;
             }
