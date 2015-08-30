@@ -28,24 +28,9 @@ public class AirshipStallingBehaviour : MonoBehaviour
     public float timerUntilBoost = 0.0f;
 
     /// <summary>
-    /// How hard to explode the ship's contents away.
-    /// </summary>
-    public float explosionForce = 10.0f;
-
-    /// <summary>
-    /// How big to make the ship's explosion.
-    /// </summary>
-    public float explosionRadius = 3.0f;
-
-    /// <summary>
     /// Multiplier to revert the player's control at. E.g. If 0.9 only revert to the control state if the player is below 90% of the stallY and moving down.
     /// </summary>
     public float stallYRevertMult = 0.9f;
-
-    /// <summary>
-    /// Where to centre the explosion from, this should be a transform relative to the ship prefab.
-    /// </summary>
-    public Transform explosionCentreTrans;
 
     /// <summary>
     /// Handle to the airship camera script.
@@ -70,6 +55,7 @@ public class AirshipStallingBehaviour : MonoBehaviour
     private Transform m_trans = null;
     private Animator m_anim = null;
     private StateManager m_shipStates = null;
+    private PassengerTray m_passTray = null;
 	
 	void Awake()
 	{
@@ -77,22 +63,18 @@ public class AirshipStallingBehaviour : MonoBehaviour
         m_trans = transform;
         m_anim = GetComponent<Animator>();
         m_shipStates = GetComponent<StateManager>();
+        m_passTray = GetComponentInChildren<PassengerTray>();
 	}
 
     void Start()
     {
-        if (explosionCentreTrans == null)
-        {
-            Debug.LogError("The explosion centre transform is not set!");
-        }
-        
         timerUntilBoost = 0.0f;
     }
 	
 	void OnEnable()
 	{
-        // Explode the ship
-        m_myRigid.AddExplosionForce(explosionForce, explosionCentreTrans.position, explosionRadius);
+        // Explode the ship tray
+        m_passTray.ExplodeTray();
 
         // Stop the propeller from moving
         m_anim.SetFloat(m_animPropellerMult, 0.0f);

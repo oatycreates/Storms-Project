@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// Attempts to keep the passengers in the ship by passing any forces applied to the ship onto the passengers.
@@ -31,6 +32,21 @@ public class PassengerTray : MonoBehaviour
     public float shipPartMassAdd = 0.0f;
 
     /// <summary>
+    /// How hard to explode the ship's contents away.
+    /// </summary>
+    public float explosionForce = 10.0f;
+
+    /// <summary>
+    /// How big to make the ship's explosion.
+    /// </summary>
+    public float explosionRadius = 3.0f;
+
+    /// <summary>
+    /// Where to centre the explosion from, this should be a transform relative to the ship prefab.
+    /// </summary>
+    public Transform explosionCentreTrans;
+
+    /// <summary>
     /// Cumulative ship acceleration for the tick.
     /// </summary>
     private Vector3 m_currShipAccel = Vector3.zero;
@@ -51,17 +67,14 @@ public class PassengerTray : MonoBehaviour
     private float m_shipStartMass = 0;
 
     /// <summary>
-    /// Number of things in the tray that match the passenger tags.
+    /// List of objects in the tray that match the passenger tag type.
     /// </summary>
-    private int m_numInTray = 0;
+    private List<GameObject> m_trayContents = new List<GameObject>();
 
     // Cached variables
     private Rigidbody m_shipRb;
 
-	/// <summary>
-    /// Use this for initialisation.
-	/// </summary>
-	void Start()
+    void Awake()
     {
         // Zero variables
         m_currShipAccel = Vector3.zero;
@@ -71,6 +84,17 @@ public class PassengerTray : MonoBehaviour
         // Cache variables
         m_shipRb = gameObject.GetComponentInParent<Rigidbody>();
         m_shipStartMass = 0.0f;
+    }
+
+	/// <summary>
+    /// Use this for initialisation.
+	/// </summary>
+	void Start()
+    {
+        if (explosionCentreTrans == null)
+        {
+            Debug.LogError("The explosion centre transform is not set!");
+        }
 	}
 	
 	/// <summary>
@@ -78,7 +102,7 @@ public class PassengerTray : MonoBehaviour
 	/// </summary>
 	void Update()
     {
-
+        Debug.DrawLine(m_shipRb.position, m_shipRb.position + Vector3.up * explosionRadius);
 	}
 
     /// <summary>
@@ -103,8 +127,7 @@ public class PassengerTray : MonoBehaviour
             //Debug.Log(m_shipRb.mass + " " + m_shipStartMass);
 
             // Set the mass
-            m_shipRb.mass = m_shipStartMass + shipPartMassAdd + m_numInTray * prisonerMassAdd;
-            m_numInTray = 0;
+            m_shipRb.mass = m_shipStartMass + shipPartMassAdd + m_trayContents.Count * prisonerMassAdd;
         }
 
         if (m_hasStarted)
@@ -115,6 +138,8 @@ public class PassengerTray : MonoBehaviour
             // Store ship velocity for the next tick
             m_lastShipVel = m_shipRb.velocity;
         }
+
+        m_trayContents.Clear();
     }
 
     /// <summary>
@@ -133,8 +158,20 @@ public class PassengerTray : MonoBehaviour
                 rb.AddForce(m_currShipAccel, ForceMode.Acceleration);
 
                 // Cumulate mass
-                ++m_numInTray;
+                m_trayContents.Add(rb.gameObject);
             }
+        }
+    }
+
+    /// <summary>
+    /// Causes the tray to explode its contents outwards.
+    /// </summary>
+    public void ExplodeTray()
+    {
+        // Explode the ship tray
+        foreach (GameObject go in m_trayContents)
+        {
+            go.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionCentreTrans.position, explosionRadius);
         }
     }
 

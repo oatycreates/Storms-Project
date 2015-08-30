@@ -1926,7 +1926,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 190788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.528, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 465954}
@@ -4264,10 +4264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallAcceleration: 100
   timerUntilBoost: 4
-  explosionForce: 10
-  explosionRadius: 3
   stallYRevertMult: .899999976
-  explosionCentreTrans: {fileID: 437454}
   airshipMainCam: {fileID: 11476918}
 --- !u!114 &11408378
 MonoBehaviour:
@@ -4517,6 +4514,9 @@ MonoBehaviour:
   - Passengers
   prisonerMassAdd: .25
   shipPartMassAdd: 0
+  explosionForce: 30
+  explosionRadius: 15
+  explosionCentreTrans: {fileID: 437454}
 --- !u!114 &11429062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4906,9 +4906,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallAcceleration: 100
   timerUntilReset: 4
-  explosionForce: 10
-  explosionRadius: 3
-  explosionCentreTrans: {fileID: 437454}
   airshipMainCam: {fileID: 11476918}
 --- !u!114 &11493030
 MonoBehaviour:
