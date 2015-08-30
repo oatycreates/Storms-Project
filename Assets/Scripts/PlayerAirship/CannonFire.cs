@@ -155,8 +155,8 @@ namespace ProjectStorms
 
                         // Toggle the trail renderer to prevent it from snapping to the new position
                         trailBall = goBall.GetComponent<TrailRenderer>();
+                        trailBall.time = -1000.0f;
                         trailBall.enabled = false;
-                        trailBall.enabled = true;
 
                         // Fire off the cannonball
                         rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);

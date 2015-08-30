@@ -54,20 +54,31 @@ namespace ProjectStorms
         /// </summary>
         private float m_lastSelfTriggerTime = 0.0f;
 
+        /// <summary>
+        /// Time to wait until enabling the trail.
+        /// </summary>
+        private float m_enableTrailTime = 0.05f;
+
         // Cached variables
         private Transform m_trans = null;
         private Vector3 m_startScale = Vector3.one;
+        private TrailRenderer m_trail = null;
+        private float m_startTrailTime = 0.0f;
 
         void Awake()
         {
             m_trans = transform;
+            m_trail = GetComponent<TrailRenderer>();
+
             m_startScale = m_trans.localScale;
+            m_startTrailTime = m_trail.time;
         }
 
         void OnEnable()
         {
             // Begin the cannonball's life
             m_timer = cannonBallLifetime;
+            m_enableTrailTime = 0.05f;
 
             // Revert the cannonball scale
             m_trans.localScale = m_startScale;
@@ -84,6 +95,17 @@ namespace ProjectStorms
         void Update()
         {
             m_timer -= Time.deltaTime;
+
+            // For enabling the trail renderer after a few frames
+            if (m_enableTrailTime > 0.0f)
+            {
+                m_enableTrailTime -= Time.deltaTime;
+                if (m_enableTrailTime <= 0.0f)
+                {
+                    m_trail.enabled = true;
+                    m_trail.time = m_startTrailTime;
+                }
+            }
 
             // Scale the cannonball
             float lifeProg = Mathf.Min((cannonBallLifetime - m_timer) / cannonBallLifetime, 1.0f);
