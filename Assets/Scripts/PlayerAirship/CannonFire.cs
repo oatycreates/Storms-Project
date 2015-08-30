@@ -31,25 +31,30 @@ public class CannonFire : MonoBehaviour
     // Cached variables
     private Rigidbody m_shipRB;
 
-	void Start () 
-	{
+    void Awake()
+    {
         m_shipRB = parentAirship.GetComponent<Rigidbody>();
 
-		cannonBalls = new List<GameObject>();
-		
-		for (int i = 0; i < pooledAmount; i++)
-		{
-			// Pooled object details
-			GameObject singleBall = Instantiate(cannonBallPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+        cannonBalls = new List<GameObject>();
+
+        for (int i = 0; i < pooledAmount; i++)
+        {
+            // Pooled object details
+            GameObject singleBall = Instantiate(cannonBallPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
 
             // Tag the cannonball
-			singleBall.tag = parentAirship.tag;
-			
-			singleBall.SetActive(false);
-			
-			// Add the singleBall to the list
-			cannonBalls.Add(singleBall);
-		}
+            singleBall.tag = parentAirship.tag;
+
+            singleBall.SetActive(false);
+
+            // Add the singleBall to the list
+            cannonBalls.Add(singleBall);
+        }
+    }
+
+	void Start() 
+	{
+
 	}
 	
 	void Update()

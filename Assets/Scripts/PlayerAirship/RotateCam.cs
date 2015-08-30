@@ -247,9 +247,7 @@ public class RotateCam : MonoBehaviour
 	
 	void Cannons(ECannonPos a_angle)
     {
-        // NOTE - Disable cannon fire for now
-
-        /*CannonFire script; 
+        CannonFire script; 
 	
         for (int i = 0; i < cannons.Length; i++)
         {
@@ -260,6 +258,6 @@ public class RotateCam : MonoBehaviour
             {
                 script.Fire();
             }
-        }*/
+        }
 	}
 }
