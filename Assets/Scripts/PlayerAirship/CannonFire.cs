@@ -25,32 +25,68 @@ namespace ProjectStorms
     /// </summary>
     public class CannonFire : MonoBehaviour
     {
+        /// <summary>
+        /// Handle to the parent airship.
+        /// </summary>
         public GameObject parentAirship;
 
+        /// <summary>
+        /// Where the cannon is relative to the ship, see ECannonPos.
+        /// </summary>
         public ECannonPos cannon;
 
-        public int pooledAmount = 1;
+        /// <summary>
+        /// Minimum time between shots.
+        /// </summary>
+        public float shotCooldown = 2.6f;
 
-        List<GameObject> cannonBalls;
+        /// <summary>
+        /// How many cannonballs to pool per cannon.
+        /// </summary>
+        public int pooledAmount = 2;
 
+        /// <summary>
+        /// Which cannonball prefab to spawn.
+        /// </summary>
         public GameObject cannonBallPrefab;
 
+        /// <summary>
+        /// How much force to launch the cannon balls with.
+        /// </summary>
         public float cannonBallForce = 50.0f;
 
+        /// <summary>
+        /// Handle to the player firing reticle.
+        /// </summary>
         public GameObject lookAtTarget;
 
-        private Vector3 relativeForward;
+        /// <summary>
+        /// Time before the cannon can fire again.
+        /// </summary>
+        private float m_currShotCooldown = 0.0f;
+
+        /// <summary>
+        /// Object pooled cannonballs.
+        /// </summary>
+        private List<GameObject> m_cannonBalls;
+
+        /// <summary>
+        /// Direction the cannon is facing in, equal to m_trans.forward.
+        /// </summary>
+        private Vector3 m_relativeForward;
 
         // Cached variables
         private Rigidbody m_shipRB;
         private Transform m_trans = null;
+        private Transform m_tarTrans = null;
 
         void Awake()
         {
             m_trans = transform;
+            m_tarTrans = lookAtTarget.transform;
             m_shipRB = parentAirship.GetComponent<Rigidbody>();
 
-            cannonBalls = new List<GameObject>();
+            m_cannonBalls = new List<GameObject>();
 
             for (int i = 0; i < pooledAmount; i++)
             {
@@ -63,7 +99,7 @@ namespace ProjectStorms
                 singleBall.SetActive(false);
 
                 // Add the singleBall to the list
-                cannonBalls.Add(singleBall);
+                m_cannonBalls.Add(singleBall);
             }
         }
 
@@ -74,42 +110,54 @@ namespace ProjectStorms
 
         void Update()
         {
-            m_trans.LookAt(lookAtTarget.transform.position);
+            // Count down the shot cool-down
+            m_currShotCooldown -= Time.deltaTime;
 
-            relativeForward = m_trans.TransformDirection(Vector3.forward);
+            // Look at the target
+            m_trans.LookAt(m_tarTrans.position);
+            m_relativeForward = m_trans.forward;
 
-            Ray ray = new Ray(m_trans.position, relativeForward);
+            Ray ray = new Ray(m_trans.position, m_relativeForward);
             Debug.DrawRay(ray.origin, ray.direction * 5, Color.red);
         }
-
 
         public void Fire()
         {
             Vector3 relativeSpace;
-            Rigidbody rigidBall;
+            Rigidbody rigidBall = null;
+            Transform transBall = null;
+            GameObject goBall = null;
 
-            for (int i = 0; i < cannonBalls.Count; i++)
+            if (m_currShotCooldown <= 0)
             {
-                // Find only inactive cannonballs
-                if (!cannonBalls[i].activeInHierarchy)
+                // Put the cannon on cool-down
+                m_currShotCooldown = shotCooldown;
+
+                for (int i = 0; i < m_cannonBalls.Count; i++)
                 {
-                    cannonBalls[i].transform.position = m_trans.position;
-                    cannonBalls[i].transform.rotation = Quaternion.identity;
+                    goBall = m_cannonBalls[i];
+                    // Find only inactive cannonballs
+                    if (!goBall.activeInHierarchy)
+                    {
+                        transBall = goBall.transform;
+                        transBall.position = m_trans.position;
+                        transBall.rotation = Quaternion.identity;
 
-                    cannonBalls[i].SetActive(true);
+                        goBall.SetActive(true);
 
-                    relativeSpace = m_trans.TransformDirection(Vector3.forward);
+                        relativeSpace = m_trans.TransformDirection(Vector3.forward);
 
-                    rigidBall = cannonBalls[i].GetComponent<Rigidbody>();
+                        rigidBall = goBall.GetComponent<Rigidbody>();
 
-                    // Inherit the parent's velocity
-                    rigidBall.velocity = m_shipRB.velocity;
+                        // Inherit the parent's velocity
+                        rigidBall.velocity = m_shipRB.velocity;
 
-                    // Fire off the cannonball
-                    rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
+                        // Fire off the cannonball
+                        rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
 
-                    // Don't forget! Every once in a while, you deserve a...
-                    break;
+                        // Don't forget! Every once in a while, you deserve a...
+                        break;
+                    }
                 }
             }
         }
