@@ -26,7 +26,7 @@ namespace ProjectStorms
 
         [HideInInspector]
         public bool suicideMode = false;
-        private float m_lerpSoundSpeed = 0.1f;
+        private float m_lerpSoundSpeed = 15.0f;
 
         public StateManager lookToTheStateManager;
 
@@ -79,12 +79,11 @@ namespace ProjectStorms
                 m_mySource.volume = m_volumeModifier;
                 m_mySource.pitch = m_pitchModifier;
             }
-            else
-                if (suicideMode)
-                {
-                    m_mySource.volume = Mathf.Lerp(m_mySource.volume, 1.0f, m_lerpSoundSpeed);
-                    m_mySource.pitch = Mathf.Lerp(m_mySource.pitch, 1.8f, m_lerpSoundSpeed);
-                }
+            else if (suicideMode)
+            {
+                m_mySource.volume = Mathf.Lerp(m_mySource.volume, 1.0f, m_lerpSoundSpeed * Time.deltaTime);
+                m_mySource.pitch = Mathf.Lerp(m_mySource.pitch, 1.8f, m_lerpSoundSpeed * Time.deltaTime);
+            }
         }
 
         public void AudioInput(float a_throttle)
@@ -93,24 +92,22 @@ namespace ProjectStorms
             {
                 //volumeModifier += 0.1f;
                 //pitchModifier += 0.1f;
-                m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.4f, m_lerpSoundSpeed);
-                m_pitchModifier = Mathf.Lerp(m_pitchModifier, 1.5f, m_lerpSoundSpeed);
+                m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.4f, m_lerpSoundSpeed * Time.deltaTime);
+                m_pitchModifier = Mathf.Lerp(m_pitchModifier, 1.5f, m_lerpSoundSpeed * Time.deltaTime);
             }
-            else
-                if (a_throttle < 0)
-                {
-                    //volumeModifier += 0.1f;
-                    //pitchModifier -= 0.1f;
-                    m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.4f, m_lerpSoundSpeed);
-                    m_pitchModifier = Mathf.Lerp(m_pitchModifier, 0.5f, m_lerpSoundSpeed);
-                }
-                else
-                    if (a_throttle == 0)
-                    {
-                        //volumeModifier -= 0.1f;
-                        m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.2f, m_lerpSoundSpeed);
-                        m_pitchModifier = Mathf.Lerp(m_pitchModifier, 1.0f, m_lerpSoundSpeed);
-                    }
+            else if (a_throttle < 0)
+            {
+                //volumeModifier += 0.1f;
+                //pitchModifier -= 0.1f;
+                m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.4f, m_lerpSoundSpeed * Time.deltaTime);
+                m_pitchModifier = Mathf.Lerp(m_pitchModifier, 0.5f, m_lerpSoundSpeed * Time.deltaTime);
+            }
+            else if (a_throttle == 0)
+            {
+                //volumeModifier -= 0.1f;
+                m_volumeModifier = Mathf.Lerp(m_volumeModifier, 0.2f, m_lerpSoundSpeed * Time.deltaTime);
+                m_pitchModifier = Mathf.Lerp(m_pitchModifier, 1.0f, m_lerpSoundSpeed * Time.deltaTime);
+            }
         }
     } 
 }
