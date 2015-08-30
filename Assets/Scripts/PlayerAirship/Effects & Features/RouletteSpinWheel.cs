@@ -53,6 +53,11 @@ namespace ProjectStorms
         /// </summary>
         private Quaternion targetFinalRotation = Quaternion.identity;
 
+        /// <summary>
+        /// How fast to increment the roulette wheel's angular drag per second.
+        /// </summary>
+        private float m_rouletteSlowRate = 25.0f;
+
         // Cached variables
         private Rigidbody m_myRigid;
         private Transform m_trans;
@@ -115,12 +120,12 @@ namespace ProjectStorms
             // Slow the roulette wheel by increasing the rigidbody drag
             if (inputStop)
             {
-                m_myRigid.angularDrag = Mathf.Lerp(m_myRigid.angularDrag, 1, 0.25f);
+                m_myRigid.angularDrag = Mathf.Lerp(m_myRigid.angularDrag, 1, m_rouletteSlowRate * Time.deltaTime);
 
                 pullHandle = true;
             }
 
-            //Handle effect
+            // Handle effect
             if (pullHandle)
             {
                 rotateAmount = Mathf.Lerp(rotateAmount, -90, Time.deltaTime * 5.0f);
