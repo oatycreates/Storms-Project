@@ -41,11 +41,6 @@ namespace ProjectStorms
         public float shotCooldown = 2.51f;
 
         /// <summary>
-        /// How many cannonballs to pool per cannon.
-        /// </summary>
-        public int pooledAmount = 2;
-
-        /// <summary>
         /// Which cannonball prefab to spawn.
         /// </summary>
         public GameObject cannonBallPrefab;
@@ -59,6 +54,11 @@ namespace ProjectStorms
         /// Handle to the player firing reticle.
         /// </summary>
         public GameObject lookAtTarget;
+
+        /// <summary>
+        /// How many cannonballs to pool per cannon. Equal to shotLifetime/fireCooldown.
+        /// </summary>
+        private int m_pooledAmount = 2;
 
         /// <summary>
         /// Time before the cannon can fire again.
@@ -88,19 +88,34 @@ namespace ProjectStorms
 
             m_cannonBalls = new List<GameObject>();
 
-            for (int i = 0; i < pooledAmount; i++)
+            // Create the first cannonball so that we may read its lifetime
+            GameObject firstBall = CreateCannonball();
+            
+            // Calculate pooling amount
+            CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
+            m_pooledAmount = Mathf.CeilToInt(ballScript.cannonBallLifetime / shotCooldown);
+
+            // Spawn the other cannonballs
+            for (int i = 1; i < m_pooledAmount; i++)
             {
-                // Pooled object details
-                GameObject singleBall = Instantiate(cannonBallPrefab, m_trans.position, Quaternion.identity) as GameObject;
-
-                // Tag the cannonball
-                singleBall.tag = parentAirship.tag;
-
-                singleBall.SetActive(false);
-
-                // Add the singleBall to the list
-                m_cannonBalls.Add(singleBall);
+                CreateCannonball();
             }
+        }
+
+        private GameObject CreateCannonball()
+        {
+            // Pooled object details
+            GameObject singleBall = Instantiate(cannonBallPrefab, m_trans.position, Quaternion.identity) as GameObject;
+
+            // Tag the cannonball
+            singleBall.tag = parentAirship.tag;
+
+            singleBall.SetActive(false);
+
+            // Add the singleBall to the list
+            m_cannonBalls.Add(singleBall);
+
+            return singleBall;
         }
 
         void Start()
