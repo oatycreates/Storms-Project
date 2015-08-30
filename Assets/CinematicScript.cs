@@ -22,7 +22,15 @@ namespace ProjectStorms
         public GameObject upDownTarget;
         private float upDown;
 
-        // Need to make it work in local space
+        // Cached variables
+        private Transform m_trans = null;
+        private Transform m_tarTrans = null;
+
+        void Awake()
+        {
+            m_trans = transform;
+            m_tarTrans = upDownTarget.transform;
+        }
 
         void Start()
         {
@@ -31,11 +39,12 @@ namespace ProjectStorms
 
         void Update()
         {
-            gameObject.transform.Rotate(Vector3.up * twirlSpeed * Time.deltaTime);
+            // Rotate in local space
+            m_trans.Rotate(Vector3.up, twirlSpeed * Time.deltaTime, Space.Self);
 
             upDown = Mathf.PingPong(Time.time, -3);
 
-            upDownTarget.transform.position = new Vector3(upDownTarget.transform.position.x, upDown, upDownTarget.transform.position.z);
+            m_tarTrans.position = new Vector3(m_tarTrans.position.x, upDown, m_tarTrans.position.z);
         }
     } 
 }
