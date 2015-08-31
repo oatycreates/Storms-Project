@@ -62,7 +62,7 @@ namespace ProjectStorms
         
 		
 		//Animation references
-		private Animator prisonAnim = null;
+		public Animator prisonAnim;
 		private bool open = false;
 		
 		//LineRenderer reference;
@@ -71,9 +71,6 @@ namespace ProjectStorms
         void Awake()
         {
             m_mySource = GetComponent<AudioSource>();
-            
-            //Get the animator
-            prisonAnim = gameObject.transform.root.gameObject.GetComponent<Animator>();
  
  			LaserOff();
         }

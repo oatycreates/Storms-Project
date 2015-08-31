@@ -17,16 +17,7 @@ namespace ProjectStorms
     /// </summary>
     public class HealPointBehaviour : MonoBehaviour
     {
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
-        }
-
+      
         void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player1_") || other.CompareTag("Player2_") || other.CompareTag("Player3_") || other.CompareTag("Player4_"))
