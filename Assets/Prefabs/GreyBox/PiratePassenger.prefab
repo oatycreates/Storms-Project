@@ -353,6 +353,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 83558a16189bfa445b03c4ccda2af30c, type: 3}
   timeFallingBeforeScream: .800000012
   readyToScream: 0
+  randomChanceOfScream: 50
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -428,6 +429,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Interpolate
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: randomChanceOfScream
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

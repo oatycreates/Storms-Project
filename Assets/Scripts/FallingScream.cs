@@ -25,6 +25,9 @@ namespace ProjectStorms
         [HideInInspector]
         public bool readyToScream = false;
         //private bool m_playing = false;
+        
+        //Create a random chance of scream
+        public int randomChanceOfScream = 0;
 
         void Awake()
         {
@@ -35,7 +38,9 @@ namespace ProjectStorms
         {
             //SERIOUS!!! THIS CAN'T BE TOO LOUD, OTHERWISE IT'LL LEAVE PEOPLE DEAF
             m_mySource.volume = 0.05f;
-            //RandomSound();
+            
+			//RandomSound();
+			randomChanceOfScream = Random.Range(0, 4);
         }
 
         void Update()
@@ -51,14 +56,11 @@ namespace ProjectStorms
                 // Check if audio source is already playing
                 if (!m_mySource.isPlaying)
                 {
-                    /*
-                    if (playing = false)
+                	//Only play if you're lucky
+                    if (randomChanceOfScream < 1)
                     {
-                        RandomSound();
-                        playing = true;
+                    	RandomSound();
                     }
-                    */
-                    RandomSound();
                 }
             }
         }
@@ -80,6 +82,9 @@ namespace ProjectStorms
             if (a_other.gameObject.tag != "Passengers")
             {
                 readyToScream = true;
+                
+				//RandomSound();
+				randomChanceOfScream = Random.Range(0, 4);
             }
         }
 

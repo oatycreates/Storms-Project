@@ -30,7 +30,8 @@ namespace ProjectStorms
     {
         public EFortressStates fortressState;
 
-        public float timeBetweenPrisonerDrops = 160.0f;
+		public float timeBeforeFirstDrop = 6.0f;
+        public float timeBetweenPrisonerDrops = 12.0f;
         private float m_timer;
 
         public int numberOfTimesKlaxonShouldSound = 3;
@@ -81,7 +82,8 @@ namespace ProjectStorms
             sternLight.intensity = 0.0f;
             hullLight.intensity = 0.0f;
 
-            m_timer = timeBetweenPrisonerDrops;
+            //m_timer = timeBetweenPrisonerDrops;
+            m_timer = timeBeforeFirstDrop;
             m_rememberStartValue = numberOfTimesKlaxonShouldSound;
             m_rememberPassengerTimerValue = timePassengerSpawnFor;
 

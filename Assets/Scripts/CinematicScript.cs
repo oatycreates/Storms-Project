@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum EShotLength{LongShot, MidShot, CloseUp}
 
@@ -37,8 +38,18 @@ namespace ProjectStorms
        	//Let the camera focus on something, probably the trapdoor area on the prison fortress?
        	public GameObject optionalLookTarget;
        	
+       	//Use the transition timer if no audio is present.
        	public float transitionTimer = 1.0f;
        	private float startTimerValue;
+       	
+       	//Text fade
+       	public Text startText;
+      	private float textAlpha = 0;
+      	
+      	//Audio Source
+      	private AudioSource mySource;
+      	private float pitch;
+       	
 
         void Awake()
         {
@@ -48,12 +59,21 @@ namespace ProjectStorms
 			
 			//Take a reference value.
 			startTimerValue = transitionTimer;
+			
+			mySource = gameObject.GetComponent<AudioSource>();
+			
+			//Start the sound immediately
+			mySource.Play();
+			pitch = 1f;
         }
 
         void Update()
         {
         	//Count down timer
-        	transitionTimer -= Time.deltaTime;
+        	if (mySource.clip == null)
+        	{
+        		transitionTimer -= Time.deltaTime;
+        	}
         	
         	if (transitionTimer < 0)
         	{
@@ -65,6 +85,7 @@ namespace ProjectStorms
 				//Reset the timer
 				transitionTimer = startTimerValue;
         	}
+        	
         
             // Rotate in local space
            	//m_trans.Rotate(Vector3.up, twirlSpeed * Time.deltaTime, Space.Self);	//NOOO!! Rotate in World space   	
@@ -74,6 +95,14 @@ namespace ProjectStorms
             {
             	cinematicCam.transform.localPosition = new Vector3(0, 0, -(Mathf.Abs (longDistance)));
             	twirlSpeed = Mathf.Abs(twirlSpeed);	//positive direction
+            	
+            	//Next 
+            	if (!mySource.isPlaying)
+            	{
+            		shot = EShotLength.MidShot;
+            		mySource.Play ();
+            		pitch = 1.15f;
+            	}
             }
             else
             if (shot == EShotLength.MidShot)
@@ -82,12 +111,23 @@ namespace ProjectStorms
 				
 				//twirlSpeed = -Mathf.Abs(twirlSpeed);	//netative direction ?? Maybe a good effect
 				twirlSpeed = Mathf.Abs(twirlSpeed);	//positive direction
+				
+				//Next
+				if (!mySource.isPlaying)
+				{
+					shot = EShotLength.CloseUp;
+					mySource.Play ();
+					pitch = 1.25f;
+				}
             }
             else
             if (shot == EShotLength.CloseUp)
             {
 				cinematicCam.transform.localPosition = new Vector3(0, 0, -(Mathf.Abs(closeDistance)));
 				twirlSpeed = Mathf.Abs(twirlSpeed);	//positive direction
+				
+				//Fade in text
+				textAlpha = Mathf.Lerp(textAlpha, 1, Time.deltaTime * 0.3f);
             }
             
             //Optional look target
@@ -100,6 +140,20 @@ namespace ProjectStorms
             {
             	cinematicCam.transform.LookAt(gameObject.transform.position);
             }
+            
+			//text - fade up
+			if (startText != null)
+			{
+				Color myAlpha = startText.color;
+				
+				myAlpha.a = textAlpha;
+				
+				startText.color = myAlpha;	
+			}
+			
+			//set audio pitch
+			mySource.pitch = pitch;
+			
             
             //Hacks
             if (Application.isEditor)

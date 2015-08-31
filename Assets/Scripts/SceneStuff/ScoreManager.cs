@@ -86,7 +86,8 @@ namespace ProjectStorms
         {
             string winner = a_playerNumber.ToString();
 
-            winText.text = ("Player " + winner + " Wins!");
+            //winText.text = ("Player " + winner + " Wins!");
+            winText.text = ("Player " +winner + "\nWinnARRRRR!");
             winText.color = m_winnerColour;
 
             Debug.Log("Player " + winner + " Wins!");
