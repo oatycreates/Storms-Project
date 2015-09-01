@@ -75,6 +75,11 @@ namespace ProjectStorms
         /// </summary>
         private Vector3 m_relativeForward;
 
+        /// <summary>
+        /// Cannonball holder object.
+        /// </summary>
+        static private GameObject ms_ballHolder = null;
+
         // Cached variables
         private Rigidbody m_shipRB;
         private Transform m_trans = null;
@@ -85,6 +90,18 @@ namespace ProjectStorms
             m_trans = transform;
             m_tarTrans = lookAtTarget.transform;
             m_shipRB = parentAirship.GetComponent<Rigidbody>();
+
+            // Find the cannonball holder object
+            if (ms_ballHolder == null)
+            {
+                ms_ballHolder = GameObject.FindGameObjectWithTag("BallHolder");
+                if (ms_ballHolder == null)
+                {
+                    ms_ballHolder = new GameObject();
+                    ms_ballHolder.name = "BallHolder";
+                    ms_ballHolder.tag = "BallHolder";
+                }
+            }
 
             m_cannonBalls = new List<GameObject>();
 
@@ -109,6 +126,9 @@ namespace ProjectStorms
 
             // Tag the cannonball
             singleBall.tag = parentAirship.tag;
+
+            // Store it under the holder object
+            singleBall.transform.parent = ms_ballHolder.transform;
 
             singleBall.SetActive(false);
 
