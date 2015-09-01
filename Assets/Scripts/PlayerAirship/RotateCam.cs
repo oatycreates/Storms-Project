@@ -115,7 +115,7 @@ namespace ProjectStorms
             totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
         }
 
-        public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceUp, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
+        public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceDown, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
         {
             // Reset on click
             if (a_leftClick || a_rightClick)
@@ -176,7 +176,6 @@ namespace ProjectStorms
                 m_tiltAroundY *= -1;
             }
 
-
             Quaternion target = Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
 
             EPlayerState currState = m_referenceStateManager.GetPlayerState();
@@ -201,7 +200,7 @@ namespace ProjectStorms
                 m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
 
                 // Allow CannonFire
-                if (a_faceUp)
+                if (a_faceDown)
                 {
                     Cannons(ECannonPos.Port);
                 }
@@ -220,7 +219,7 @@ namespace ProjectStorms
                 m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
 
                 // Allow CannonFire
-                if (a_faceUp)
+                if (a_faceDown)
                 {
                     Cannons(ECannonPos.Starboard);
                 }
@@ -249,7 +248,7 @@ namespace ProjectStorms
                 m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);
 
                 // Allow CannonFire
-                if (a_faceUp)
+                if (a_faceDown)
                 {
                     Cannons(ECannonPos.Forward);
                 }
