@@ -79,6 +79,7 @@ namespace ProjectStorms
 
             passengers = new List<GameObject>();
 
+            Transform holderTrans = ms_prisonerHolder.transform;
             for (int i = 0; i < pooledAmount; i++)
             {
                 //GameObject singlePassenger = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -98,7 +99,7 @@ namespace ProjectStorms
                             singlePassenger.AddComponent<FallingScream>();
                 */
                 // Hide under a holder prefab to keep the scene tidy
-                singlePassenger.transform.parent = ms_prisonerHolder.transform;
+                singlePassenger.transform.parent = holderTrans;
 
                 singlePassenger.GetComponent<Rigidbody>().useGravity = true;
                 singlePassenger.SetActive(false);

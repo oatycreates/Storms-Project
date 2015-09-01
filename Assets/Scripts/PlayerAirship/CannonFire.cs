@@ -106,7 +106,8 @@ namespace ProjectStorms
             m_cannonBalls = new List<GameObject>();
 
             // Create the first cannonball so that we may read its lifetime
-            GameObject firstBall = CreateCannonball();
+            Transform holderTrans = ms_ballHolder.transform;
+            GameObject firstBall = CreateCannonball(holderTrans);
             
             // Calculate pooling amount
             CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
@@ -115,11 +116,11 @@ namespace ProjectStorms
             // Spawn the other cannonballs
             for (int i = 1; i < m_pooledAmount; i++)
             {
-                CreateCannonball();
+                CreateCannonball(holderTrans);
             }
         }
 
-        private GameObject CreateCannonball()
+        private GameObject CreateCannonball(Transform a_holderTrans)
         {
             // Pooled object details
             GameObject singleBall = Instantiate(cannonBallPrefab, m_trans.position, Quaternion.identity) as GameObject;
@@ -128,7 +129,7 @@ namespace ProjectStorms
             singleBall.tag = parentAirship.tag;
 
             // Store it under the holder object
-            singleBall.transform.parent = ms_ballHolder.transform;
+            singleBall.transform.parent = a_holderTrans;
 
             singleBall.SetActive(false);
 
