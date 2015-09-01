@@ -165,7 +165,7 @@ namespace ProjectStorms
             GameObject goBall = null;
             TrailRenderer trailBall = null;
 
-            if (m_currShotCooldown <= 0)
+            if (this.isActiveAndEnabled && m_currShotCooldown <= 0)
             {
                 // Put the cannon on cool-down
                 m_currShotCooldown = shotCooldown;

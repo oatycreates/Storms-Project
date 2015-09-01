@@ -229,63 +229,66 @@ namespace ProjectStorms
             bool a_faceLeft,    // X - Fire broadside left
             bool a_faceRight)   // B - Fire broadside right
         {
-            // Use this to convert buttonpresses to axis input;
-            float rollFloat = 0;
-
-            if (a_faceLeft)
+            if (this.isActiveAndEnabled)
             {
-                rollFloat = -1;
-            }
-            else if (a_faceRight)
-            {
-                rollFloat = 1;
-            }
+                // Use this to convert buttonpresses to axis input;
+                float rollFloat = 0;
 
-            //roll = 0.25f * a_Horizontal + a_camHorizontal;
-            roll = 0.25f * a_Horizontal + rollFloat;
-            pitch = a_Vertical;
-            throttle = a_triggers;
-
-            // Reverse yaw if play is moving backwards
-            if (a_triggers < 0)
-            {
-                // Ensure player is actually moving backwards
-                if (Vector3.Dot(m_myRigid.velocity, m_trans.forward) < 0)
+                if (a_faceLeft)
                 {
-                    m_isReversing = true;
-                    yaw = a_Horizontal;
+                    rollFloat = -1;
                 }
+                else if (a_faceRight)
+                {
+                    rollFloat = 1;
+                }
+
+                //roll = 0.25f * a_Horizontal + a_camHorizontal;
+                roll = 0.25f * a_Horizontal + rollFloat;
+                pitch = a_Vertical;
+                throttle = a_triggers;
+
+                // Reverse yaw if play is moving backwards
+                if (a_triggers < 0)
+                {
+                    // Ensure player is actually moving backwards
+                    if (Vector3.Dot(m_myRigid.velocity, m_trans.forward) < 0)
+                    {
+                        m_isReversing = true;
+                        yaw = a_Horizontal;
+                    }
+                }
+                else
+                {
+                    // Player is moving forwards, or reverse trigger not held
+                    yaw = a_Horizontal;
+                    m_isReversing = false;
+                }
+
+                // Check buttonPresses
+                openHatch = a_faceUp;//(a_faceUp || a_faceDown);
+
+                // Keep the inputs in reasonable ranges, see the standard asset examples for more
+                ClampInputs();
+
+                /*
+                // Open/close the hatches
+                m_anim.SetBool(m_animHatchOpen, a_faceUp);
+                m_anim.SetBool(m_animTrapdoorOpen, a_faceUp);
+                */
+
+                // Spin the propeller
+                float animThrottle = throttle * 2.0f; // [-1, 1] to [-2, 2], 50% now maps to 100% anim throttle
+                float animThrottleSign = animThrottle >= 0 ? 1 : -1;
+                animThrottle = Mathf.Abs(animThrottle);
+                if (animThrottle > 1)
+                {
+                    // Scale up to the animation throttle multiplier
+                    float boundedThrottle = animThrottle * 0.5f + 0.5f;
+                    animThrottle = boundedThrottle * (animThrottleMult - 1) + 1;
+                }
+                m_anim.SetFloat(m_animPropellerMult, animThrottleSign * animThrottle);
             }
-            else
-            {
-                // Player is moving forwards, or reverse trigger not held
-                yaw = a_Horizontal;
-                m_isReversing = false;
-            }
-
-            // Check buttonPresses
-            openHatch = a_faceUp;//(a_faceUp || a_faceDown);
-
-            // Keep the inputs in reasonable ranges, see the standard asset examples for more
-            ClampInputs();
-
-            /*
-            // Open/close the hatches
-            m_anim.SetBool(m_animHatchOpen, a_faceUp);
-            m_anim.SetBool(m_animTrapdoorOpen, a_faceUp);
-            */
-
-            // Spin the propeller
-            float animThrottle = throttle * 2.0f; // [-1, 1] to [-2, 2], 50% now maps to 100% anim throttle
-            float animThrottleSign = animThrottle >= 0 ? 1 : -1;
-            animThrottle = Mathf.Abs(animThrottle);
-            if (animThrottle > 1)
-            {
-                // Scale up to the animation throttle multiplier
-                float boundedThrottle = animThrottle * 0.5f + 0.5f;
-                animThrottle = boundedThrottle * (animThrottleMult - 1) + 1;
-            }
-            m_anim.SetFloat(m_animPropellerMult, animThrottleSign * animThrottle);
         }
 
         void FixedUpdate()

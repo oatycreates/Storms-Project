@@ -112,8 +112,11 @@ namespace ProjectStorms
 
         public void PlayerInputs(bool a_leftBumper, bool a_rightBumper)
         {
-            m_leftTriggerDown = a_leftBumper;
-            m_rightTriggerDown = a_rightBumper;
+            if (this.isActiveAndEnabled)
+            {
+                m_leftTriggerDown = a_leftBumper;
+                m_rightTriggerDown = a_rightBumper;
+            }
         }
     } 
 }

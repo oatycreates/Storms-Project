@@ -64,14 +64,17 @@ namespace ProjectStorms
 
         public void PlayerInput(bool a_stopWheel, bool a_SpinFaster)
         {
-            // Pass these values directly into the spin-wheel script
-            if (spinWheel != null)
+            if (this.isActiveAndEnabled)
             {
-                spinWheel.ChangeSpeed(a_stopWheel, a_SpinFaster);
-            }
-            else
-            {
-                Debug.LogWarning("No Reference to the Wooden Spin Wheel");
+                // Pass these values directly into the spin-wheel script
+                if (spinWheel != null)
+                {
+                    spinWheel.ChangeSpeed(a_stopWheel, a_SpinFaster);
+                }
+                else
+                {
+                    Debug.LogWarning("No Reference to the Wooden Spin Wheel");
+                }
             }
         }
 

@@ -117,146 +117,149 @@ namespace ProjectStorms
 
         public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceDown, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
         {
-            // Reset on click
-            if (a_leftClick || a_rightClick)
+            if (this.isActiveAndEnabled)
             {
-                ResetCamRotation(true);
-            }
-
-            // Reset on accelerate only a few seconds after the last input
-            m_lastCamLookTime -= Time.deltaTime;
-            if (a_triggerAxis > 0 && m_lastCamLookTime < 0)
-            {
-                // Check for direct cam input first
-                ResetCamRotation(false);
-            }
-
-            // Lock up/down
-            if (a_camVertical > 0)
-            {
-                totalVert -= 0.01f * camTurnMultiplier;
-            }
-
-            if (a_camVertical < 0)
-            {
-                totalVert += 0.01f * camTurnMultiplier;
-            }
-
-            // Lock left/right
-            if (a_camHorizontal > 0)
-            {
-                totalHori += 0.01f * camTurnMultiplier;
-            }
-
-            if (a_camHorizontal < 0)
-            {
-                totalHori -= 0.01f * camTurnMultiplier;
-            }
-
-            // Record last camera movement time for when to reset the looking
-            if (!Mathf.Approximately(a_camHorizontal, 0) || !Mathf.Approximately(a_camVertical, 0))
-            {
-                m_lastCamLookTime = movingCamResetTime;
-            }
-
-            m_tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
-            m_tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
-
-            //tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
-            //tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
-
-            if (invertUpDown)
-            {
-                m_tiltAroundX *= -1;
-            }
-
-            if (invertLeftRight)
-            {
-
-                m_tiltAroundY *= -1;
-            }
-
-            Quaternion target = Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
-
-            EPlayerState currState = m_referenceStateManager.GetPlayerState();
-            if (currState == EPlayerState.Control || currState == EPlayerState.Suicide)
-            {
-                camRotTrans.localRotation = Quaternion.Slerp(camRotTrans.localRotation, target, Time.deltaTime * smooth);
-            }
-
-            //Move lookTarget around.
-            float internalCamYRotation = camRotTrans.localEulerAngles.y;
-            //Debug.Log(internalCamYRotation);
-
-
-            if (internalCamYRotation <= 315 && internalCamYRotation > 225)
-            {
-                //print ("Left");
-                //Move the target
-                yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
-
-                //Move the cam
-                m_xPos = Mathf.Lerp(m_xPos, camPositionFactor, Time.deltaTime * smooth / 2);
-                m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
-
-                // Allow CannonFire
-                if (a_faceDown)
+                // Reset on click
+                if (a_leftClick || a_rightClick)
                 {
-                    Cannons(ECannonPos.Port);
+                    ResetCamRotation(true);
                 }
 
-            }
-            else if (internalCamYRotation <= 135 && internalCamYRotation > 45)
-            {
-                //print ("Right");
-
-                // Move the target
-                yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
-
-
-                // Move the cam
-                m_xPos = Mathf.Lerp(m_xPos, -camPositionFactor, Time.deltaTime * smooth / 2);
-                m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
-
-                // Allow CannonFire
-                if (a_faceDown)
+                // Reset on accelerate only a few seconds after the last input
+                m_lastCamLookTime -= Time.deltaTime;
+                if (a_triggerAxis > 0 && m_lastCamLookTime < 0)
                 {
-                    Cannons(ECannonPos.Starboard);
+                    // Check for direct cam input first
+                    ResetCamRotation(false);
                 }
 
-            }
-            else if (internalCamYRotation <= 225 && internalCamYRotation > 135)
-            {
-                //print ("Back");
-                // Move the target
-                yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth / 2);
-
-
-                // Move the cam
-                m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth / 2);
-                m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);
-            }
-            else
-            {
-                //print ("Forward");
-                // Move the target
-                yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth / 2);
-
-
-                // Move the cam
-                m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth / 2);
-                m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);
-
-                // Allow CannonFire
-                if (a_faceDown)
+                // Lock up/down
+                if (a_camVertical > 0)
                 {
-                    Cannons(ECannonPos.Forward);
+                    totalVert -= 0.01f * camTurnMultiplier;
                 }
 
-            }
+                if (a_camVertical < 0)
+                {
+                    totalVert += 0.01f * camTurnMultiplier;
+                }
 
-            lookTarTrans.localPosition = new Vector3(lookTarTrans.localPosition.x, yPos, lookTarTrans.localPosition.z);
-            camProxyTrans.localPosition = new Vector3(m_xPos, camProxyTrans.localPosition.y, -m_zPos);
+                // Lock left/right
+                if (a_camHorizontal > 0)
+                {
+                    totalHori += 0.01f * camTurnMultiplier;
+                }
+
+                if (a_camHorizontal < 0)
+                {
+                    totalHori -= 0.01f * camTurnMultiplier;
+                }
+
+                // Record last camera movement time for when to reset the looking
+                if (!Mathf.Approximately(a_camHorizontal, 0) || !Mathf.Approximately(a_camVertical, 0))
+                {
+                    m_lastCamLookTime = movingCamResetTime;
+                }
+
+                m_tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
+                m_tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
+
+                //tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
+                //tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
+
+                if (invertUpDown)
+                {
+                    m_tiltAroundX *= -1;
+                }
+
+                if (invertLeftRight)
+                {
+
+                    m_tiltAroundY *= -1;
+                }
+
+                Quaternion target = Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
+
+                EPlayerState currState = m_referenceStateManager.GetPlayerState();
+                if (currState == EPlayerState.Control || currState == EPlayerState.Suicide)
+                {
+                    camRotTrans.localRotation = Quaternion.Slerp(camRotTrans.localRotation, target, Time.deltaTime * smooth);
+                }
+
+                //Move lookTarget around.
+                float internalCamYRotation = camRotTrans.localEulerAngles.y;
+                //Debug.Log(internalCamYRotation);
+
+
+                if (internalCamYRotation <= 315 && internalCamYRotation > 225)
+                {
+                    //print ("Left");
+                    //Move the target
+                    yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
+
+                    //Move the cam
+                    m_xPos = Mathf.Lerp(m_xPos, camPositionFactor, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
+
+                    // Allow CannonFire
+                    if (a_faceDown)
+                    {
+                        Cannons(ECannonPos.Port);
+                    }
+
+                }
+                else if (internalCamYRotation <= 135 && internalCamYRotation > 45)
+                {
+                    //print ("Right");
+
+                    // Move the target
+                    yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
+
+
+                    // Move the cam
+                    m_xPos = Mathf.Lerp(m_xPos, -camPositionFactor, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
+
+                    // Allow CannonFire
+                    if (a_faceDown)
+                    {
+                        Cannons(ECannonPos.Starboard);
+                    }
+
+                }
+                else if (internalCamYRotation <= 225 && internalCamYRotation > 135)
+                {
+                    //print ("Back");
+                    // Move the target
+                    yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth / 2);
+
+
+                    // Move the cam
+                    m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);
+                }
+                else
+                {
+                    //print ("Forward");
+                    // Move the target
+                    yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth / 2);
+
+
+                    // Move the cam
+                    m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);
+
+                    // Allow CannonFire
+                    if (a_faceDown)
+                    {
+                        Cannons(ECannonPos.Forward);
+                    }
+
+                }
+
+                lookTarTrans.localPosition = new Vector3(lookTarTrans.localPosition.x, yPos, lookTarTrans.localPosition.z);
+                camProxyTrans.localPosition = new Vector3(m_xPos, camProxyTrans.localPosition.y, -m_zPos);
+            }
         }
 
         void Cannons(ECannonPos a_angle)

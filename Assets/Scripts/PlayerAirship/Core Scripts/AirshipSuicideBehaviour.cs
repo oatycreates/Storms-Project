@@ -99,11 +99,14 @@ namespace ProjectStorms
             float a_Vertical,
             float a_Horizontal)
         {
-            pitch = a_Vertical;
-            yaw = a_Horizontal;
+            if (this.isActiveAndEnabled)
+            {
+                pitch = a_Vertical;
+                yaw = a_Horizontal;
 
-            // Keep the inputs in reasonable ranges, see the standard asset examples for more
-            ClampInputs();
+                // Keep the inputs in reasonable ranges, see the standard asset examples for more
+                ClampInputs();
+            }
         }
 
         /// <summary>
