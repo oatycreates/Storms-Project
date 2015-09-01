@@ -89,5 +89,35 @@ namespace ProjectStorms
             m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, clickLeft, clickRight);
             m_shuntingControl.PlayerInputs(bumperLeft, bumperRight);
         }
+
+        /// <summary>
+        /// Checks whether any input has been pressed for the input player.
+        /// </summary>
+        /// <param name="a_playerTag">Input player's tag.</param>
+        /// <returns>True if any button was pressed, false if not.</returns>
+        public static bool GetAnyButtonDown(string a_playerTag)
+        {
+            // Check if any button is down
+            if (Input.GetButton(a_playerTag + "Start") ||
+                Input.GetButton(a_playerTag + "Select") ||
+                Input.GetButton(a_playerTag + "FaceDown") ||
+                Input.GetButton(a_playerTag + "FaceUp") ||
+                Input.GetButton(a_playerTag + "FaceLeft") ||
+                Input.GetButton(a_playerTag + "FaceRight") ||
+                Input.GetButton(a_playerTag + "BumperLeft") ||
+                Input.GetButton(a_playerTag + "BumperRight") ||
+                Input.GetButton(a_playerTag + "ClickLeft") ||
+                Input.GetButton(a_playerTag + "ClickRight") ||
+                Mathf.Abs(Input.GetAxisRaw(a_playerTag + "Triggers")) >= 0.25f ||
+                Mathf.Abs(Input.GetAxisRaw(a_playerTag + "Horizontal")) >= 0.25f ||
+                Mathf.Abs(Input.GetAxisRaw(a_playerTag + "Vertical")) >= 0.25f ||
+                Mathf.Abs(Input.GetAxisRaw(a_playerTag + "CamHorizontal")) >= 0.25f ||
+                Mathf.Abs(Input.GetAxisRaw(a_playerTag + "CamVertical")) >= 0.25f)
+            {
+                return true;
+            }
+
+            return false;
+        }
     } 
 }

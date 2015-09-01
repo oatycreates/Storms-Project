@@ -220,29 +220,7 @@ namespace ProjectStorms
 
         private bool GetAnyButtonDownMyPlayer()
         {
-            string cntPrefix = gameObject.tag;
-
-            // Check if any button is down
-            if (Input.GetButton(cntPrefix + "Start") ||
-                Input.GetButton(cntPrefix + "Select") ||
-                Input.GetButton(cntPrefix + "FaceDown") ||
-                Input.GetButton(cntPrefix + "FaceUp") ||
-                Input.GetButton(cntPrefix + "FaceLeft") ||
-                Input.GetButton(cntPrefix + "FaceRight") ||
-                Input.GetButton(cntPrefix + "BumperLeft") ||
-                Input.GetButton(cntPrefix + "BumperRight") ||
-                Input.GetButton(cntPrefix + "ClickLeft") ||
-                Input.GetButton(cntPrefix + "ClickRight") ||
-                Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Triggers")) >= 0.25f ||
-                Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Horizontal")) >= 0.25f ||
-                Mathf.Abs(Input.GetAxisRaw(cntPrefix + "Vertical")) >= 0.25f ||
-                Mathf.Abs(Input.GetAxisRaw(cntPrefix + "CamHorizontal")) >= 0.25f ||
-                Mathf.Abs(Input.GetAxisRaw(cntPrefix + "CamVertical")) >= 0.25f)
-            {
-                return true;
-            }
-
-            return false;
+            return InputManager.GetAnyButtonDown(gameObject.tag);
         }
 
         private void PregameUpdate()
