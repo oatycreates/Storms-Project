@@ -48,8 +48,12 @@ namespace ProjectStorms
         private Ray m_myRay;
         private RaycastHit m_hit;
 
+        /// <summary>
+        /// For putting the prisoners under a common holder transform to keep the scene tidy.
+        /// </summary>
+        private static GameObject ms_prisonerHolder = null;
+
         // Cached variables
-        private GameObject m_prisonerHolder = null;
         private Transform m_trans = null;
         
 
@@ -60,12 +64,17 @@ namespace ProjectStorms
 
         void Start()
         {
-            m_prisonerHolder = GameObject.FindGameObjectWithTag("PrisonerHolder");
-            if (m_prisonerHolder == null)
+
+            // Find the prisoner holder object
+            if (ms_prisonerHolder == null)
             {
-                m_prisonerHolder = new GameObject();
-                m_prisonerHolder.name = "PrisonerHolder";
-                m_prisonerHolder.tag = "PrisonerHolder";
+                ms_prisonerHolder = GameObject.FindGameObjectWithTag("PrisonerHolder");
+                if (ms_prisonerHolder == null)
+                {
+                    ms_prisonerHolder = new GameObject();
+                    ms_prisonerHolder.name = "PrisonerHolder";
+                    ms_prisonerHolder.tag = "PrisonerHolder";
+                }
             }
 
             passengers = new List<GameObject>();
@@ -89,7 +98,7 @@ namespace ProjectStorms
                             singlePassenger.AddComponent<FallingScream>();
                 */
                 // Hide under a holder prefab to keep the scene tidy
-                singlePassenger.transform.parent = m_prisonerHolder.transform;
+                singlePassenger.transform.parent = ms_prisonerHolder.transform;
 
                 singlePassenger.GetComponent<Rigidbody>().useGravity = true;
                 singlePassenger.SetActive(false);
