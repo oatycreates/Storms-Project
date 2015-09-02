@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using XInputDotNetPure;
 
 namespace ProjectStorms
@@ -18,6 +19,56 @@ namespace ProjectStorms
     /// </summary>
     public class InputManager : MonoBehaviour
     {
+        /// <summary>
+        /// A collection object to contain a particular piece of rumble information to be blended.
+        /// </summary>
+        [System.Serializable]
+        public class ControllerRumbleInfo
+        {
+            /// <summary>
+            /// Index of the player to apply this rumble to.
+            /// </summary>
+            public int playerIndex = 0;
+            /// <summary>
+            /// Left motor roll percentage.
+            /// </summary>
+            public float leftMotor = 0.0f;
+            /// <summary>
+            /// Right motor roll percentage.
+            /// </summary>
+            public float rightMotor = 0.0f;
+            /// <summary>
+            /// How long the rumble goes for.
+            /// </summary>
+            public float rumbleDurr = 0.0f;
+            /// <summary>
+            /// Timestamp at the start of the rumble.
+            /// </summary>
+            public float rumbleStart = 0.0f;
+
+            /// <summary>
+            /// Default constructor. Additional rumbles for a player are additive.
+            /// </summary>
+            /// <param name="a_playerTag">Index of the player to apply this rumble to. 0 is player 1.</param>
+            /// <param name="a_motorLeft">Vibration value for the left controller motor.</param>
+            /// <param name="a_motorRight">Vibration value for the right controller motor.</param>
+            /// <param name="a_rumbleDurr">How long to rumble for in seconds.</param>
+            public ControllerRumbleInfo(int a_playerIndex, float a_motorLeft, float a_motorRight, float a_rumbleDurr)
+            {
+                playerIndex = a_playerIndex;
+                leftMotor = a_motorLeft;
+                rightMotor = a_motorRight;
+                rumbleDurr = a_rumbleDurr;
+                rumbleStart = Time.time;
+            }
+
+            public bool IsRumbleExpired()
+            {
+                return Time.time - rumbleStart >= rumbleDurr;
+            }
+        }
+        private static List<ControllerRumbleInfo> ms_currRumbles = new List<ControllerRumbleInfo>();
+
         private AirshipControlBehaviour m_standardControl;
         private AirshipSuicideBehaviour m_fireshipControl;
         private RouletteBehaviour m_rouletteControl;
@@ -53,11 +104,8 @@ namespace ProjectStorms
         /// </summary>
         void Update()
         {
-            // Clear rumble
-            for (int i = 0; i < ms_playerTags.Length; ++i)
-            {
-                GamePad.SetVibration((PlayerIndex)i, 0, 0);
-            }
+            // Apply any stored rumble information
+            ApplyRumble();
 
             #region Axis Input
             // Left Stick Input	- One Stick to Determine Movement
@@ -104,6 +152,45 @@ namespace ProjectStorms
             m_shuntingControl.PlayerInputs(bumperLeft, bumperRight);
         }
 
+        private static void ApplyRumble()
+        {
+            // Expire old rumble infos
+            for (int i = 0; i < ms_currRumbles.Count; )
+            {
+                if (ms_currRumbles[i].IsRumbleExpired())
+                {
+                    // Remove the element at the index
+                    ms_currRumbles.RemoveAt(i);
+                }
+                else
+                {
+                    // Only iterate if an element is not removed.
+                    ++i;
+                }
+            }
+
+            float sumLeft = 0;
+            float sumRight = 0;
+            for (int playerTag = 0; playerTag < ms_playerTags.Length; ++playerTag)
+            {
+                // Sum all rumbles with this tag
+                sumLeft = 0;
+                sumRight = 0;
+                
+                for (int i = 0; i < ms_currRumbles.Count; ++i)
+                {
+                    if (ms_currRumbles[i].playerIndex == playerTag)
+                    {
+                        sumLeft  += ms_currRumbles[i].leftMotor;
+                        sumRight += ms_currRumbles[i].rightMotor;
+                    }
+                }
+
+                // Apply rumble, will clear if sum is zero
+                GamePad.SetVibration((PlayerIndex)playerTag, sumLeft, sumRight);
+            }
+        }
+
         /// <summary>
         /// Checks whether any input has been pressed for the input player.
         /// </summary>
@@ -137,18 +224,19 @@ namespace ProjectStorms
         /// <summary>
         /// Makes the input controller vibrate.
         /// </summary>
-        /// <param name="a_playerIndex">Player tag. E.g. "Player1_"</param>
+        /// <param name="a_playerTag">Player tag. E.g. "Player1_"</param>
         /// <param name="a_motorLeft">Vibration value for the left controller motor.</param>
         /// <param name="a_motorRight">Vibration value for the right controller motor.</param>
-        public static void SetControllerVibrate(string a_playerTag, float a_motorLeft, float a_motorRight)
+        /// <param name="a_rumbleDurr">How long to rumble for in seconds.</param>
+        public static void SetControllerVibrate(string a_playerTag, float a_motorLeft, float a_motorRight, float a_rumbleDurr)
         {
             // Find the player of the input tag
             for (int i = 0; i < ms_playerTags.Length; ++i)
             {
                 if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
                 {
-                    // Apply the vibration
-                    GamePad.SetVibration((PlayerIndex) i, a_motorLeft, a_motorRight);
+                    // Store the vibration for later
+                    ms_currRumbles.Add(new ControllerRumbleInfo(i, a_motorLeft, a_motorRight, a_rumbleDurr));
                     break;
                 }
             }
