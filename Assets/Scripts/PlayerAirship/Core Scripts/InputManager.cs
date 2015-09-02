@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 
 namespace ProjectStorms
 {
@@ -24,6 +25,11 @@ namespace ProjectStorms
         private ShuntingController m_shuntingControl;
 
         // TODO: We might need to add more script references here as we progress
+
+        /// <summary>
+        /// All of the player controller tags in order.
+        /// </summary>
+        private static string[] ms_playerTags = {"Player1_", "Player2_", "Player3_", "Player4_"};
 
         public void Awake()
         {
@@ -118,6 +124,26 @@ namespace ProjectStorms
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Makes the input controller vibrate.
+        /// </summary>
+        /// <param name="a_playerIndex">Player tag. E.g. "Player1_"</param>
+        /// <param name="a_motorLeft">Vibration value for the left controller motor.</param>
+        /// <param name="a_motorRight">Vibration value for the right controller motor.</param>
+        public static void SetControllerVibrate(string a_playerTag, float a_motorLeft, float a_motorRight)
+        {
+            // Find the player of the input tag
+            for (int i = 0; i < ms_playerTags.Length; ++i)
+            {
+                if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
+                {
+                    // Apply the vibration
+                    GamePad.SetVibration((PlayerIndex) i, a_motorLeft, a_motorRight);
+                    break;
+                }
+            }
         }
     } 
 }
