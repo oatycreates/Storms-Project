@@ -176,7 +176,7 @@ namespace ProjectStorms
                     m_lastCamLookTime = movingCamResetTime;
                 }
 
-                m_tiltAroundX = totalVert * verticalTiltAngle * deadZoneFactor;
+                m_tiltAroundX = totalVert * horizontalTiltAngle * deadZoneFactor;
                 m_tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
 
                 //tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
