@@ -49,6 +49,10 @@ namespace ProjectStorms
       	//Audio Source
       	private AudioSource mySource;
       	private float pitch;
+
+		//Delay the trumpet
+		private bool delay = true;
+		private float delayTimer = 1.5f;
        	
 
         void Awake()
@@ -62,13 +66,27 @@ namespace ProjectStorms
 			
 			mySource = gameObject.GetComponent<AudioSource>();
 			
-			//Start the sound immediately
-			mySource.Play();
-			pitch = 1f;
+			//Start the sound immediately?
+			//mySource.Play();
+			//pitch = 1f;
         }
 
         void Update()
         {
+			//How long should the delay last Before the Trumpet Sounds
+			delayTimer -= Time.deltaTime;
+
+			if (delayTimer < 0)
+			{
+				if (delay)
+				{
+					mySource.Play();
+					pitch = 1.0f;
+				}
+
+				delay = false;
+			}
+
         	//Count down timer
         	if (mySource.clip == null)
         	{
@@ -96,13 +114,16 @@ namespace ProjectStorms
             	cinematicCam.transform.localPosition = new Vector3(0, 0, -(Mathf.Abs (longDistance)));
             	twirlSpeed = Mathf.Abs(twirlSpeed);	//positive direction
             	
-            	//Next 
-            	if (!mySource.isPlaying)
-            	{
-            		shot = EShotLength.MidShot;
-            		mySource.Play ();
-            		pitch = 1.15f;
-            	}
+            	//Next _ if the trumpet
+				if (delay==false)
+				{
+	            	if (!mySource.isPlaying)
+	            	{
+	            		shot = EShotLength.MidShot;
+	            		mySource.Play ();
+	            		pitch = 1.15f;
+	            	}
+				}
             }
             else
             if (shot == EShotLength.MidShot)
@@ -153,27 +174,23 @@ namespace ProjectStorms
 			
 			//set audio pitch
 			mySource.pitch = pitch;
-			
-            
-            //Hacks
-            if (Application.isEditor)
-            {
-            	if (Input.GetKeyDown(KeyCode.Space))
-            	{
-            		if (shot != EShotLength.CloseUp)
-            		{
-            			shot += 1;
-            		}
-            		else
-            		{
-            			shot = 0;
-            		}
-            		
-            		//reset timer
-					transitionTimer = startTimerValue;
-            	}
+		
 
-            }
+			//Skip ahead
+
+			if (InputManager.GetAnyButtonDown ("Player1_") || InputManager.GetAnyButtonDown ("Player2_") || InputManager.GetAnyButtonDown ("Player3_") || InputManager.GetAnyButtonDown ("Player4_"))
+			{
+				if (shot == EShotLength.CloseUp)
+				{
+					gameObject.SetActive(false);
+				}/*
+				else
+				{
+					shot = EShotLength.CloseUp;
+				}*/
+			}
+
+
         }
      
     } 
