@@ -327,10 +327,37 @@ namespace ProjectStorms
             float rightMotor = 0;
 
             // Move both on pitch up and down
-            if (Mathf.Abs(pitch) > 0.1f)
+            float absPitch = Mathf.Abs(pitch);
+            if (absPitch > 0.8f)
             {
-                leftMotor += pitch * controllerRumbleMult;
-                rightMotor += pitch * controllerRumbleMult;
+                leftMotor += absPitch * controllerRumbleMult;
+                rightMotor += absPitch * controllerRumbleMult;
+            }
+
+            // Yawing
+            float absYaw = Mathf.Abs(yaw);
+            if (yaw < -0.8f)
+            {
+                // Rumble left on left
+                leftMotor += absYaw * controllerRumbleMult;
+            }
+            else if (yaw > 0.8f)
+            {
+                // Rumble right on right
+                rightMotor += absYaw * controllerRumbleMult;
+            }
+
+            // Rolling
+            float absRoll = Mathf.Abs(roll);
+            if (roll < -0.8f)
+            {
+                // Rumble left on left
+                leftMotor += absRoll * controllerRumbleMult;
+            }
+            else if (roll > 0.8f)
+            {
+                // Rumble right on right
+                rightMotor += absRoll * controllerRumbleMult;
             }
 
             InputManager.SetControllerVibrate(tag, leftMotor, rightMotor);
