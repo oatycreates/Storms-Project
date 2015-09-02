@@ -31,10 +31,13 @@ public class CinematicOutro : MonoBehaviour
 	void FixedUpdate () 
 	{
 		rotator.transform.Rotate(Vector3.down * Time.deltaTime * 60);
-
-		pirateRenderer.material.color = myColour;
-		winText.color = myColour;
-		winText.text = "HELLO WORLD";
 	}
 
+
+	public void WinCam(string winnerNumberText, Color winnerColour)
+	{
+		winText.text = winnerNumberText;
+		winText.color = winnerColour;
+		pirateRenderer.material.color = winnerColour;
+	}
 }
