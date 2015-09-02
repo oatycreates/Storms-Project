@@ -2,7 +2,7 @@
  * File: SlipStream.cs
  * Author: Andrew Barbour
  * Maintainer: Andrew Barbour
- * Created: 27/08/2015
+ * Created: 2/09/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
  * Description: Behaviour for slip streams. Will apply a velocity change
  *      in the slip stream's forward vector
