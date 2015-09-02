@@ -53,12 +53,13 @@ namespace ProjectStorms
         private InputManager m_inputManager;
 
         // References to the different components on the airship
-        public GameObject colliders;
-        public GameObject meshes;
-        public GameObject hinges;
-        public GameObject rouletteHierachy;
-        public GameObject particlesEffectsHierachy;
-        public GameObject weaponsHierachy;
+        public GameObject colliders = null;
+        public GameObject meshes = null;
+        public GameObject hinges = null;
+        public GameObject rouletteHierachy = null;
+        public GameObject particlesEffectsHierachy = null;
+        public GameObject weaponsHierachy = null;
+        public GameObject playerReticle = null;
 
         /// <summary>
         /// Remember the start position and rotation in world space, so we can return here when the player has died.
@@ -388,6 +389,7 @@ namespace ProjectStorms
             if (weaponsHierachy != null)
             {
                 weaponsHierachy.SetActive(a_weaponsEnable);
+                playerReticle.SetActive(a_weaponsEnable);
             }
         }
 
