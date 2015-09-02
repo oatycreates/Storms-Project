@@ -53,7 +53,6 @@ namespace ProjectStorms
         /// </summary>
         void Update()
         {
-            Debug.Log("Clear!");
             // Clear rumble
             for (int i = 0; i < ms_playerTags.Length; ++i)
             {
@@ -148,7 +147,6 @@ namespace ProjectStorms
             {
                 if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
                 {
-                    Debug.Log("Rumble!");
                     // Apply the vibration
                     GamePad.SetVibration((PlayerIndex) i, a_motorLeft, a_motorRight);
                     break;
