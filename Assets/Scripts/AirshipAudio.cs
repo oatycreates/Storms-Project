@@ -59,7 +59,7 @@ namespace ProjectStorms
                     m_mySource.Play();
 
                     // Rumble the controller a bit
-                    TriggerControllerRumble();
+                    //TriggerControllerRumble();
                 }
 
             }
