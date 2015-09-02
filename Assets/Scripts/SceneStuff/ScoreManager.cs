@@ -42,6 +42,11 @@ namespace ProjectStorms
 
         public FadeCamWhite fadeOutScene;
 
+		public CinematicOutro optionalWinnerCam;
+
+		//is game ending
+		private bool gameOver = false;
+
         void Start()
         {
             winText.text = " ";
@@ -80,6 +85,15 @@ namespace ProjectStorms
                 m_winnerNumber = pirateBase4.teamNumber;
                 Win(m_winnerNumber, m_winnerColour);
             }
+
+			//Progress
+			if (gameOver)
+			{
+				if (InputManager.GetAnyButtonDown ("Player1_") || InputManager.GetAnyButtonDown ("Player2_") || InputManager.GetAnyButtonDown ("Player3_") || InputManager.GetAnyButtonDown ("Player4_"))
+				{
+					FadeOut();
+				}
+			}
         }
 
         void Win(float a_playerNumber, Color a_colour)
@@ -92,19 +106,45 @@ namespace ProjectStorms
 
             Debug.Log("Player " + winner + " Wins!");
 
-            //fadeOut.fadeEnd = true;
-            if (fadeOutScene != null)
-            {
-                // check to see if the bool is not already true
-                if (!fadeOutScene.fadeStart || !fadeOutScene.fadeEnd)
-                {
-                    fadeOutScene.fadeEnd = true;
-                }
-            }
-            else
-            {
-                Debug.Log("No Scene to Fade between. See Screen Fader Script");
-            }
+			Invoke ("GameOver", 5.0f);
+
+			//Play an Outro Cinematic if there is one present
+			if (optionalWinnerCam != null)
+			{
+				optionalWinnerCam.gameObject.SetActive(true);
+				optionalWinnerCam.WinCam(("Player " +winner + "\nWins!"), m_winnerColour);
+
+				winText.text = " ";
+
+				if (fadeOutScene != null)
+				{
+					Invoke("FadeOut", 15.0f);
+				}
+			}
+			else
+			{
+				Debug.Log("No outro attached");
+
+				FadeOut();
+			}
         }
+
+		void GameOver()
+		{
+			//Toggle gameover
+			gameOver = true;
+		}
+
+		void FadeOut()
+		{
+			if (fadeOutScene != null)
+			{
+				// check to see if the bool is not already true
+				if (!fadeOutScene.fadeStart || !fadeOutScene.fadeEnd)
+				{
+					fadeOutScene.fadeEnd = true;
+				}
+			}
+		}
     } 
 }

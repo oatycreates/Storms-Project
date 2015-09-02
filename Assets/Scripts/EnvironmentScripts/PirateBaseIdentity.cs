@@ -36,6 +36,9 @@ namespace ProjectStorms
         public LineRenderer dropzoneLineRenderer;
         public float dropZoneAlpha = 1.0f;
 
+		//Reference to final Cinematic Outro
+		public CinematicOutro outroScript;
+
         void Start()
         {
             baseColour = Color.clear;
