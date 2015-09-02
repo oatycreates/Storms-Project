@@ -48,9 +48,18 @@ namespace ProjectStorms
         /// <summary>
         /// This input stuff was all figured out in an old script called 'TempDebugScript'.
         /// It's clever, because it determines which input to look for based off the player tag.
+        /// 
+        /// InputManager update is set to run before anything else.
         /// </summary>
-        void FixedUpdate()
+        void Update()
         {
+            Debug.Log("Clear!");
+            // Clear rumble
+            for (int i = 0; i < ms_playerTags.Length; ++i)
+            {
+                GamePad.SetVibration((PlayerIndex)i, 0, 0);
+            }
+
             #region Axis Input
             // Left Stick Input	- One Stick to Determine Movement
             float upDown = Input.GetAxis(gameObject.tag + "Vertical");
@@ -139,6 +148,7 @@ namespace ProjectStorms
             {
                 if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
                 {
+                    Debug.Log("Rumble!");
                     // Apply the vibration
                     GamePad.SetVibration((PlayerIndex) i, a_motorLeft, a_motorRight);
                     break;
