@@ -32,7 +32,7 @@ namespace ProjectStorms
         // Cached variables
         private Rigidbody m_myRigid;
         private Transform m_trans;
-        private AirshipDyingBehaviour m_dyingBehaviour;
+        //private AirshipDyingBehaviour m_dyingBehaviour;
         private AirshipStallingBehaviour m_stallingBehaviour;
         private AirshipSuicideBehaviour m_suicideBehaviour;
 
@@ -40,7 +40,7 @@ namespace ProjectStorms
         {
             m_myRigid = GetComponent<Rigidbody>();
             m_trans = transform;
-            m_dyingBehaviour = GetComponent<AirshipDyingBehaviour>();
+            //m_dyingBehaviour = GetComponent<AirshipDyingBehaviour>();
             m_stallingBehaviour = GetComponent<AirshipStallingBehaviour>();
             m_suicideBehaviour = GetComponent<AirshipSuicideBehaviour>();
         }

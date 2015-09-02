@@ -133,8 +133,8 @@ namespace ProjectStorms
         private float m_startShipMass = 0;
 
         // Animation trigger hashes
-        private int m_animHatchOpen = Animator.StringToHash("HatchOpen");
-        private int m_animTrapdoorOpen = Animator.StringToHash("TrapdoorOpen");
+        //private int m_animHatchOpen = Animator.StringToHash("HatchOpen");
+        //private int m_animTrapdoorOpen = Animator.StringToHash("TrapdoorOpen");
         private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
 
         // Cached variables

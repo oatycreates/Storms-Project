@@ -72,8 +72,8 @@ namespace ProjectStorms
             float triggers = -Input.GetAxis(gameObject.tag + "Triggers");
 
             // DPad Input - For menus and such
-            float dPadUpDown = -Input.GetAxis(gameObject.tag + "DPadVertical");
-            float dPadLeftRight = Input.GetAxis(gameObject.tag + "DPadHorizontal");
+            //float dPadUpDown = -Input.GetAxis(gameObject.tag + "DPadVertical");
+            //float dPadLeftRight = Input.GetAxis(gameObject.tag + "DPadHorizontal");
             #endregion
 
             #region Button Input
@@ -88,8 +88,8 @@ namespace ProjectStorms
             bool faceUp = Input.GetButton(gameObject.tag + "FaceUp");
 
             // Start and Select
-            bool select = Input.GetButton(gameObject.tag + "Select");
-            bool start = Input.GetButton(gameObject.tag + "Start");
+            //bool select = Input.GetButton(gameObject.tag + "Select");
+            //bool start = Input.GetButton(gameObject.tag + "Start");
 
             // Analogue Stick Clicks
             bool clickLeft = Input.GetButton(gameObject.tag + "ClickLeft");
