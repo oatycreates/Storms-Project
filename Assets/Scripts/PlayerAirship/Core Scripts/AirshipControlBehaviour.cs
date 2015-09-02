@@ -118,11 +118,6 @@ namespace ProjectStorms
         public float killY = -2000.0f;
 
         /// <summary>
-        /// Controller rumble multiplier for the left and right gamepad motors.
-        /// </summary>
-        public float controllerRumbleMult = 10.0f;
-
-        /// <summary>
         /// Multiplier values for when various ship parts get destroyed.
         /// </summary>
         public ShipPartInputConnection[] shipPartConns;
@@ -303,9 +298,6 @@ namespace ProjectStorms
             CalculateTorque();
             CalculateRightingForce();
 
-            // Vibration
-            CalculateControllerRumble();
-
             //Pass values to AudioController
             if (audioControl != null)
             {
@@ -316,51 +308,6 @@ namespace ProjectStorms
             {
                 engineAudioControl.AudioInput(throttle);
             }
-        }
-
-        /// <summary>
-        /// Calculate controller rumble.
-        /// </summary>
-        private void CalculateControllerRumble()
-        {
-            float leftMotor = 0;
-            float rightMotor = 0;
-
-            // Move both on pitch up and down
-            float absPitch = Mathf.Abs(pitch);
-            if (absPitch > 0.8f)
-            {
-                leftMotor += absPitch * controllerRumbleMult;
-                rightMotor += absPitch * controllerRumbleMult;
-            }
-
-            // Yawing
-            float absYaw = Mathf.Abs(yaw);
-            if (yaw < -0.8f)
-            {
-                // Rumble left on left
-                leftMotor += absYaw * controllerRumbleMult;
-            }
-            else if (yaw > 0.8f)
-            {
-                // Rumble right on right
-                rightMotor += absYaw * controllerRumbleMult;
-            }
-
-            // Rolling
-            float absRoll = Mathf.Abs(roll);
-            if (roll < -0.8f)
-            {
-                // Rumble left on left
-                leftMotor += absRoll * controllerRumbleMult;
-            }
-            else if (roll > 0.8f)
-            {
-                // Rumble right on right
-                rightMotor += absRoll * controllerRumbleMult;
-            }
-
-            InputManager.SetControllerVibrate(tag, leftMotor, rightMotor);
         }
 
         /// <summary>
