@@ -57,6 +57,11 @@ namespace ProjectStorms
         public float totalHori = 0;
 
         /// <summary>
+        /// Minimum time between shots.
+        /// </summary>
+        public float shotCooldown = 2.51f;
+
+        /// <summary>
         /// Time to wait before beginning to interp the camera back when moving,
         /// </summary>
         public float movingCamResetTime = 1.5f;
@@ -68,6 +73,11 @@ namespace ProjectStorms
         /// For resetting the camera when moving a few seconds after the last look.
         /// </summary>
         private float m_lastCamLookTime = 0;
+
+        /// <summary>
+        /// Time before the cannon can fire again.
+        /// </summary>
+        private float m_currShotCooldown = 0.0f;
 
         // Cached variables
         private Transform camRotTrans;
@@ -113,6 +123,9 @@ namespace ProjectStorms
             // Clamp the totalVert values
             totalVert = Mathf.Clamp(totalVert, -1.25f, 1.25f);
             totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
+
+            // Count down the shot cool-down
+            m_currShotCooldown -= Time.deltaTime;
         }
 
         public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceDown, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
@@ -264,16 +277,22 @@ namespace ProjectStorms
 
         void Cannons(ECannonPos a_angle)
         {
-            CannonFire script;
-
-            for (int i = 0; i < cannons.Length; i++)
+            if (m_currShotCooldown <= 0)
             {
-                script = cannons[i].GetComponent<CannonFire>();
+                CannonFire script;
 
-                // Fire the cannons situated in the requested direction
-                if (a_angle == script.cannon)
+                // Put the cannon on cool-down
+                m_currShotCooldown = shotCooldown;
+
+                for (int i = 0; i < cannons.Length; i++)
                 {
-                    script.Fire();
+                    script = cannons[i].GetComponent<CannonFire>();
+
+                    // Fire the cannons situated in the requested direction
+                    if (a_angle == script.cannon)
+                    {
+                        script.Fire();
+                    }
                 }
             }
         }

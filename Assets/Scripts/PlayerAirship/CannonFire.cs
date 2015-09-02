@@ -36,11 +36,6 @@ namespace ProjectStorms
         public ECannonPos cannon;
 
         /// <summary>
-        /// Minimum time between shots.
-        /// </summary>
-        public float shotCooldown = 2.51f;
-
-        /// <summary>
         /// Which cannonball prefab to spawn.
         /// </summary>
         public GameObject cannonBallPrefab;
@@ -59,11 +54,6 @@ namespace ProjectStorms
         /// How many cannonballs to pool per cannon. Equal to shotLifetime/fireCooldown.
         /// </summary>
         private int m_pooledAmount = 2;
-
-        /// <summary>
-        /// Time before the cannon can fire again.
-        /// </summary>
-        private float m_currShotCooldown = 0.0f;
 
         /// <summary>
         /// Object pooled cannonballs.
@@ -110,8 +100,9 @@ namespace ProjectStorms
             GameObject firstBall = CreateCannonball(holderTrans);
             
             // Calculate pooling amount
+            RotateCam camRot = GetComponentInParent<RotateCam>();
             CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
-            m_pooledAmount = Mathf.CeilToInt(ballScript.cannonBallLifetime / shotCooldown);
+            m_pooledAmount = Mathf.CeilToInt(ballScript.cannonBallLifetime / camRot.shotCooldown);
 
             // Spawn the other cannonballs
             for (int i = 1; i < m_pooledAmount; i++)
@@ -146,9 +137,6 @@ namespace ProjectStorms
 
         void Update()
         {
-            // Count down the shot cool-down
-            m_currShotCooldown -= Time.deltaTime;
-
             // Look at the target
             m_trans.LookAt(m_tarTrans.position);
             m_relativeForward = m_trans.forward;
@@ -165,11 +153,8 @@ namespace ProjectStorms
             GameObject goBall = null;
             TrailRenderer trailBall = null;
 
-            if (this.isActiveAndEnabled && m_currShotCooldown <= 0)
+            if (this.isActiveAndEnabled)
             {
-                // Put the cannon on cool-down
-                m_currShotCooldown = shotCooldown;
-
                 for (int i = 0; i < m_cannonBalls.Count; i++)
                 {
                     goBall = m_cannonBalls[i];
