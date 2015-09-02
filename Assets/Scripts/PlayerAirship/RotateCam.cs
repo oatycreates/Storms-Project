@@ -80,17 +80,19 @@ namespace ProjectStorms
         private float m_currShotCooldown = 0.0f;
 
         // Cached variables
-        private Transform camRotTrans;
-        private Transform lookTarTrans;
-        private Transform camProxyTrans;
+        private Transform m_shipTrans = null;
+        private Transform m_camRotTrans = null;
+        private Transform m_lookTarTrans = null;
+        private Transform m_camProxyTrans = null;
 
         void Start()
         {
             // Cache variables
             m_referenceStateManager = GetComponent<StateManager>();
-            camRotTrans = rotateCam.transform;
-            lookTarTrans = lookyHereTarget.transform;
-            camProxyTrans = camProxyTarget.transform;
+            m_shipTrans = transform;
+            m_camRotTrans = rotateCam.transform;
+            m_lookTarTrans = lookyHereTarget.transform;
+            m_camProxyTrans = camProxyTarget.transform;
         }
 
         public void ResetCamRotation(bool a_snap)
@@ -132,8 +134,8 @@ namespace ProjectStorms
         {
             if (this.isActiveAndEnabled)
             {
-                // Reset on click
-                if (a_leftClick || a_rightClick)
+                // Reset on left stick click
+                if (a_leftClick)
                 {
                     ResetCamRotation(true);
                 }
@@ -196,11 +198,18 @@ namespace ProjectStorms
                 EPlayerState currState = m_referenceStateManager.GetPlayerState();
                 if (currState == EPlayerState.Control || currState == EPlayerState.Suicide)
                 {
-                    camRotTrans.localRotation = Quaternion.Slerp(camRotTrans.localRotation, target, Time.deltaTime * smooth);
+                    // Smooth the camera's rotation out on control and suicide
+                    m_camRotTrans.localRotation = Quaternion.Slerp(m_camRotTrans.localRotation, target, Time.deltaTime * smooth);
                 }
 
-                //Move lookTarget around.
-                float internalCamYRotation = camRotTrans.localEulerAngles.y;
+                // Look behind self on right stick click
+                if (a_rightClick)
+                {
+                    m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);//Quaternion.LookRotation(-m_shipTrans.forward);
+                }
+
+                // Move lookTarget around
+                float internalCamYRotation = m_camRotTrans.localEulerAngles.y;
                 //Debug.Log(internalCamYRotation);
 
 
@@ -270,8 +279,8 @@ namespace ProjectStorms
 
                 }
 
-                lookTarTrans.localPosition = new Vector3(lookTarTrans.localPosition.x, yPos, lookTarTrans.localPosition.z);
-                camProxyTrans.localPosition = new Vector3(m_xPos, camProxyTrans.localPosition.y, -m_zPos);
+                m_lookTarTrans.localPosition = new Vector3(m_lookTarTrans.localPosition.x, yPos, m_lookTarTrans.localPosition.z);
+                m_camProxyTrans.localPosition = new Vector3(m_xPos, m_camProxyTrans.localPosition.y, -m_zPos);
             }
         }
 
