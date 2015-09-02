@@ -294,7 +294,7 @@ namespace ProjectStorms
         void FixedUpdate()
         {
             // Doing this here makes it easier on the physics
-            ConstantForwardMovement();
+            ThrottleMovement();
             CalculateTorque();
             CalculateRightingForce();
 
@@ -324,14 +324,14 @@ namespace ProjectStorms
         /// <summary>
         /// Moves the player's ship forward with either their constant movement speed or their inputted throttle.
         /// </summary>
-        private void ConstantForwardMovement()
+        private void ThrottleMovement()
         {
             // 				general speed 	half or double general speed	+ 25% of general speed == Always a positive value
             float speedMod = (throttle * generalSpeed) /*+ (generalSpeed/4)*/;
 
-            if (throttle < 0 && m_myRigid.velocity.sqrMagnitude < 0)
+            if (throttle < 0)
             {
-                // Slow down when reversing
+                // Slow down when trying to reverse
                 speedMod *= reverseSpeedMult;
             }
 
@@ -346,7 +346,7 @@ namespace ProjectStorms
 
             m_myRigid.AddRelativeForce(Vector3.forward * speedMod, ForceMode.Acceleration);
 
-            // This finds the 'up' vector. It was a cool trick from The Standard Vehicle Assets
+            // This finds the moving 'up' vector. It was a cool trick from The Standard Vehicle Assets
             var liftDirection = Vector3.Cross(m_myRigid.velocity, m_myRigid.transform.right).normalized;
 
             m_myRigid.AddForce(liftDirection);
