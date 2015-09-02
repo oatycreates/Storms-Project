@@ -64,7 +64,7 @@ namespace ProjectStorms
 		
 		//Animation references
 		public Animator prisonAnim;
-		private bool open = false;
+		//private bool open = false;
 		
 		//LineRenderer reference;
 		public LineRenderer myLaser;

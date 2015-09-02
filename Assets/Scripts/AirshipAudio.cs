@@ -44,12 +44,11 @@ namespace ProjectStorms
                 }
 
             }
-            else
-                if (!m_movement)
-                {
-                    m_mySource.Stop();
-                    RandomMe();
-                }
+            else if (!m_movement)
+            {
+                m_mySource.Stop();
+                RandomMe();
+            }
 
         }
 

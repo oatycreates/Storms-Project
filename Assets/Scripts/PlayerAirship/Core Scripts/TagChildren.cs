@@ -20,13 +20,18 @@ namespace ProjectStorms
     {
         void Start()
         {
-            Transform[] transChilds = gameObject.GetComponentsInChildren<Transform>();
-            foreach (Transform child in transChilds)
+            string myTag = gameObject.tag;
+            ApplyTags_R(transform, myTag);
+        }
+
+        private void ApplyTags_R(Transform a_trans, string a_tag)
+        {
+            // Make the child tag == my tag
+            a_trans.gameObject.tag = a_tag;
+            foreach (Transform child in a_trans)
             {
-                // Make the child tag == my tag
-                child.gameObject.tag = gameObject.tag;
                 // Recurse
-                //child.gameObject.AddComponent<TagChildren>();
+                ApplyTags_R(child, a_tag);
             }
         }
     } 

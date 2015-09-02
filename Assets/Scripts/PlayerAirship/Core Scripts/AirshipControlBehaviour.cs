@@ -118,6 +118,11 @@ namespace ProjectStorms
         public float killY = -2000.0f;
 
         /// <summary>
+        /// Controller rumble multiplier for the left and right gamepad motors.
+        /// </summary>
+        public float controllerRumbleMult = 10.0f;
+
+        /// <summary>
         /// Multiplier values for when various ship parts get destroyed.
         /// </summary>
         public ShipPartInputConnection[] shipPartConns;
@@ -128,8 +133,8 @@ namespace ProjectStorms
         private float m_startShipMass = 0;
 
         // Animation trigger hashes
-        private int m_animHatchOpen = Animator.StringToHash("HatchOpen");
-        private int m_animTrapdoorOpen = Animator.StringToHash("TrapdoorOpen");
+        //private int m_animHatchOpen = Animator.StringToHash("HatchOpen");
+        //private int m_animTrapdoorOpen = Animator.StringToHash("TrapdoorOpen");
         private int m_animPropellerMult = Animator.StringToHash("PropellerMult");
 
         // Cached variables
@@ -298,6 +303,9 @@ namespace ProjectStorms
             CalculateTorque();
             CalculateRightingForce();
 
+            // Vibration
+            CalculateControllerRumble();
+
             //Pass values to AudioController
             if (audioControl != null)
             {
@@ -308,6 +316,24 @@ namespace ProjectStorms
             {
                 engineAudioControl.AudioInput(throttle);
             }
+        }
+
+        /// <summary>
+        /// Calculate controller rumble.
+        /// </summary>
+        private void CalculateControllerRumble()
+        {
+            float leftMotor = 0;
+            float rightMotor = 0;
+
+            // Move both on pitch up and down
+            if (Mathf.Abs(pitch) > 0.1f)
+            {
+                leftMotor += pitch * controllerRumbleMult;
+                rightMotor += pitch * controllerRumbleMult;
+            }
+
+            InputManager.SetControllerVibrate(tag, leftMotor, rightMotor);
         }
 
         /// <summary>

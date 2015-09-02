@@ -1,7 +1,7 @@
 ﻿/**
  * File: SpawnPassengers.cs
  * Author: Rowan Donaldson
- * Maintainer: Patrick Ferguson
+ * Maintainer: Patrick Ferguson, Andrew Barbour
  * Created: 6/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
  * Description: Manages the spawning and pooling of passengers.
@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 // For lists
 using System.Collections.Generic;
 
@@ -20,6 +21,10 @@ namespace ProjectStorms
     /// </summary>
     public class SpawnPassengers : MonoBehaviour
     {
+        public bool spawnAsSpray = false;
+        [Tooltip("Modifies the cone angle in degrees")]
+        public float spraySpawnAngle = 0.5f;
+
         public float initialPassengerForce = 10.0f;
 
         /// <summary>
@@ -162,7 +167,14 @@ namespace ProjectStorms
                 // Search for inactive passengers
                 if (!passengers[i].activeInHierarchy)
                 {
-                    passengers[i].transform.position = m_trans.position;
+                    Quaternion sprayQuat = Quaternion.identity;
+                    if (spawnAsSpray)
+                    {
+                        sprayQuat = Quaternion.Euler(randomAngle, randomAngle, randomAngle);
+                    }
+
+                    //passengers[i].transform.position = m_trans.position;
+                    passengers[i].transform.position = m_trans.position + sprayQuat * Vector3.forward * 15.0f;
                     passengers[i].transform.rotation = Quaternion.identity;
 
                     passengers[i].SetActive(true);
@@ -181,11 +193,19 @@ namespace ProjectStorms
                     passengerRb.angularVelocity = Vector3.zero;
 
                     // Add initial passenger velocity here!	Jump!
-                    passengerRb.AddForce(relativeSpace * initialPassengerForce * passengerRb.mass, ForceMode.Impulse);
+                    passengerRb.AddForce((sprayQuat * relativeSpace) * initialPassengerForce * passengerRb.mass, ForceMode.Impulse);
 
                     // Don't forget this!
                     break;
                 }
+            }
+        }
+
+        float randomAngle
+        {
+            get
+            {
+                return Random.Range(-spraySpawnAngle, spraySpawnAngle);
             }
         }
 
