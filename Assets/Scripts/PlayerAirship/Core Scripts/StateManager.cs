@@ -50,7 +50,7 @@ namespace ProjectStorms
         /// <summary>
         /// Good to make sure the airship HAS an input manager.
         /// </summary>
-        private InputManager m_inputManager;
+        //private InputManager m_inputManager;
 
         // References to the different components on the airship
         public GameObject colliders = null;
@@ -95,7 +95,7 @@ namespace ProjectStorms
             m_stallingScript = GetComponent<AirshipStallingBehaviour>();
             m_suicideScript = GetComponent<AirshipSuicideBehaviour>();
 
-            m_inputManager = GetComponent<InputManager>();
+            //m_inputManager = GetComponent<InputManager>();
 
             // World position & rotation
             m_worldStartPos = m_trans.position;

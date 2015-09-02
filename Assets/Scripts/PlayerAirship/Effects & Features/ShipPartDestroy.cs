@@ -73,7 +73,7 @@ namespace ProjectStorms
         private Rigidbody m_rb = null;
         private PassengerTray m_shipTray = null;
         private StateManager m_shipStates = null;
-        private float m_breakVelSqr = 0;
+        //private float m_breakVelSqr = 0;
 
         void Awake()
         {
