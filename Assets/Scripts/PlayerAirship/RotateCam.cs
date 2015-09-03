@@ -175,20 +175,26 @@ namespace ProjectStorms
                 }
 
                 // Construct the local target rotation
-                Quaternion target = Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
+                Vector3 playerRot = m_shipTrans.rotation.eulerAngles;
+                Quaternion target = Quaternion.Euler(playerRot.x + m_tiltAroundX, playerRot.y +  m_tiltAroundY, 0);
 
                 EPlayerState currState = m_referenceStateManager.GetPlayerState();
                 if (currState == EPlayerState.Control || currState == EPlayerState.Suicide)
                 {
                     // Smooth the camera's rotation out on control and suicide
-                    m_camRotTrans.localRotation = Quaternion.Slerp(m_camRotTrans.localRotation, target, Time.deltaTime * smooth);
+                    m_camRotTrans.rotation = Quaternion.Slerp(m_camRotTrans.rotation, target, Time.deltaTime * smooth);
                 }
 
                 // Look behind self on right stick click
                 if (a_rightClick)
                 {
-                    m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);//Quaternion.LookRotation(-m_shipTrans.forward);
+                    m_camRotTrans.rotation = Quaternion.Euler(0, -180, 0);//Quaternion.LookRotation(-m_shipTrans.forward);
                 }
+
+                // Ignore the roll of the ship, make camera controls relative to the world
+                /*Vector3 eulerRot = m_camRotTrans.localRotation.eulerAngles;
+                eulerRot.z = -m_shipTrans.rotation.eulerAngles.z;
+                m_camRotTrans.localRotation = Quaternion.Euler(eulerRot);*/
 
                 // Move lookTarget around
                 float internalCamYRotation = m_camRotTrans.localEulerAngles.y;

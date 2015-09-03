@@ -94,10 +94,7 @@ namespace ProjectStorms
                 //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
                 //m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
 
-                // Ignore the roll of the rotator
-                Vector3 eulerRot = camRotator.rotation.eulerAngles;
-                eulerRot.z = 0;
-                m_trans.rotation = Quaternion.Euler(eulerRot);
+                m_trans.rotation = camRotator.rotation;
             }
 
         }
