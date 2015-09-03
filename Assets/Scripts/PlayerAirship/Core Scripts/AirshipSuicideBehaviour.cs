@@ -55,6 +55,10 @@ namespace ProjectStorms
         private Animator m_anim;
         private StateManager m_stateManager;
 
+        // Input variables
+        private bool m_selectHeld     = false;    // Current state of the select button
+        private bool m_lastSelectHeld = false;    // Last frame's state of the back button, for comparison
+
         void Awake()
         {
             m_myRigid = gameObject.GetComponent<Rigidbody>();
@@ -81,7 +85,7 @@ namespace ProjectStorms
             // Time until the player state resets
             timerUntilReset -= Time.deltaTime;
 
-            if (timerUntilReset < 0.0f)
+            if (timerUntilReset < 0.0f || SelectButtonReleased())
             {
                 // Try sending the airship back into control mode
                 //m_stateManager.SetPlayerState(EPlayerState.Roulette);
@@ -97,7 +101,7 @@ namespace ProjectStorms
 
         public void PlayerFireshipInputs(
             float a_Vertical,
-            float a_Horizontal)
+            float a_Horizontal, bool a_selectButton)
         {
             if (this.isActiveAndEnabled)
             {
@@ -106,7 +110,16 @@ namespace ProjectStorms
 
                 // Keep the inputs in reasonable ranges, see the standard asset examples for more
                 ClampInputs();
+
+                // Set back button state
+                m_lastSelectHeld    = m_selectHeld;
+                m_selectHeld        = a_selectButton;
             }
+        }
+
+        bool SelectButtonReleased()
+        {
+            return m_lastSelectHeld && !m_selectHeld;
         }
 
         /// <summary>

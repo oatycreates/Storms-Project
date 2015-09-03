@@ -4,7 +4,7 @@
  * Maintainer: Patrick Ferguson
  * Created: 12/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: Manages scoring for each player in the game.
+ * Description: Manages scoring for each player/team in the game.
  **/
 
 using UnityEngine;
@@ -13,20 +13,20 @@ using UnityEngine.UI;
 
 namespace ProjectStorms
 {
-    public enum ENumberOfPlayers
-    {
-        One,
-        Two,
-        Three,
-        Four
-    }
+
+	public enum EGameType
+	{
+		FreeForAll,
+		TeamGame
+	}
 
     /// <summary>
     /// Manages scoring for each player in the game.
     /// </summary>
     public class ScoreManager : MonoBehaviour
     {
-        public ENumberOfPlayers e_numberOfBases;
+       // public ENumberOfPlayers e_numberOfBases;
+		public EGameType gameType;
 
         public int PassengersToWin = 10;
 
@@ -36,6 +36,13 @@ namespace ProjectStorms
         public PirateBaseIdentity pirateBase2;
         public PirateBaseIdentity pirateBase3;
         public PirateBaseIdentity pirateBase4;
+
+		public PirateBaseIdentity teamBaseAlpha;
+		public PirateBaseIdentity teamBaseOmega;
+
+		public string alphaTeamName = "Alpha";
+		public string omegateamName = "Omega";
+
 
         private Color m_winnerColour;
         private int m_winnerNumber;
@@ -52,39 +59,42 @@ namespace ProjectStorms
             winText.text = " ";
             m_winnerColour = Color.clear;
 
-            pirateBase1.ResetPirateBase(PassengersToWin);
-            pirateBase2.ResetPirateBase(PassengersToWin);
-            pirateBase3.ResetPirateBase(PassengersToWin);
-            pirateBase4.ResetPirateBase(PassengersToWin);
+			if (gameType == EGameType.FreeForAll) 
+			{
+				pirateBase1.ResetPirateBase (PassengersToWin);
+				pirateBase2.ResetPirateBase (PassengersToWin);
+				pirateBase3.ResetPirateBase (PassengersToWin);
+				pirateBase4.ResetPirateBase (PassengersToWin);
+			}
+
+			if (gameType == EGameType.TeamGame)
+			{
+				teamBaseAlpha.ResetPirateBase (PassengersToWin);
+				teamBaseOmega.ResetPirateBase (PassengersToWin);
+
+
+				//Set the colour of the bases
+				teamBaseAlpha.teamGame = true;
+				teamBaseOmega.teamGame = true;
+
+				teamBaseAlpha.omegaBlack = false;
+				teamBaseOmega.omegaBlack = true;
+
+			}
         }
+
 
         void Update()
         {
-            // Check to see if any base score is less than /equal to 0
-            if (pirateBase1.baseScore <= 0)
-            {
-                m_winnerColour = pirateBase1.baseColour;
-                m_winnerNumber = pirateBase1.teamNumber;
-                Win(m_winnerNumber, m_winnerColour);
-            }
-            else if (pirateBase2.baseScore <= 0)
-            {
-                m_winnerColour = pirateBase2.baseColour;
-                m_winnerNumber = pirateBase2.teamNumber;
-                Win(m_winnerNumber, m_winnerColour);
-            }
-            else if (pirateBase3.baseScore <= 0)
-            {
-                m_winnerColour = pirateBase3.baseColour;
-                m_winnerNumber = pirateBase3.teamNumber;
-                Win(m_winnerNumber, m_winnerColour);
-            }
-            else if (pirateBase4.baseScore <= 0)
-            {
-                m_winnerColour = pirateBase4.baseColour;
-                m_winnerNumber = pirateBase4.teamNumber;
-                Win(m_winnerNumber, m_winnerColour);
-            }
+           	if (gameType == EGameType.FreeForAll)
+			{
+				FourPlayerMatch();
+			}
+			else
+			if (gameType == EGameType.TeamGame)
+			{
+				TeamMatch();
+			}
 
 			//Progress
 			if (gameOver)
@@ -96,23 +106,116 @@ namespace ProjectStorms
 			}
         }
 
-        void Win(float a_playerNumber, Color a_colour)
+
+		void TeamMatch()
+		{
+			//Alpha = team 1 = white
+			//Omega = team 2 = black
+
+			string winnerName = " ";
+
+			if (teamBaseAlpha.baseScore <= 0)
+			{
+				winnerName = alphaTeamName;
+				m_winnerColour = Color.white;
+				TeamWin(winnerName, m_winnerColour);
+			}
+			else
+			if (teamBaseOmega.baseScore <= 0)
+			{
+				winnerName = omegateamName;
+				m_winnerColour = Color.black;
+				TeamWin(winnerName, m_winnerColour);
+			}
+
+		}
+
+
+		void FourPlayerMatch()
+		{
+			// Check to see if any base score is less than /equal to 0
+			if (pirateBase1.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase1.baseColour;
+				m_winnerNumber = pirateBase1.teamNumber;
+				PlayerWin(m_winnerNumber, m_winnerColour);
+			}
+			else if (pirateBase2.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase2.baseColour;
+				m_winnerNumber = pirateBase2.teamNumber;
+				PlayerWin(m_winnerNumber, m_winnerColour);
+			}
+			else if (pirateBase3.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase3.baseColour;
+				m_winnerNumber = pirateBase3.teamNumber;
+				PlayerWin(m_winnerNumber, m_winnerColour);
+			}
+			else if (pirateBase4.baseScore <= 0)
+			{
+				m_winnerColour = pirateBase4.baseColour;
+				m_winnerNumber = pirateBase4.teamNumber;
+				PlayerWin(m_winnerNumber, m_winnerColour);
+			}
+		}
+
+
+
+		void TeamWin (string teamName, Color teamColour)
+		{
+			string teamWinner = teamName;
+
+			//Set Text	
+			//winText.text = ("Team " + teamWinner + " Wins!");
+			winText.text = (teamWinner + " Wins!");
+
+			//Set end game to true
+			//Invoke ("GameOver", 5.0f);
+			if (optionalWinnerCam != null)
+			{
+				optionalWinnerCam.gameObject.SetActive(true);
+				//optionalWinnerCam.WinCam((teamWinner + "\nWins!"), teamColour);
+				optionalWinnerCam.WinCam(winText.text, teamColour);
+				
+				
+				winText.text = " ";
+
+				//Fade out after 15 sec
+				
+				if (fadeOutScene != null)
+				{
+					Invoke("FadeOut", 15.0f);
+				}
+			}
+			else
+			{
+				Debug.Log("No Cinematic Outro Prefab Attached");
+
+				//Backup Manual Fadeout
+				FadeOut();
+			}
+		}
+
+
+        void PlayerWin(float a_playerNumber, Color a_colour)
         {
             string winner = a_playerNumber.ToString();
 
             //winText.text = ("Player " + winner + " Wins!");
-            winText.text = ("Player " +winner + "\nWinnARRRRR!");
+            winText.text = ("Player " +winner + "\nWins!");
             winText.color = m_winnerColour;
 
-            Debug.Log("Player " + winner + " Wins!");
-
 			Invoke ("GameOver", 5.0f);
+
+
 
 			//Play an Outro Cinematic if there is one present
 			if (optionalWinnerCam != null)
 			{
 				optionalWinnerCam.gameObject.SetActive(true);
-				optionalWinnerCam.WinCam(("Player " +winner + "\nWins!"), m_winnerColour);
+				optionalWinnerCam.WinCam(winText.text, m_winnerColour);
+
 
 				winText.text = " ";
 
@@ -129,11 +232,13 @@ namespace ProjectStorms
 			}
         }
 
+
 		void GameOver()
 		{
 			//Toggle gameover
 			gameOver = true;
 		}
+
 
 		void FadeOut()
 		{

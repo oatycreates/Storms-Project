@@ -26,6 +26,10 @@ namespace ProjectStorms
         public int teamNumber;
         [HideInInspector]
         public Color baseColour;
+		[HideInInspector]
+		public bool teamGame = false;
+		[HideInInspector]
+		public bool omegaBlack = false;
 
         public Renderer myRenderer;
 
@@ -36,8 +40,6 @@ namespace ProjectStorms
         public LineRenderer dropzoneLineRenderer;
         public float dropZoneAlpha = 1.0f;
 
-		//Reference to final Cinematic Outro
-		public CinematicOutro outroScript;
 
         void Start()
         {
@@ -48,35 +50,54 @@ namespace ProjectStorms
 
         void Update()
         {
-            if (gameObject.tag == "Player1_")
-            {
-                teamNumber = 1;
-                myRenderer.material.color = Color.magenta;
-                baseColour = myRenderer.material.color;
+			if (teamGame == false)
+			{
+	            if (gameObject.tag == "Player1_")
+	            {
+	                teamNumber = 1;
+	                myRenderer.material.color = Color.magenta;
+	                baseColour = myRenderer.material.color;
 
-            }
-            else if (gameObject.tag == "Player2_")
-            {
-                teamNumber = 2;
-                myRenderer.material.color = Color.cyan;
-                baseColour = myRenderer.material.color;
-            }
-            else if (gameObject.tag == "Player3_")
-            {
-                teamNumber = 3;
-                myRenderer.material.color = Color.green;
-                baseColour = myRenderer.material.color;
-            }
-            else if (gameObject.tag == "Player4_")
-            {
-                teamNumber = 4;
-                myRenderer.material.color = Color.yellow;
-                baseColour = myRenderer.material.color;
-            }
-            else if (gameObject.tag == "Untagged")
-            {
-                Debug.Log("NO TAG!!");
-            }
+	            }
+	            else if (gameObject.tag == "Player2_")
+	            {
+	                teamNumber = 2;
+	                myRenderer.material.color = Color.cyan;
+	                baseColour = myRenderer.material.color;
+	            }
+	            else if (gameObject.tag == "Player3_")
+	            {
+	                teamNumber = 3;
+	                myRenderer.material.color = Color.green;
+	                baseColour = myRenderer.material.color;
+	            }
+	            else if (gameObject.tag == "Player4_")
+	            {
+	                teamNumber = 4;
+	                myRenderer.material.color = Color.yellow;
+	                baseColour = myRenderer.material.color;
+	            }
+	            else if (gameObject.tag == "Untagged")
+	            {
+	                Debug.Log("Four player - NO TAG!!");
+	            }
+			}
+			else
+			if (teamGame)
+			{
+				//Set the colour for the team base (black or white)
+				if (!omegaBlack)
+				{
+					myRenderer.material.color = Color.red;
+				}
+				else
+				if (omegaBlack)
+				{
+					myRenderer.material.color = Color.black;
+				}
+
+				baseColour = myRenderer.material.color;
+			}
 
             // Set the flag's colour
             Color flagColour = baseColour;
