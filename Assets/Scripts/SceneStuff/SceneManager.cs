@@ -78,5 +78,11 @@ namespace ProjectStorms
         {
             Application.LoadLevel("RoDoTestScene");
         }
+
+		public void CoOpTeamMatch()
+		{
+			Application.LoadLevel ("TwoTeamMapPrototype");
+		}
+		                       
     } 
 }
