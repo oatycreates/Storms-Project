@@ -22,7 +22,7 @@ namespace ProjectStorms
     public class SpawnPassengers : MonoBehaviour
     {
         public bool spawnAsSpray = false;
-        [Tooltip("Modifies the cone angle in degrees")]
+        [Tooltip("Modifies the cone angle in degrees.")]
         public float spraySpawnAngle = 0.5f;
 
         public float initialPassengerForce = 10.0f;
@@ -174,7 +174,7 @@ namespace ProjectStorms
                     }
 
                     //passengers[i].transform.position = m_trans.position;
-                    passengers[i].transform.position = m_trans.position + sprayQuat * Vector3.forward * 15.0f;
+                    passengers[i].transform.position = m_trans.position + (spawnAsSpray ? sprayQuat * Vector3.forward : Vector3.zero);
                     passengers[i].transform.rotation = Quaternion.identity;
 
                     passengers[i].SetActive(true);
