@@ -136,7 +136,7 @@ namespace ProjectStorms
             bool faceUp = Input.GetButton(gameObject.tag + "FaceUp");
 
             // Start and Select
-            //bool select = Input.GetButton(gameObject.tag + "Select");
+            bool select = Input.GetButton(gameObject.tag + "Select");
             //bool start = Input.GetButton(gameObject.tag + "Start");
 
             // Analogue Stick Clicks
@@ -147,7 +147,7 @@ namespace ProjectStorms
             // Send variable data to individual scripts
             m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
             m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
-            m_fireshipControl.PlayerFireshipInputs(upDown, leftRight);
+            m_fireshipControl.PlayerFireshipInputs(upDown, leftRight, select);
             m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, clickLeft, clickRight);
             m_shuntingControl.PlayerInputs(bumperLeft, bumperRight);
         }
