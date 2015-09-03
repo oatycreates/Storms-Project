@@ -215,15 +215,15 @@ namespace ProjectStorms
 
                 //Debug.Log("Inp: " + m_totalHoriz + " " + m_totalVert + ", deg: " + m_tiltAroundX + " " + m_tiltAroundY + ", result: " + internalCamYRotation);
 
-                /*if (internalCamYRotation <= 315 && internalCamYRotation > 225)
+                if (internalCamYRotation <= 315 && internalCamYRotation > 225)
                 {
-                    //print ("Left");
+                    /*//print ("Left");
                     //Move the target
                     m_yPos = Mathf.Lerp(m_yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
 
                     //Move the cam
                     m_xPos = Mathf.Lerp(m_xPos, camPositionFactor, Time.deltaTime * smooth / 2);
-                    m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);*/
 
                     // Allow CannonFire
                     if (a_faceDown)
@@ -234,7 +234,7 @@ namespace ProjectStorms
                 }
                 else if (internalCamYRotation <= 135 && internalCamYRotation > 45)
                 {
-                    //print ("Right");
+                    /*//print ("Right");
 
                     // Move the target
                     m_yPos = Mathf.Lerp(m_yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
@@ -242,7 +242,7 @@ namespace ProjectStorms
 
                     // Move the cam
                     m_xPos = Mathf.Lerp(m_xPos, -camPositionFactor, Time.deltaTime * smooth / 2);
-                    m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);*/
 
                     // Allow CannonFire
                     if (a_faceDown)
@@ -253,25 +253,25 @@ namespace ProjectStorms
                 }
                 else if (internalCamYRotation <= 225 && internalCamYRotation > 135)
                 {
-                    //print ("Back");
+                    /*//print ("Back");
                     // Move the target
                     m_yPos = Mathf.Lerp(m_yPos, 0, Time.deltaTime * smooth / 2);
 
 
                     // Move the cam
                     m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth / 2);
-                    m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);*/
                 }
                 else
                 {
-                    //print ("Forward");
+                    /*//print ("Forward");
                     // Move the target
                     m_yPos = Mathf.Lerp(m_yPos, 0, Time.deltaTime * smooth / 2);
 
 
                     // Move the cam
                     m_xPos = Mathf.Lerp(m_xPos, 0, Time.deltaTime * smooth / 2);
-                    m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);
+                    m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);*/
 
                     // Allow CannonFire
                     if (a_faceDown)
@@ -279,7 +279,7 @@ namespace ProjectStorms
                         Cannons(ECannonPos.Forward);
                     }
 
-                }*/
+                }
 
                 //m_lookTarTrans.localPosition = new Vector3(m_lookTarTrans.localPosition.x, m_yPos, m_lookTarTrans.localPosition.z);
                 //m_camProxyTrans.localPosition = new Vector3(m_xPos, m_camProxyTrans.localPosition.y, -m_zPos);
