@@ -28,7 +28,7 @@ namespace ProjectStorms
        // public ENumberOfPlayers e_numberOfBases;
 		public EGameType gameType;
 
-        public int PassengersToWin = 10;
+        public int passengersToWin = 50;
 
         public Text winText;
 
@@ -61,16 +61,16 @@ namespace ProjectStorms
 
 			if (gameType == EGameType.FreeForAll) 
 			{
-				pirateBase1.ResetPirateBase (PassengersToWin);
-				pirateBase2.ResetPirateBase (PassengersToWin);
-				pirateBase3.ResetPirateBase (PassengersToWin);
-				pirateBase4.ResetPirateBase (PassengersToWin);
+				pirateBase1.ResetPirateBase (passengersToWin);
+				pirateBase2.ResetPirateBase (passengersToWin);
+				pirateBase3.ResetPirateBase (passengersToWin);
+				pirateBase4.ResetPirateBase (passengersToWin);
 			}
 
 			if (gameType == EGameType.TeamGame)
 			{
-				teamBaseAlpha.ResetPirateBase (PassengersToWin);
-				teamBaseOmega.ResetPirateBase (PassengersToWin);
+				teamBaseAlpha.ResetPirateBase (passengersToWin);
+				teamBaseOmega.ResetPirateBase (passengersToWin);
 
 
 				//Set the colour of the bases
@@ -79,7 +79,6 @@ namespace ProjectStorms
 
 				teamBaseAlpha.omegaBlack = false;
 				teamBaseOmega.omegaBlack = true;
-
 			}
         }
 
