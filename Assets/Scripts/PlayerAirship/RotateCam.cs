@@ -80,6 +80,11 @@ namespace ProjectStorms
         private float m_totalVert = 0;
         private float m_totalHoriz = 0;
 
+        /// <summary>
+        /// Whether the view was flipped last tick.
+        /// </summary>
+        private bool m_flippedViewLast = false;
+
         // Cached variables
         private Transform m_shipTrans = null;
         private Transform m_camRotTrans = null;
@@ -160,8 +165,8 @@ namespace ProjectStorms
                 m_totalVert = Mathf.Clamp(m_totalVert, -1.0f, 1.0f);
 
                 // Map input to desired tilt angle
-                m_tiltAroundX = Mathf.Asin(m_totalVert) * Mathf.Rad2Deg * horizontalTiltAnglePerc;
-                m_tiltAroundY = Mathf.Asin(m_totalHoriz) * Mathf.Rad2Deg * verticalTiltAnglePerc;
+                m_tiltAroundX = m_totalVert * 90.0f * horizontalTiltAnglePerc;
+                m_tiltAroundY = m_totalHoriz * 90.0f * verticalTiltAnglePerc;
 
                 if (invertUpDown)
                 {
@@ -170,24 +175,34 @@ namespace ProjectStorms
 
                 if (invertLeftRight)
                 {
-
                     m_tiltAroundY = -m_tiltAroundY;
                 }
 
+                bool shouldFlip = a_rightClick;
+
                 // Construct the local target rotation
-                Quaternion target = Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
+                Vector3 playerRot = m_shipTrans.rotation.eulerAngles;
+                Quaternion target = Quaternion.Euler(playerRot.x + m_tiltAroundX, playerRot.y +  m_tiltAroundY, 0);
 
                 EPlayerState currState = m_referenceStateManager.GetPlayerState();
                 if (currState == EPlayerState.Control || currState == EPlayerState.Suicide)
                 {
+                    // If the view was flipped last tick, just snap
+                    if (m_flippedViewLast && !shouldFlip)
+                    {
+                        m_camRotTrans.rotation = target;
+                    }
+
                     // Smooth the camera's rotation out on control and suicide
-                    m_camRotTrans.localRotation = Quaternion.Slerp(m_camRotTrans.localRotation, target, Time.deltaTime * smooth);
+                    m_camRotTrans.rotation = Quaternion.Slerp(m_camRotTrans.rotation, target, Time.deltaTime * smooth);
                 }
 
                 // Look behind self on right stick click
-                if (a_rightClick)
+                m_flippedViewLast = false;
+                if (shouldFlip)
                 {
-                    m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);//Quaternion.LookRotation(-m_shipTrans.forward);
+                    m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);
+                    m_flippedViewLast = true;
                 }
 
                 // Move lookTarget around
