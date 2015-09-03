@@ -193,7 +193,7 @@ namespace ProjectStorms
                 // Move lookTarget around
                 float internalCamYRotation = m_camRotTrans.localEulerAngles.y;
 
-                Debug.Log("Inp: " + m_totalHoriz + " " + m_totalVert + ", deg: " + m_tiltAroundX + " " + m_tiltAroundY + ", result: " + internalCamYRotation);
+                //Debug.Log("Inp: " + m_totalHoriz + " " + m_totalVert + ", deg: " + m_tiltAroundX + " " + m_tiltAroundY + ", result: " + internalCamYRotation);
 
                 /*if (internalCamYRotation <= 315 && internalCamYRotation > 225)
                 {
