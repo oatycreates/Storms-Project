@@ -17,7 +17,7 @@ public class CinematicOutro : MonoBehaviour
 	public GameObject pirate;
 	private Renderer pirateRenderer;
 	public Text winText;
-	public Color myColour = Color.blue;
+	public Color myColour = Color.white;
 
 
 	void Awake () 
