@@ -11,33 +11,35 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class CinematicOutro : MonoBehaviour 
+namespace ProjectStorms
 {
-	public GameObject rotator;
-	public GameObject pirate;
-	private Renderer pirateRenderer;
-	public Text winText;
-	public Color myColour = Color.white;
+    public class CinematicOutro : MonoBehaviour
+    {
+        public GameObject rotator;
+        public GameObject pirate;
+        private Renderer pirateRenderer;
+        public Text winText;
+        public Color myColour = Color.white;
 
 
-	void Awake () 
-	{
-		pirateRenderer = pirate.GetComponent<Renderer> ();
+        void Awake()
+        {
+            pirateRenderer = pirate.GetComponent<Renderer>();
 
-		//Go to sleep untill I'm needed
-		gameObject.SetActive (false);
-	}
+            //Go to sleep untill I'm needed
+            gameObject.SetActive(false);
+        }
 
-	void FixedUpdate () 
-	{
-		rotator.transform.Rotate(Vector3.down * Time.deltaTime * 60);
-	}
+        void FixedUpdate()
+        {
+            rotator.transform.Rotate(Vector3.down * Time.deltaTime * 60);
+        }
 
-
-	public void WinCam(string winnerNumberText, Color winnerColour)
-	{
-		winText.text = winnerNumberText;
-		winText.color = winnerColour;
-		pirateRenderer.material.color = winnerColour;
-	}
+        public void WinCam(string winnerNumberText, Color winnerColour)
+        {
+            winText.text = winnerNumberText;
+            winText.color = winnerColour;
+            pirateRenderer.material.color = winnerColour;
+        }
+    }
 }
