@@ -27,25 +27,25 @@ namespace ProjectStorms
         public bool invertUpDown = false;
         public bool invertLeftRight = false;
 
-        public float horizontalTiltAngle = 360.0f;
-        public float verticalTiltAngle = 90.0f;
+        public float horizontalTiltAnglePerc = 0.95f;
+        public float verticalTiltAnglePerc = 0.95f;
         public float smooth = 2.0f;
 
         private float m_tiltAroundY;
         private float m_tiltAroundX;
 
         // Move the target object
-
         public GameObject lookyHereTarget;
         public float targetHeightFactor = 5.0f;
-        private float yPos = 0;
 
         // Move the camera directly
         public GameObject camProxyTarget;
-        private float m_xPos;
         public float camPositionFactor = 2.0f;
-        private float m_zPos;
         public float camDistanceFactor = 15.0f;
+
+        private float m_yPos = 0;
+        private float m_xPos = 0;
+        private float m_zPos = 0;
 
         // Link to Cannons
         public GameObject[] cannons;
@@ -78,7 +78,7 @@ namespace ProjectStorms
 
         // Total camera rotation values
         private float m_totalVert = 0;
-        private float m_totalHori = 0;
+        private float m_totalHoriz = 0;
 
         // Cached variables
         private Transform m_shipTrans = null;
@@ -100,19 +100,19 @@ namespace ProjectStorms
         {
             if (a_snap)
             {
-                m_totalHori = 0;
+                m_totalHoriz = 0;
                 m_totalVert = 0;
             }
             else
             {
                 // Interp the look back to neutral
-                m_totalHori = Mathf.Lerp(m_totalHori, 0, camResetMoveSpeed * Time.deltaTime);
+                m_totalHoriz = Mathf.Lerp(m_totalHoriz, 0, camResetMoveSpeed * Time.deltaTime);
                 m_totalVert = Mathf.Lerp(m_totalVert, 0, camResetMoveSpeed * Time.deltaTime);
 
                 // Snap the last leg
-                if (Mathf.Abs(m_totalHori) < 0.01f)
+                if (Mathf.Abs(m_totalHoriz) < 0.01f)
                 {
-                    m_totalHori = 0;
+                    m_totalHoriz = 0;
                 }
                 if (Mathf.Abs(m_totalVert) < 0.01f)
                 {
@@ -123,10 +123,6 @@ namespace ProjectStorms
 
         void Update()
         {
-            // Clamp the total rotation values
-            m_totalHori = Mathf.Clamp(m_totalHori, -1.0f, 1.0f);
-            m_totalVert = Mathf.Clamp(m_totalVert, -1.0f, 1.0f);
-
             // Count down the shot cool-down
             m_currShotCooldown -= Time.deltaTime;
         }
@@ -149,48 +145,36 @@ namespace ProjectStorms
                     ResetCamRotation(false);
                 }
 
-                // Lock up/down
-                if (a_camVertical > 0)
-                {
-                    m_totalVert -= a_camVertical * camTurnSpeed * Time.deltaTime;
-                }
-
-                if (a_camVertical < 0)
-                {
-                    m_totalVert += a_camVertical * camTurnSpeed * Time.deltaTime;
-                }
-
-                // Lock left/right
-                if (a_camHorizontal > 0)
-                {
-                    m_totalHori += a_camHorizontal * camTurnSpeed * Time.deltaTime;
-                }
-
-                if (a_camHorizontal < 0)
-                {
-                    m_totalHori -= a_camHorizontal * camTurnSpeed * Time.deltaTime;
-                }
-
                 // Record last camera movement time for when to reset the looking
                 if (!Mathf.Approximately(a_camHorizontal, 0) || !Mathf.Approximately(a_camVertical, 0))
                 {
                     m_lastCamLookTime = movingCamResetTime;
                 }
 
-                m_tiltAroundX = m_totalVert * horizontalTiltAngle;
-                m_tiltAroundY = m_totalHori * verticalTiltAngle;
+                // Sample look input
+                m_totalVert += a_camVertical * camTurnSpeed * Time.deltaTime;
+                m_totalHoriz += a_camHorizontal * camTurnSpeed * Time.deltaTime;
+
+                // Clamp the total rotation values
+                m_totalHoriz = Mathf.Clamp(m_totalHoriz, -1.0f, 1.0f);
+                m_totalVert = Mathf.Clamp(m_totalVert, -1.0f, 1.0f);
+
+                // Map input to desired tilt angle
+                m_tiltAroundX = Mathf.Asin(m_totalVert) * Mathf.Rad2Deg * horizontalTiltAnglePerc;
+                m_tiltAroundY = Mathf.Asin(m_totalHoriz) * Mathf.Rad2Deg * verticalTiltAnglePerc;
 
                 if (invertUpDown)
                 {
-                    m_tiltAroundX *= -1;
+                    m_tiltAroundX = -m_tiltAroundX;
                 }
 
                 if (invertLeftRight)
                 {
 
-                    m_tiltAroundY *= -1;
+                    m_tiltAroundY = -m_tiltAroundY;
                 }
 
+                // Construct the local target rotation
                 Quaternion target = Quaternion.Euler(m_tiltAroundX, m_tiltAroundY, 0);
 
                 EPlayerState currState = m_referenceStateManager.GetPlayerState();
@@ -208,14 +192,14 @@ namespace ProjectStorms
 
                 // Move lookTarget around
                 float internalCamYRotation = m_camRotTrans.localEulerAngles.y;
-                //Debug.Log(internalCamYRotation);
 
+                Debug.Log("Inp: " + m_totalHoriz + " " + m_totalVert + ", deg: " + m_tiltAroundX + " " + m_tiltAroundY + ", result: " + internalCamYRotation);
 
-                if (internalCamYRotation <= 315 && internalCamYRotation > 225)
+                /*if (internalCamYRotation <= 315 && internalCamYRotation > 225)
                 {
                     //print ("Left");
                     //Move the target
-                    yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
+                    m_yPos = Mathf.Lerp(m_yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
 
                     //Move the cam
                     m_xPos = Mathf.Lerp(m_xPos, camPositionFactor, Time.deltaTime * smooth / 2);
@@ -233,7 +217,7 @@ namespace ProjectStorms
                     //print ("Right");
 
                     // Move the target
-                    yPos = Mathf.Lerp(yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
+                    m_yPos = Mathf.Lerp(m_yPos, targetHeightFactor, Time.deltaTime * smooth / 2);
 
 
                     // Move the cam
@@ -251,7 +235,7 @@ namespace ProjectStorms
                 {
                     //print ("Back");
                     // Move the target
-                    yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth / 2);
+                    m_yPos = Mathf.Lerp(m_yPos, 0, Time.deltaTime * smooth / 2);
 
 
                     // Move the cam
@@ -262,7 +246,7 @@ namespace ProjectStorms
                 {
                     //print ("Forward");
                     // Move the target
-                    yPos = Mathf.Lerp(yPos, 0, Time.deltaTime * smooth / 2);
+                    m_yPos = Mathf.Lerp(m_yPos, 0, Time.deltaTime * smooth / 2);
 
 
                     // Move the cam
@@ -275,10 +259,13 @@ namespace ProjectStorms
                         Cannons(ECannonPos.Forward);
                     }
 
-                }
+                }*/
 
-                m_lookTarTrans.localPosition = new Vector3(m_lookTarTrans.localPosition.x, yPos, m_lookTarTrans.localPosition.z);
-                m_camProxyTrans.localPosition = new Vector3(m_xPos, m_camProxyTrans.localPosition.y, -m_zPos);
+                //m_lookTarTrans.localPosition = new Vector3(m_lookTarTrans.localPosition.x, m_yPos, m_lookTarTrans.localPosition.z);
+                //m_camProxyTrans.localPosition = new Vector3(m_xPos, m_camProxyTrans.localPosition.y, -m_zPos);
+
+                //m_lookTarTrans.localPosition = new Vector3(m_lookTarTrans.localPosition.x, m_yPos, m_lookTarTrans.localPosition.z);
+                //m_camProxyTrans.localPosition = new Vector3(m_xPos, m_camProxyTrans.localPosition.y, -m_zPos);
             }
         }
 

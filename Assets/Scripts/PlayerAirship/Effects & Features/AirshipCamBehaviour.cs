@@ -21,8 +21,9 @@ namespace ProjectStorms
         [HideInInspector]
         public bool camFollowPlayer = true;
 
-        public Transform camPosTarget;
-        public Transform camLookTarget;
+        public Transform camPosTarget = null;
+        public Transform camRotator = null;
+        public Transform camLookTarget = null;
 
         /// <summary>
         /// Used to slerp look direction.
@@ -91,7 +92,8 @@ namespace ProjectStorms
             {
                 //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
                 //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
-                m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+                //m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
+                m_trans.rotation = camRotator.rotation;
             }
 
         }
