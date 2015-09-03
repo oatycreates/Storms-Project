@@ -188,7 +188,7 @@ namespace ProjectStorms
                 // Look behind self on right stick click
                 if (a_rightClick)
                 {
-                    m_camRotTrans.rotation = Quaternion.Euler(0, -180, 0);//Quaternion.LookRotation(-m_shipTrans.forward);
+                    m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);//Quaternion.LookRotation(-m_shipTrans.forward);
                 }
 
                 // Ignore the roll of the ship, make camera controls relative to the world
