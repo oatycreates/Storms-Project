@@ -1465,7 +1465,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 185346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -800, y: 440, z: -800}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 443548}
@@ -4332,6 +4332,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 705e262557a2e0043adcacf8303642dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnAsSpray: 0
+  spraySpawnAngle: .5
   initialPassengerForce: 10
   currentlySpawning: 0
   pooledAmount: 350
@@ -4364,6 +4366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 705e262557a2e0043adcacf8303642dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnAsSpray: 0
+  spraySpawnAngle: .5
   initialPassengerForce: 10
   currentlySpawning: 0
   pooledAmount: 350
