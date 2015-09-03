@@ -41,7 +41,7 @@ namespace ProjectStorms
 		public PirateBaseIdentity teamBaseOmega;
 
 		public string alphaTeamName = "Alpha";
-		public string omegateamName = "Omega";
+		public string omegaTeamName = "Omega";
 
 
         private Color m_winnerColour;
@@ -123,7 +123,7 @@ namespace ProjectStorms
 			else
 			if (teamBaseOmega.baseScore <= 0)
 			{
-				winnerName = omegateamName;
+				winnerName = omegaTeamName;
 				m_winnerColour = Color.black;
 				TeamWin(winnerName, m_winnerColour);
 			}
