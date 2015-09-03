@@ -15,12 +15,14 @@ namespace ProjectStorms
 {
     public enum ENextScene
     {
+		Empty,
         Menu,
         Game,
         Credits,
         Splash,
         LoopLevel,
-        TestScene
+        TestScene,
+		CoOpTeamScene
     }
 
     /// <summary>
@@ -106,35 +108,45 @@ namespace ProjectStorms
 
         void Scene()
         {
-            if (fadeToThisScene == ENextScene.Menu)
-            {
-                m_sceneManagerScript.MenuScene();
-            }
-            else
-                if (fadeToThisScene == ENextScene.Game)
-                {
-                    m_sceneManagerScript.GameScene();
-                }
-                else
-                    if (fadeToThisScene == ENextScene.Credits)
-                    {
-                        m_sceneManagerScript.CreditsScene();
-                    }
-                    else
-                        if (fadeToThisScene == ENextScene.Splash)
-                        {
-                            m_sceneManagerScript.SplashScreen();
-                        }
-                        else
-                            if (fadeToThisScene == ENextScene.LoopLevel)
-                            {
-                                m_sceneManagerScript.LoopCurrentLevel();
-                            }
-                            else
-                                if (fadeToThisScene == ENextScene.TestScene)
-                                {
-                                    m_sceneManagerScript.TestScene();
-                                }
+			if (fadeToThisScene == ENextScene.Empty)
+			{
+				Debug.Log("Stay Here");
+			}
+			else
+	            if (fadeToThisScene == ENextScene.Menu)
+	            {
+	                m_sceneManagerScript.MenuScene();
+	            }
+	            else
+	                if (fadeToThisScene == ENextScene.Game)
+	                {
+	                    m_sceneManagerScript.GameScene();
+	                }
+	                else
+	                    if (fadeToThisScene == ENextScene.Credits)
+	                    {
+	                        m_sceneManagerScript.CreditsScene();
+	                    }
+	                    else
+	                        if (fadeToThisScene == ENextScene.Splash)
+	                        {
+	                            m_sceneManagerScript.SplashScreen();
+	                        }
+	                        else
+	                            if (fadeToThisScene == ENextScene.LoopLevel)
+	                            {
+	                                m_sceneManagerScript.LoopCurrentLevel();
+	                            }
+	                            else
+	                                if (fadeToThisScene == ENextScene.TestScene)
+	                                {
+	                                    m_sceneManagerScript.TestScene();
+	                                }
+									else
+										if (fadeToThisScene == ENextScene.CoOpTeamScene)
+										{
+											m_sceneManagerScript.CoOpTeamMatch();
+										}
         }
     } 
 }
