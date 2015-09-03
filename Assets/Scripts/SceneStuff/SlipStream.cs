@@ -104,6 +104,7 @@ namespace ProjectStorms
 
                 default:
                     // Not player
+                    playerBody = a_other.GetComponent<Rigidbody>();
                     return;
             }
 
@@ -114,7 +115,7 @@ namespace ProjectStorms
             }
             else
             {
-                Debug.LogWarning("Object: " + name + " entered slipstream without a rigidbody, unable to accelerate");
+                //Debug.LogWarning("Object: " + name + " entered slipstream without a rigidbody, unable to accelerate");
             }
         }
     }
