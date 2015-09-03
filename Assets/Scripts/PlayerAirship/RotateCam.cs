@@ -134,7 +134,12 @@ namespace ProjectStorms
 
         public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceDown, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
         {
-            if (this.isActiveAndEnabled)
+            // Zero input if not enabled
+            if (!this.isActiveAndEnabled)
+            {
+                ResetCamRotation(true);
+            }
+            else
             {
                 // Reset on left stick click
                 if (a_leftClick)

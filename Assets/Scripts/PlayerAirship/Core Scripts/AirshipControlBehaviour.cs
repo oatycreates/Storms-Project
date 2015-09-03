@@ -229,7 +229,18 @@ namespace ProjectStorms
             bool a_faceLeft,    // X - Fire broadside left
             bool a_faceRight)   // B - Fire broadside right
         {
-            if (this.isActiveAndEnabled)
+            // Zero input if not enabled
+            if (!this.isActiveAndEnabled)
+            {
+                pitch = 0;
+                yaw = 0;
+                roll = 0;
+
+                throttle = 0;
+
+                openHatch = false;
+            }
+            else
             {
                 // Use this to convert buttonpresses to axis input;
                 float rollFloat = 0;

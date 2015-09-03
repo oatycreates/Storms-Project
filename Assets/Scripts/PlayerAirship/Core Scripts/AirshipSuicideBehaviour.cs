@@ -103,7 +103,16 @@ namespace ProjectStorms
             float a_Vertical,
             float a_Horizontal, bool a_selectButton)
         {
-            if (this.isActiveAndEnabled)
+            // Zero input if not enabled
+            if (!this.isActiveAndEnabled)
+            {
+                pitch = 0;
+                yaw = 0;
+
+                m_lastSelectHeld = false;
+                m_selectHeld = false;
+            }
+            else
             {
                 pitch = a_Vertical;
                 yaw = a_Horizontal;

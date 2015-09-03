@@ -180,6 +180,12 @@ namespace ProjectStorms
 
         public void SetPlayerState(EPlayerState a_state)
         {
+            // Reset the suicide cooldown when going from the dying state to the control state
+            if (m_currentPlayerState == EPlayerState.Dying && a_state == EPlayerState.Control)
+            {
+                m_suicideScript.ResetTimer();
+            }
+
             m_currentPlayerState = a_state;
             switch (a_state)
             {
