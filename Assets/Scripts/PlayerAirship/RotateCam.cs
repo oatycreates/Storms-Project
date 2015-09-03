@@ -30,7 +30,6 @@ namespace ProjectStorms
         public float horizontalTiltAngle = 360.0f;
         public float verticalTiltAngle = 90.0f;
         public float smooth = 2.0f;
-        public float deadZoneFactor = 0.25f;
 
         private float m_tiltAroundY;
         private float m_tiltAroundX;
@@ -52,9 +51,7 @@ namespace ProjectStorms
         public GameObject[] cannons;
 
         // Fix cam to position
-        public float camTurnMultiplier = 1.0f;
-        public float totalVert = 0;
-        public float totalHori = 0;
+        public float camTurnSpeed = 3.0f;
 
         /// <summary>
         /// Minimum time between shots.
@@ -79,6 +76,10 @@ namespace ProjectStorms
         /// </summary>
         private float m_currShotCooldown = 0.0f;
 
+        // Total camera rotation values
+        private float m_totalVert = 0;
+        private float m_totalHori = 0;
+
         // Cached variables
         private Transform m_shipTrans = null;
         private Transform m_camRotTrans = null;
@@ -99,32 +100,32 @@ namespace ProjectStorms
         {
             if (a_snap)
             {
-                totalHori = 0;
-                totalVert = 0;
+                m_totalHori = 0;
+                m_totalVert = 0;
             }
             else
             {
                 // Interp the look back to neutral
-                totalHori = Mathf.Lerp(totalHori, 0, camResetMoveSpeed * Time.deltaTime);
-                totalVert = Mathf.Lerp(totalVert, 0, camResetMoveSpeed * Time.deltaTime);
+                m_totalHori = Mathf.Lerp(m_totalHori, 0, camResetMoveSpeed * Time.deltaTime);
+                m_totalVert = Mathf.Lerp(m_totalVert, 0, camResetMoveSpeed * Time.deltaTime);
 
                 // Snap the last leg
-                if (Mathf.Abs(totalHori) < 0.01f)
+                if (Mathf.Abs(m_totalHori) < 0.01f)
                 {
-                    totalHori = 0;
+                    m_totalHori = 0;
                 }
-                if (Mathf.Abs(totalVert) < 0.01f)
+                if (Mathf.Abs(m_totalVert) < 0.01f)
                 {
-                    totalVert = 0;
+                    m_totalVert = 0;
                 }
             }
         }
 
         void Update()
         {
-            // Clamp the totalVert values
-            totalVert = Mathf.Clamp(totalVert, -1.25f, 1.25f);
-            totalHori = Mathf.Clamp(totalHori, -1.85f, 1.85f);
+            // Clamp the total rotation values
+            m_totalHori = Mathf.Clamp(m_totalHori, -1.0f, 1.0f);
+            m_totalVert = Mathf.Clamp(m_totalVert, -1.0f, 1.0f);
 
             // Count down the shot cool-down
             m_currShotCooldown -= Time.deltaTime;
@@ -151,23 +152,23 @@ namespace ProjectStorms
                 // Lock up/down
                 if (a_camVertical > 0)
                 {
-                    totalVert -= 0.01f * camTurnMultiplier;
+                    m_totalVert -= a_camVertical * camTurnSpeed * Time.deltaTime;
                 }
 
                 if (a_camVertical < 0)
                 {
-                    totalVert += 0.01f * camTurnMultiplier;
+                    m_totalVert += a_camVertical * camTurnSpeed * Time.deltaTime;
                 }
 
                 // Lock left/right
                 if (a_camHorizontal > 0)
                 {
-                    totalHori += 0.01f * camTurnMultiplier;
+                    m_totalHori += a_camHorizontal * camTurnSpeed * Time.deltaTime;
                 }
 
                 if (a_camHorizontal < 0)
                 {
-                    totalHori -= 0.01f * camTurnMultiplier;
+                    m_totalHori -= a_camHorizontal * camTurnSpeed * Time.deltaTime;
                 }
 
                 // Record last camera movement time for when to reset the looking
@@ -176,11 +177,8 @@ namespace ProjectStorms
                     m_lastCamLookTime = movingCamResetTime;
                 }
 
-                m_tiltAroundX = totalVert * horizontalTiltAngle * deadZoneFactor;
-                m_tiltAroundY = totalHori * verticalTiltAngle * deadZoneFactor;
-
-                //tiltAroundY = camHorizontal * horizontalTiltAngle * deadZoneFactor;
-                //tiltAroundX = camVertical * verticalTiltAngle * deadZoneFactor;
+                m_tiltAroundX = m_totalVert * horizontalTiltAngle;
+                m_tiltAroundY = m_totalHori * verticalTiltAngle;
 
                 if (invertUpDown)
                 {
