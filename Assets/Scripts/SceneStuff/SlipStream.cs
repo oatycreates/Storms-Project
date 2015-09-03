@@ -55,7 +55,6 @@ namespace ProjectStorms
                 return null;
             }
 
-
             Transform playerObjectTransform = playerStuffObject.transform.FindChild("Airship_Prefab");
             if (playerObjectTransform == null)
             {
@@ -102,6 +101,10 @@ namespace ProjectStorms
                     playerBody = m_playerRigidBodies[3];
                     break;
 
+                case "Passengers":
+                    playerBody = a_other.GetComponentInParent<Rigidbody>();
+                    break;
+
                 default:
                     // Not player
                     playerBody = a_other.GetComponent<Rigidbody>();
@@ -112,10 +115,6 @@ namespace ProjectStorms
             if (playerBody != null)
             {
                 playerBody.AddForce(transform.forward, ForceMode.VelocityChange);
-            }
-            else
-            {
-                //Debug.LogWarning("Object: " + name + " entered slipstream without a rigidbody, unable to accelerate");
             }
         }
     }
