@@ -25,8 +25,8 @@ public class CinematicOutro : MonoBehaviour
 		pirateRenderer = pirate.GetComponent<Renderer>();
         pirateRenderer.enabled = false;
 
-		//Go to sleep untill I'm needed
-		gameObject.SetActive (false);
+		//Go to sleep until I'm needed
+		gameObject.SetActive(false);
 	}
 
 	void FixedUpdate() 
