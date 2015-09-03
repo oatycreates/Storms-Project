@@ -28,37 +28,6 @@ namespace ProjectStorms
 
         void Update()
         {
-            // Update lerp values
-            //if (m_airpshipControl.isReversing)
-            //{
-            //    m_rawLerp += Time.deltaTime * speed;
-            //    m_lerpTime = Mathf.Min(m_rawLerp, 1.0f);
-            //}
-            //else
-            //{
-            //    m_rawLerp -= Time.deltaTime * speed;
-            //    m_lerpTime = Mathf.Min(m_rawLerp, 0.0f);
-            //}
-            //
-            //if (m_lastReverse != m_airpshipControl.isReversing)
-            //{
-            //    if (m_lerpTime >= 1.0f)
-            //    {
-            //        m_lerpTime = 0.0f;
-            //        m_rawLerp = 0.0f;
-            //    }
-            //
-            //    m_lastReverse = m_airpshipControl.isReversing;
-            //}
-            //else
-            //{
-            //    if (m_lerpTime <= 0.0f)
-            //    {
-            //        m_lerpTime  = 1.0f;
-            //        m_rawLerp   = 1.0f;
-            //    }
-            //}
-
             Vector3 currentScale = m_transform.localScale;
             float lerpTarget;
 
