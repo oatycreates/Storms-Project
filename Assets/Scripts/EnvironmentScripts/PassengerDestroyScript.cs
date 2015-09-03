@@ -21,10 +21,20 @@ namespace ProjectStorms
         /// Kill-Y.
         /// </summary>
         public float heightTillDeath = -2000.0f;
-        private FallingScream m_scream;
+
+        /// <summary>
+        /// Time till each passenger expires.
+        /// </summary>
+        public float expireTime = 60.0f;
+
+        /// <summary>
+        /// When the prisoner was spawned.
+        /// </summary>
+        private float m_spawnTime = 0.0f;
 
         // Cached variables
         private Transform m_trans;
+        private FallingScream m_scream;
 
         void Awake()
         {
@@ -37,11 +47,17 @@ namespace ProjectStorms
             m_trans.tag = "Passengers";
         }
 
+        void OnEnable()
+        {
+            m_spawnTime = Time.time;
+        }
+
         void Update()
         {
             if (gameObject.activeInHierarchy)
             {
-                if (m_trans.position.y < heightTillDeath)
+                // If below kill Y or has expired
+                if (m_trans.position.y < heightTillDeath || Time.time - m_spawnTime >= expireTime)
                 {
                     // Check timeout
                     gameObject.SetActive(false);
@@ -51,7 +67,6 @@ namespace ProjectStorms
                     {
                         m_scream.readyToScream = true;
                     }
-
                 }
             }
         }
