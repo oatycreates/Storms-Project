@@ -82,12 +82,14 @@ namespace ProjectStorms
         private Transform m_trans = null;
         private Rigidbody m_rb = null;
         private ShipPartDestroy m_shipParts = null;
+        private ShuntingController m_shuntScript = null;
 
         void Awake()
         {
             m_trans = transform;
             m_rb = GetComponent<Rigidbody>();
             m_shipParts = GetComponent<ShipPartDestroy>();
+            m_shuntScript = GetComponent<ShuntingController>();
 
             m_rouletteScript = GetComponent<RouletteBehaviour>();
             m_airshipScript = GetComponent<AirshipControlBehaviour>();
@@ -279,6 +281,7 @@ namespace ProjectStorms
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
+            m_shuntScript.enabled = false;
 
             // Revert the ship back to the start
             ResetPlayerShip();
@@ -294,6 +297,7 @@ namespace ProjectStorms
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = true;
+            m_shuntScript.enabled = false;
 
             ToggleShipParts(true, true, true, false, true, false);
         }
@@ -306,6 +310,7 @@ namespace ProjectStorms
             m_dyingScript.enabled = true;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
+            m_shuntScript.enabled = false;
 
             ToggleShipParts(true, true, true, false, true, false);
         }
@@ -318,6 +323,7 @@ namespace ProjectStorms
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = true;
             m_suicideScript.enabled = false;
+            m_shuntScript.enabled = false;
 
             ToggleShipParts(true, true, true, false, true, false);
         }
@@ -330,6 +336,7 @@ namespace ProjectStorms
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
+            m_shuntScript.enabled = true;
 
             ToggleShipParts(true, true, true, false, true, true);
         }
@@ -342,6 +349,7 @@ namespace ProjectStorms
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
+            m_shuntScript.enabled = false;
 
             // Revert the ship back to the start
             ResetPlayerShip();
