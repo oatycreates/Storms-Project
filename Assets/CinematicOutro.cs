@@ -20,24 +20,25 @@ public class CinematicOutro : MonoBehaviour
 	public Color myColour = Color.white;
 
 
-	void Awake () 
+	void Awake() 
 	{
-		pirateRenderer = pirate.GetComponent<Renderer> ();
+		pirateRenderer = pirate.GetComponent<Renderer>();
+        pirateRenderer.enabled = false;
 
 		//Go to sleep untill I'm needed
 		gameObject.SetActive (false);
 	}
 
-	void FixedUpdate () 
+	void FixedUpdate() 
 	{
 		rotator.transform.Rotate(Vector3.down * Time.deltaTime * 60);
 	}
 
-
 	public void WinCam(string winnerNumberText, Color winnerColour)
 	{
 		winText.text = winnerNumberText;
-		winText.color = winnerColour;
+        winText.color = winnerColour;
+        pirateRenderer.enabled = true;
 		pirateRenderer.material.color = winnerColour;
 	}
 }
