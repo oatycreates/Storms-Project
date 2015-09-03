@@ -165,8 +165,8 @@ namespace ProjectStorms
                 m_totalVert = Mathf.Clamp(m_totalVert, -1.0f, 1.0f);
 
                 // Map input to desired tilt angle
-                m_tiltAroundX = Mathf.Asin(m_totalVert) * Mathf.Rad2Deg * horizontalTiltAnglePerc;
-                m_tiltAroundY = Mathf.Asin(m_totalHoriz) * Mathf.Rad2Deg * verticalTiltAnglePerc;
+                m_tiltAroundX = m_totalVert * 90.0f * horizontalTiltAnglePerc;
+                m_tiltAroundY = m_totalHoriz * 90.0f * verticalTiltAnglePerc;
 
                 if (invertUpDown)
                 {
@@ -175,7 +175,6 @@ namespace ProjectStorms
 
                 if (invertLeftRight)
                 {
-
                     m_tiltAroundY = -m_tiltAroundY;
                 }
 
@@ -202,14 +201,9 @@ namespace ProjectStorms
                 m_flippedViewLast = false;
                 if (shouldFlip)
                 {
-                    m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);//Quaternion.LookRotation(-m_shipTrans.forward);
+                    m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);
                     m_flippedViewLast = true;
                 }
-
-                // Ignore the roll of the ship, make camera controls relative to the world
-                /*Vector3 eulerRot = m_camRotTrans.localRotation.eulerAngles;
-                eulerRot.z = -m_shipTrans.rotation.eulerAngles.z;
-                m_camRotTrans.localRotation = Quaternion.Euler(eulerRot);*/
 
                 // Move lookTarget around
                 float internalCamYRotation = m_camRotTrans.localEulerAngles.y;
