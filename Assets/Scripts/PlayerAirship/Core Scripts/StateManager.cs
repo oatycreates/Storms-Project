@@ -509,11 +509,13 @@ namespace ProjectStorms
                 stallCommit = 1.0f;
             }
 
-
+			//Put this in the Scene manager Script
+			/*
             if (Input.GetButtonDown(gameObject.tag + "Start"))
             {
                 Application.LoadLevel(Application.loadedLevelName);
             }
+            */
         }
     } 
 }

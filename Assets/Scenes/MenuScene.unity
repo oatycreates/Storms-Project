@@ -280,11 +280,9 @@ GameObject:
   - 114: {fileID: 400452385}
   - 114: {fileID: 400452384}
   - 114: {fileID: 400452383}
-  - 114: {fileID: 400452388}
-  - 114: {fileID: 400452387}
   m_Layer: 0
   m_Name: EventSystem
-  m_TagString: Untagged
+  m_TagString: Player1_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -346,32 +344,6 @@ Transform:
   - {fileID: 1785536971}
   m_Father: {fileID: 0}
   m_RootOrder: 5
---- !u!114 &400452387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 400452382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ed663961fb0b5c458e18002a24f4d0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &400452388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 400452382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16e5e88d1bec6c2488b5b936d6de54dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horizontal: 0
-  vertical: 0
-  press: 0
-  cancelPress: 0
 --- !u!1 &623250020
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,7 +671,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1711522049}
-        m_MethodName: GameScene
+        m_MethodName: CoOpTeamMatch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -849,7 +821,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 169304, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 149666, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
       propertyPath: m_IsActive
@@ -956,7 +928,7 @@ Canvas:
   m_GameObject: {fileID: 1785536969}
   m_Enabled: 1
   serializedVersion: 2
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1194861508}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -995,7 +967,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
