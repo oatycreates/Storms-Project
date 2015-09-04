@@ -74,12 +74,14 @@ namespace ProjectStorms
         private Rigidbody m_shipRB;
         private Transform m_trans = null;
         private Transform m_tarTrans = null;
+        private ShuntingController m_shuntingController;
 
         void Awake()
         {
             m_trans = transform;
             m_tarTrans = lookAtTarget.transform;
             m_shipRB = parentAirship.GetComponent<Rigidbody>();
+            m_shuntingController = m_trans.parent.GetComponentInParent<ShuntingController>();
 
             // Find the cannonball holder object
             if (ms_ballHolder == null)
@@ -187,6 +189,9 @@ namespace ProjectStorms
                     }
                 }
             }
+
+            // Apply shunt
+            m_shuntingController.ApplyShunt(m_trans.TransformDirection(-Vector3.forward));
         }
     } 
 }
