@@ -83,6 +83,11 @@ namespace ProjectStorms
 		{
 			Application.LoadLevel ("TwoTeamMapPrototype");
 		}
+
+		public void ExperimentalX()
+		{
+			Application.LoadLevel ("TestSceneX");
+		}
 		                       
     } 
 }
