@@ -28,6 +28,9 @@ namespace ProjectStorms
        // public ENumberOfPlayers e_numberOfBases;
 		public EGameType gameType;
 
+		[HideInInspector]
+		public static bool teamGame = false;
+
         public int passengersToWin = 50;
 
         public Text winText;
@@ -65,6 +68,8 @@ namespace ProjectStorms
 				pirateBase2.ResetPirateBase (passengersToWin);
 				pirateBase3.ResetPirateBase (passengersToWin);
 				pirateBase4.ResetPirateBase (passengersToWin);
+
+				teamGame = false;
 			}
 
 			if (gameType == EGameType.TeamGame)
@@ -79,6 +84,9 @@ namespace ProjectStorms
 
 				teamBaseAlpha.omegaBlack = false;
 				teamBaseOmega.omegaBlack = true;
+
+				//make the reference
+				teamGame = true;
 			}
         }
 
@@ -108,15 +116,12 @@ namespace ProjectStorms
 
 		void TeamMatch()
 		{
-			//Alpha = team 1 = white
-			//Omega = team 2 = black
-
 			string winnerName = " ";
 
 			if (teamBaseAlpha.baseScore <= 0)
 			{
 				winnerName = alphaTeamName;
-				m_winnerColour = Color.white;
+				m_winnerColour = Color.red;
 				TeamWin(winnerName, m_winnerColour);
 			}
 			else
