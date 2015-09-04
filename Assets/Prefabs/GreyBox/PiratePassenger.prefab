@@ -215,7 +215,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: .0900000036
-  m_AngularDrag: .100000001
+  m_AngularDrag: .5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -331,6 +331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightTillDeath: -2000
+  expireTime: 60
+  colDisableTime: 1
 --- !u!114 &11448062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -415,7 +417,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_AngularDrag
-      value: .100000001
+      value: .5
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
@@ -433,6 +435,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: randomChanceOfScream
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: colDisableTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

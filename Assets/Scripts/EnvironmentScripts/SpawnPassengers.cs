@@ -160,6 +160,7 @@ namespace ProjectStorms
             // Variables for loop
             Vector3 relativeSpace;
             Rigidbody passengerRb;
+            Transform passengerTrans;
 
             // Loop through, find first non-active player
             for (int i = 0; i < passengers.Count; i++)
@@ -173,14 +174,15 @@ namespace ProjectStorms
                         sprayQuat = Quaternion.Euler(randomAngle, randomAngle, randomAngle);
                     }
 
-                    //passengers[i].transform.position = m_trans.position;
-                    passengers[i].transform.position = m_trans.position + (spawnAsSpray ? sprayQuat * Vector3.forward : Vector3.zero);
-                    passengers[i].transform.rotation = Quaternion.identity;
+                    passengerTrans = passengers[i].transform;
+                    //passengerTrans.position = m_trans.position;
+                    passengerTrans.position = m_trans.position + (spawnAsSpray ? sprayQuat * Vector3.forward : Vector3.zero);
+                    passengerTrans.rotation = (spawnAsSpray ? sprayQuat : Quaternion.identity);
 
                     passengers[i].SetActive(true);
 
                     // Use relative space to spawn
-                    relativeSpace = m_trans.TransformDirection(Vector3.forward);
+                    relativeSpace = m_trans.forward;
 
                     // Set up player rigidbody
                     passengerRb = passengers[i].GetComponent<Rigidbody>();
@@ -193,7 +195,9 @@ namespace ProjectStorms
                     passengerRb.angularVelocity = Vector3.zero;
 
                     // Add initial passenger velocity here!	Jump!
-                    passengerRb.AddForce((sprayQuat * relativeSpace) * initialPassengerForce * passengerRb.mass, ForceMode.Impulse);
+                    /*Vector3 passengerVel = (spawnAsSpray ? sprayQuat : Quaternion.identity) * relativeSpace * initialPassengerForce * passengerRb.mass;
+                    //passengerRb.AddForce(passengerForce, ForceMode.Impulse);
+                    passengerRb.velocity = passengerVel;*/
 
                     // Don't forget this!
                     break;
