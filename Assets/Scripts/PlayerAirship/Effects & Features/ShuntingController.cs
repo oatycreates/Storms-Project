@@ -104,7 +104,7 @@ namespace ProjectStorms
             }
         }
 
-        public void ApplyShunt(Vector3 a_direction)
+        void ApplyShunt(Vector3 a_direction)
         {
             m_rigidBody.AddForce(a_direction * shuntingForce, ForceMode.Impulse);
             m_shuntApplied = true;

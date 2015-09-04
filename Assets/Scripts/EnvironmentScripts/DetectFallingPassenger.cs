@@ -34,21 +34,13 @@ namespace ProjectStorms
         {
             scoreText.color = textColour;
             scoreText.text = ("" + peopleLeftToCatch);
-
-			if (peopleLeftToCatch <= 0)
-			{
-				peopleLeftToCatch = 0;
-			}
         }
 
         void OnTriggerEnter(Collider a_other)
         {
             if (a_other.tag == "Passengers")
             {
-				if (peopleLeftToCatch > 0)
-				{
-                	peopleLeftToCatch -= 1;
-				}
+                peopleLeftToCatch -= 1;
                 a_other.gameObject.SetActive(false);
             }
         }

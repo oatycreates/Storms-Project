@@ -53,9 +53,6 @@ namespace ProjectStorms
 		//Delay the trumpet
 		private bool delay = true;
 		private float delayTimer = 1.5f;
-
-		//bool to skip intro
-		private bool skip = false;
        	
 
         void Awake()
@@ -152,10 +149,6 @@ namespace ProjectStorms
 				
 				//Fade in text
 				textAlpha = Mathf.Lerp(textAlpha, 1, Time.deltaTime * 0.3f);
-
-				//Skip the scene 
-				Invoke("Skipping", 0.5f);
-
             }
             
             //Optional look target
@@ -189,28 +182,16 @@ namespace ProjectStorms
 			{
 				if (shot == EShotLength.CloseUp)
 				{
-					if (!skip)
-					{
-						gameObject.SetActive(false);
-					}
-				}
+					gameObject.SetActive(false);
+				}/*
 				else
-				if (shot != EShotLength.CloseUp) 
 				{
-					if (!skip)
-					{
-						shot = EShotLength.CloseUp;
-						skip = true;
-					}
-				}
+					shot = EShotLength.CloseUp;
+				}*/
 			}
 
-        }
 
-		void Skipping()
-		{
-			skip = false;
-		}
+        }
      
     } 
 }

@@ -32,20 +32,61 @@ namespace ProjectStorms
         // Cached variables
         StateManager m_stateManager;
 
-		//Private check for game type
-		private bool amIATeamGame;
-		private Color alphaTeamColour;
-		private Color omegaTeamColour;
-
-        void Awake()
+        void Start()
         {
             m_canvasText = canvasChild.GetComponentInChildren<Text>();
             m_stateManager = airshipTopOfHierachy.GetComponent<StateManager>();
+            /*
+            if (Application.isEditor == false)
+            {
+                canvasChild.SetActive(false);
+            }*/
         }
-
 
         void Update()
         {
+            // Set color
+            if (myRenderer.enabled == true)
+            {
+                /*
+                if (Application.isEditor == true)
+                {
+                    myRenderer.material.color = playerColor;	
+                }
+                */
+                myRenderer.material.color = m_playerColor;
+
+                string myTag = tag;
+                if (myTag == "Player1_")
+                {
+                    m_playerColor = Color.magenta;
+                }
+
+                if (myTag == "Player2_")
+                {
+                    m_playerColor = Color.cyan;
+                }
+
+                if (myTag == "Player3_")
+                {
+                    m_playerColor = Color.green;
+                }
+
+                if (myTag == "Player4_")
+                {
+                    m_playerColor = Color.yellow;
+                }
+
+                //In case of a second render object
+                if (myOtherRenderer != null)
+                {
+                    if (myOtherRenderer.enabled == true)
+                    {
+                        myOtherRenderer.material.color = m_playerColor;
+                    }
+                }
+            }
+
             if (Application.isEditor)
             {
                 // Explain game states
@@ -55,99 +96,6 @@ namespace ProjectStorms
             {
                 m_canvasText.text = "";
             }
-
-			//Determine which colours to use
-			amIATeamGame = ScoreManager.teamGame;
-
-			if (!amIATeamGame)
-			{
-				SetColour();
-			}
-			else
-			if (amIATeamGame)
-			{
-				SetTeamColour(alphaTeamColour, omegaTeamColour);
-			}
-
         }
-
-		void SetTeamColour(Color alpha, Color omega)
-		{
-			// Set team color
-			if (myRenderer.enabled == true)
-			{
-				myRenderer.material.color = m_playerColor;
-				
-				string myTag = tag;
-				if (myTag == "Player1_")
-				{
-					m_playerColor = Color.red;
-				}
-				
-				if (myTag == "Player2_")
-				{
-					m_playerColor = Color.red;
-				}
-				
-				if (myTag == "Player3_")
-				{
-					m_playerColor = Color.black;
-				}
-				
-				if (myTag == "Player4_")
-				{
-					m_playerColor = Color.black;
-				}
-				
-				//In case of a second render object
-				if (myOtherRenderer != null)
-				{
-					if (myOtherRenderer.enabled == true)
-					{
-						myOtherRenderer.material.color = m_playerColor;
-					}
-				}
-			}
-		}
-
-
-		void SetColour()
-		{
-			// Set color
-			if (myRenderer.enabled == true)
-			{
-				myRenderer.material.color = m_playerColor;
-				
-				string myTag = tag;
-				if (myTag == "Player1_")
-				{
-					m_playerColor = Color.magenta;
-				}
-				
-				if (myTag == "Player2_")
-				{
-					m_playerColor = Color.cyan;
-				}
-				
-				if (myTag == "Player3_")
-				{
-					m_playerColor = Color.green;
-				}
-				
-				if (myTag == "Player4_")
-				{
-					m_playerColor = Color.yellow;
-				}
-				
-				//In case of a second render object
-				if (myOtherRenderer != null)
-				{
-					if (myOtherRenderer.enabled == true)
-					{
-						myOtherRenderer.material.color = m_playerColor;
-					}
-				}
-			}
-		}
     } 
 }
