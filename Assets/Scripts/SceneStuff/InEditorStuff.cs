@@ -34,12 +34,13 @@ namespace ProjectStorms
 
 		//Private check for game type
 		private bool amIATeamGame;
+		private Color alphaTeamColour;
+		private Color omegaTeamColour;
 
         void Awake()
         {
             m_canvasText = canvasChild.GetComponentInChildren<Text>();
             m_stateManager = airshipTopOfHierachy.GetComponent<StateManager>();
-          
         }
 
 
@@ -65,12 +66,12 @@ namespace ProjectStorms
 			else
 			if (amIATeamGame)
 			{
-				SetTeamColour();
+				SetTeamColour(alphaTeamColour, omegaTeamColour);
 			}
 
         }
 
-		void SetTeamColour()
+		void SetTeamColour(Color alpha, Color omega)
 		{
 			// Set team color
 			if (myRenderer.enabled == true)
@@ -80,22 +81,22 @@ namespace ProjectStorms
 				string myTag = tag;
 				if (myTag == "Player1_")
 				{
-					m_playerColor = Color.black;
+					m_playerColor = Color.red;
 				}
 				
 				if (myTag == "Player2_")
 				{
-					m_playerColor = Color.black;
+					m_playerColor = Color.red;
 				}
 				
 				if (myTag == "Player3_")
 				{
-					m_playerColor = Color.red;
+					m_playerColor = Color.black;
 				}
 				
 				if (myTag == "Player4_")
 				{
-					m_playerColor = Color.red;
+					m_playerColor = Color.black;
 				}
 				
 				//In case of a second render object
