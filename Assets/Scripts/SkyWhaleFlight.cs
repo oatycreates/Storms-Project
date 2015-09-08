@@ -13,13 +13,21 @@ using System.Collections;
 namespace ProjectStorms
 {
 
+	public enum E_WhaleMode 
+	{
+		Attack,
+		Dormant
+	}
+
 	[RequireComponent(typeof(Rigidbody))]
 	public class SkyWhaleFlight : MonoBehaviour 
 	{
 		
 		private Rigidbody myRigid;
+		public E_WhaleMode whaleMode;
 		
 		public GameObject followObject;
+		public GameObject spiralPoint;
 		
 		public float turnSpeed = 1;
 		public float moveSpeed = 12;
@@ -56,8 +64,17 @@ namespace ProjectStorms
 			// I think this function needs to be called regularly
 			FindClosestNode();
 			
-			Rotating();
-			Moving();
+			
+			if (whaleMode == E_WhaleMode.Attack)
+			{
+				Rotating();
+				Moving();
+			}
+			else
+			if (whaleMode == E_WhaleMode.Dormant)
+			{
+				Spiral ();
+			}
 			
 			Debug.DrawRay(myRigid.transform.position, direction * distanceToTarget, Color.green);
 		}
@@ -85,8 +102,6 @@ namespace ProjectStorms
 			}		
 			return closest;			
 		}
-		
-		
 		
 		void Rotating()
 		{		
@@ -127,6 +142,13 @@ namespace ProjectStorms
 			}
 			
 			myRigid.MovePosition(tempPos);
+		}
+		
+		
+		void Spiral()
+		{
+			//This isn't right - maybe review this
+			myRigid.transform.RotateAround(spiralPoint.transform.position, Vector3.up, moveSpeed * Time.deltaTime);
 		}
 		
 		
