@@ -22,7 +22,8 @@ namespace ProjectStorms
         Splash,
         LoopLevel,
         TestScene,
-		CoOpTeamScene
+		CoOpTeamScene,
+		ExperimentalX
     }
 
     /// <summary>
@@ -147,6 +148,11 @@ namespace ProjectStorms
 										{
 											m_sceneManagerScript.CoOpTeamMatch();
 										}
+										else
+											if (fadeToThisScene == ENextScene.ExperimentalX)
+											{
+												m_sceneManagerScript.ExperimentalX();
+											}
         }
     } 
 }

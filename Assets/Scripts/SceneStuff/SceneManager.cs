@@ -19,28 +19,16 @@ namespace ProjectStorms
     {
         void Update()
         {
-            if (Application.isEditor == true)
-            {
-                if (Input.GetKeyDown(KeyCode.M))
-                {
-                    MenuScene();
-                }
+            // Reset the level - Press Both Start AND Select
+			if ((Input.GetButton("Player1_Start") && Input.GetButton("Player1_Select")) || (Input.GetButton("Player2_Start") && Input.GetButton("Player2_Select")) || (Input.GetButton("Player3_Start") && Input.GetButton("Player3_Select")) || (Input.GetButton("Player4_Start") && Input.GetButton("Player4_Select")) )
+			{
+				LoopCurrentLevel();
+			}
 
-                if (Input.GetKeyDown(KeyCode.G))
-                {
-                    GameScene();
-                }
-
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    CreditsScene();
-                }
-            }
-
-            // Reset the level
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
-                Application.LoadLevel(Application.loadedLevelName);
+                //Application.LoadLevel(Application.loadedLevelName);
+				LoopCurrentLevel();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))

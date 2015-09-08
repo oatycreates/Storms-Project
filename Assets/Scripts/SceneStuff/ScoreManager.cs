@@ -28,6 +28,9 @@ namespace ProjectStorms
        // public ENumberOfPlayers e_numberOfBases;
 		public EGameType gameType;
 
+		[HideInInspector]
+		public static bool teamGame = false;
+
         public int passengersToWin = 50;
 
         public Text winText;
@@ -41,7 +44,9 @@ namespace ProjectStorms
 		public PirateBaseIdentity teamBaseOmega;
 
 		public string alphaTeamName = "Alpha";
+		public Color alphaTeamColour = Color.red;
 		public string omegaTeamName = "Omega";
+		public Color omegaTeamColour = Color.black;
 
 
         private Color m_winnerColour;
@@ -65,6 +70,8 @@ namespace ProjectStorms
 				pirateBase2.ResetPirateBase (passengersToWin);
 				pirateBase3.ResetPirateBase (passengersToWin);
 				pirateBase4.ResetPirateBase (passengersToWin);
+
+				teamGame = false;
 			}
 
 			if (gameType == EGameType.TeamGame)
@@ -79,6 +86,9 @@ namespace ProjectStorms
 
 				teamBaseAlpha.omegaBlack = false;
 				teamBaseOmega.omegaBlack = true;
+
+				//make the reference
+				teamGame = true;
 			}
         }
 
@@ -108,22 +118,19 @@ namespace ProjectStorms
 
 		void TeamMatch()
 		{
-			//Alpha = team 1 = white
-			//Omega = team 2 = black
-
 			string winnerName = " ";
 
 			if (teamBaseAlpha.baseScore <= 0)
 			{
 				winnerName = alphaTeamName;
-				m_winnerColour = Color.white;
+				m_winnerColour = alphaTeamColour;
 				TeamWin(winnerName, m_winnerColour);
 			}
 			else
 			if (teamBaseOmega.baseScore <= 0)
 			{
 				winnerName = omegaTeamName;
-				m_winnerColour = Color.black;
+				m_winnerColour = omegaTeamColour;
 				TeamWin(winnerName, m_winnerColour);
 			}
 
@@ -220,7 +227,7 @@ namespace ProjectStorms
 
 				if (fadeOutScene != null)
 				{
-					Invoke("FadeOut", 15.0f);
+					Invoke("FadeOut", 8.0f);
 				}
 			}
 			else
