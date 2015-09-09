@@ -78,7 +78,12 @@ namespace ProjectStorms
         void Awake()
         {
             m_trans = transform;
-            m_tarTrans = lookAtTarget.transform;
+
+            if (lookAtTarget != null)
+            {
+                m_tarTrans = lookAtTarget.transform;
+            }
+
             m_shipRB = parentAirship.GetComponent<Rigidbody>();
 
             // Find the cannonball holder object
@@ -138,7 +143,11 @@ namespace ProjectStorms
         void Update()
         {
             // Look at the target
-            m_trans.LookAt(m_tarTrans.position);
+            if (lookAtTarget != null)
+            {
+                m_trans.LookAt(m_tarTrans.position);
+            }
+
             m_relativeForward = m_trans.forward;
 
             Ray ray = new Ray(m_trans.position, m_relativeForward);
