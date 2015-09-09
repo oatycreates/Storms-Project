@@ -48,7 +48,7 @@ namespace ProjectStorms
         /// <summary>
         /// Handle to the player firing reticle.
         /// </summary>
-        public GameObject lookAtTarget;
+        public GameObject lookAtTarget = null;
 
         /// <summary>
         /// How many cannonballs to pool per cannon. Equal to shotLifetime/fireCooldown.
@@ -71,15 +71,20 @@ namespace ProjectStorms
         static private GameObject ms_ballHolder = null;
 
         // Cached variables
-        private Rigidbody m_shipRB;
+        private Rigidbody m_shipRB = null;
         private Transform m_trans = null;
         private Transform m_tarTrans = null;
+        private Transform m_shipTrans = null;
 
         void Awake()
         {
             m_trans = transform;
-            m_tarTrans = lookAtTarget.transform;
+            if (lookAtTarget != null)
+            {
+                m_tarTrans = lookAtTarget.transform;
+            }
             m_shipRB = parentAirship.GetComponent<Rigidbody>();
+            m_shipTrans = parentAirship.transform;
 
             // Find the cannonball holder object
             if (ms_ballHolder == null)
