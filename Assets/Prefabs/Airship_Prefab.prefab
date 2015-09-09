@@ -987,6 +987,7 @@ GameObject:
   - 114: {fileID: 11421384}
   - 114: {fileID: 11470350}
   - 114: {fileID: 11430200}
+  - 114: {fileID: 11451448}
   m_Layer: 0
   m_Name: Airship_Prefab
   m_TagString: Player1_
@@ -2040,7 +2041,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 188948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 474240}
@@ -3005,7 +3006,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 146936}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_Materials:
@@ -4575,7 +4576,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11404896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4648,7 +4649,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11413364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4832,7 +4833,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11428984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4909,6 +4910,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shuntingForce: 2000
   cooldownTime: 1
+  portCannons:
+  - {fileID: 11413248}
+  - {fileID: 11440298}
+  - {fileID: 11428686}
+  starboardCannons:
+  - {fileID: 11403966}
+  - {fileID: 11463058}
+  - {fileID: 11493030}
 --- !u!114 &11432028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4994,7 +5003,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11444942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5084,6 +5093,41 @@ MonoBehaviour:
   m_Text: 'Hello World
 
 '
+--- !u!114 &11451448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b055e2871226e945bc5f9978f8b1015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontCannonLockAngle: .707000017
+  lockRepeatCooldown: .25
+  maximumTarDist: 1000
+  lookTarget: {fileID: 481600}
+  playerObjs:
+  - {fileID: 158488}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &11456062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ccc23584cd70384285e868d90326463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: 1
+  maxRotationDegrees: -20
+  airshipControlBehaviour: {fileID: 11429062}
+  isRudderJoint: 0
 --- !u!114 &11458418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5141,7 +5185,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11470350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5271,7 +5315,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!124 &12475972
 Behaviour:
   m_ObjectHideFlags: 1

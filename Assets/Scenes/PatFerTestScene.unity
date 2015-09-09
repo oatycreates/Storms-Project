@@ -150,6 +150,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 790d7dd9dbdfd334d86f4f9a3a1410ca, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &15004862 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 158488, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
+  m_PrefabInternal: {fileID: 2082822823}
 --- !u!1001 &18915715
 Prefab:
   m_ObjectHideFlags: 0
@@ -1007,6 +1011,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 790d7dd9dbdfd334d86f4f9a3a1410ca, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &112120619 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 158488, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
+  m_PrefabInternal: {fileID: 181368388}
 --- !u!1001 &115318298
 Prefab:
   m_ObjectHideFlags: 0
@@ -7569,6 +7577,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff3636f82a6c422478de0e45da1bf4a4, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &873927426 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 158488, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
+  m_PrefabInternal: {fileID: 1971129569}
 --- !u!4 &875500224 stripped
 Transform:
   m_PrefabParentObject: {fileID: 432590, guid: ff3636f82a6c422478de0e45da1bf4a4, type: 2}
@@ -14606,10 +14618,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 433946, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -20
-      objectReference: {fileID: 0}
+    - target: {fileID: 11451448, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
+      propertyPath: playerObjs.Array.data[1]
+      value: 
+      objectReference: {fileID: 873927426}
+    - target: {fileID: 11451448, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
+      propertyPath: playerObjs.Array.data[2]
+      value: 
+      objectReference: {fileID: 112120619}
+    - target: {fileID: 11451448, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
+      propertyPath: playerObjs.Array.data[3]
+      value: 
+      objectReference: {fileID: 15004862}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 326e40a1a64984b429262974b7cdcb6f, type: 2}
   m_IsPrefabParent: 0

@@ -226,10 +226,10 @@ namespace ProjectStorms
                     m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);*/
 
                     // Allow CannonFire
-                    if (a_faceDown)
-                    {
-                        Cannons(ECannonPos.Port);
-                    }
+                    //if (a_faceDown)
+                    //{
+                    //    Cannons(ECannonPos.Port);
+                    //}
 
                 }
                 else if (internalCamYRotation <= 135 && internalCamYRotation > 45)
@@ -245,10 +245,10 @@ namespace ProjectStorms
                     m_zPos = Mathf.Lerp(m_zPos, camDistanceFactor, Time.deltaTime * smooth / 2);*/
 
                     // Allow CannonFire
-                    if (a_faceDown)
-                    {
-                        Cannons(ECannonPos.Starboard);
-                    }
+                    //if (a_faceDown)
+                    //{
+                    //    Cannons(ECannonPos.Starboard);
+                    //}
 
                 }
                 else if (internalCamYRotation <= 225 && internalCamYRotation > 135)
@@ -274,10 +274,10 @@ namespace ProjectStorms
                     m_zPos = Mathf.Lerp(m_zPos, 20, Time.deltaTime * smooth / 2);*/
 
                     // Allow CannonFire
-                    if (a_faceDown)
-                    {
-                        Cannons(ECannonPos.Forward);
-                    }
+                    //if (a_faceDown)
+                    //{
+                    //    Cannons(ECannonPos.Forward);
+                    //}
 
                 }
 
@@ -289,26 +289,26 @@ namespace ProjectStorms
             }
         }
 
-        void Cannons(ECannonPos a_angle)
-        {
-            if (m_currShotCooldown <= 0)
-            {
-                CannonFire script;
-
-                // Put the cannon on cool-down
-                m_currShotCooldown = shotCooldown;
-
-                for (int i = 0; i < cannons.Length; i++)
-                {
-                    script = cannons[i].GetComponent<CannonFire>();
-
-                    // Fire the cannons situated in the requested direction
-                    if (a_angle == script.cannon)
-                    {
-                        script.Fire();
-                    }
-                }
-            }
-        }
+        //void Cannons(ECannonPos a_angle)
+        //{
+        //    if (m_currShotCooldown <= 0)
+        //    {
+        //        CannonFire script;
+        //
+        //        // Put the cannon on cool-down
+        //        m_currShotCooldown = shotCooldown;
+        //
+        //        for (int i = 0; i < cannons.Length; i++)
+        //        {
+        //            script = cannons[i].GetComponent<CannonFire>();
+        //
+        //            // Fire the cannons situated in the requested direction
+        //            if (a_angle == script.cannon)
+        //            {
+        //                script.Fire();
+        //            }
+        //        }
+        //    }
+        //}
     } 
 }
