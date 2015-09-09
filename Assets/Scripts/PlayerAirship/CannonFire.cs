@@ -167,7 +167,7 @@ namespace ProjectStorms
 
                         goBall.SetActive(true);
 
-                        relativeSpace = m_trans.TransformDirection(Vector3.forward);
+                        relativeSpace = m_trans.forward;
 
                         rigidBall = goBall.GetComponent<Rigidbody>();
 
