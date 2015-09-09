@@ -396,7 +396,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 445132}
   - 114: {fileID: 11436168}
-  - 114: {fileID: 11456062}
   m_Layer: 0
   m_Name: Hinge_Mast
   m_TagString: Untagged
@@ -4882,10 +4881,10 @@ MonoBehaviour:
   shipPartConns:
   - partType: 1
     partValueMult: 0
-    partAuxValueMult: .699999988
+    partAuxValueMult: .400000006
   - partType: 2
     partValueMult: 0
-    partAuxValueMult: .699999988
+    partAuxValueMult: .400000006
   - partType: 3
     partValueMult: .300000012
     partAuxValueMult: 0
@@ -4948,8 +4947,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ccc23584cd70384285e868d90326463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: 2
-  maxRotationDegrees: -20
+  axis: 0
+  maxRotationDegrees: -10
   airshipControlBehaviour: {fileID: 11429062}
   isRudderJoint: 0
 --- !u!114 &11436902
@@ -5085,21 +5084,6 @@ MonoBehaviour:
   m_Text: 'Hello World
 
 '
---- !u!114 &11456062
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 125792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ccc23584cd70384285e868d90326463, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  axis: 1
-  maxRotationDegrees: -20
-  airshipControlBehaviour: {fileID: 11429062}
-  isRudderJoint: 0
 --- !u!114 &11458418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5172,12 +5156,12 @@ MonoBehaviour:
   destructableParts:
   - partObject: {fileID: 111452}
     partType: 1
-    breakVelocity: 30
+    breakVelocity: 50
     partMass: -5
     cached_breakVelocitySqr: 0
   - partObject: {fileID: 151136}
     partType: 2
-    breakVelocity: 30
+    breakVelocity: 50
     partMass: -5
     cached_breakVelocitySqr: 0
   - partObject: {fileID: 198500}
