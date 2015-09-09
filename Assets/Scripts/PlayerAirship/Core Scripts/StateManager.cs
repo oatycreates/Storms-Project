@@ -508,12 +508,6 @@ namespace ProjectStorms
                 //Then player is not stalling
                 stallCommit = 1.0f;
             }
-
-
-            if (Input.GetButtonDown(gameObject.tag + "Start"))
-            {
-                Application.LoadLevel(Application.loadedLevelName);
-            }
         }
     } 
 }

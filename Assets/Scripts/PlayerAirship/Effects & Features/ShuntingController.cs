@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ProjectStorms
 {
@@ -39,6 +40,9 @@ namespace ProjectStorms
         /// </summary>
         private float m_currentCoolTime = 0.0f;
 
+        public List<CannonFire> portCannons;
+        public List<CannonFire> starboardCannons;
+
         /// <summary>
         /// Returns a quaternion which ignores the rotation on the Y axis
         /// </summary>
@@ -59,12 +63,12 @@ namespace ProjectStorms
             m_rigidBody = GetComponent<Rigidbody>();
         }
 
-        void Start()
+        private void Start()
         {
 
         }
 
-        void Update()
+        private void Update()
         {
             if (m_shuntApplied && !(m_leftTriggerDown || m_rightTriggerDown))
             {
@@ -94,17 +98,29 @@ namespace ProjectStorms
             // Left shunt
             if (m_leftTriggerDown && !m_shuntApplied)
             {
-                ApplyShunt(left);
+                ApplyShunt(right);
+                FireCannons(false);
             }
 
             // Right shunt
             if (m_rightTriggerDown && !m_shuntApplied)
             {
-                ApplyShunt(right);
+                ApplyShunt(left);
+                FireCannons(true);
             }
         }
 
-        void ApplyShunt(Vector3 a_direction)
+        private void FireCannons(bool a_fireStarboard)
+        {
+            List<CannonFire> cannons = a_fireStarboard ? starboardCannons : portCannons;
+
+            for (int i = 0; i < cannons.Count; ++i)
+            {
+                cannons[i].Fire();
+            }
+        }
+
+        private void ApplyShunt(Vector3 a_direction)
         {
             m_rigidBody.AddForce(a_direction * shuntingForce, ForceMode.Impulse);
             m_shuntApplied = true;

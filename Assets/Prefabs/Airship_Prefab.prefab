@@ -396,7 +396,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 445132}
   - 114: {fileID: 11436168}
-  - 114: {fileID: 11456062}
   m_Layer: 0
   m_Name: Hinge_Mast
   m_TagString: Untagged
@@ -4577,7 +4576,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11404896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4650,7 +4649,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11413364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4834,7 +4833,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11428984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4883,10 +4882,10 @@ MonoBehaviour:
   shipPartConns:
   - partType: 1
     partValueMult: 0
-    partAuxValueMult: .699999988
+    partAuxValueMult: .400000006
   - partType: 2
     partValueMult: 0
-    partAuxValueMult: .699999988
+    partAuxValueMult: .400000006
   - partType: 3
     partValueMult: .300000012
     partAuxValueMult: 0
@@ -4911,6 +4910,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shuntingForce: 2000
   cooldownTime: 1
+  portCannons:
+  - {fileID: 11413248}
+  - {fileID: 11440298}
+  - {fileID: 11428686}
+  starboardCannons:
+  - {fileID: 11403966}
+  - {fileID: 11463058}
+  - {fileID: 11493030}
 --- !u!114 &11432028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4949,8 +4956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ccc23584cd70384285e868d90326463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: 2
-  maxRotationDegrees: -20
+  axis: 0
+  maxRotationDegrees: -10
   airshipControlBehaviour: {fileID: 11429062}
   isRudderJoint: 0
 --- !u!114 &11436902
@@ -4996,7 +5003,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11444942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5178,7 +5185,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!114 &11470350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5193,12 +5200,12 @@ MonoBehaviour:
   destructableParts:
   - partObject: {fileID: 111452}
     partType: 1
-    breakVelocity: 30
+    breakVelocity: 50
     partMass: -5
     cached_breakVelocitySqr: 0
   - partObject: {fileID: 151136}
     partType: 2
-    breakVelocity: 30
+    breakVelocity: 50
     partMass: -5
     cached_breakVelocitySqr: 0
   - partObject: {fileID: 198500}
@@ -5308,7 +5315,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
-  lookAtTarget: {fileID: 146936}
+  lookAtTarget: {fileID: 0}
 --- !u!124 &12475972
 Behaviour:
   m_ObjectHideFlags: 1
