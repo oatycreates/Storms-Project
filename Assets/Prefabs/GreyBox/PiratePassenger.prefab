@@ -156,7 +156,7 @@ Transform:
   m_GameObject: {fileID: 169638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -79.5572281, y: -29.680151, z: 11.1802998}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 459584}
   - {fileID: 421486}
@@ -331,6 +331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightTillDeath: -2000
+  expireTime: 60
+  colDisableTime: 1
 --- !u!114 &11448062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -399,15 +401,15 @@ Prefab:
       objectReference: {fileID: 8300000, guid: 83558a16189bfa445b03c4ccda2af30c, type: 3}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Drag
