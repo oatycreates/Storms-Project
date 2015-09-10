@@ -73,7 +73,7 @@ namespace ProjectStorms
         private AirshipSuicideBehaviour m_fireshipControl;
         private RouletteBehaviour m_rouletteControl;
         private RotateCam m_rotateCam;
-        private ShuntingController m_shuntingControl;
+        private BroadsideWeaponsController m_broadSideWeapons;
 
         // TODO: We might need to add more script references here as we progress
 
@@ -84,11 +84,11 @@ namespace ProjectStorms
 
         public void Awake()
         {
-            m_standardControl = GetComponent<AirshipControlBehaviour>();
-            m_fireshipControl = GetComponent<AirshipSuicideBehaviour>();
-            m_rouletteControl = GetComponent<RouletteBehaviour>();
-            m_rotateCam = GetComponent<RotateCam>();
-            m_shuntingControl = GetComponent<ShuntingController>();
+            m_standardControl   = GetComponent<AirshipControlBehaviour>();
+            m_fireshipControl   = GetComponent<AirshipSuicideBehaviour>();
+            m_rouletteControl   = GetComponent<RouletteBehaviour>();
+            m_rotateCam         = GetComponent<RotateCam>();
+            m_broadSideWeapons  = GetComponent<BroadsideWeaponsController>();
         }
 
         void Start()
@@ -149,7 +149,7 @@ namespace ProjectStorms
             m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
             m_fireshipControl.PlayerFireshipInputs(upDown, leftRight, select);
             m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, clickLeft, clickRight);
-            m_shuntingControl.PlayerInputs(bumperLeft, bumperRight);
+            m_broadSideWeapons.PlayerInputs(bumperLeft, bumperRight);
         }
 
         private static void ApplyRumble()
