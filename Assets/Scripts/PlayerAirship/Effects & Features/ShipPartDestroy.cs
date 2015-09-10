@@ -143,7 +143,7 @@ namespace ProjectStorms
         /// 
         /// </summary>
         /// <param name="a_colInfo">Collision information</param>
-        private void EvaluatePartCollision(Collider a_col, float a_colVelSqr)
+        public void EvaluatePartCollision(Collider a_col, float a_colVelSqr)
         {
             // Find the part being collided with
             Collider[] childColliders;

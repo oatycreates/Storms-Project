@@ -108,8 +108,11 @@ namespace ProjectStorms
             
             // Calculate pooling amount
             RotateCam camRot = GetComponentInParent<RotateCam>();
-            CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
-            m_pooledAmount = Mathf.CeilToInt(ballScript.cannonBallLifetime / camRot.shotCooldown);
+            //CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
+            //m_pooledAmount = Mathf.CeilToInt(ballScript.cannonBallLifetime / camRot.shotCooldown);
+
+            CannonBallRaytracer ballScript = firstBall.GetComponent<CannonBallRaytracer>();
+            m_pooledAmount = Mathf.CeilToInt(ballScript.totalLifeTime / camRot.shotCooldown);
 
             // Spawn the other cannonballs
             for (int i = 1; i < m_pooledAmount; i++)
@@ -174,24 +177,26 @@ namespace ProjectStorms
                     {
                         transBall = goBall.transform;
                         transBall.position = m_trans.position;
-                        transBall.rotation = Quaternion.identity;
+                        transBall.rotation = m_trans.rotation;
+
+                        transBall.tag = this.tag;
 
                         goBall.SetActive(true);
 
                         relativeSpace = m_trans.forward;
 
-                        rigidBall = goBall.GetComponent<Rigidbody>();
-
-                        // Inherit the parent's velocity
-                        rigidBall.velocity = m_shipRB.velocity;
-
-                        // Toggle the trail renderer to prevent it from snapping to the new position
-                        trailBall = goBall.GetComponent<TrailRenderer>();
-                        trailBall.time = -1000.0f;
-                        trailBall.enabled = false;
-
-                        // Fire off the cannonball
-                        rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
+                        //rigidBall = goBall.GetComponent<Rigidbody>();
+                        //
+                        //// Inherit the parent's velocity
+                        //rigidBall.velocity = m_shipRB.velocity;
+                        //
+                        //// Toggle the trail renderer to prevent it from snapping to the new position
+                        //trailBall = goBall.GetComponent<TrailRenderer>();
+                        //trailBall.time = -1000.0f;
+                        //trailBall.enabled = false;
+                        //
+                        //// Fire off the cannonball
+                        //rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
 
                         // Don't forget! Every once in a while, you deserve a...
                         break;
