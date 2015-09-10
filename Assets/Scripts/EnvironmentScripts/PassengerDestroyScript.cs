@@ -37,6 +37,11 @@ namespace ProjectStorms
         /// </summary>
         private float m_spawnTime = 0.0f;
 
+        /// <summary>
+        /// Cached expiry time.
+        /// </summary>
+        private float m_startExpireTime = 0.0f;
+
         // Cached variables
         private Transform m_trans;
         private Collider m_col;
@@ -47,6 +52,8 @@ namespace ProjectStorms
             m_trans = transform;
             m_col = GetComponent<Collider>();
             m_scream = GetComponent<FallingScream>();
+
+            m_startExpireTime = expireTime;
         }
 
         void Start()
@@ -85,6 +92,11 @@ namespace ProjectStorms
                     }
                 }
             }
+        }
+
+        public void ResetExpireTimer()
+        {
+            expireTime = m_startExpireTime;
         }
     }
 

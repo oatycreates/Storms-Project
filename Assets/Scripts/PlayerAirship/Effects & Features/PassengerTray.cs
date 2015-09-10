@@ -162,6 +162,12 @@ namespace ProjectStorms
                     // Cumulate mass
                     m_trayContents.Add(rb.gameObject);
                 }
+
+                PassengerDestroyScript pass = a_other.GetComponent<PassengerDestroyScript>();
+                if (pass != null)
+                {
+                    pass.ResetExpireTimer();
+                }
             }
         }
 
