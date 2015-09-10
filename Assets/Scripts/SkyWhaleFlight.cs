@@ -150,21 +150,13 @@ namespace ProjectStorms
 		
 		void Spiral()
 		{
-			//This isn't right - maybe review this
-			//myRigid.transform.RotateAround(spiralPoint.transform.position, Vector3.up, moveSpeed * Time.deltaTime);
 
-			/*
-			Vector3 moveDirection = Vector3.up;
+			Vector3 localWaypoint = (myRigid.transform.position + Random.insideUnitSphere*150);
+			//localWaypoint.y = 0;
 
-			moveDirection = myRigid.transform.TransformDirection (moveDirection);
+			myRigid.transform.LookAt (localWaypoint);
 
-			myRigid.MovePosition(myRigid.transform.position + moveDirection * moveSpeed * Time.deltaTime);
-			*/
-			float number = 1;
 
-			number += 1;
-
-			myRigid.MovePosition(new Vector3( Mathf.Cos(number), myRigid.transform.position.y, Mathf.Sin(number)));
 		}
 		
 		
