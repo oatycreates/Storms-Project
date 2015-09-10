@@ -26,8 +26,7 @@ namespace ProjectStorms
 		private Rigidbody myRigid;
 		public E_WhaleMode whaleMode;
 		
-		public GameObject followObject;
-		public GameObject spiralPoint;
+		public Transform followObject;
 		
 		public float turnSpeed = 1;
 		public float moveSpeed = 12;
@@ -40,48 +39,75 @@ namespace ProjectStorms
 		private float distanceToTarget;
 		
 		private GameObject closest = null;
+		private Vector3 spiral;
 		
 		//Stuff for the editor
 		private Vector3 tempDirection;
 		private float tempDistance;
 
-		//TempTransform for spiral
-		private Transform spiral;
+		//Random timer
+		private float random;
+
+		private Renderer rend;
 		
 		void Awake()
 		{
 			myRigid = gameObject.GetComponent<Rigidbody>();
+			rend = GetComponentInChildren<Renderer>();
 		}
 		
 		void Start()
 		{
 			//Start by spawning a target;
-			SpawnATarget();
-			
+			/*SpawnATarget();*/
+			//Or Start by Spiraling
+			random = Random.Range (1, 9);
+			//start all whales going downwards
+			spiral = new Vector3 (myRigid.transform.position.x, myRigid.transform.position.y - random*10, myRigid.transform.position.z);
+
 			//Spawn a Target Every Second
-			InvokeRepeating("SpawnATarget", 0, 1);
+			/*InvokeRepeating("SpawnATarget", 0, 1);*/
 		}
 		
 		void FixedUpdate () 
 		{
-			// I think this function needs to be called regularly
-			FindClosestNode();
-			
-			
+			//Choose a new spiral target every few seconds
+			random -= Time.deltaTime;
+
+			if (random < 0)
+			{
+				Spiral();
+				random = Random.Range(0, 8);
+			}
+
 			if (whaleMode == E_WhaleMode.Attack)
 			{
-				Rotating();
-				Moving();
+				if (followObject != null)
+				{
+					speedByDistance = true;
+
+					Rotating(followObject.position);
+					Moving(followObject.position);
+				}
+				else
+				{
+					speedByDistance = false;
+				}
 			}
 			else
 			if (whaleMode == E_WhaleMode.Dormant)
 			{
-				Spiral ();
+				speedByDistance = false;
+
+				Rotating (spiral);
+				Moving (spiral);
 			}
+
 			
 			Debug.DrawRay(myRigid.transform.position, direction * distanceToTarget, Color.green);
 		}
-		
+
+
 		//Hmm this is the example from the Unity Scripting API page
 		GameObject FindClosestNode()
 		{
@@ -105,11 +131,12 @@ namespace ProjectStorms
 			}		
 			return closest;			
 		}
-		
-		void Rotating()
+
+
+		void Rotating(Vector3 rotateTarget)
 		{		
-			//Direciton between me and the other object
-			direction = (closest.transform.position - myRigid.transform.position).normalized;
+			//Direction between me and the other object
+			direction = (rotateTarget - myRigid.transform.position).normalized;
 			
 			//Create the rotation to the target
 			lookRotation = Quaternion.LookRotation(direction);
@@ -122,14 +149,14 @@ namespace ProjectStorms
 		}
 		
 		
-		void Moving()
+		void Moving(Vector3 moveTarget)
 		{
 			//Distance to target object
-			distanceToTarget = Vector3.Distance(closest.transform.position, myRigid.transform.position);
+			distanceToTarget = Vector3.Distance(moveTarget, myRigid.transform.position);
 			
 			float tempDistanceValue = distanceToTarget;
 			//Clamp the distance value, so we can then use it in the Movement vector
-			Mathf.Clamp(tempDistanceValue, 0, 1);
+			tempDistanceValue = Mathf.Clamp(tempDistanceValue, 0, 100);
 			
 			Vector3 tempPos;
 			
@@ -150,13 +177,9 @@ namespace ProjectStorms
 		
 		void Spiral()
 		{
+			spiral = (myRigid.transform.position + Random.insideUnitSphere*150);
 
-			Vector3 localWaypoint = (myRigid.transform.position + Random.insideUnitSphere*150);
-			//localWaypoint.y = 0;
-
-			myRigid.transform.LookAt (localWaypoint);
-
-
+			Debug.Log (spiral);
 		}
 		
 		
@@ -168,6 +191,25 @@ namespace ProjectStorms
 			tempTarget.tag = "AINode";
 			Destroy(tempTarget, 1.5f);
 			
+		}
+
+		void OnCollisionEnter(Collision other)
+		{
+			if (followObject == null)
+			{
+				//IF a player bumps into me - chase them!
+				if (other.gameObject.tag == "Player1_" || other.gameObject.tag == "Player2_" || other.gameObject.tag == "Player3_" || other.gameObject.tag == "Player4_")
+				{
+					followObject = other.transform;
+					whaleMode = E_WhaleMode.Attack;
+
+					rend.material.color = Color.red;
+
+					// I think this function needs to be called regularly
+					//closest = FindClosestNode();
+				}
+			}
+
 		}
 		
 	}
