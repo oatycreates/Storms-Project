@@ -10,7 +10,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+#if (UNITY_STANDALONE)
 using XInputDotNetPure;
+#endif
 
 namespace ProjectStorms
 {
@@ -185,9 +187,11 @@ namespace ProjectStorms
                         sumRight += ms_currRumbles[i].rightMotor;
                     }
                 }
-
+                
+#if (UNITY_STANDALONE)
                 // Apply rumble, will clear if sum is zero
                 GamePad.SetVibration((PlayerIndex)playerTag, sumLeft, sumRight);
+#endif
             }
         }
 
