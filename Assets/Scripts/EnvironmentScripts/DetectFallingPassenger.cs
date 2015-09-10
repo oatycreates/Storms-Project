@@ -21,24 +21,27 @@ namespace ProjectStorms
         public Text scoreText;
         [HideInInspector]
         public int peopleLeftToCatch = 100;
+        [HideInInspector]
+        public int maxPeople = 100;
 
         public Color textColour;
 
         void Start()
         {
             textColour = Color.black;
+            maxPeople = peopleLeftToCatch;
         }
 
 
         void Update()
         {
-            scoreText.color = textColour;
-            scoreText.text = ("" + peopleLeftToCatch);
+            if (peopleLeftToCatch <= 0)
+            {
+                peopleLeftToCatch = 0;
+            }
 
-			if (peopleLeftToCatch <= 0)
-			{
-				peopleLeftToCatch = 0;
-			}
+            scoreText.color = textColour;
+            scoreText.text = ((maxPeople - peopleLeftToCatch) + "/" + maxPeople);
         }
 
         void OnTriggerEnter(Collider a_other)

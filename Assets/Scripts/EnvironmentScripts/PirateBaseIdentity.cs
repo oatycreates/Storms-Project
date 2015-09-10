@@ -121,6 +121,7 @@ namespace ProjectStorms
         {
             // Set score values
             baseTriggerZone.peopleLeftToCatch = a_baseScore;
+            baseTriggerZone.maxPeople = a_baseScore;
             baseScore = a_baseScore;
         }
     } 
