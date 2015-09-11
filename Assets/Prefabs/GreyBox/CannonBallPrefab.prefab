@@ -76,7 +76,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: .0500000007
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
   cannonBallCollider: {fileID: 13540152}
   selfCollisionTrigger: {fileID: 6529228}
   cannonBallLifetime: 5
-  endScale: {x: 12, y: 12, z: 12}
+  endScale: {x: 2, y: 2, z: 2}
 --- !u!135 &13540152
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -230,7 +230,7 @@ SphereCollider:
   m_GameObject: {fileID: 128906}
   m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 0, y: 0, z: 0}
@@ -264,19 +264,27 @@ Prefab:
         type: 2}
     - target: {fileID: 0}
       propertyPath: endScale.x
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: endScale.y
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: endScale.z
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Interpolate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: cannonBallLifetime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_UseGravity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

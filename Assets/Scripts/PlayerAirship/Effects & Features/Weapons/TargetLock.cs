@@ -35,6 +35,11 @@ namespace ProjectStorms
         public Transform lookTarget = null;
 
         /// <summary>
+        /// Points the front cannon towards the target.
+        /// </summary>
+        public Transform frontCannon = null;
+
+        /// <summary>
         /// Handle to all of the player objects in the scene.
         /// </summary>
         public GameObject[] playerObjs = null;
@@ -47,11 +52,18 @@ namespace ProjectStorms
         // Cached variables
         private Transform m_trans = null;
         private Transform m_tarTrans = null;
+        private CannonFire m_cannon = null;
+        private Quaternion m_startCannonRot = Quaternion.identity;
 
         void Awake()
         {
             m_trans = transform;
             m_tarTrans = lookTarget;
+            if (frontCannon != null)
+            {
+                m_startCannonRot = frontCannon.localRotation;
+            }
+            m_cannon = frontCannon.GetComponent<CannonFire>();
 
             // Re-target the front cannon every few seconds
             InvokeRepeating("FindLockTarget", lockRepeatCooldown, lockRepeatCooldown);
@@ -64,10 +76,26 @@ namespace ProjectStorms
 		
 		void Update() 
 		{
-		    // Render debug over the target
-            if (m_currFrontTarget != null)
+            // Render over the target
+            if (frontCannon != null)
             {
-                Debug.DrawLine(m_trans.position, m_currFrontTarget.position, Color.red);
+                if (m_currFrontTarget != null)
+                {
+                    if (m_cannon != null)
+                    {
+                        m_cannon.lookAtTarget = m_currFrontTarget;
+                    }
+                    Debug.DrawLine(frontCannon.position, m_currFrontTarget.position, Color.red);
+                }
+                else
+                {
+                    // Reset to look where the ship is
+                    frontCannon.localRotation = m_startCannonRot;
+                    if (m_cannon != null)
+                    {
+                        m_cannon.lookAtTarget = null;
+                    }
+                }
             }
 		}
 

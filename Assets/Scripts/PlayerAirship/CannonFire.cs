@@ -46,9 +46,14 @@ namespace ProjectStorms
         public float cannonBallForce = 50.0f;
 
         /// <summary>
+        /// Minimum time between shots.
+        /// </summary>
+        public float shotCooldown = 2.51f;
+
+        /// <summary>
         /// Handle to the player firing reticle.
         /// </summary>
-        public GameObject lookAtTarget = null;
+        public Transform lookAtTarget = null;
 
         /// <summary>
         /// How many cannonballs to pool per cannon. Equal to shotLifetime/fireCooldown.
@@ -66,6 +71,11 @@ namespace ProjectStorms
         private Vector3 m_relativeForward;
 
         /// <summary>
+        /// Time before the cannon can fire again.
+        /// </summary>
+        private float m_currShotCooldown = 0.0f;
+
+        /// <summary>
         /// Cannonball holder object.
         /// </summary>
         static private GameObject ms_ballHolder = null;
@@ -73,17 +83,11 @@ namespace ProjectStorms
         // Cached variables
         private Rigidbody m_shipRB = null;
         private Transform m_trans = null;
-        private Transform m_tarTrans = null;
         private Transform m_shipTrans = null;
 
         void Awake()
         {
             m_trans = transform;
-
-            if (lookAtTarget != null)
-            {
-                m_tarTrans = lookAtTarget.transform;
-            }
 
             m_shipRB = parentAirship.GetComponent<Rigidbody>();
             m_shipTrans = parentAirship.transform;
@@ -108,11 +112,22 @@ namespace ProjectStorms
             
             // Calculate pooling amount
             RotateCam camRot = GetComponentInParent<RotateCam>();
-            //CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
-            //m_pooledAmount = Mathf.CeilToInt(ballScript.cannonBallLifetime / camRot.shotCooldown);
 
-            CannonBallRaytracer ballScript = firstBall.GetComponent<CannonBallRaytracer>();
-            m_pooledAmount = Mathf.CeilToInt(ballScript.totalLifeTime / camRot.shotCooldown);
+            float ballLife = 0;
+            CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
+            if (ballScript != null)
+            {
+                ballLife = ballScript.cannonBallLifetime;
+            }
+            CannonBallRaytracer rayBallScript = firstBall.GetComponent<CannonBallRaytracer>();
+            if (rayBallScript)
+            {
+                ballLife = rayBallScript.totalLifeTime;
+            }
+            m_pooledAmount = Mathf.CeilToInt(ballLife / shotCooldown);
+
+            // Start with the shot on cooldown
+            m_currShotCooldown = shotCooldown;
 
             // Spawn the other cannonballs
             for (int i = 1; i < m_pooledAmount; i++)
@@ -147,10 +162,13 @@ namespace ProjectStorms
 
         void Update()
         {
+            // Count down the shot cool-down
+            m_currShotCooldown -= Time.deltaTime;
+
             // Look at the target
             if (lookAtTarget != null)
             {
-                m_trans.LookAt(m_tarTrans.position);
+                m_trans.LookAt(lookAtTarget.position);
             }
 
             m_relativeForward = m_trans.forward;
@@ -161,45 +179,56 @@ namespace ProjectStorms
 
         public void Fire()
         {
-            Vector3 relativeSpace;
             Rigidbody rigidBall = null;
             Transform transBall = null;
             GameObject goBall = null;
             TrailRenderer trailBall = null;
 
-            if (this.isActiveAndEnabled)
+            if (m_currShotCooldown <= 0)
             {
-                for (int i = 0; i < m_cannonBalls.Count; i++)
+                // Put the cannon on cool-down
+                m_currShotCooldown = shotCooldown;
+
+                if (this.isActiveAndEnabled)
                 {
-                    goBall = m_cannonBalls[i];
-                    // Find only inactive cannonballs
-                    if (!goBall.activeInHierarchy)
+                    for (int i = 0; i < m_cannonBalls.Count; i++)
                     {
-                        transBall = goBall.transform;
-                        transBall.position = m_trans.position;
-                        transBall.rotation = m_trans.rotation;
+                        goBall = m_cannonBalls[i];
+                        // Find only inactive cannonballs
+                        if (!goBall.activeInHierarchy)
+                        {
+                            transBall = goBall.transform;
+                            transBall.position = m_trans.position;
+                            transBall.rotation = m_trans.rotation;
 
-                        transBall.tag = this.tag;
+                            Debug.Log("Fired cannon along " + transBall.rotation.eulerAngles);
 
-                        goBall.SetActive(true);
+                            transBall.tag = this.tag;
 
-                        relativeSpace = m_trans.forward;
+                            goBall.SetActive(true);
 
-                        //rigidBall = goBall.GetComponent<Rigidbody>();
-                        //
-                        //// Inherit the parent's velocity
-                        //rigidBall.velocity = m_shipRB.velocity;
-                        //
-                        //// Toggle the trail renderer to prevent it from snapping to the new position
-                        //trailBall = goBall.GetComponent<TrailRenderer>();
-                        //trailBall.time = -1000.0f;
-                        //trailBall.enabled = false;
-                        //
-                        //// Fire off the cannonball
-                        //rigidBall.AddRelativeForce(relativeSpace * cannonBallForce, ForceMode.Impulse);
+                            rigidBall = goBall.GetComponent<Rigidbody>();
 
-                        // Don't forget! Every once in a while, you deserve a...
-                        break;
+                            if (rigidBall != null)
+                            {
+                                // Inherit the parent's velocity
+                                //rigidBall.velocity = m_shipRB.velocity;
+
+                                // Toggle the trail renderer to prevent it from snapping to the new position
+                                trailBall = goBall.GetComponent<TrailRenderer>();
+                                if (trailBall != null)
+                                {
+                                    trailBall.time = -1000.0f;
+                                    trailBall.enabled = false;
+                                }
+
+                                // Fire off the cannonball
+                                rigidBall.AddForce(transBall.forward * cannonBallForce, ForceMode.Impulse);
+                            }
+
+                            // Don't forget! Every once in a while, you deserve a...
+                            break;
+                        }
                     }
                 }
             }

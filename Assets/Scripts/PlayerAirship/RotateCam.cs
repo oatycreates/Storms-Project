@@ -47,16 +47,13 @@ namespace ProjectStorms
         private float m_xPos = 0;
         private float m_zPos = 0;
 
+        public CannonFire frontCannon = null;
+
         // Link to Cannons
         public GameObject[] cannons;
 
         // Fix cam to position
         public float camTurnSpeed = 3.0f;
-
-        /// <summary>
-        /// Minimum time between shots.
-        /// </summary>
-        public float shotCooldown = 2.51f;
 
         /// <summary>
         /// Time to wait before beginning to interp the camera back when moving,
@@ -70,11 +67,6 @@ namespace ProjectStorms
         /// For resetting the camera when moving a few seconds after the last look.
         /// </summary>
         private float m_lastCamLookTime = 0;
-
-        /// <summary>
-        /// Time before the cannon can fire again.
-        /// </summary>
-        private float m_currShotCooldown = 0.0f;
 
         // Total camera rotation values
         private float m_totalVert = 0;
@@ -128,8 +120,7 @@ namespace ProjectStorms
 
         void Update()
         {
-            // Count down the shot cool-down
-            m_currShotCooldown -= Time.deltaTime;
+
         }
 
         public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceDown, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
@@ -208,6 +199,12 @@ namespace ProjectStorms
                 {
                     m_camRotTrans.localRotation = Quaternion.Euler(0, -180, 0);
                     m_flippedViewLast = true;
+                }
+
+                // Fire the front cannons
+                if (a_faceDown && frontCannon != null)
+                {
+                    frontCannon.Fire();
                 }
 
                 // Move lookTarget around
@@ -294,9 +291,6 @@ namespace ProjectStorms
         //    if (m_currShotCooldown <= 0)
         //    {
         //        CannonFire script;
-        //
-        //        // Put the cannon on cool-down
-        //        m_currShotCooldown = shotCooldown;
         //
         //        for (int i = 0; i < cannons.Length; i++)
         //        {
