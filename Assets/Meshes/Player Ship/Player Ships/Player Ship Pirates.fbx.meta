@@ -154,7 +154,7 @@ ModelImporter:
     4300048: Railing
     4300050: Sand_Bags
     4300052: Propeller
-    7400000: Take 001
+    7400000: PropellerIdle
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -175,7 +175,101 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: PropellerIdle
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 31
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Deck
+        weight: 0
+      - path: Deck/Centre_Deck
+        weight: 0
+      - path: Deck/Door_Top_Left
+        weight: 0
+      - path: Deck/Door_Top_Right
+        weight: 0
+      - path: Hull
+        weight: 0
+      - path: Hull/Door_Bot_Left
+        weight: 0
+      - path: Hull/Door_Bot_Right
+        weight: 0
+      - path: Hull/Hull 1
+        weight: 0
+      - path: Hull/Sides
+        weight: 0
+      - path: Medium_Parts
+        weight: 0
+      - path: Medium_Parts/Left_Balloon
+        weight: 0
+      - path: Medium_Parts/Left_Rope
+        weight: 0
+      - path: Medium_Parts/Medium_parts
+        weight: 0
+      - path: Medium_Parts/Medium_parts/Boiler
+        weight: 0
+      - path: Medium_Parts/Medium_parts/Cannons
+        weight: 0
+      - path: Medium_Parts/Medium_parts/Front_Beam
+        weight: 0
+      - path: Medium_Parts/Medium_parts/Mast
+        weight: 0
+      - path: Medium_Parts/Medium_parts/Sail_Beam
+        weight: 0
+      - path: Medium_Parts/Medium_parts/Wheel_Support
+        weight: 0
+      - path: Medium_Parts/Right_Balloon
+        weight: 0
+      - path: Medium_Parts/Right_Rope
+        weight: 0
+      - path: Medium_Parts/Wheel
+        weight: 0
+      - path: Sail_and_Dials
+        weight: 0
+      - path: Sail_and_Dials/Boiler_Details
+        weight: 0
+      - path: Sail_and_Dials/Sail
+        weight: 0
+      - path: Sail_and_Dials/Sail_Curved
+        weight: 0
+      - path: Skull
+        weight: 0
+      - path: Small_Parts
+        weight: 0
+      - path: Small_Parts/Engine_Pipe
+        weight: 0
+      - path: Small_Parts/Propeller
+        weight: 1
+      - path: Small_Parts/Railing
+        weight: 0
+      - path: Small_Parts/Rudder
+        weight: 0
+      - path: Small_Parts/Sand_Bags
+        weight: 0
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
