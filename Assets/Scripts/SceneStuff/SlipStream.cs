@@ -20,63 +20,43 @@ namespace ProjectStorms
 
         List<Rigidbody> m_playerRigidBodies = new List<Rigidbody>(4);
 
-        Rigidbody GetPlayerRigidBody(int a_num)
+        void GetPlayerRigidBodies()
         {
-            string playerName;
-            GameObject playerObject = null;
+            Rigidbody body = null;
 
-            switch (a_num)
+            // Airships are the only things that will have AirshipControlBehaviours, this will only change if we refactor the input system
+            AirshipControlBehaviour[] objs = GameObject.FindObjectsOfType<AirshipControlBehaviour>();
+            foreach (AirshipControlBehaviour script in objs)
             {
-                case 1:
-                    playerName = "Player1Stuff";
-                    break;
-
-                case 2:
-                    playerName = "Player2Stuff";
-                    break;
-
-                case 3:
-                    playerName = "Player3Stuff";
-                    break;
-
-                case 4:
-                    playerName = "Player4Stuff";
-                    break;
-
-                default:
-                    // Invalid player number
-                    return null;
+                // Use the script to find the rigidbody.
+                body = script.GetComponent<Rigidbody>();
+                
+                if (body != null)
+                {
+                    if (body.CompareTag("Player1_"))
+                    {
+                        m_playerRigidBodies[0] = body;
+                    }
+                    else if (body.CompareTag("Player2_"))
+                    {
+                        m_playerRigidBodies[1] = body;
+                    }
+                    else if (body.CompareTag("Player3_"))
+                    {
+                        m_playerRigidBodies[2] = body;
+                    }
+                    else if (body.CompareTag("Player4_"))
+                    {
+                        m_playerRigidBodies[3] = body;
+                    }
+                }
             }
-
-            GameObject playerStuffObject = GameObject.Find(playerName);
-            if (playerStuffObject == null)
-            {
-                // Player not present
-                return null;
-            }
-
-            Transform playerObjectTransform = playerStuffObject.transform.FindChild("Airship_Prefab");
-            if (playerObjectTransform == null)
-            {
-                // Can't find Airship prefab
-                Debug.LogError("Unable to find airship prefab for player: " + a_num);
-                Debug.Break();
-
-                return null;
-            }
-
-            playerObject = playerObjectTransform.gameObject;
-
-            return playerObject.GetComponent<Rigidbody>();
         }
 
         public void Awake()
         {
             // Get player rigidbodies
-            m_playerRigidBodies.Add(GetPlayerRigidBody(1));
-            m_playerRigidBodies.Add(GetPlayerRigidBody(2));
-            m_playerRigidBodies.Add(GetPlayerRigidBody(3));
-            m_playerRigidBodies.Add(GetPlayerRigidBody(4));
+            GetPlayerRigidBodies();
         }
 
         public void OnTriggerStay(Collider a_other)
