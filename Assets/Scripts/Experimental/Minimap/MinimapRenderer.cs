@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-namespace ProjectStorms
+namespace ProjectStorms.Experimental
 {
 	public class MinimapRenderer : MonoBehaviour 
 	{
