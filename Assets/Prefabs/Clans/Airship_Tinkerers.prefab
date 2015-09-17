@@ -235,6 +235,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &117472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 417604}
+  - 215: {fileID: 21514174}
+  m_Layer: 0
+  m_Name: ReflectionProbe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &118936
 GameObject:
   m_ObjectHideFlags: 1
@@ -2250,6 +2266,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 412652}
   m_RootOrder: 9
+--- !u!4 &417604
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .180000007, y: 18.5100002, z: .25999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 440704}
+  m_RootOrder: 10
 --- !u!4 &417976
 Transform:
   m_ObjectHideFlags: 1
@@ -2609,7 +2637,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.6800003, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 409020}
@@ -2622,6 +2650,7 @@ Transform:
   - {fileID: 492562}
   - {fileID: 404950}
   - {fileID: 485576}
+  - {fileID: 417604}
   - {fileID: 452394}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2783,11 +2812,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .180000007, y: 18.5100002, z: .25999999}
+  m_LocalPosition: {x: .180000007, y: -8.32999992, z: .25999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 440704}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!4 &453078
 Transform:
   m_ObjectHideFlags: 1
@@ -4742,7 +4771,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: .400000006, z: -1}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: .100002289, y: 4.6869998, z: -2.0769999}
+  m_ConnectedAnchor: {x: .100000493, y: 4.6869998, z: -2.0769999}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -6180,7 +6209,7 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 0}
   m_AABB:
     m_Center: {x: 0, y: 9.58499813, z: 1.01382661}
-    m_Extent: {x: 4.68305969, y: 3.38426399, z: 1.60911703}
+    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.60911703}
   m_DirtyAABB: 0
 --- !u!183 &18366390
 Cloth:
@@ -7399,6 +7428,37 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+--- !u!215 &21514174
+ReflectionProbe:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117472}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Type: 0
+  m_Mode: 1
+  m_RefreshMode: 0
+  m_TimeSlicingMode: 0
+  m_Resolution: 128
+  m_UpdateFrequency: 0
+  m_Importance: 1
+  m_BoxSize: {x: 35, y: 35, z: 35}
+  m_BoxOffset: {x: .0346186757, y: -7.3448782, z: .288580179}
+  m_NearClip: .300000012
+  m_FarClip: 1000
+  m_ShadowDistance: 100
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: 0}
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IntensityMultiplier: 1
+  m_HDR: 1
+  m_BoxProjection: 0
+  m_RenderDynamicObjects: 0
+  m_UseOcclusionCulling: 1
+  m_CustomBakedTexture: {fileID: 0}
 --- !u!215 &21559298
 ReflectionProbe:
   m_ObjectHideFlags: 1
@@ -7414,8 +7474,8 @@ ReflectionProbe:
   m_Resolution: 128
   m_UpdateFrequency: 0
   m_Importance: 1
-  m_BoxSize: {x: 20.2443695, y: 26.3795128, z: 35.4568253}
-  m_BoxOffset: {x: .0346186757, y: -13.1897564, z: .288580179}
+  m_BoxSize: {x: 35, y: 35, z: 35}
+  m_BoxOffset: {x: .0346186757, y: 7.3448782, z: .288580179}
   m_NearClip: .300000012
   m_FarClip: 1000
   m_ShadowDistance: 100
@@ -7628,6 +7688,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Player3_
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
