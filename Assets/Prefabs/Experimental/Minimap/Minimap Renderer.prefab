@@ -59,6 +59,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22428262}
+  - 114: {fileID: 11428602}
   m_Layer: 5
   m_Name: Minimap Renderer
   m_TagString: Untagged
@@ -118,6 +119,35 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 138986}
   m_Enabled: 1
+--- !u!114 &11428602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ffc94c85ea295546b8d07f0b0077d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerImage: {fileID: 11447636, guid: 6434b5c3bced044458864cf401916ddd, type: 2}
+  baseImage: {fileID: 11432720, guid: b2ab398214368c84580fd0912ad6e5b9, type: 2}
+  playerIconScale: 0
+  playerBaseIconScale: 0
+  player1Colour: {r: 0, g: 0, b: 0, a: 0}
+  player2Colour: {r: 0, g: 0, b: 0, a: 0}
+  player3Colour: {r: 0, g: 0, b: 0, a: 0}
+  player4Colour: {r: 0, g: 0, b: 0, a: 0}
+  playersTransfroms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerBasesTranforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &11454616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: .791000009}
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0

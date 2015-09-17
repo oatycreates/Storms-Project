@@ -16,14 +16,14 @@ namespace ProjectStorms
 	public class PassengerTriggerZone : MonoBehaviour 
 	{
         /// <summary>
-        /// Handle to the player airship prefab.
+        /// Cooldown between each wave.
         /// </summary>
-        public GameObject shipPrefab;
+        public float waveCooldown = 5.0f;
 
         /// <summary>
-        /// Spawn cooldown for the prisoners.
+        /// Number of passengers to be released per wave.
         /// </summary>
-        public float spawnCooldown = 0.5f;
+        public int waveSize = 10;
 
         /// <summary>
         /// Offset to spawn passengers on from the chosen root transform.
@@ -53,6 +53,11 @@ namespace ProjectStorms
         private float m_currSpawnWait = 0.0f;
 
         /// <summary>
+        /// Number of minions spawned in the current block.
+        /// </summary>
+        private int m_currWaveSpawned = 0;
+
+        /// <summary>
         /// Stored ship name.
         /// </summary>
         private string m_shipName = "";
@@ -74,8 +79,7 @@ namespace ProjectStorms
         {
             // Cache variables
             m_trans = transform;
-            m_shipName = shipPrefab.name;
-            m_currSpawnWait = spawnCooldown;
+            m_currSpawnWait = waveCooldown;
         }
 
 		void Start()
@@ -125,26 +129,27 @@ namespace ProjectStorms
             }
 		}
 		
-		void Update() 
-		{
+		void Update()
+        {
             m_currSpawnWait -= Time.deltaTime;
             if (m_currSpawnWait < 0)
             {
-                // Reset the cooldown and set to spawn a wave
+                // Set to spawn a wave
                 m_spawnAWave = true;
-                m_currSpawnWait = spawnCooldown;
+            }
+
+            if (m_currWaveSpawned >= waveSize)
+            {
+                // Reset the wave
+                m_spawnAWave = false;
+                m_currWaveSpawned = 0;
+                m_currSpawnWait = waveCooldown;
             }
 		}
 
         void FixedUpdate()
         {
-            m_spawnAWave = false;
-            if (m_currSpawnWait < 0)
-            {
-                // Reset the cooldown and set to spawn a wave
-                m_spawnAWave = true;
-                m_currSpawnWait = spawnCooldown;
-            }
+
         }
 
         /// <summary>
@@ -153,7 +158,7 @@ namespace ProjectStorms
         /// <param name="a_other"></param>
         void OnTriggerStay(Collider a_other)
         {
-            if (m_spawnAWave && IsPlayer(a_other))
+            if (m_spawnAWave && m_currWaveSpawned < waveSize && IsPlayer(a_other))
             {
                 SpawnPassengerFor(a_other.transform);
             }
@@ -170,6 +175,8 @@ namespace ProjectStorms
             Rigidbody passengerRb;
             Transform passengerTrans;
 
+            ++m_currWaveSpawned;
+
             // Loop through, find first non-active player
             for (int i = 0; i < m_passengers.Count; i++)
             {
@@ -180,7 +187,7 @@ namespace ProjectStorms
 
                     passengerTrans = m_passengers[i].transform;
                     //passengerTrans.position = m_trans.position;
-                    passengerTrans.position = m_trans.position + spawnOffset;
+                    passengerTrans.position = a_trans.position + spawnOffset;
                     passengerTrans.rotation = Quaternion.identity;
 
                     m_passengers[i].SetActive(true);
