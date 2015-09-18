@@ -17,9 +17,6 @@ namespace ProjectStorms
 {
 	public class Minimap : MonoBehaviour 
 	{
-        // TODO: Change display background depending on player count
-        // TODO: Make this script run within editor for easy tweaking
-
         // Map icon images
         [Tooltip("Prefab GUI Image, to represent players within the world")]
         public Image playerImage;
@@ -29,8 +26,6 @@ namespace ProjectStorms
         public Image repairZoneImage;
         [Tooltip("Prefab GUI Image, to display player score")]
         public Image scoreIndicator;
-
-        // TODO: Add support for powerups
 
         // Player icons colour tints
         [Tooltip("Sprite colour tint to use on Player 1 objects within the minimap")]
@@ -55,6 +50,11 @@ namespace ProjectStorms
         // Cached variables
         private Canvas m_captureCanvas;
         private Camera m_captureCamera;
+        private Transform m_transform;
+
+        // TODO: Add support for powerups
+        // TODO: Change display background depending on player count
+        // TODO: Make this script run within editor for easy tweaking
 
         public void Awake()
         {
@@ -64,9 +64,16 @@ namespace ProjectStorms
             // Get capture canvas reference and ensure it's at 0,0,0 in local space
             m_captureCanvas = m_captureCamera.GetComponentInChildren<Canvas>();
             m_captureCanvas.transform.localPosition = Vector3.zero;
+
+            // Cache this object's transform reference
+            m_transform = transform;
         }
 
-        void GetTransforms()
+        /// <summary>
+        /// Retrieves the transforms for all players, bases, and repair zones
+        /// within the map
+        /// </summary>
+        void GetObjectTransforms()
         {
             // Get all player transforms
             AirshipControlBehaviour[] players =
@@ -102,11 +109,37 @@ namespace ProjectStorms
             }
         }
 
+        /// <summary>
+        /// Creates the maps icon using the given prefabs
+        /// (assumes prefabs aren't null)
+        /// </summary>
         void CreateMapIcons()
         {
+            // Create base icons
+            m_baseImages = new List<Image>(m_baseTransforms.Count);
+            
+            for (int i = 0; i < m_baseImages.Capacity; ++i)
+            {
+                Image image = Instantiate(playerBaseImage);
+                image.transform.SetParent(m_captureCanvas.transform, false);
+            
+                m_baseImages.Add(image);
+            }
+            
+            // Create repair zone icons
+            m_repairImages = new List<Image>(m_repairTransforms.Count);
+            
+            for (int i = 0; i < m_repairImages.Capacity; ++i)
+            {
+                Image image = Instantiate(repairZoneImage);
+                image.transform.SetParent(m_captureCanvas.transform, false);
+            
+                m_repairImages.Add(image);
+            }
+
             // Create player icons
             m_playerImages = new List<Image>(m_playerTransforms.Count);
-            
+
             for (int i = 0; i < m_playerImages.Capacity; ++i)
             {
                 Image image = Instantiate(playerImage);
@@ -114,35 +147,13 @@ namespace ProjectStorms
 
                 m_playerImages.Add(image);
             }
-
-            //// Create base icons
-            //m_baseImages = new List<Image>(m_baseTransforms.Count);
-            //
-            //for (int i = 0; i < m_baseImages.Capacity; ++i)
-            //{
-            //    Image image = Instantiate(playerBaseImage);
-            //    image.transform.SetParent(m_captureCanvas.transform, false);
-            //
-            //    m_baseImages.Add(image);
-            //}
-            //
-            //// Create repair zone icons
-            //m_repairImages = new List<Image>(m_repairTransforms.Count);
-            //
-            //for (int i = 0; i < m_repairImages.Capacity; ++i)
-            //{
-            //    Image image = Instantiate(repairZoneImage);
-            //    image.transform.SetParent(m_captureCanvas.transform, false);
-            //
-            //    m_repairImages.Add(image);
-            //}
         }
 
         void Start()
         {
-            GetTransforms();
+            GetObjectTransforms();
             CreateMapIcons();
-            SetupCaptureCamera();
+            //SetupCaptureCamera();
         }
 
         public void OnEnable()
@@ -155,33 +166,55 @@ namespace ProjectStorms
             Canvas.willRenderCanvases -= OnWillRenderCanvas;
         }
 
+        /// <summary>
+        /// Callback function for when cavas is going to be rendered.
+        /// Will update the minimap's icons when called
+        /// </summary>
         void OnWillRenderCanvas()
         {
             UpdatePlayerIcons();
             
-            //// Update base icons
-            //for (int i = 0; i < m_baseTransforms.Count; ++i)
-            //{
-            //    Vector3 basePosition    = m_baseTransforms[i].position;
-            //    Image baseIcon          = m_baseImages[i];
-            //
-            //    // TODO: Colour based upon tag
-            //
-            //    baseIcon.transform.position = 
-            //        new Vector3(basePosition.x, 0.0f, basePosition.z);
-            //}
-            //
-            //// Update repair zone icons
-            //for (int i = 0; i < m_repairTransforms.Count; ++i)
-            //{
-            //    Vector3 repairPosition  = m_repairTransforms[i].position;
-            //    Image repairIcon        = m_repairImages[i];
-            //
-            //    repairIcon.transform.position = 
-            //        new Vector3(repairPosition.x, 0.0f, repairPosition.z);
-            //}
+            // Update base icons
+            for (int i = 0; i < m_baseTransforms.Count; ++i)
+            {
+                Transform baseTransform             = m_baseTransforms[i];
+                Image baseIcon                      = m_baseImages[i];
+                RectTransform baseIcon_rectTrans    = baseIcon.rectTransform;
+                
+                // Colour base icon (may not be required with actual icons)
+                ColourIconBasedUponTag(baseIcon, m_baseTransforms[i].tag);
+                
+                // Position base icon
+                PositionIconToTransform(baseIcon_rectTrans, baseTransform);
+            }
+            
+            // Update repair zone icons
+            for (int i = 0; i < m_repairTransforms.Count; ++i)
+            {
+                Transform repairZone_trans              = m_repairTransforms[i];
+                RectTransform repairZone_iconRectTrans  = m_repairImages[i].rectTransform;
+
+                PositionIconToTransform(repairZone_iconRectTrans, repairZone_trans);
+            }
         }
 
+        /// <summary>
+        /// Positions an icon to the given transform, in minimap-space
+        /// </summary>
+        /// <param name="a_iconTrans">Rectangle transform of the icon</param>
+        /// <param name="a_transform">Transform to move this icon to</param>
+        void PositionIconToTransform(RectTransform a_iconTrans, Transform a_transform)
+        {
+            Vector3 transformPos = a_transform.position;
+            Vector3 iconPosition = a_iconTrans.position;
+
+            a_iconTrans.position = new Vector3(transformPos.x, iconPosition.y, transformPos.z);
+        }
+
+        /// <summary>
+        /// Sets up the capture camera using the level's
+        /// "Level Bounds" prefab (currently buggy and not used)
+        /// </summary>
         void SetupCaptureCamera()
         {
             LevelBoundsBehaviour levelBounds = GameObject.FindObjectOfType<LevelBoundsBehaviour>();
@@ -200,29 +233,57 @@ namespace ProjectStorms
             m_captureCamera.orthographicSize = Mathf.Max(levelBounds_size.x, levelBounds_size.z) / 2.0f;
         }
 
+        /// <summary>
+        /// Updates all player icon's canvas position and rotation
+        /// </summary>
         void UpdatePlayerIcons()
         {
             for (int i = 0; i < m_playerTransforms.Count; ++i)
             {
-                Vector3 playerPosition      = m_playerTransforms[i].position;
-                Transform playerIconTrans   = m_playerImages[i].transform;
+                Transform playerTransform       = m_playerTransforms[i];
+                RectTransform playerIconTrans   = m_playerImages[i].rectTransform;
 
                 // Set icon position
-                playerIconTrans.position = new Vector3(
-                    playerPosition.x, 
-                    playerPosition.y, 
-                    playerPosition.z);
+                PositionIconToTransform(playerIconTrans, playerTransform);
 
-                // Perhaps using Rect transform may fix odd positioning bug?
-
-                // TODO: Colour icon based upon tag
+                // Set icon colour
+                ColourIconBasedUponTag(m_playerImages[i], m_playerTransforms[i].tag);
 
                 // Set icon rotation
-                //Vector3 playerRotation  = m_playerTransforms[i].rotation.eulerAngles;
-                //playerRotation.y        = 0.0f;
-                //playerRotation.z        = 0.0f;
-                //
-                //playerIconTrans.rotation = Quaternion.Euler(playerRotation);
+                float playerRotationY           = playerTransform.rotation.eulerAngles.y;
+                playerIconTrans.localRotation   = Quaternion.Euler(new Vector3(0.0f, 0.0f, -playerRotationY));
+            }
+        }
+
+        /// <summary>
+        /// Colours a given UI image to a player's colour
+        /// </summary>
+        /// <param name="a_image">Image to colour</param>
+        /// <param name="a_tag">Player tag</param>
+        void ColourIconBasedUponTag(Image a_image, string a_tag)
+        {
+            switch (a_tag)
+            {
+                case "Player1_":
+                    a_image.color = player1Colour;
+                    break;
+
+                case "Player2_":
+                    a_image.color = player2Colour;
+                    break;
+
+                case "Player3_":
+                    a_image.color = player3Colour;
+                    break;
+
+                case "Player4_":
+                    a_image.color = player4Colour;
+                    break;
+
+                default:
+                    Debug.LogWarning(string.Format("Unknown player tag given for: {0} (given tag: {1}) \n Unable to colour icon",  
+                        a_image.name, a_tag));
+                    break;
             }
         }
 	}
