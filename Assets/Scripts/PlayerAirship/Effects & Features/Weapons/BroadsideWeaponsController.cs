@@ -109,7 +109,7 @@ namespace ProjectStorms
                 if (m_portTimer >= cooldownTime)
                 {
                     FireCannons(false);
-                    ApplyShunt(rightShunt_dir);
+                    ApplyShunt(leftShunt_dir);
 
                     m_portTimer = 0.0f;
                 }
@@ -121,7 +121,7 @@ namespace ProjectStorms
                 if (m_starboardTimer >= cooldownTime)
                 {
                     FireCannons(true);
-                    ApplyShunt(leftShunt_dir);
+                    ApplyShunt(rightShunt_dir);
 
                     m_starboardTimer = 0.0f;
                 }
