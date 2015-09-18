@@ -41,6 +41,7 @@ namespace ProjectStorms
         private List<Transform> m_playerTransforms;
         private List<Transform> m_baseTransforms;
         private List<Transform> m_repairTransforms;
+        private Transform m_prisonshipTransform;
 
         // Minimap icon images
         private List<Image> m_playerImages;
@@ -51,6 +52,7 @@ namespace ProjectStorms
         private Canvas m_captureCanvas;
         private Camera m_captureCamera;
         private Transform m_transform;
+        private GameObject m_gameObject;
 
         // TODO: Add support for powerups
         // TODO: Change display background depending on player count
@@ -65,8 +67,9 @@ namespace ProjectStorms
             m_captureCanvas = m_captureCamera.GetComponentInChildren<Canvas>();
             m_captureCanvas.transform.localPosition = Vector3.zero;
 
-            // Cache this object's transform reference
-            m_transform = transform;
+            // Cache common properties
+            m_transform     = transform;
+            m_gameObject    = gameObject;
         }
 
         /// <summary>
@@ -153,7 +156,7 @@ namespace ProjectStorms
         {
             GetObjectTransforms();
             CreateMapIcons();
-            //SetupCaptureCamera();
+            SetupCaptureCamera();
         }
 
         public void OnEnable()
@@ -213,24 +216,34 @@ namespace ProjectStorms
 
         /// <summary>
         /// Sets up the capture camera using the level's
-        /// "Level Bounds" prefab (currently buggy and not used)
+        /// "Level Bounds" prefab
         /// </summary>
         void SetupCaptureCamera()
         {
             LevelBoundsBehaviour levelBounds = GameObject.FindObjectOfType<LevelBoundsBehaviour>();
+
+            if (levelBounds == null)
+            {
+                // Unable to locate level bounds prefab within scene
+                // Throw exception, and deactivate minimap
+                Debug.LogException(new System.Exception("Unable to find Level Bounds prefab within scene"));
+                this.gameObject.SetActive(false);
+
+                return;
+            }
+
             Vector3 levelBounds_size = levelBounds.GetComponent<BoxCollider>().size;
             Vector3 levelBounds_pos = levelBounds.transform.position;
 
-            // Set capture node position
-            Transform captureNode   = transform.FindChild("Capture Node");
-            captureNode.position    = new Vector3(
-                levelBounds_pos.x, 
-                levelBounds_pos.y + levelBounds_size.y, 
+            // Set camera position
+            m_captureCamera.transform.position = new Vector3(
+                levelBounds_pos.x,
+                levelBounds_pos.y + (levelBounds_size.y * 0.5f),
                 levelBounds_pos.z);
 
             // Setup camera frustrum
             m_captureCamera.farClipPlane = levelBounds_size.y;
-            m_captureCamera.orthographicSize = Mathf.Max(levelBounds_size.x, levelBounds_size.z) / 2.0f;
+            m_captureCamera.orthographicSize = Mathf.Max(levelBounds_size.x, levelBounds_size.z) * 0.5f;
         }
 
         /// <summary>
