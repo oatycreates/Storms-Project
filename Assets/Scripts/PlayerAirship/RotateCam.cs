@@ -202,10 +202,10 @@ namespace ProjectStorms
                 }
 
                 // Fire the front cannons
-                if (a_faceDown && frontCannon != null)
+                /*if (a_faceDown && frontCannon != null)
                 {
                     frontCannon.Fire();
-                }
+                }*/
 
                 // Move lookTarget around
                 float internalCamYRotation = m_camRotTrans.localEulerAngles.y;
