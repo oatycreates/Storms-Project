@@ -18,6 +18,7 @@ namespace ProjectStorms
 	public class Minimap : MonoBehaviour 
 	{
         // Map icon images
+        [Space(10)]
         [Tooltip("Prefab GUI Image, to represent players within the world")]
         public Image playerImage;
         [Tooltip("Prefab GUI Image, to represent player bases within the world")]
@@ -25,9 +26,12 @@ namespace ProjectStorms
         [Tooltip("Prefab GUI Image, to represent repair zones within the world")]
         public Image repairZoneImage;
         [Tooltip("Prefab GUI Image, to display player score")]
-        public Image scoreIndicator;
+        public Image scoreIndicatorImage;
+        [Tooltip("Prefab GUI Image, to represent the prison ship")]
+        public Image prisonshipImage;
 
         // Player icons colour tints
+        [Space(10)]
         [Tooltip("Sprite colour tint to use on Player 1 objects within the minimap")]
         public Color player1Colour;
         [Tooltip("Sprite colour tint to use on Player 2 objects within the minimap")]
@@ -36,6 +40,20 @@ namespace ProjectStorms
         public Color player3Colour;
         [Tooltip("Sprite colour tint to use on Player 4 objects within the minimap")]
         public Color player4Colour;
+
+        // Prisonship colour tint
+        [Space(10)]
+        [Tooltip("Flash rate between normal and dropping colour, in seconds")]
+        public float prisonshipFlashRate = 0.1f;
+        [Tooltip("Sprite colour tint to use on the prison ship icon, when not dropping passengers")]
+        public Color prisonshipNormalColour;
+        [Tooltip("Sprite colour tint to use on the prison ship icon, when dropping passengers")]
+        public Color prisonshipDroppingColour;
+
+        // Player icon resizing
+        [Space(10)]
+        [Tooltip("Used to scale player icon, as carry more passengers. Ships carrying passengers more than this value won't increase in size, but will be at the maximum size")]
+        public float maxPlayerPassengerDisplay;
 
         // Transforms
         private List<Transform> m_playerTransforms;
@@ -47,6 +65,13 @@ namespace ProjectStorms
         private List<Image> m_playerImages;
         private List<Image> m_baseImages;
         private List<Image> m_repairImages;
+        private Image m_prisonshipImage;
+
+        // Passenger spawner
+        private bool m_passengersSpawning       = false;
+        private bool m_useNormalPrisonColour    = false;
+        private float m_currentPrisonFlashTime  = 0.0f;
+        private List<SpawnPassengers> m_passengerSpawners;
 
         // Cached variables
         private Canvas m_captureCanvas;
@@ -57,6 +82,31 @@ namespace ProjectStorms
         // TODO: Add support for powerups
         // TODO: Change display background depending on player count
         // TODO: Make this script run within editor for easy tweaking
+        // TODO: Set icons' alpha to background alpha, or have an overall tweakable value
+        // TODO: Show when prison ship is dropping passengers through icon colour flashing
+
+        /// <summary>
+        /// Returns whether or not any passengers are currently
+        /// being spawned
+        /// </summary>
+        bool passengersSpawning
+        {
+            get
+            {
+                // Loop through all spawners and check if any are
+                // current spawning
+                bool passengersSpawning = false;
+                for (int i = 0; i < m_passengerSpawners.Count; ++i)
+                {
+                    if (m_passengerSpawners[i].currentlySpawning)
+                    {
+                        passengersSpawning = true;
+                    }
+                }
+
+                return passengersSpawning;
+            }
+        }
 
         public void Awake()
         {
@@ -110,6 +160,10 @@ namespace ProjectStorms
             {
                 m_repairTransforms.Add(repairZones[i].transform);
             }
+
+            // Get prison ship transform
+            PrisonFortressRotate prisonship = GameObject.FindObjectOfType<PrisonFortressRotate>();
+            m_prisonshipTransform = prisonship.transform;
         }
 
         /// <summary>
@@ -118,13 +172,15 @@ namespace ProjectStorms
         /// </summary>
         void CreateMapIcons()
         {
+            Transform captureCanvas_trans = m_captureCanvas.transform;
+
             // Create base icons
             m_baseImages = new List<Image>(m_baseTransforms.Count);
             
             for (int i = 0; i < m_baseImages.Capacity; ++i)
             {
                 Image image = Instantiate(playerBaseImage);
-                image.transform.SetParent(m_captureCanvas.transform, false);
+                image.transform.SetParent(captureCanvas_trans, false);
             
                 m_baseImages.Add(image);
             }
@@ -135,10 +191,14 @@ namespace ProjectStorms
             for (int i = 0; i < m_repairImages.Capacity; ++i)
             {
                 Image image = Instantiate(repairZoneImage);
-                image.transform.SetParent(m_captureCanvas.transform, false);
+                image.transform.SetParent(captureCanvas_trans, false);
             
                 m_repairImages.Add(image);
             }
+
+            // Create prisonship icon
+            m_prisonshipImage = Instantiate(prisonshipImage);
+            m_prisonshipImage.rectTransform.SetParent(captureCanvas_trans, false);
 
             // Create player icons
             m_playerImages = new List<Image>(m_playerTransforms.Count);
@@ -146,7 +206,7 @@ namespace ProjectStorms
             for (int i = 0; i < m_playerImages.Capacity; ++i)
             {
                 Image image = Instantiate(playerImage);
-                image.transform.SetParent(m_captureCanvas.transform, false);
+                image.transform.SetParent(captureCanvas_trans, false);
 
                 m_playerImages.Add(image);
             }
@@ -157,6 +217,15 @@ namespace ProjectStorms
             GetObjectTransforms();
             CreateMapIcons();
             SetupCaptureCamera();
+
+            // Get passenger spawner references
+            SpawnPassengers[] passengerSpawners = GameObject.FindObjectsOfType<SpawnPassengers>();
+            m_passengerSpawners = new List<SpawnPassengers>(passengerSpawners.Length);
+
+            for (int i = 0; i < m_passengerSpawners.Capacity; ++i)
+            {
+                m_passengerSpawners.Add(passengerSpawners[i]);
+            }
         }
 
         public void OnEnable()
@@ -190,7 +259,10 @@ namespace ProjectStorms
                 // Position base icon
                 PositionIconToTransform(baseIcon_rectTrans, baseTransform);
             }
-            
+
+            // Update prison ship icon
+            UpdatePrisonShipIcon();
+
             // Update repair zone icons
             for (int i = 0; i < m_repairTransforms.Count; ++i)
             {
@@ -266,6 +338,43 @@ namespace ProjectStorms
                 float playerRotationY           = playerTransform.rotation.eulerAngles.y;
                 playerIconTrans.localRotation   = Quaternion.Euler(new Vector3(0.0f, 0.0f, -playerRotationY));
             }
+        }
+
+        /// <summary>
+        /// Updates the prison ship icon, and will flash colour tint
+        /// when passengers dropping, are detected
+        /// </summary>
+        void UpdatePrisonShipIcon()
+        {
+            // Update icon colour
+            if (passengersSpawning)
+            {
+                if (m_currentPrisonFlashTime <= 0.0f)
+                {
+                    // Reset flashing timer
+                    m_currentPrisonFlashTime    = prisonshipFlashRate;
+                    // Swap prison ship colour
+                    m_useNormalPrisonColour     = !m_useNormalPrisonColour;
+                }
+                else
+                {
+                    // Tick prison ship icon flash, timer
+                    m_currentPrisonFlashTime -= Time.deltaTime;
+                }
+
+                // Assign prison ship icon flashing colour
+                m_prisonshipImage.color = 
+                    m_useNormalPrisonColour ? prisonshipNormalColour : prisonshipDroppingColour;
+            }
+            else
+            {
+                // Assign prison ship normal colour
+                m_prisonshipImage.color = prisonshipNormalColour;
+            }
+
+            // Update icon position
+            PositionIconToTransform(m_prisonshipImage.rectTransform,
+                m_prisonshipTransform);
         }
 
         /// <summary>
