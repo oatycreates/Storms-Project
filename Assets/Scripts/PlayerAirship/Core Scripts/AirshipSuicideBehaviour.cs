@@ -91,6 +91,9 @@ namespace ProjectStorms
                 //m_stateManager.SetPlayerState(EPlayerState.Roulette);
                 m_stateManager.SetPlayerState(EPlayerState.Control);
             }
+
+			//Make controller vibrate - update every second
+			InputManager.SetControllerVibrate (gameObject.tag, 10, 10, 0.1f);
         }
 
         void FixedUpdate()

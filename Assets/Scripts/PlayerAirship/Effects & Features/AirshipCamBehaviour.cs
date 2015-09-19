@@ -78,6 +78,11 @@ namespace ProjectStorms
 
         void Update()
         {
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				ShakeCam(0.7f, 1.5f);
+			}
+
 			shakeTime -= Time.deltaTime;
 
 			//This has been updated - If cam IS following and screenshake is NOT in effect, then make the camera move to the right position.
@@ -162,6 +167,9 @@ namespace ProjectStorms
 				//Look at target.
 				m_trans.rotation = camRotator.rotation;
 			}
+
+			//Make my controller vibrate while camera shakes
+			InputManager.SetControllerVibrate (gameObject.tag, 1, 1, shakeTime);
 		}
 	} 
 }

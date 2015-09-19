@@ -159,6 +159,17 @@ namespace ProjectStorms
         public float throttle;
         [HideInInspector]
         public bool openHatch;
+
+		//Vibration values
+		private float v_leftYaw = 0;
+		private float v_rightYaw = 0;
+		private float v_throttleVibrate = 0;
+		private float v_pitchVibrate = 0;
+		//private float v_leftBumper = 0;
+		//private float v_rightBumper = 0;
+		private float v_leftRoll = 0;
+		private float v_rightRoll = 0;
+
         void Awake()
         {
             // Get Rigidbody variables
@@ -299,8 +310,87 @@ namespace ProjectStorms
                     animThrottle = boundedThrottle * (animThrottleMult - 1) + 1;
                 }
                 m_anim.SetFloat(m_animPropellerMult, animThrottleSign * animThrottle);
-            }
+
+				Vibrate();
+			}
         }
+
+		void Vibrate()
+		{
+			//Control Vibration
+
+			//Yaw
+			if (yaw < 0)
+			{
+				//leftVibrate = 0.1f;
+				v_leftYaw = Mathf.Abs(yaw) / 10;
+			}
+			else
+				if (yaw > 0)
+			{
+				//rightVibrate = 0.1f;
+				v_rightYaw = Mathf.Abs(yaw) / 10;
+			}
+			else
+				if (yaw == 0)
+			{
+				v_leftYaw = 0;
+				v_rightYaw = 0;
+			}
+			
+			//Throttle
+			if (throttle > 0)
+			{
+				//throttleVibrate = 0.0f;
+				v_throttleVibrate = Mathf.Abs(throttle) /25;
+			}
+			else
+			if (throttle < 0)
+			{
+				v_throttleVibrate = Mathf.Abs(throttle);
+			}
+			else
+				if (throttle == 0)
+			{
+				v_throttleVibrate = 0;
+			}
+
+			//Pitch
+			if (pitch != 0)
+			{
+				v_pitchVibrate = Mathf.Abs(pitch) /25;
+			}
+			else
+			{
+				v_pitchVibrate = 0;
+			}
+
+			//Roll
+			if (roll > 0)
+			{
+				v_leftRoll = Mathf.Abs(roll)/5;
+			}
+			else
+			if (roll < 0)
+			{
+				v_rightRoll = Mathf.Abs(roll)/5;
+			}
+			else
+			if (roll == 0)
+			{
+				v_leftRoll = 0;
+				v_rightRoll = 0;
+			}
+			
+			//Calculate vibration values
+			float leftForces = (v_throttleVibrate + v_pitchVibrate + v_leftRoll + v_leftYaw);
+			float rightForces = (v_throttleVibrate + v_pitchVibrate + v_rightRoll + v_rightYaw);
+
+			//Debug.Log ("LeftForce: " + leftForces + " RightForces: " + rightForces);
+			
+			//Vibrate
+			InputManager.SetControllerVibrate (gameObject.tag, leftForces, rightForces, 0.1f);
+		}
 
         void FixedUpdate()
         {
