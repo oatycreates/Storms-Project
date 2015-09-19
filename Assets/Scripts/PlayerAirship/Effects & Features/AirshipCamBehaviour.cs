@@ -44,6 +44,15 @@ namespace ProjectStorms
         // Cached variables
         Transform m_trans;
 
+		/// <summary>
+		/// Screenshake	function variables
+		/// </summary>
+		//Timer used for determining how long the camera should continue shaking for.
+		private float shakeTime = 0.0f;
+		//The amount that the camera should shake.
+		private float shakeAmount = 1.0f;
+
+
         void Awake()
         {
             m_trans = transform;
@@ -69,9 +78,19 @@ namespace ProjectStorms
 
         void Update()
         {
+			shakeTime -= Time.deltaTime;
+
+			//This has been updated - If cam IS following and screenshake is NOT in effect, then make the camera move to the right position.
             if (camFollowPlayer)
             {
-                FollowCam();
+				if (shakeTime < 0)
+				{
+                	FollowCam();
+				}
+				else
+				{
+					Shaking();
+				}
             }
             else if (!camFollowPlayer)
             {
@@ -79,31 +98,37 @@ namespace ProjectStorms
             }
         }
 
+		/// <summary>
+		/// This triggers the camera shake.		
+		/// </summary>
+		public void ShakeCam(float shakeDuration, float shakeStrength)
+		{
+			//Recommend shakeDuration = 0.6f and shakeStrength = 1.5f;
+
+			//Set shake time
+			shakeTime = shakeDuration;
+			shakeAmount = shakeStrength;
+			
+			//This changes the values in the update function.
+		}
+
         public void FollowCam()
         {
             if (camPosTarget != null)
             {
                 // TODO Fix lerping
-                //m_trans.position = Vector3.Lerp(m_trans.position, camPosTarget.position, Time.deltaTime * camPosSmooth);
                 m_trans.position = camPosTarget.position;
             }
 
             if (camLookTarget != null)
             {
-                //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-                //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
-                //m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-
                 m_trans.rotation = camRotator.rotation;
             }
-
         }
 
 
         public void SuicideCam()
         {
-            //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-            //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
             m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
         }
 
@@ -111,8 +136,6 @@ namespace ProjectStorms
         {
             if (camLookTarget != null)
             {
-                //Quaternion tar = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
-                //m_trans.rotation = Quaternion.Slerp(m_trans.localRotation, tar, Time.deltaTime * camLookSmooth);
                 m_trans.rotation = Quaternion.LookRotation(camLookTarget.position - m_trans.position);
             }
         }
@@ -122,11 +145,23 @@ namespace ProjectStorms
         /// </summary>
         public void RouletteCam()
         {
-            //m_trans.parent = rememberMyParent.transform;
-            //m_trans.LookAt(camPosTarget.transform.position);
-
             m_trans.position = m_myStartPos;
             m_trans.rotation = m_myStartRot;
         }
-    } 
+
+		/// <summary>
+		/// This determines the shaking behaviour.
+		/// </summary>
+		private void Shaking()
+		{
+			if (camPosTarget != null)
+			{
+				Vector3 tempPos = camPosTarget.position;
+				m_trans.position = tempPos + Random.insideUnitSphere * shakeAmount;
+
+				//Look at target.
+				m_trans.rotation = camRotator.rotation;
+			}
+		}
+	} 
 }

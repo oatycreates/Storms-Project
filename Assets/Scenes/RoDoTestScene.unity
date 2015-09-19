@@ -2434,7 +2434,7 @@ Prefab:
     - target: {fileID: 11461088, guid: 5cca6ef4fd801cb4ea5e68556c5f1952, type: 2}
       propertyPath: cam1
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1055060652}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5cca6ef4fd801cb4ea5e68556c5f1952, type: 2}
   m_IsPrefabParent: 0
@@ -2683,22 +2683,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3c06527c671d53b42acb1d16142dfe90, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1055060650 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 142252, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
+--- !u!20 &1055060652 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 2089972, guid: 703593058d53ea447836fb9a2ea40a50,
+    type: 2}
   m_PrefabInternal: {fileID: 1593387307}
---- !u!114 &1055060656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1055060650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a00f92db7c5cd4caa4c32056171097, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shakeAmount: .5
 --- !u!4 &1080009227 stripped
 Transform:
   m_PrefabParentObject: {fileID: 468688, guid: 65f6e76c5896b0c4ba240566e9d03833, type: 2}
@@ -3324,6 +3313,14 @@ Prefab:
     - target: {fileID: 193358, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
       propertyPath: m_TagString
       value: Player1_
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448570, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
+      propertyPath: maxShakeTime
+      value: .600000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 11448570, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
+      propertyPath: shakeAmount
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
