@@ -347,7 +347,7 @@ namespace ProjectStorms
 			else
 			if (throttle < 0)
 			{
-				v_throttleVibrate = Mathf.Abs(throttle);
+				v_throttleVibrate = Mathf.Abs(throttle)/2;
 			}
 			else
 				if (throttle == 0)
