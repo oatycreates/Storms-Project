@@ -1381,7 +1381,7 @@ GameObject:
   - 114: {fileID: 11474832}
   m_Layer: 0
   m_Name: SecondLevelProxy
-  m_TagString: Untagged
+  m_TagString: Player4_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2883,7 +2883,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187888}
   m_LocalRotation: {x: 0, y: .404264659, z: 0, w: -.914642096}
-  m_LocalPosition: {x: -237.100006, y: 43.5999985, z: -1360}
+  m_LocalPosition: {x: 25.801815, y: 2.32133412, z: -16.6143875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 454476}
@@ -3065,6 +3065,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!23 &2301668
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -4202,8 +4203,8 @@ HingeJoint:
   m_Limits:
     min: 0
     max: 100
-    minBounce: 0
-    maxBounce: 0
+    bounciness: 0
+    bounceMinVelocity: .200000003
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -5561,6 +5562,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bumpVelThreshold: 90
+  bumpRumbleStr: 1
+  bumpRumbleDurr: .75
+  balDestForce: 500
+  balDestRumbleStr: 1
+  balDestRumbleDurr: .75
   destructableParts:
   - partObject: {fileID: 149976}
     partType: 1
@@ -5655,8 +5661,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: .000122070312, y: 9.58499908, z: 1.01391602}
-    m_Extent: {x: 6.28510761, y: 3.3842659, z: 6.27156258}
+    m_Center: {x: -9.53674316e-07, y: 9.58499908, z: 1.01382828}
+    m_Extent: {x: 6.28509045, y: 3.38426399, z: 6.27154779}
   m_DirtyAABB: 0
 --- !u!183 &18302522
 Cloth:
