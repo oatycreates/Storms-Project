@@ -334,14 +334,14 @@ namespace ProjectStorms
             if (yaw == -1 && previousYaw != -1)
 			{
 				//leftVibrate = 0.1f;
-				v_leftYaw = Mathf.Abs(yaw) / 10;
+				v_leftYaw = Mathf.Abs(yaw) / 6;
 			}
 			else
 			//if (yaw > 0)
             if (yaw == 1 && previousYaw != 1)
 			{
 				//rightVibrate = 0.1f;
-				v_rightYaw = Mathf.Abs(yaw) / 10;
+                v_rightYaw = Mathf.Abs(yaw) / 6;
 			}
 			else
 			//if (yaw == 0)
@@ -355,13 +355,13 @@ namespace ProjectStorms
             if (throttle == 1 && previousThrottle != 1)
 			{
 				//throttleVibrate = 0.0f;
-				v_throttleVibrate = Mathf.Abs(throttle) /25;
+                v_throttleVibrate = Mathf.Abs(throttle) / 25;
 			}
 			else
 			//if (throttle < 0)
             if (throttle == -1 && previousThrottle != -1)
 			{
-				v_throttleVibrate = Mathf.Abs(throttle)/2;
+                v_throttleVibrate = Mathf.Abs(throttle) / 2;
 			}
 			else
 				//if (throttle == 0)
@@ -373,12 +373,12 @@ namespace ProjectStorms
 			//if (pitch != 0)
             if (pitch == 1 && previousPitch != 1)
 			{
-				v_pitchVibrate = Mathf.Abs(pitch) /25;
+                v_pitchVibrate = Mathf.Abs(pitch) / 7;
 			}
             else
             if (pitch == -1 && previousPitch != -1)
             {
-                v_pitchVibrate = Mathf.Abs(pitch) / 25;
+                v_pitchVibrate = Mathf.Abs(pitch) / 7;
             }
 			else
 			{
@@ -389,13 +389,13 @@ namespace ProjectStorms
 			//if (roll > 0)
             if (roll == 1 && previousRoll != 1)
 			{
-				v_leftRoll = Mathf.Abs(roll)/5;
+                v_leftRoll = Mathf.Abs(roll) / 5;
 			}
 			else
 			//if (roll < 0)
             if (roll == -1 && previousRoll != -1)
 			{
-				v_rightRoll = Mathf.Abs(roll)/5;
+                v_rightRoll = Mathf.Abs(roll) / 5;
 			}
 			else
 			//if (roll == 0)
@@ -409,10 +409,10 @@ namespace ProjectStorms
 			float rightForces = (v_throttleVibrate + v_pitchVibrate + v_rightRoll + v_rightYaw);
 
 			//Debug.Log ("LeftForce: " + leftForces + " RightForces: " + rightForces);
-            Debug.Log("Yaw: " + yaw + "Previous Yaw: " + previousYaw);
+            //Debug.Log("Yaw: " + yaw + "Previous Yaw: " + previousYaw);
 			
 			//Vibrate
-			InputManager.SetControllerVibrate (gameObject.tag, leftForces, rightForces, 1.0f);
+			InputManager.SetControllerVibrate (gameObject.tag, leftForces, rightForces, 0.5f);
 		}
 
         void FixedUpdate()
