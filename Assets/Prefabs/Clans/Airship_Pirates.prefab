@@ -1701,6 +1701,7 @@ GameObject:
   - 114: {fileID: 11494226}
   - 114: {fileID: 11422278}
   - 114: {fileID: 11439742}
+  - 114: {fileID: 11404446}
   m_Layer: 0
   m_Name: Airship_Pirates
   m_TagString: Player1_
@@ -2040,8 +2041,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1792.5, y: 365.963013, z: 1087.85205}
+  m_LocalRotation: {x: 0, y: .915390968, z: 0, w: -.402566016}
+  m_LocalPosition: {x: -283, y: 63, z: -295}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -3154,7 +3155,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
-  m_StereoMirrorMode: 0
 --- !u!23 &2300888
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -4323,8 +4323,8 @@ HingeJoint:
   m_Limits:
     min: 0
     max: 100
-    bounciness: .5
-    bounceMinVelocity: 0
+    minBounce: 0
+    maxBounce: 0
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -4918,6 +4918,18 @@ MonoBehaviour:
   cannonBallForce: 100
   shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
+--- !u!114 &11404446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7c1441f01563243bf6ca853e2f79fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
 --- !u!114 &11405404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5764,8 +5776,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58496094, z: 1.01379395}
-    m_Extent: {x: 4.68310547, y: 3.38427734, z: 1.60913086}
+    m_Center: {x: 0, y: 9.58500671, z: 1.01382446}
+    m_Extent: {x: 6.28616524, y: 3.38426208, z: 6.27467966}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:

@@ -1182,6 +1182,7 @@ GameObject:
   - 114: {fileID: 11425746}
   - 114: {fileID: 11422214}
   - 114: {fileID: 11424278}
+  - 114: {fileID: 11434316}
   m_Layer: 0
   m_Name: Airship_Tinkerers
   m_TagString: Player3_
@@ -2636,8 +2637,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158946}
-  m_LocalRotation: {x: 0, y: .382683456, z: 0, w: .923879504}
-  m_LocalPosition: {x: -1705.53003, y: 364.543182, z: 1087.24622}
+  m_LocalRotation: {x: 0, y: .352176696, z: 0, w: .93593353}
+  m_LocalPosition: {x: -1368.12, y: 35, z: -1355.04004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 409020}
@@ -3494,7 +3495,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
-  m_StereoMirrorMode: 0
 --- !u!23 &2303784
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -4787,8 +4787,8 @@ HingeJoint:
   m_Limits:
     min: 0
     max: 100
-    bounciness: .5
-    bounceMinVelocity: 0
+    minBounce: 0
+    maxBounce: 0
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -5658,6 +5658,18 @@ MonoBehaviour:
   cannonBallForce: 100
   shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
+--- !u!114 &11434316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7c1441f01563243bf6ca853e2f79fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 2
 --- !u!114 &11443600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6228,8 +6240,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -.000122070312, y: 9.58496094, z: 1.0138855}
-    m_Extent: {x: 6.29214525, y: 3.38427734, z: 6.29214525}
+    m_Center: {x: 0, y: 9.58499527, z: 1.01367188}
+    m_Extent: {x: 6.27830029, y: 3.38426208, z: 6.25187302}
   m_DirtyAABB: 0
 --- !u!183 &18366390
 Cloth:
