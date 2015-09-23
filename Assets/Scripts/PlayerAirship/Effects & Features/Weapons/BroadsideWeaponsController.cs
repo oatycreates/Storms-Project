@@ -159,12 +159,12 @@ namespace ProjectStorms
 
             if (a_direction.x > 0)
             {
-                InputManager.SetControllerVibrate(gameObject.tag, 0.1f, 0.9f, 0.4f, true);
+                InputManager.SetControllerVibrate(gameObject.tag, 0.0f, 0.9f, 0.35f, true);
             }
             else
             if (a_direction.x < 0)
             {
-                InputManager.SetControllerVibrate(gameObject.tag, 0.9f, 0.1f, 0.4f, true);
+                InputManager.SetControllerVibrate(gameObject.tag, 0.9f, 0.0f, 0.35f, true);
             }
             
             

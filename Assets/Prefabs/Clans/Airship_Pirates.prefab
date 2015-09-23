@@ -666,6 +666,7 @@ GameObject:
   - 124: {fileID: 12414020}
   - 92: {fileID: 9296638}
   - 114: {fileID: 11462060}
+  - 114: {fileID: 11475470}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1702,7 +1703,7 @@ GameObject:
   - 114: {fileID: 11439742}
   m_Layer: 0
   m_Name: Airship_Pirates
-  m_TagString: Player2_
+  m_TagString: Player1_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2040,7 +2041,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.6684952, y: -85.6301651, z: 303.899994}
+  m_LocalPosition: {x: -1792.5, y: 365.963013, z: 1087.85205}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -5429,6 +5430,24 @@ MonoBehaviour:
   maxRotationInDegrees: 90
   controller: {fileID: 11479436}
   flipDirection: 1
+--- !u!114 &11475470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 142252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b5ec6153a1d55438228df10fe66844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFog: 1
+  useRadialDistance: 0
+  heightFog: 0
+  height: 1
+  heightDensity: 2
+  startDistance: 750
+  fogShader: {fileID: 4800000, guid: 70d8568987ac0499f952b54c7c13e265, type: 3}
 --- !u!114 &11475864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5744,8 +5763,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58499908, z: 1.01382446}
-    m_Extent: {x: 4.68305969, y: 3.38426208, z: 1.60913086}
+    m_Center: {x: 0, y: 9.58496094, z: 1.01379395}
+    m_Extent: {x: 4.68310547, y: 3.38427734, z: 1.60913086}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:

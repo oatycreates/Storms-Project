@@ -169,9 +169,6 @@ namespace ProjectStorms
 				//Look at target.
 				m_trans.rotation = camRotator.rotation;
 			}
-
-			//Make my controller vibrate while camera shakes
-			InputManager.SetControllerVibrate (gameObject.tag, 1, 1, shakeTime);
 		}
 	} 
 }
