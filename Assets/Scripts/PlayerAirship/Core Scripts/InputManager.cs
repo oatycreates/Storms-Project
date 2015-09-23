@@ -269,7 +269,7 @@ namespace ProjectStorms
             {
                 if (cam.CompareTag(a_playerTag))
                 {
-                    cam.ShakeCam(a_shakeDurr, a_shakeStr);
+                    cam.ShakeCam(a_shakeStr, a_shakeDurr);
                     break;
                 }
             }
