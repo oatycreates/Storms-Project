@@ -20,6 +20,18 @@ namespace ProjectStorms
         [Tooltip("Prefab which will be the base for player and base icons")]
         public Image iconTemplatePrefab;
 
+        // TODO: Implement score indicators
+
+        [Space(10)]
+        public GameObject navyScoreIndicator;
+        public Color navyScoreColour;
+        public GameObject piratesScoreIndicator;
+        public Color piratesScoreColour;
+        public GameObject tinkererScoreIndicator;
+        public Color tinkerersScoreColour;
+        public GameObject vikingsScoreIndicator;
+        public Color vikingsScoreColour;
+
         // Player images
         [Space(10)]
         [Tooltip("Sprite to represent players within the navy faction")]
@@ -87,9 +99,7 @@ namespace ProjectStorms
         private GameObject m_gameObject;
 
         // TODO: Change display background depending on player count
-        // TODO: Make this script run within editor for easy tweaking
-        // TODO: Set icons' alpha to background alpha, or have an overall tweakable value
-        // TODO: Show when prison ship is dropping passengers through icon colour flashing
+        // TODO: Flash player icons when they are dropping passengers
 
         /// <summary>
         /// Returns whether or not any passengers are currently
