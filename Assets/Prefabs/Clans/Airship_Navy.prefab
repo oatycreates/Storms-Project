@@ -4825,6 +4825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ce800254132449a2e6f9f47072e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bumpVelThreshold: 90
   destructableParts:
   - partObject: {fileID: 152488}
     partType: 1
@@ -7122,6 +7123,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Player2_
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bumpVelThreshold
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -29,6 +29,11 @@ namespace ProjectStorms
         }
 
         /// <summary>
+        /// Threshold for a collision to consider a bump rumble.
+        /// </summary>
+        public float bumpVelThreshold = 90.0f;
+
+        /// <summary>
         /// A collection object to contain part information.
         /// </summary>
         [System.Serializable]
@@ -73,13 +78,14 @@ namespace ProjectStorms
         private Rigidbody m_rb = null;
         private PassengerTray m_shipTray = null;
         private StateManager m_shipStates = null;
-        //private float m_breakVelSqr = 0;
+        private float m_bumpVelSqr = 0;
 
         void Awake()
         {
             m_rb = GetComponent<Rigidbody>();
             m_shipTray = GetComponentInChildren<PassengerTray>();
             m_shipStates = GetComponent<StateManager>();
+            m_bumpVelSqr = bumpVelThreshold * bumpVelThreshold;
         }
 
         /// <summary>
@@ -110,6 +116,11 @@ namespace ProjectStorms
                 foreach (ContactPoint contact in a_colInfo.contacts)
                 {
                     EvaluatePartCollision(contact.thisCollider, a_colInfo.relativeVelocity.sqrMagnitude);
+
+                    if (a_colInfo.relativeVelocity.sqrMagnitude >= m_bumpVelSqr)
+                    {
+                        InputManager.SetControllerVibrate(gameObject.tag, 1.0f, 1.0f, 1.0f, true);
+                    }
                 }
             }
         }
