@@ -117,6 +117,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &185788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 496742}
+  - 82: {fileID: 8263078}
+  - 114: {fileID: 11428506}
+  m_Layer: 0
+  m_Name: OptionalMusic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &191656
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +189,7 @@ Transform:
   - {fileID: 403204}
   - {fileID: 402546}
   - {fileID: 435868}
+  - {fileID: 496742}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &435868
@@ -186,6 +204,87 @@ Transform:
   m_Children: []
   m_Father: {fileID: 408110}
   m_RootOrder: 2
+--- !u!4 &496742
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185788}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 408110}
+  m_RootOrder: 3
+--- !u!82 &8263078
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185788}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!82 &8271370
 AudioSource:
   m_ObjectHideFlags: 1
@@ -255,6 +354,20 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &11428506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3655b6622b14446a1898c19a3ad47a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeMusicIn: 1
+  maxMusicVolume: .5
+  music: {fileID: 8300000, guid: cd9f8f3aaf7d04a449bcdaa36bc63b5f, type: 3}
 --- !u!114 &11429980
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 788222124a9f140498ae48dd74114222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  windSounds:
+  sounds:
   - {fileID: 8300000, guid: 5559f6eb2ba1fe74ea8a034ca59d3efd, type: 3}
   - {fileID: 8300000, guid: 8d560d4febffbc64795f4602fa36d2f0, type: 3}
   - {fileID: 8300000, guid: 2368c7fbefb9f8c4591366b58f748798, type: 3}
@@ -395,14 +508,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830ace0db69479740861e9a84c03ab48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  e_numberOfBases: 3
-  PassengersToWin: 50
+  gameType: 0
+  passengersToWin: 50
   winText: {fileID: 11454760}
   pirateBase1: {fileID: 0}
   pirateBase2: {fileID: 0}
   pirateBase3: {fileID: 0}
   pirateBase4: {fileID: 0}
+  teamBaseAlpha: {fileID: 0}
+  teamBaseOmega: {fileID: 0}
+  alphaTeamName: Alpha
+  alphaTeamColour: {r: 1, g: 0, b: 0, a: 1}
+  omegaTeamName: Omega
+  omegaTeamColour: {r: 0, g: 0, b: 0, a: 1}
   fadeOutScene: {fileID: 11446454}
+  optionalWinnerCam: {fileID: 0}
 --- !u!222 &22213798
 CanvasRenderer:
   m_ObjectHideFlags: 1

@@ -13,13 +13,13 @@ using System.Collections;
 namespace ProjectStorms
 {
     /// <summary>
-    /// This script controls the ambient wind audio - It chooses ONE clip to loop throughout the level, but changes the pitch often.
+    /// This script controls the ambient wind audio, fire sfx etc - It chooses ONE clip to loop throughout the level, but changes the pitch often.
     /// </summary>
     [RequireComponent(typeof(AudioSource))]
     public class AmbientSound : MonoBehaviour
     {
         private AudioSource m_mySource;
-        public AudioClip[] windSounds;
+        public AudioClip[] sounds;
 
         void Start()
         {
@@ -39,7 +39,7 @@ namespace ProjectStorms
         void RandomClip()
         {
             // Random clip
-            m_mySource.clip = windSounds[Random.Range(0, windSounds.Length)];
+            m_mySource.clip = sounds[Random.Range(0, sounds.Length)];
 
             RandomPitch();
         }
