@@ -160,6 +160,13 @@ namespace ProjectStorms
         [HideInInspector]
         public bool openHatch;
 
+        //Last Vibration values
+        private float previousYaw = 0;
+        private float previousRoll = 0;
+        private float previousPitch = 0;
+        private float previousThrottle = 0;
+
+
 		//Vibration values
 		private float v_leftYaw = 0;
 		private float v_rightYaw = 0;
@@ -320,13 +327,15 @@ namespace ProjectStorms
 			//Control Vibration
 
 			//Yaw
-			if (yaw < 0)
+			//if (yaw < 0)
+            if (yaw == -1)
 			{
 				//leftVibrate = 0.1f;
 				v_leftYaw = Mathf.Abs(yaw) / 10;
 			}
 			else
-				if (yaw > 0)
+				//if (yaw > 0)
+                if (yaw == 1)
 			{
 				//rightVibrate = 0.1f;
 				v_rightYaw = Mathf.Abs(yaw) / 10;
