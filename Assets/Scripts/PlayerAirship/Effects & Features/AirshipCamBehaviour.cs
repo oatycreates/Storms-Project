@@ -87,7 +87,7 @@ namespace ProjectStorms
 
 			shakeTime -= Time.deltaTime;
 
-			//This has been updated - If cam IS following and screenshake is NOT in effect, then make the camera move to the right position.
+			// This has been updated - If cam IS following and screenshake is NOT in effect, then make the camera move to the right position.
             if (camFollowPlayer)
             {
 				if (shakeTime < 0)
@@ -166,7 +166,7 @@ namespace ProjectStorms
 				Vector3 tempPos = camPosTarget.position;
 				m_trans.position = tempPos + Random.insideUnitSphere * shakeAmount;
 
-				//Look at target.
+				// Look at target
 				m_trans.rotation = camRotator.rotation;
 			}
 		}

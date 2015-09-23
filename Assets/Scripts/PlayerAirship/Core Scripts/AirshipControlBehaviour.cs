@@ -388,7 +388,7 @@ namespace ProjectStorms
 				v_pitchVibrate = 0;
 			}
 
-			//Roll
+			/*//Roll
 			//if (roll > 0)
             if (roll == 1 && previousRoll != 1)
 			{
@@ -405,7 +405,7 @@ namespace ProjectStorms
 			{
 				v_leftRoll = 0;
 				v_rightRoll = 0;
-			}
+			}*/
 			
 			//Calculate vibration values
 			float leftForces = (v_throttleVibrate + v_pitchVibrate + v_leftRoll + v_leftYaw);
