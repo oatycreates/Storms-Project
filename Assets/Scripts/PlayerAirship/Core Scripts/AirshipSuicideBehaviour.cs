@@ -93,7 +93,7 @@ namespace ProjectStorms
             }
 
 			//Make controller vibrate - update every second
-			InputManager.SetControllerVibrate (gameObject.tag, 10, 10, 0.1f);
+			InputManager.SetControllerVibrate (gameObject.tag, 10, 10, 0.1f, true);
         }
 
         void FixedUpdate()

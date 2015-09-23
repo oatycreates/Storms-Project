@@ -1529,6 +1529,7 @@ GameObject:
   - 124: {fileID: 12422828}
   - 92: {fileID: 9258004}
   - 114: {fileID: 11451624}
+  - 114: {fileID: 11429472}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -2880,8 +2881,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187888}
-  m_LocalRotation: {x: 0, y: .382683277, z: 0, w: -.923879623}
-  m_LocalPosition: {x: -50, y: 50, z: -1550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.70000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 454476}
@@ -4988,6 +4989,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rouletteEndWait: .5
   rotatorJoint: {fileID: 109546}
+--- !u!114 &11429472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 184970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b5ec6153a1d55438228df10fe66844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFog: 1
+  useRadialDistance: 0
+  heightFog: 0
+  height: 1
+  heightDensity: 2
+  startDistance: 750
+  fogShader: {fileID: 4800000, guid: 70d8568987ac0499f952b54c7c13e265, type: 3}
 --- !u!114 &11430042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5623,8 +5642,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: .000122070312, y: 9.58499908, z: 1.01379395}
-    m_Extent: {x: 6.29216194, y: 3.3842659, z: 6.29216194}
+    m_Center: {x: 0, y: 9.58499813, z: 1.01382661}
+    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.60911703}
   m_DirtyAABB: 0
 --- !u!183 &18302522
 Cloth:

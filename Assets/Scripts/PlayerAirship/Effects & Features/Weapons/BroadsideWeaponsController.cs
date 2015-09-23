@@ -4,7 +4,7 @@
  * Maintainers: Andrew Barbour, Patrick Ferguson
  * Created: 28/08/2015
  * Copyright: (c) 2015 Team Storms, All Rights Reserved.
- * Description: Controls the shunting ability for players ship movement
+ * Description: Controls the shunting ability for players ship movement - no longer used for weapons
  **/
 
 using UnityEngine;
@@ -156,6 +156,18 @@ namespace ProjectStorms
         private void ApplyShunt(Vector3 a_direction)
         {
             m_rigidBody.AddForce(a_direction * shuntingForce, ForceMode.Impulse);
+
+            if (a_direction.x > 0)
+            {
+                InputManager.SetControllerVibrate(gameObject.tag, 0.0f, 0.9f, 0.35f, true);
+            }
+            else
+            if (a_direction.x < 0)
+            {
+                InputManager.SetControllerVibrate(gameObject.tag, 0.9f, 0.0f, 0.35f, true);
+            }
+            
+            
         }
 
         /// <summary>

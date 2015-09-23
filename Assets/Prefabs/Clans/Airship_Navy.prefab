@@ -515,6 +515,7 @@ GameObject:
   - 124: {fileID: 12482752}
   - 92: {fileID: 9271724}
   - 114: {fileID: 11405026}
+  - 114: {fileID: 11433262}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1957,7 +1958,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194162}
   m_LocalRotation: {x: 0, y: .923879564, z: 0, w: .382683307}
-  m_LocalPosition: {x: -1550, y: 50, z: -50}
+  m_LocalPosition: {x: -1744.40112, y: 361.463043, z: 1091.90088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 496100}
@@ -5075,6 +5076,24 @@ MonoBehaviour:
   - {fileID: 11418944}
   - {fileID: 11445574}
   - {fileID: 11468884}
+--- !u!114 &11433262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b5ec6153a1d55438228df10fe66844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceFog: 1
+  useRadialDistance: 0
+  heightFog: 0
+  height: 1
+  heightDensity: 2
+  startDistance: 750
+  fogShader: {fileID: 4800000, guid: 70d8568987ac0499f952b54c7c13e265, type: 3}
 --- !u!114 &11434422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5623,8 +5642,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58499527, z: 1.01391602}
-    m_Extent: {x: 6.29216194, y: 3.38426208, z: 6.29216194}
+    m_Center: {x: 6.10351562e-05, y: 9.58496094, z: 1.01379395}
+    m_Extent: {x: 6.29214573, y: 3.38427734, z: 6.29214573}
   m_DirtyAABB: 0
 --- !u!183 &18325980
 Cloth:
