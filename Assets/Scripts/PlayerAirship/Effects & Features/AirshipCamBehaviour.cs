@@ -110,14 +110,17 @@ namespace ProjectStorms
 		/// </summary>
         public void ShakeCam(float a_shakeStrength, float a_shakeDuration)
 		{
-			//Recommend shakeDuration = 0.6f and shakeStrength = 1.5f;
+			// Recommend shakeDuration = 0.6f and shakeStrength = 1.5f;
 
-			//Set shake time
-			shakeTime = a_shakeDuration;
-			//shakeAmount = a_shakeStrength;
-            shakeAmount = a_shakeStrength * 2;
+            // Only override shake if stronger or longer
+            if (a_shakeDuration >= shakeTime || a_shakeStrength >= shakeAmount)
+            {
+                // Set shake time
+                shakeTime = a_shakeDuration;
+                shakeAmount = a_shakeStrength;
+            }
 			
-			//This changes the values in the update function.
+			// This changes the values in the update function.
 		}
 
         public void FollowCam()

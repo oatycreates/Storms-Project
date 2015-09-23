@@ -244,7 +244,7 @@ namespace ProjectStorms
                     if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
                     {
                         // Store the vibration for later
-                        ms_currRumbles.Add(new ControllerRumbleInfo(i, a_motorLeft, a_motorRight, a_rumbleDurr));
+                        ms_currRumbles.Add(new ControllerRumbleInfo(i, Mathf.Min(a_motorLeft, 1.0f), Mathf.Min(a_motorRight, 1.0f), a_rumbleDurr));
 
                         if (a_shouldShakeScreen)
                         {
