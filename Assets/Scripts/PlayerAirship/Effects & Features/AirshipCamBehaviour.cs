@@ -78,10 +78,12 @@ namespace ProjectStorms
 
         void Update()
         {
+#if UNITY_EDITOR
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				ShakeCam(0.7f, 1.5f);
+                ShakeCam(1.5f, 0.7f);
 			}
+#endif
 
 			shakeTime -= Time.deltaTime;
 
@@ -106,13 +108,13 @@ namespace ProjectStorms
 		/// <summary>
 		/// This triggers the camera shake.		
 		/// </summary>
-		public void ShakeCam(float shakeDuration, float shakeStrength)
+        public void ShakeCam(float a_shakeStrength, float a_shakeDuration)
 		{
 			//Recommend shakeDuration = 0.6f and shakeStrength = 1.5f;
 
 			//Set shake time
-			shakeTime = shakeDuration;
-			shakeAmount = shakeStrength;
+			shakeTime = a_shakeDuration;
+			shakeAmount = a_shakeStrength;
 			
 			//This changes the values in the update function.
 		}
@@ -167,9 +169,6 @@ namespace ProjectStorms
 				//Look at target.
 				m_trans.rotation = camRotator.rotation;
 			}
-
-			//Make my controller vibrate while camera shakes
-			InputManager.SetControllerVibrate (gameObject.tag, 1, 1, shakeTime);
 		}
 	} 
 }

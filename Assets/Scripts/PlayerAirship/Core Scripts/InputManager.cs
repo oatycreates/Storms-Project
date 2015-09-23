@@ -229,18 +229,47 @@ namespace ProjectStorms
         /// Makes the input controller vibrate.
         /// </summary>
         /// <param name="a_playerTag">Player tag. E.g. "Player1_"</param>
-        /// <param name="a_motorLeft">Vibration value for the left controller motor.</param>
-        /// <param name="a_motorRight">Vibration value for the right controller motor.</param>
+        /// <param name="a_motorLeft">Vibration value for the left controller motor. Should have a maximum of 1. Is a percentage value.</param>
+        /// <param name="a_motorRight">Vibration value for the right controller motor. Should have a maximum of 1. Is a percentage value.</param>
         /// <param name="a_rumbleDurr">How long to rumble for in seconds.</param>
-        public static void SetControllerVibrate(string a_playerTag, float a_motorLeft, float a_motorRight, float a_rumbleDurr)
+        /// <param name="a_shouldShakeScreen">True if the screen should also be shaken with the maximum</param>
+        public static void SetControllerVibrate(string a_playerTag, float a_motorLeft, float a_motorRight, float a_rumbleDurr, bool a_shouldShakeScreen = false)
         {
-            // Find the player of the input tag
-            for (int i = 0; i < ms_playerTags.Length; ++i)
+            // Ignore null vibrations
+            if (a_motorLeft != 0 || a_motorRight != 0)
             {
-                if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
+                // Find the player of the input tag
+                for (int i = 0; i < ms_playerTags.Length; ++i)
                 {
-                    // Store the vibration for later
-                    ms_currRumbles.Add(new ControllerRumbleInfo(i, a_motorLeft, a_motorRight, a_rumbleDurr));
+                    if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
+                    {
+                        // Store the vibration for later
+                        ms_currRumbles.Add(new ControllerRumbleInfo(i, a_motorLeft, a_motorRight, a_rumbleDurr));
+
+                        if (a_shouldShakeScreen)
+                        {
+                            ShakeScreenForPlayer(a_playerTag, Mathf.Max(a_motorLeft, a_motorRight), a_rumbleDurr);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shakes the the screen for the input player.
+        /// </summary>
+        /// <param name="a_playerTag">Player tag. E.g. "Player1_"</param>
+        /// <param name="a_shakeStr">Amplitude of the shake.</param>
+        /// <param name="a_shakeDurr">Duration of the shake.</param>
+        private static void ShakeScreenForPlayer(string a_playerTag, float a_shakeStr, float a_shakeDurr)
+        {
+            AirshipCamBehaviour[] cams = GameObject.FindObjectsOfType<AirshipCamBehaviour>();
+            foreach (AirshipCamBehaviour cam in cams)
+            {
+                if (cam.CompareTag(a_playerTag))
+                {
+                    cam.ShakeCam(a_shakeDurr, a_shakeStr);
                     break;
                 }
             }
