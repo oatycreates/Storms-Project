@@ -50,6 +50,8 @@ namespace ProjectStorms
 
         void Update()
         {
+
+            /*
 			if (teamGame == false)
 			{
 	            if (gameObject.tag == "Player1_")
@@ -98,6 +100,7 @@ namespace ProjectStorms
 
 				baseColour = myRenderer.material.color;
 			}
+             */
 
             // Set the flag's colour
             Color flagColour = baseColour;
