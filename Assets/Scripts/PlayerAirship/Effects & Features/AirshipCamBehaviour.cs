@@ -114,7 +114,8 @@ namespace ProjectStorms
 
 			//Set shake time
 			shakeTime = a_shakeDuration;
-			shakeAmount = a_shakeStrength;
+			//shakeAmount = a_shakeStrength;
+            shakeAmount = a_shakeStrength * 2;
 			
 			//This changes the values in the update function.
 		}
