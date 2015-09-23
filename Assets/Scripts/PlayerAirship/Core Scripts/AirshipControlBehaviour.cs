@@ -135,6 +135,7 @@ namespace ProjectStorms
         // Cached variables
         private Rigidbody m_myRigid = null;            // Rigidbody of player
         private Transform m_trans = null;         // Transform for above rigidbody
+        private Transform m_camTrans = null;
         private Animator m_anim = null;
         private ShipPartDestroy m_shipPartDestroy = null;
         private StateManager m_shipStates = null;
@@ -188,6 +189,8 @@ namespace ProjectStorms
             m_shipPartDestroy = GetComponent<ShipPartDestroy>();
             m_shipStallScript = GetComponent<AirshipStallingBehaviour>();
             m_shipStates = GetComponent<StateManager>();
+
+            m_camTrans = airshipMainCam.transform;
         }
 
         void Start()
@@ -471,7 +474,7 @@ namespace ProjectStorms
             m_myRigid.AddRelativeForce(Vector3.forward * speedMod, ForceMode.Acceleration);
 
             // This finds the moving 'up' vector. It was a cool trick from The Standard Vehicle Assets
-            var liftDirection = Vector3.Cross(m_myRigid.velocity, m_myRigid.transform.right).normalized;
+            var liftDirection = Vector3.Cross(m_myRigid.velocity, m_trans.right).normalized;
 
             m_myRigid.AddForce(liftDirection);
         }
@@ -530,9 +533,9 @@ namespace ProjectStorms
                 roll += rightBallPopVal;
             }
 
-            torque += handleMod * -pitch * reverseMult * m_myRigid.transform.right * pitchForce;
-            torque += handleMod * yaw * (1.0f - rudderYawMult) * reverseMult * m_myRigid.transform.up * yawForce;
-            torque += handleMod * -roll * (1.0f - leftBallRollMult - rightBallRollMult) * m_myRigid.transform.forward * rollForce;
+            torque += handleMod * -pitch * reverseMult * m_camTrans.right * pitchForce;
+            torque += handleMod * yaw * (1.0f - rudderYawMult) * reverseMult * m_camTrans.up * yawForce;
+            torque += handleMod * -roll * (1.0f - leftBallRollMult - rightBallRollMult) * m_trans.forward * rollForce;
 
             // Add all the torque forces together
             m_myRigid.AddTorque(torque);
@@ -545,8 +548,8 @@ namespace ProjectStorms
         {
             // Calculate a few useful vectors relative to the ship and the world
             Vector3 worldUp = new Vector3(0, 1, 0); // Up relative to the world
-            Vector3 shipForward = transform.forward; // Front relative to the ship
-            Vector3 shipRight = transform.right; // Right relative to the ship
+            Vector3 shipForward = m_trans.forward; // Front relative to the ship
+            Vector3 shipRight = m_trans.right; // Right relative to the ship
 
             var torque = Vector3.zero;
 
