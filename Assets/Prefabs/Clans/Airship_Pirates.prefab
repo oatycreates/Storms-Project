@@ -133,7 +133,7 @@ GameObject:
   - 114: {fileID: 11448570}
   m_Layer: 0
   m_Name: SecondLevelProxy
-  m_TagString: Untagged
+  m_TagString: Player1_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2042,7 +2042,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
   m_LocalRotation: {x: 0, y: .915390968, z: 0, w: -.402566016}
-  m_LocalPosition: {x: -283, y: 63, z: -295}
+  m_LocalPosition: {x: 4.01923943, y: 1.91711056, z: 2.93624401}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -3155,6 +3155,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+  m_StereoMirrorMode: 0
 --- !u!23 &2300888
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -4323,8 +4324,8 @@ HingeJoint:
   m_Limits:
     min: 0
     max: 100
-    minBounce: 0
-    maxBounce: 0
+    bounciness: 0
+    bounceMinVelocity: .200000003
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -5681,6 +5682,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ce800254132449a2e6f9f47072e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bumpVelThreshold: 90
+  bumpRumbleStr: 1
+  bumpRumbleDurr: .75
+  balDestForce: 500
+  balDestRumbleStr: 1
+  balDestRumbleDurr: .75
   destructableParts:
   - partObject: {fileID: 131350}
     partType: 1
@@ -5775,8 +5782,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58500671, z: 1.01382446}
-    m_Extent: {x: 6.28616524, y: 3.38426208, z: 6.27467966}
+    m_Center: {x: 2.38418579e-07, y: 9.58500004, z: 1.01382685}
+    m_Extent: {x: 6.28616619, y: 3.38426399, z: 6.27468014}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:
@@ -9439,6 +9446,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: bumpVelThreshold
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
