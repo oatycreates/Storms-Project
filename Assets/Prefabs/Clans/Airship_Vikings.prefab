@@ -1632,6 +1632,7 @@ GameObject:
   - 114: {fileID: 11499168}
   - 114: {fileID: 11460276}
   - 114: {fileID: 11438696}
+  - 114: {fileID: 11412004}
   m_Layer: 0
   m_Name: Airship_Vikings
   m_TagString: Player4_
@@ -2881,8 +2882,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187888}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.70000005, z: 0}
+  m_LocalRotation: {x: 0, y: .404264659, z: 0, w: -.914642096}
+  m_LocalPosition: {x: -237.100006, y: 43.5999985, z: -1360}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 454476}
@@ -3064,7 +3065,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
-  m_StereoMirrorMode: 0
 --- !u!23 &2301668
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -4202,8 +4202,8 @@ HingeJoint:
   m_Limits:
     min: 0
     max: 100
-    bounciness: .5
-    bounceMinVelocity: 0
+    minBounce: 0
+    maxBounce: 0
     contactDistance: 0
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -4919,6 +4919,18 @@ MonoBehaviour:
   maxRotationDegrees: 45
   airshipControlBehaviour: {fileID: 11433972}
   isRudderJoint: 1
+--- !u!114 &11412004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7c1441f01563243bf6ca853e2f79fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 3
 --- !u!114 &11412668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5642,8 +5654,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58499813, z: 1.01382661}
-    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.60911703}
+    m_Center: {x: .000122070312, y: 9.58499908, z: 1.01391602}
+    m_Extent: {x: 6.28510761, y: 3.3842659, z: 6.27156258}
   m_DirtyAABB: 0
 --- !u!183 &18302522
 Cloth:

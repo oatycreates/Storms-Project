@@ -17,32 +17,39 @@ namespace ProjectStorms
 {
 	public class Minimap : MonoBehaviour 
 	{
-        // Map icon images
-        [Space(10)]
-        [Tooltip("Prefab GUI Image, to represent players within the world")]
-        public Image playerImage;
-        [Tooltip("Prefab GUI Image, to represent player bases within the world")]
-        public Image playerBaseImage;
-        [Tooltip("Prefab GUI Image, to represent repair zones within the world")]
-        public Image repairZoneImage;
-        [Tooltip("Prefab GUI Image, to display player score")]
-        public Image scoreIndicatorImage;
-        [Tooltip("Prefab GUI Image, to represent the prison ship")]
-        public Image prisonshipImage;
+        [Tooltip("Prefab which will be the base for player and base icons")]
+        public Image iconTemplatePrefab;
 
-        // Player icons colour tints
+        // Player images
         [Space(10)]
-        [Tooltip("Sprite colour tint to use on Player 1 objects within the minimap")]
-        public Color player1Colour;
-        [Tooltip("Sprite colour tint to use on Player 2 objects within the minimap")]
-        public Color player2Colour;
-        [Tooltip("Sprite colour tint to use on Player 3 objects within the minimap")]
-        public Color player3Colour;
-        [Tooltip("Sprite colour tint to use on Player 4 objects within the minimap")]
-        public Color player4Colour;
+        [Tooltip("Sprite to represent players within the navy faction")]
+        public Sprite navyPlayerSprite;
+        [Tooltip("Sprite to represent players within the pirates faction")]
+        public Sprite piratesPlayerSprite;
+        [Tooltip("Sprite to represent players within the tinkerers faction")]
+        public Sprite tinkerersPlayerSprite;
+        [Tooltip("Sprite to represent players within the vikings faction")]
+        public Sprite vikingsPlayerSprite;
 
-        // Prisonship colour tint
+        // Base images
         [Space(10)]
+        [Tooltip("Sprite to represent bases within the navy faction")]
+        public Sprite navyBaseSprite;
+        [Tooltip("Sprite to represent bases within the pirates faction")]
+        public Sprite piratesBaseSprite;
+        [Tooltip("Sprite to represent bases within the tinkerers faction")]
+        public Sprite tinkerersBaseSprite;
+        [Tooltip("Sprite to represent bases within the vikings faction")]
+        public Sprite vikingsBaseSprite;
+
+        [Space(10)]
+        [Tooltip("Sprite to represent repair zones")]
+        public Sprite repairZoneSprite;
+
+        // Prisonship icon variables
+        [Space(10)]
+        [Tooltip("Sprite to represent the prison ship")]
+        public Sprite prisonShipSprite;
         [Tooltip("Flash rate between normal and dropping colour, in seconds")]
         public float prisonshipFlashRate = 0.1f;
         [Tooltip("Sprite colour tint to use on the prison ship icon, when not dropping passengers")]
@@ -79,7 +86,6 @@ namespace ProjectStorms
         private Transform m_transform;
         private GameObject m_gameObject;
 
-        // TODO: Add support for powerups
         // TODO: Change display background depending on player count
         // TODO: Make this script run within editor for easy tweaking
         // TODO: Set icons' alpha to background alpha, or have an overall tweakable value
@@ -126,7 +132,7 @@ namespace ProjectStorms
         /// Retrieves the transforms for all players, bases, and repair zones
         /// within the map
         /// </summary>
-        void GetObjectTransforms()
+        void PopulateCacheLists()
         {
             // Get all player transforms
             AirshipControlBehaviour[] players =
@@ -179,7 +185,7 @@ namespace ProjectStorms
             
             for (int i = 0; i < m_baseImages.Capacity; ++i)
             {
-                Image image = Instantiate(playerBaseImage);
+                Image image = Instantiate(iconTemplatePrefab);
                 image.transform.SetParent(captureCanvas_trans, false);
             
                 m_baseImages.Add(image);
@@ -190,14 +196,16 @@ namespace ProjectStorms
             
             for (int i = 0; i < m_repairImages.Capacity; ++i)
             {
-                Image image = Instantiate(repairZoneImage);
+                Image image = Instantiate(iconTemplatePrefab);
+                image.overrideSprite = repairZoneSprite;
                 image.transform.SetParent(captureCanvas_trans, false);
             
                 m_repairImages.Add(image);
             }
 
             // Create prisonship icon
-            m_prisonshipImage = Instantiate(prisonshipImage);
+            m_prisonshipImage                   = Instantiate(iconTemplatePrefab);
+            m_prisonshipImage.overrideSprite    = prisonShipSprite;
             m_prisonshipImage.rectTransform.SetParent(captureCanvas_trans, false);
 
             // Create player icons
@@ -205,7 +213,7 @@ namespace ProjectStorms
 
             for (int i = 0; i < m_playerImages.Capacity; ++i)
             {
-                Image image = Instantiate(playerImage);
+                Image image = Instantiate(iconTemplatePrefab);
                 image.transform.SetParent(captureCanvas_trans, false);
 
                 m_playerImages.Add(image);
@@ -214,7 +222,7 @@ namespace ProjectStorms
 
         void Start()
         {
-            GetObjectTransforms();
+            PopulateCacheLists();
             CreateMapIcons();
             SetupCaptureCamera();
 
@@ -245,22 +253,7 @@ namespace ProjectStorms
         void OnWillRenderCanvas()
         {
             UpdatePlayerIcons();
-            
-            // Update base icons
-            for (int i = 0; i < m_baseTransforms.Count; ++i)
-            {
-                Transform baseTransform             = m_baseTransforms[i];
-                Image baseIcon                      = m_baseImages[i];
-                RectTransform baseIcon_rectTrans    = baseIcon.rectTransform;
-                
-                // Colour base icon (may not be required with actual icons)
-                ColourIconBasedUponTag(baseIcon, m_baseTransforms[i].tag);
-                
-                // Position base icon
-                PositionIconToTransform(baseIcon_rectTrans, baseTransform);
-            }
-
-            // Update prison ship icon
+            UpdateBaseIcons();
             UpdatePrisonShipIcon();
 
             // Update repair zone icons
@@ -318,6 +311,42 @@ namespace ProjectStorms
             m_captureCamera.orthographicSize = Mathf.Max(levelBounds_size.x, levelBounds_size.z) * 0.5f;
         }
 
+        void UpdateBaseIcons()
+        {
+            // Update base icons
+            for (int i = 0; i < m_baseTransforms.Count; ++i)
+            {
+                Transform baseTransform = m_baseTransforms[i];
+                Image baseIcon = m_baseImages[i];
+                RectTransform baseIcon_rectTrans = baseIcon.rectTransform;
+
+                // Set base texture
+                FactionIndentifier identity = baseTransform.GetComponent<FactionIndentifier>();
+
+                switch (identity.faction)
+                {
+                    case FactionIndentifier.Faction.NAVY:
+                        baseIcon.overrideSprite = navyBaseSprite; 
+                        break;
+
+                    case FactionIndentifier.Faction.PIRATES:
+                        baseIcon.overrideSprite = piratesBaseSprite; 
+                        break;
+
+                    case FactionIndentifier.Faction.TINKERERS:
+                        baseIcon.overrideSprite = tinkerersBaseSprite; 
+                        break;
+
+                    case FactionIndentifier.Faction.VIKINGS:
+                        baseIcon.overrideSprite = vikingsBaseSprite; 
+                        break;
+                }
+
+                // Position base icon
+                PositionIconToTransform(baseIcon_rectTrans, baseTransform);
+            }
+        }
+
         /// <summary>
         /// Updates all player icon's canvas position and rotation
         /// </summary>
@@ -325,14 +354,34 @@ namespace ProjectStorms
         {
             for (int i = 0; i < m_playerTransforms.Count; ++i)
             {
+                Image playerIconImage           = m_playerImages[i];
                 Transform playerTransform       = m_playerTransforms[i];
                 RectTransform playerIconTrans   = m_playerImages[i].rectTransform;
 
                 // Set icon position
                 PositionIconToTransform(playerIconTrans, playerTransform);
 
-                // Set icon colour
-                ColourIconBasedUponTag(m_playerImages[i], m_playerTransforms[i].tag);
+                // Set icon texture
+                FactionIndentifier identity = playerTransform.GetComponent<FactionIndentifier>();
+                
+                switch (identity.faction)
+                {
+                    case FactionIndentifier.Faction.NAVY:
+                        playerIconImage.overrideSprite = navyPlayerSprite;
+                        break;
+
+                    case FactionIndentifier.Faction.PIRATES:
+                        playerIconImage.overrideSprite = piratesPlayerSprite;
+                        break;
+
+                    case FactionIndentifier.Faction.TINKERERS:
+                        playerIconImage.overrideSprite = tinkerersPlayerSprite;
+                        break;
+
+                    case FactionIndentifier.Faction.VIKINGS:
+                        playerIconImage.overrideSprite = vikingsPlayerSprite;
+                        break;
+                }
 
                 // Set icon rotation
                 float playerRotationY           = playerTransform.rotation.eulerAngles.y;
@@ -375,38 +424,6 @@ namespace ProjectStorms
             // Update icon position
             PositionIconToTransform(m_prisonshipImage.rectTransform,
                 m_prisonshipTransform);
-        }
-
-        /// <summary>
-        /// Colours a given UI image to a player's colour
-        /// </summary>
-        /// <param name="a_image">Image to colour</param>
-        /// <param name="a_tag">Player tag</param>
-        void ColourIconBasedUponTag(Image a_image, string a_tag)
-        {
-            switch (a_tag)
-            {
-                case "Player1_":
-                    a_image.color = player1Colour;
-                    break;
-
-                case "Player2_":
-                    a_image.color = player2Colour;
-                    break;
-
-                case "Player3_":
-                    a_image.color = player3Colour;
-                    break;
-
-                case "Player4_":
-                    a_image.color = player4Colour;
-                    break;
-
-                default:
-                    Debug.LogWarning(string.Format("Unknown player tag given for: {0} (given tag: {1}) \n Unable to colour icon",  
-                        a_image.name, a_tag));
-                    break;
-            }
         }
 	}
 }
