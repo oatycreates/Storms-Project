@@ -34,6 +34,31 @@ namespace ProjectStorms
         public float bumpVelThreshold = 90.0f;
 
         /// <summary>
+        /// Strength of the bump rumble and screenshake.
+        /// </summary>
+        public float bumpRumbleStr = 1.0f;
+
+        /// <summary>
+        /// Duration of the bump rumble and screenshake.
+        /// </summary>
+        public float bumpRumbleDurr = 0.75f;
+
+        /// <summary>
+        /// Force to explode the balloons with.
+        /// </summary>
+        public float balDestForce = 500.0f;
+
+        /// <summary>
+        /// Strength to rumble and screenshake the balloon destruction on.
+        /// </summary>
+        public float balDestRumbleStr = 1.0f;
+
+        /// <summary>
+        /// How long to rumble and screenshake the balloon destruction for.
+        /// </summary>
+        public float balDestRumbleDurr = 0.75f;
+
+        /// <summary>
         /// A collection object to contain part information.
         /// </summary>
         [System.Serializable]
@@ -75,6 +100,7 @@ namespace ProjectStorms
         private bool m_balRightDest = false;
 
         // Cached variables
+        private Transform m_trans = null;
         private Rigidbody m_rb = null;
         private PassengerTray m_shipTray = null;
         private StateManager m_shipStates = null;
@@ -82,6 +108,7 @@ namespace ProjectStorms
 
         void Awake()
         {
+            m_trans = transform;
             m_rb = GetComponent<Rigidbody>();
             m_shipTray = GetComponentInChildren<PassengerTray>();
             m_shipStates = GetComponent<StateManager>();
@@ -119,7 +146,7 @@ namespace ProjectStorms
 
                     if (a_colInfo.relativeVelocity.sqrMagnitude >= m_bumpVelSqr)
                     {
-                        InputManager.SetControllerVibrate(gameObject.tag, 1.0f, 1.0f, 1.0f, true);
+                        InputManager.SetControllerVibrate(gameObject.tag, bumpRumbleStr, bumpRumbleStr, bumpRumbleDurr, true);
                     }
                 }
             }
@@ -298,10 +325,18 @@ namespace ProjectStorms
         {
             if (a_part.partType == EShipPartType.LEFT_BALLOON)
             {
+                // Apply balloon explosion
+                m_rb.AddForceAtPosition(m_trans.up * balDestForce, a_part.partObject.transform.position);
+                InputManager.SetControllerVibrate(gameObject.tag, balDestRumbleStr, 0.0f, balDestRumbleDurr, true);
+
                 m_balLeftDest = true;
             }
             else if (a_part.partType == EShipPartType.RIGHT_BALLOON)
             {
+                // Apply balloon explosion
+                m_rb.AddForceAtPosition(m_trans.up * balDestForce, a_part.partObject.transform.position);
+                InputManager.SetControllerVibrate(gameObject.tag, 0.0f, balDestRumbleStr, balDestRumbleDurr, true);
+
                 m_balRightDest = true;
             }
             if (m_balLeftDest && m_balRightDest)
