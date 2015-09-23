@@ -236,7 +236,7 @@ namespace ProjectStorms
         public static void SetControllerVibrate(string a_playerTag, float a_motorLeft, float a_motorRight, float a_rumbleDurr, bool a_shouldShakeScreen = false)
         {
             // Ignore null vibrations
-            if (a_motorLeft != 0 && a_motorRight != 0)
+            if (a_motorLeft != 0 || a_motorRight != 0)
             {
                 // Find the player of the input tag
                 for (int i = 0; i < ms_playerTags.Length; ++i)
