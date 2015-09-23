@@ -533,8 +533,12 @@ namespace ProjectStorms
                 roll += rightBallPopVal;
             }
 
-            torque += handleMod * -pitch * reverseMult * m_camTrans.right * pitchForce;
-            torque += handleMod * yaw * (1.0f - rudderYawMult) * reverseMult * m_camTrans.up * yawForce;
+            // Ship right on the XZ plane
+            Vector3 shipRightXZ = m_trans.forward;
+            shipRightXZ = Vector3.Cross(Vector3.up, shipRightXZ);
+
+            torque += handleMod * -pitch * reverseMult * shipRightXZ * pitchForce;
+            torque += handleMod * yaw * (1.0f - rudderYawMult) * reverseMult * Vector3.up * yawForce;
             torque += handleMod * -roll * (1.0f - leftBallRollMult - rightBallRollMult) * m_trans.forward * rollForce;
 
             // Add all the torque forces together
