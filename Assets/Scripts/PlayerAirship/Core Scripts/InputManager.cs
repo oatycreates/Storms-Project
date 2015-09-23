@@ -234,14 +234,18 @@ namespace ProjectStorms
         /// <param name="a_rumbleDurr">How long to rumble for in seconds.</param>
         public static void SetControllerVibrate(string a_playerTag, float a_motorLeft, float a_motorRight, float a_rumbleDurr)
         {
-            // Find the player of the input tag
-            for (int i = 0; i < ms_playerTags.Length; ++i)
+            // Ignore null vibrations
+            if (a_motorLeft != 0 && a_motorRight != 0)
             {
-                if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
+                // Find the player of the input tag
+                for (int i = 0; i < ms_playerTags.Length; ++i)
                 {
-                    // Store the vibration for later
-                    ms_currRumbles.Add(new ControllerRumbleInfo(i, a_motorLeft, a_motorRight, a_rumbleDurr));
-                    break;
+                    if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
+                    {
+                        // Store the vibration for later
+                        ms_currRumbles.Add(new ControllerRumbleInfo(i, a_motorLeft, a_motorRight, a_rumbleDurr));
+                        break;
+                    }
                 }
             }
         }
