@@ -151,9 +151,12 @@ namespace ProjectStorms
                     // Find obstacles that aren't owned by this player
                     if (rayHits[i].distance <= nearDist && !rayHits[i].collider.isTrigger && !rayHits[i].collider.gameObject.CompareTag(myTag))
                     {
-                        //Debug.Log("Hit " + rayHits[i].collider.gameObject.name + ", tag: " + rayHits[i].collider.gameObject.tag + ", dist: " + rayHits[i].distance);
-                        nearDist = rayHits[i].distance;
-                        nearPos = rayHits[i].point;
+                        if (rayHits[i].collider.gameObject.tag.CompareTo("Passengers") != 0)
+                        {
+                            //Debug.Log("Hit " + rayHits[i].collider.gameObject.name + ", tag: " + rayHits[i].collider.gameObject.tag + ", dist: " + rayHits[i].distance);
+                            nearDist = rayHits[i].distance;
+                            nearPos = rayHits[i].point;
+                        }
                     }
                 }
                 //Debug.DrawRay(camLookTarget.position, lookOffset, Color.yellow);
