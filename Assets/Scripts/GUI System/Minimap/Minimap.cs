@@ -60,7 +60,7 @@ namespace ProjectStorms
         // Score Indicator variables
         [Space(10)]
         [Tooltip("Uses texture offsetting for animation. 1 unit per second")]
-        public float scoreAnimationSpeed;
+        public float scoreAnimationSpeed = 0.05f;
 
         // Player icon resizing
         [Space(10)]
@@ -487,10 +487,11 @@ namespace ProjectStorms
             m_vikingScoreIndicator.animationSpeed       = scoreAnimationSpeed;
 
             // Update percentages
-            float navyScorePercent      = (m_navyBase.maxPeople - m_navyBase.peopleLeftToCatch) / m_navyBase.maxPeople;
-            float pirateScorePercent    = (m_pirateBase.maxPeople - m_pirateBase.peopleLeftToCatch) / m_pirateBase.maxPeople;
-            float tinkerersScorePercent = (m_tinkerersBase.maxPeople - m_tinkerersBase.peopleLeftToCatch) / m_tinkerersBase.maxPeople;
-            float vikingScorePercent    = (m_vikingBase.maxPeople - m_vikingBase.peopleLeftToCatch) / m_vikingBase.maxPeople;
+            // (
+            float navyScorePercent      = 1.0f - ((float)m_navyBase.peopleLeftToCatch / (float)m_navyBase.maxPeople);
+            float pirateScorePercent    = 1.0f - ((float)m_pirateBase.peopleLeftToCatch / (float)m_pirateBase.maxPeople);
+            float tinkerersScorePercent = 1.0f - ((float)m_tinkerersBase.peopleLeftToCatch / (float)m_tinkerersBase.maxPeople);
+            float vikingScorePercent    = 1.0f - ((float)m_vikingBase.peopleLeftToCatch / (float)m_vikingBase.maxPeople);
 
             m_navyScoreIndicator.scorePercent       = navyScorePercent;
             m_piratesScoreIndicator.scorePercent    = pirateScorePercent;

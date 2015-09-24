@@ -33,12 +33,16 @@ namespace ProjectStorms
 
         public float distanceTwo = -10.0f;
 
+        private Vector3 m_colForcePos = Vector3.zero;
+
         // Cached variables
         private Transform m_trans = null;
+        private Vector3 m_cachedLocalPos = Vector3.zero;
 
         void Awake()
         {
             m_trans = transform;
+            m_cachedLocalPos = m_trans.localPosition;
         }
 
         void Start()
@@ -80,7 +84,15 @@ namespace ProjectStorms
                 SlideBack();
             }
 
-            m_trans.localPosition = new Vector3(m_trans.localPosition.x, m_trans.localPosition.y, myLocalZ);
+            if (m_colForcePos != Vector3.zero)
+            {
+                /*m_trans.localPosition = Vector3.zero;*/
+                m_trans.position = m_colForcePos;
+            }
+            else
+            {
+                m_trans.localPosition = new Vector3(m_cachedLocalPos.x, m_cachedLocalPos.y, myLocalZ);
+            }
         }
 
         void SlideForward()
@@ -96,6 +108,16 @@ namespace ProjectStorms
         void SlideBack()
         {
             myLocalZ = Mathf.Lerp(myLocalZ, distanceTwo, Time.deltaTime * camLerpSpeed / 2);
+        }
+
+        public void SetCollisionFollowDist(Vector3 a_nearPos)
+        {
+            m_colForcePos = a_nearPos;
+        }
+
+        public Vector3 GetOriginalPosition()
+        {
+            return m_trans.parent.position + m_trans.parent.transform.rotation * m_cachedLocalPos;
         }
     } 
 }
