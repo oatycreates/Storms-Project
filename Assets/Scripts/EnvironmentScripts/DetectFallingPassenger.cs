@@ -19,7 +19,7 @@ namespace ProjectStorms
     public class DetectFallingPassenger : MonoBehaviour
     {
         public Text scoreText;
-        [HideInInspector]
+        //[HideInInspector]
         public int peopleLeftToCatch = 100;
         [HideInInspector]
         public int maxPeople = 100;

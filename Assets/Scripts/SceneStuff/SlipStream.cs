@@ -14,6 +14,7 @@ using System.Collections.Generic;
 
 namespace ProjectStorms
 {
+    [RequireComponent(typeof(AudioSource))]
     public class SlipStream : MonoBehaviour
     {
         public float force = 100.0f;
@@ -23,6 +24,9 @@ namespace ProjectStorms
         private float rumbleCooldown = 0.0f;
 
         Rigidbody[] m_playerRigidBodies = new Rigidbody[4];
+
+        //Audio
+        private AudioSource m_AudioSource;
 
         void GetPlayerRigidBodies()
         {
@@ -63,6 +67,8 @@ namespace ProjectStorms
         {
             // Get player rigidbodies
             GetPlayerRigidBodies();
+
+            m_AudioSource = gameObject.GetComponent<AudioSource>();
         }
 
         public void Update()
@@ -117,8 +123,54 @@ namespace ProjectStorms
 
                     // Only rumble as often as it would be triggered
                     rumbleCooldown = rumbleDurr;
+
+                    //Trigger a sound
+                    if (!m_AudioSource.isPlaying)
+                    { 
+                        m_AudioSource.Play(); 
+                    }
                 }
             }
         }
+
+        /*
+        void OnTriggerExit(Collider a_other)
+        {
+            Rigidbody playerBody = null;
+
+            if (m_playerRigidBodies.Length > 0)
+            {
+                //bool isPlayer = false;
+                switch (a_other.tag)
+                {
+                    case "Player1_":
+                        playerBody = m_playerRigidBodies[0];
+                      
+                        break;
+                    case "Player2_":
+                        playerBody = m_playerRigidBodies[1];
+                     
+                        break;
+                    case "Player3_":
+                        playerBody = m_playerRigidBodies[2];
+                       
+                        break;
+                    case "Player4_":
+                        playerBody = m_playerRigidBodies[3];
+                       
+                        break;
+                    default:
+                        // Not player
+                        return;
+                }
+
+                if (m_AudioSource.isPlaying)
+                {
+                    m_AudioSource.Stop();
+                }
+            }
+
+        }
+        */
     }
 }

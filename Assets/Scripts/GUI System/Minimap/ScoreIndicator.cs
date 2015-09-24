@@ -18,7 +18,7 @@ namespace ProjectStorms
         [Tooltip("Decimal percentage of the player's score, to win")]
         public float m_scorePercent     = 1.0f;
         [Tooltip("Speed in UV units per second")]
-        private float m_animationSpeed  = 0.05f;
+        public float m_animationSpeed  = 0.05f;
 
         // Used for setting the Y texture offset
         private float m_offsetValueY = 0.51f;
@@ -62,7 +62,7 @@ namespace ProjectStorms
 		void Update() 
 		{
             Vector2 textureOffset = m_material.mainTextureOffset;
-            Vector2 detailTexOffset = m_material.GetTextureOffset("_DetailTex");
+            Vector2 detailTexOffset = m_material.GetTextureOffset("_DetailAlbedoMap");
 
             if (textureOffset.x > 1.0f)
             {
@@ -79,14 +79,15 @@ namespace ProjectStorms
             {
                 // Animate
                 textureOffset.x     += m_animationSpeed * Time.deltaTime;
-                detailTexOffset.y   += m_animationSpeed * Time.deltaTime;
             }
+
+            detailTexOffset.y += m_animationSpeed * Time.deltaTime;
 
             // Set Y offset - displays score percent
             textureOffset.y = 0.5f - (m_offsetValueY * m_scorePercent);
 
             m_material.SetTextureOffset("_MainTex", textureOffset);
-            m_material.SetTextureOffset("_DetailTex", detailTexOffset);
+            m_material.SetTextureOffset("_DetailAlbedoMap", detailTexOffset);
 		}
 	}
 }
