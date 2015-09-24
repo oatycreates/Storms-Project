@@ -42,7 +42,7 @@ namespace ProjectStorms
 				RandomClip();
 			}
 
-			Debug.Log (delayTime);
+			//Debug.Log (delayTime);
 		}
 		
 		void RandomClip()

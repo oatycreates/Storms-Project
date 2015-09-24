@@ -179,7 +179,7 @@ namespace ProjectStorms
 		{
 			spiral = (myRigid.transform.position + Random.insideUnitSphere*150);
 
-			Debug.Log (spiral);
+			//Debug.Log (spiral);
 		}
 		
 		
