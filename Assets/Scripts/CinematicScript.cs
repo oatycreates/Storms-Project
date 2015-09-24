@@ -56,6 +56,8 @@ namespace ProjectStorms
 
 		//bool to skip intro
 		private bool skip = false;
+
+        private GameObject minimap = null;
        	
 
         void Awake()
@@ -68,7 +70,18 @@ namespace ProjectStorms
 			startTimerValue = transitionTimer;
 			
 			mySource = gameObject.GetComponent<AudioSource>();
-			
+
+            minimap = GameObject.Find("Minimap");
+            if (minimap == null)
+            {
+                Debug.Log("Couldn't find object named 'Minimap'!");
+            }
+            else
+            {
+                // Disable the minimap for the cinematic
+                minimap.SetActive(false);
+            }
+
 			//Start the sound immediately?
 			//mySource.Play();
 			//pitch = 1f;
@@ -183,15 +196,17 @@ namespace ProjectStorms
 			mySource.pitch = pitch;
 		
 
-			//Skip ahead
-
+			// Skip ahead
 			if (InputManager.GetAnyButtonDown ("Player1_") || InputManager.GetAnyButtonDown ("Player2_") || InputManager.GetAnyButtonDown ("Player3_") || InputManager.GetAnyButtonDown ("Player4_"))
 			{
 				if (shot == EShotLength.CloseUp)
 				{
 					if (!skip)
 					{
-						gameObject.SetActive(false);
+                        gameObject.SetActive(false);
+
+                        // Re-enable minimap
+                        minimap.SetActive(true);
 					}
 				}
 				else
