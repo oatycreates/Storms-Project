@@ -32,6 +32,12 @@ namespace ProjectStorms
         [Tooltip("Sprite to represent players within the vikings faction")]
         public Sprite vikingsPlayerSprite;
 
+        [Header("Player Passenger Display")]
+        [Tooltip("Cutoff value at which the ships will scale to, when at or above this passenger count")]
+        public uint passengerDisplayCutoff = 10;
+        [Tooltip("Scale at which the player icons will scale towards, when reaching the max passenger display value, in passenger count")]
+        public float passengerDisplayScale = 2.0f;
+
         // Base images
         [Header("Bases")]
         [Tooltip("Sprite to represent bases within the navy faction")]
@@ -63,16 +69,14 @@ namespace ProjectStorms
         [Tooltip("Uses texture offsetting for animation. 1 unit per second")]
         public float scoreAnimationSpeed = 0.05f;
 
-        // Player icon resizing
-        [Header("Player Resizing")]
-        [Tooltip("Used to scale player icon, as carry more passengers. Ships carrying passengers more than this value won't increase in size, but will be at the maximum size")]
-        public float maxPlayerPassengerDisplay;
-
         // Transforms
         private List<Transform> m_playerTransforms;
         private List<Transform> m_baseTransforms;
         private List<Transform> m_repairTransforms;
         private Transform m_prisonshipTransform;
+
+        // Player passenger count
+        private List<PassengerTray> m_passengerTrays;
 
         // Minimap icon images
         private List<Image> m_playerImages;
@@ -148,15 +152,21 @@ namespace ProjectStorms
         /// </summary>
         void PopulateCacheLists()
         {
-            // Get all player transforms
+            // Get all player transforms and passenger trays
             AirshipControlBehaviour[] players =
                 GameObject.FindObjectsOfType<AirshipControlBehaviour>();
 
-            m_playerTransforms = new List<Transform>(players.Length);
+            m_playerTransforms  = new List<Transform>(players.Length);
+            m_passengerTrays    = new List<PassengerTray>(players.Length);
 
             for (int i = 0; i < m_playerTransforms.Capacity; ++i)
             {
+                // Get player transform
                 m_playerTransforms.Add(players[i].transform);
+
+                // Get player passenger tray
+                Transform passengerTrayTrans = players[i].transform.FindChild("ParticlesAndEffects/PassengerTriggerZone");
+                m_passengerTrays.Add(passengerTrayTrans.GetComponent<PassengerTray>());
             }
 
             // Get all base transforms
@@ -439,6 +449,12 @@ namespace ProjectStorms
                 // Set icon rotation
                 float playerRotationY           = playerTransform.rotation.eulerAngles.y;
                 playerIconTrans.localRotation   = Quaternion.Euler(new Vector3(0.0f, 0.0f, -playerRotationY));
+
+                // Set scale
+                float passengerCount            = m_passengerTrays[i].passengerCount;
+                float scale                     = passengerDisplayScale * (passengerCount / passengerDisplayCutoff);
+                
+                playerIconTrans.localScale      = new Vector3(scale, scale, scale);
             }
         }
 
