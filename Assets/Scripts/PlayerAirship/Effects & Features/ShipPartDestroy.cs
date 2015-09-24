@@ -56,7 +56,7 @@ namespace ProjectStorms
         /// <summary>
         /// How long to rumble and screenshake the balloon destruction for.
         /// </summary>
-        public float balDestRumbleDurr = 0.75f;
+        public float balDestRumbleDurr = 0.2f;
 
         /// <summary>
         /// A collection object to contain part information.
