@@ -414,8 +414,8 @@ namespace ProjectStorms
 			//Debug.Log ("LeftForce: " + leftForces + " RightForces: " + rightForces);
             //Debug.Log("Yaw: " + yaw + "Previous Yaw: " + previousYaw);
 			
-			//Vibrate
-			InputManager.SetControllerVibrate (gameObject.tag, leftForces, rightForces, 0.5f);
+			// Vibrate
+			//InputManager.SetControllerVibrate(gameObject.tag, leftForces, rightForces, 0.5f);
 		}
 
         void FixedUpdate()
