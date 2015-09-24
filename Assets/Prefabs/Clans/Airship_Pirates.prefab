@@ -240,6 +240,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &119982
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 499638}
+  - 82: {fileID: 8260808}
+  m_Layer: 0
+  m_Name: BalloonPopAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &120154
 GameObject:
   m_ObjectHideFlags: 1
@@ -2041,8 +2057,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
-  m_LocalRotation: {x: 0, y: .915390968, z: 0, w: -.402566016}
-  m_LocalPosition: {x: 4.01923943, y: 1.91711056, z: 2.93624401}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -2478,6 +2494,7 @@ Transform:
   - {fileID: 424014}
   - {fileID: 443550}
   - {fileID: 483684}
+  - {fileID: 499638}
   m_Father: {fileID: 422878}
   m_RootOrder: 7
 --- !u!4 &447384
@@ -3086,6 +3103,18 @@ Transform:
   - {fileID: 417542}
   m_Father: {fileID: 466626}
   m_RootOrder: 0
+--- !u!4 &499638
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 447192}
+  m_RootOrder: 9
 --- !u!4 &499722
 Transform:
   m_ObjectHideFlags: 1
@@ -4691,6 +4720,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8260808
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 119982}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8db1f94f49b76544ead7d3864b85404f, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!82 &8269510
 AudioSource:
   m_ObjectHideFlags: 1
@@ -5688,6 +5786,7 @@ MonoBehaviour:
   balDestForce: 500
   balDestRumbleStr: 1
   balDestRumbleDurr: .75
+  balloonPopNoise: {fileID: 8260808}
   destructableParts:
   - partObject: {fileID: 131350}
     partType: 1
@@ -5782,8 +5881,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 2.38418579e-07, y: 9.58500004, z: 1.01382685}
-    m_Extent: {x: 6.28616619, y: 3.38426399, z: 6.27468014}
+    m_Center: {x: 0, y: 9.58499813, z: 1.01382661}
+    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.60911703}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:
