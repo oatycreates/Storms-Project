@@ -539,7 +539,7 @@ namespace ProjectStorms
 
             torque += handleMod * -pitch * reverseMult * shipRightXZ * pitchForce;
             torque += handleMod * yaw * (1.0f - rudderYawMult) * reverseMult * Vector3.up * yawForce;
-            torque += handleMod * -roll * (1.0f - leftBallRollMult - rightBallRollMult) * m_trans.forward * rollForce;
+            torque += handleMod * (-roll + -yaw * 0.25f) * (1.0f - leftBallRollMult - rightBallRollMult) * m_trans.forward * rollForce;
 
             // Add all the torque forces together
             m_myRigid.AddTorque(torque);
