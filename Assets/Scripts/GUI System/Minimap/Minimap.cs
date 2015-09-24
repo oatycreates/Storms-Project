@@ -17,11 +17,12 @@ namespace ProjectStorms
 {
 	public class Minimap : MonoBehaviour 
 	{
+        [Header("General Prefabs")]
         [Tooltip("Prefab which will be the base for player and base icons")]
         public Image iconTemplatePrefab;
 
         // Player images
-        [Space(10)]
+        [Header("Players")]
         [Tooltip("Sprite to represent players within the navy faction")]
         public Sprite navyPlayerSprite;
         [Tooltip("Sprite to represent players within the pirates faction")]
@@ -32,7 +33,7 @@ namespace ProjectStorms
         public Sprite vikingsPlayerSprite;
 
         // Base images
-        [Space(10)]
+        [Header("Bases")]
         [Tooltip("Sprite to represent bases within the navy faction")]
         public Sprite navyBaseSprite;
         [Tooltip("Sprite to represent bases within the pirates faction")]
@@ -42,12 +43,12 @@ namespace ProjectStorms
         [Tooltip("Sprite to represent bases within the vikings faction")]
         public Sprite vikingsBaseSprite;
 
-        [Space(10)]
+        [Header("Repair Zones")]
         [Tooltip("Sprite to represent repair zones")]
         public Sprite repairZoneSprite;
 
         // Prisonship icon variables
-        [Space(10)]
+        [Header("Prison Ship")]
         [Tooltip("Sprite to represent the prison ship")]
         public Sprite prisonShipSprite;
         [Tooltip("Flash rate between normal and dropping colour, in seconds")]
@@ -58,12 +59,12 @@ namespace ProjectStorms
         public Color prisonshipDroppingColour;
 
         // Score Indicator variables
-        [Space(10)]
+        [Header("Scoring")]
         [Tooltip("Uses texture offsetting for animation. 1 unit per second")]
         public float scoreAnimationSpeed = 0.05f;
 
         // Player icon resizing
-        [Space(10)]
+        [Header("Player Resizing")]
         [Tooltip("Used to scale player icon, as carry more passengers. Ships carrying passengers more than this value won't increase in size, but will be at the maximum size")]
         public float maxPlayerPassengerDisplay;
 

@@ -20,6 +20,8 @@ namespace ProjectStorms
         [Tooltip("Speed in UV units per second")]
         public float m_animationSpeed  = 0.05f;
 
+        public bool m_clockwiseAnimation = true;
+
         // Used for setting the Y texture offset
         private float m_offsetValueY = 0.51f;
 
@@ -61,7 +63,7 @@ namespace ProjectStorms
 		
 		void Update() 
 		{
-            Vector2 textureOffset = m_material.mainTextureOffset;
+            Vector2 textureOffset   = m_material.mainTextureOffset;
             Vector2 detailTexOffset = m_material.GetTextureOffset("_DetailAlbedoMap");
 
             if (textureOffset.x > 1.0f)
@@ -78,13 +80,34 @@ namespace ProjectStorms
             else
             {
                 // Animate
-                textureOffset.x     += m_animationSpeed * Time.deltaTime;
+                if (m_clockwiseAnimation)
+                {
+                    textureOffset.x += m_animationSpeed * Time.deltaTime;
+                }
+                else
+                {
+                    textureOffset.x -= m_animationSpeed * Time.deltaTime;
+                }
             }
 
-            detailTexOffset.y += m_animationSpeed * Time.deltaTime;
+            if (m_clockwiseAnimation)
+            {
+                detailTexOffset.y += m_animationSpeed * Time.deltaTime;
+            }
+            else
+            {
+                detailTexOffset.y -= m_animationSpeed * Time.deltaTime;
+            }
 
             // Set Y offset - displays score percent
-            textureOffset.y = 0.5f - (m_offsetValueY * m_scorePercent);
+            if (m_clockwiseAnimation)
+            {
+                textureOffset.y = 0.5f - (m_offsetValueY * m_scorePercent);
+            }
+            else
+            {
+                textureOffset.y = (m_offsetValueY * m_scorePercent);
+            }
 
             m_material.SetTextureOffset("_MainTex", textureOffset);
             m_material.SetTextureOffset("_DetailAlbedoMap", detailTexOffset);
