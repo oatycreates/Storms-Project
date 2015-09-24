@@ -22,8 +22,8 @@ namespace ProjectStorms
     public class SpawnPassengers : MonoBehaviour
     {
         public bool spawnAsSpray = false;
-        [Tooltip("Modifies the cone angle in degrees.")]
-        public float spraySpawnAngle = 0.5f;
+        [Tooltip("Modifies the cone top size.")]
+        public float spraySpawnOffset = 0.5f;
 
         public float initialPassengerForce = 10.0f;
 
@@ -168,16 +168,19 @@ namespace ProjectStorms
                 // Search for inactive passengers
                 if (!passengers[i].activeInHierarchy)
                 {
-                    Quaternion sprayQuat = Quaternion.identity;
+                    Vector3 sprayOffset = Vector3.zero;
                     if (spawnAsSpray)
                     {
-                        sprayQuat = Quaternion.Euler(randomAngle, randomAngle, randomAngle);
+                        sprayOffset = new Vector3(
+                            Random.Range(-spraySpawnOffset, spraySpawnOffset),
+                            Random.Range(-spraySpawnOffset, spraySpawnOffset),
+                            Random.Range(-spraySpawnOffset, spraySpawnOffset));
                     }
 
                     passengerTrans = passengers[i].transform;
                     //passengerTrans.position = m_trans.position;
-                    passengerTrans.position = m_trans.position + (spawnAsSpray ? sprayQuat * Vector3.forward : Vector3.zero);
-                    passengerTrans.rotation = (spawnAsSpray ? sprayQuat : Quaternion.identity);
+                    passengerTrans.position = m_trans.position + (spawnAsSpray ? (m_trans.rotation * sprayOffset) : Vector3.zero);
+                    passengerTrans.rotation = m_trans.rotation;
 
                     passengers[i].SetActive(true);
 
@@ -195,21 +198,14 @@ namespace ProjectStorms
                     passengerRb.angularVelocity = Vector3.zero;
 
                     // Add initial passenger velocity here!	Jump!
-                    Vector3 passengerVel = (spawnAsSpray ? sprayQuat : Quaternion.identity) * relativeSpace * initialPassengerForce * passengerRb.mass;
+                    Vector3 passengerVel = relativeSpace * initialPassengerForce * passengerRb.mass;
                     //passengerRb.AddForce(passengerForce, ForceMode.Impulse);
                     passengerRb.velocity = passengerVel;
+                    passengerRb.angularVelocity = Random.insideUnitSphere;
 
                     // Don't forget this!
                     break;
                 }
-            }
-        }
-
-        float randomAngle
-        {
-            get
-            {
-                return Random.Range(-spraySpawnAngle, spraySpawnAngle);
             }
         }
 
