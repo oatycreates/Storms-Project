@@ -83,6 +83,7 @@ namespace ProjectStorms
         private Rigidbody m_rb = null;
         private ShipPartDestroy m_shipParts = null;
         private BroadsideWeaponsController m_broadSideWeapons = null;
+        private RotateCam m_camRotator = null;
 
         void Awake()
         {
@@ -90,6 +91,7 @@ namespace ProjectStorms
             m_rb = GetComponent<Rigidbody>();
             m_shipParts = GetComponent<ShipPartDestroy>();
             m_broadSideWeapons = GetComponent<BroadsideWeaponsController>();
+            m_camRotator = GetComponent<RotateCam>();
 
             m_rouletteScript = GetComponent<RouletteBehaviour>();
             m_airshipScript = GetComponent<AirshipControlBehaviour>();
@@ -313,6 +315,9 @@ namespace ProjectStorms
         {
             // Reset position
             m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+
+            // Reset camera orientation
+            m_camRotator.ResetCamRotation(true);
 
             // Reset velocity
             m_rb.velocity = Vector3.zero;
