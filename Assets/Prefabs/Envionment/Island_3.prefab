@@ -16,6 +16,22 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!1 &130164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 440486}
+  - 64: {fileID: 6426874}
+  m_Layer: 0
+  m_Name: Collider_Secondary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &136574
 GameObject:
@@ -27,11 +43,11 @@ GameObject:
   - 4: {fileID: 496702}
   - 64: {fileID: 6498784}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: Collider_Secondary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &144478
 GameObject:
@@ -47,7 +63,23 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &148068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 463240}
+  - 64: {fileID: 6476936}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &151854
 GameObject:
@@ -82,7 +114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &177424
 GameObject:
   m_ObjectHideFlags: 1
@@ -133,7 +165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &420562
 Transform:
   m_ObjectHideFlags: 1
@@ -158,6 +190,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 454012}
   m_RootOrder: 1
+--- !u!4 &440486
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130164}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 457900}
+  m_RootOrder: 5
 --- !u!4 &454012
 Transform:
   m_ObjectHideFlags: 1
@@ -186,9 +230,23 @@ Transform:
   - {fileID: 483146}
   - {fileID: 420562}
   - {fileID: 477924}
+  - {fileID: 463240}
+  - {fileID: 440486}
   - {fileID: 496702}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &463240
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 457900}
+  m_RootOrder: 4
 --- !u!4 &477924
 Transform:
   m_ObjectHideFlags: 1
@@ -236,7 +294,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 457900}
-  m_RootOrder: 4
+  m_RootOrder: 6
 --- !u!23 &2304768
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -423,6 +481,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177424}
   m_Mesh: {fileID: 4300002, guid: 29cc3699bb42eb540aa862f0772c2066, type: 3}
+--- !u!64 &6426874
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130164}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 4300002, guid: 29cc3699bb42eb540aa862f0772c2066, type: 3}
+--- !u!64 &6476936
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 148068}
+  m_Material: {fileID: 13400000, guid: cbd1c5d5057827a44b67706f6f0f3511, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 29cc3699bb42eb540aa862f0772c2066, type: 3}
 --- !u!64 &6498784
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -433,8 +515,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 4300000, guid: 29cc3699bb42eb540aa862f0772c2066, type: 3}
+  m_Convex: 1
+  m_Mesh: {fileID: 4300004, guid: 29cc3699bb42eb540aa862f0772c2066, type: 3}
 --- !u!95 &9551308
 Animator:
   serializedVersion: 3
