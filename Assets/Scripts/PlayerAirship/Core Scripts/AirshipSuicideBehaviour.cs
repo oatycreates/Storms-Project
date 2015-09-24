@@ -113,7 +113,7 @@ namespace ProjectStorms
 
         public void PlayerFireshipInputs(
             float a_Vertical,
-            float a_Horizontal, bool a_selectButton)
+            float a_Horizontal, bool a_leftClick)
         {
             // Zero input if not enabled
             if (!this.isActiveAndEnabled)
@@ -134,7 +134,7 @@ namespace ProjectStorms
 
                 // Set back button state
                 m_lastSelectHeld    = m_selectHeld;
-                m_selectHeld        = a_selectButton;
+                m_selectHeld        = a_leftClick;
             }
         }
 
