@@ -82,21 +82,21 @@ namespace ProjectStorms
                 // Animate
                 if (m_clockwiseAnimation)
                 {
-                    textureOffset.x += m_animationSpeed * Time.deltaTime;
+                    textureOffset.x -= m_animationSpeed * Time.deltaTime;
                 }
                 else
                 {
-                    textureOffset.x -= m_animationSpeed * Time.deltaTime;
+                    textureOffset.x += m_animationSpeed * Time.deltaTime;
                 }
             }
 
             if (m_clockwiseAnimation)
             {
-                detailTexOffset.y += m_animationSpeed * Time.deltaTime;
+                detailTexOffset.y -= m_animationSpeed * Time.deltaTime;
             }
             else
             {
-                detailTexOffset.y -= m_animationSpeed * Time.deltaTime;
+                detailTexOffset.y += m_animationSpeed * Time.deltaTime;
             }
 
             // Set Y offset - displays score percent

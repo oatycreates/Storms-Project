@@ -118,6 +118,14 @@ namespace ProjectStorms
             float camUpDown = Input.GetAxis(gameObject.tag + "CamVertical");
             float camLeftRight = Input.GetAxis(gameObject.tag + "CamHorizontal");
 
+            // Dpad buttons
+            float dpadVert = Input.GetAxis(gameObject.tag + "DPadHorizontal");
+            float dpadHoriz = Input.GetAxis(gameObject.tag + "DPadVertical");
+            bool dpadDown = dpadVert < 0;
+            bool dpadUp = dpadVert > 0;
+            bool dpadLeft = dpadHoriz < 0;
+            bool dpadRight = dpadHoriz > 0;
+
             // Trigger Input - For acceleration
             float triggers = -Input.GetAxis(gameObject.tag + "Triggers");
 
