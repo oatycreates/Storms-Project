@@ -76,6 +76,18 @@ namespace ProjectStorms
         // Cached variables
         private Rigidbody m_shipRb;
 
+        /// <summary>
+        /// The current amount of passengers within the tray
+        /// trigger volume
+        /// </summary>
+        public int passengerCount
+        {
+            get
+            {
+                return m_trayContents.Count;
+            }
+        }
+
         void Awake()
         {
             // Zero variables
