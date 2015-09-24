@@ -18,6 +18,10 @@ namespace ProjectStorms
     {
         public float force = 100.0f;
 
+        public float rumbleStr = 1.0f;
+        public float rumbleDurr = 0.1f;
+        private float rumbleCooldown = 0.0f;
+
         Rigidbody[] m_playerRigidBodies = new Rigidbody[4];
 
         void GetPlayerRigidBodies()
@@ -61,34 +65,39 @@ namespace ProjectStorms
             GetPlayerRigidBodies();
         }
 
+        public void Update()
+        {
+            rumbleCooldown -= Time.deltaTime;
+        }
+
         public void OnTriggerStay(Collider a_other)
         {
             Rigidbody playerBody = null;
 
             if (m_playerRigidBodies.Length > 0)
             {
+                bool isPlayer = false;
                 switch (a_other.tag)
                 {
                     case "Player1_":
                         playerBody = m_playerRigidBodies[0];
+                        isPlayer = true;
                         break;
-
                     case "Player2_":
                         playerBody = m_playerRigidBodies[1];
+                        isPlayer = true;
                         break;
-
                     case "Player3_":
                         playerBody = m_playerRigidBodies[2];
+                        isPlayer = true;
                         break;
-
                     case "Player4_":
                         playerBody = m_playerRigidBodies[3];
+                        isPlayer = true;
                         break;
-
                     case "Passengers":
                         playerBody = a_other.GetComponentInParent<Rigidbody>();
                         break;
-
                     default:
                         // Not player
                         playerBody = a_other.GetComponent<Rigidbody>();
@@ -99,6 +108,15 @@ namespace ProjectStorms
                 if (playerBody != null)
                 {
                     playerBody.AddForce(transform.forward, ForceMode.VelocityChange);
+                }
+
+                if (isPlayer && rumbleCooldown <= 0)
+                {
+                    // Rumble and screenshake the player
+                    InputManager.SetControllerVibrate(a_other.tag, rumbleStr, rumbleStr, rumbleDurr, true);
+
+                    // Only rumble as often as it would be triggered
+                    rumbleCooldown = rumbleDurr;
                 }
             }
         }

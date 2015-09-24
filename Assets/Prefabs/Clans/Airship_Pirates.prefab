@@ -2057,8 +2057,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: .923879564, z: 0, w: .382683307}
+  m_LocalPosition: {x: -1550, y: 50, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -5452,6 +5452,8 @@ MonoBehaviour:
   pitch: 0
   yaw: 0
   animThrottleMult: 10
+  boostRumbleStr: 1
+  boostRumbleDurr: .100000001
   airshipMainCam: {fileID: 11448570}
 --- !u!114 &11466692
 MonoBehaviour:
@@ -5782,7 +5784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bumpVelThreshold: 90
   bumpRumbleStr: 1
-  bumpRumbleDurr: .75
+  bumpRumbleDurr: .300000012
   balDestForce: 500
   balDestRumbleStr: 1
   balDestRumbleDurr: .75
@@ -5881,8 +5883,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58499813, z: 1.01382661}
-    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.60911703}
+    m_Center: {x: 0, y: 9.58499527, z: 1.01391602}
+    m_Extent: {x: 6.29216194, y: 3.38426208, z: 6.29216194}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:

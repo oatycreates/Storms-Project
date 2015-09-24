@@ -118,6 +118,49 @@ namespace ProjectStorms
             DevHacks();
             //}
 
+            bool stallBtnDown = Input.GetButtonDown(gameObject.tag + "ClickLeft");
+            if (m_currentPlayerState == EPlayerState.Control)
+            {
+                if (stallBtnDown)
+                {
+                    if (timeBetweenStall < 0)
+                    {
+                        SetPlayerState(EPlayerState.Stalling);
+                    }
+                }
+            }
+
+            // Stop spamming stall
+            if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide || m_currentPlayerState == EPlayerState.Roulette)
+            {
+                timeBetweenStall = 5.0f;
+            }
+
+            // Hacky!! Make auto stall an option
+            if (m_currentPlayerState == EPlayerState.Stalling)
+            {
+
+                // If the button is not down, but the player is allowed to escape the stall anyway.
+                if (!stallBtnDown)
+                {
+                    if (escapeStall)
+                    {
+                        //Take a Stall value and pass it into the suicide script.
+                        float timer = m_stallingScript.timerUntilBoost;
+
+                        SetPlayerState(EPlayerState.Suicide);
+
+                        m_suicideScript.timerUntilReset = timer;
+                    }
+                }
+            }
+
+            if (m_currentPlayerState == EPlayerState.Control)
+            {
+                //Then player is not stalling
+                stallCommit = 1.0f;
+            }
+
             // Make the player commit to the STALL
             if (m_currentPlayerState == EPlayerState.Stalling)
             {
@@ -438,75 +481,6 @@ namespace ProjectStorms
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
                 SetPlayerState(EPlayerState.Suicide);
-            }
-
-            //Old code- consider removing
-            /*
-            //inputs
-            if (Input.GetButtonDown(gameObject.tag + "Select"))
-            {
-                if (currentPlayerState == EPlayerState.Roulette)
-                {
-                    currentPlayerState = EPlayerState.Control;
-                }
-                else
-                if (currentPlayerState == EPlayerState.Control)
-                {
-                    currentPlayerState = EPlayerState.Dying;
-                }
-                else
-                if (currentPlayerState == EPlayerState.Dying)
-                {
-                    //currentPlayerState = EPlayerState.Suicide;
-                }
-                else
-                if (currentPlayerState == EPlayerState.Suicide)
-                {
-                    //currentPlayerState = EPlayerState.Roulette;
-                    currentPlayerState = EPlayerState.Control;
-                }
-            }
-            */
-            if (m_currentPlayerState == EPlayerState.Control)
-            {
-                if (Input.GetButtonDown(gameObject.tag + "Select"))
-                {
-                    if (timeBetweenStall < 0)
-                    {
-                        SetPlayerState(EPlayerState.Stalling);
-                    }
-                }
-            }
-
-            // Stop spamming stall
-            if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide || m_currentPlayerState == EPlayerState.Roulette)
-            {
-                timeBetweenStall = 5.0f;
-            }
-
-            // Hacky!! Make auto stall an option
-            if (m_currentPlayerState == EPlayerState.Stalling)
-            {
-
-                // If the button is not down, but the player is allowed to escape the stall anyway.
-                if (!Input.GetButton(gameObject.tag + "Select"))
-                {
-                    if (escapeStall)
-                    {
-                        //Take a Stall value and pass it into the suicide script.
-                        float timer = m_stallingScript.timerUntilBoost;
-
-                        SetPlayerState(EPlayerState.Suicide);
-
-                        m_suicideScript.timerUntilReset = timer;
-                    }
-                }
-            }
-
-            if (m_currentPlayerState == EPlayerState.Control)
-            {
-                //Then player is not stalling
-                stallCommit = 1.0f;
             }
         }
     } 

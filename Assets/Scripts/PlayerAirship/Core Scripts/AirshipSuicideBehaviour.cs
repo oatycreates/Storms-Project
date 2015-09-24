@@ -43,6 +43,15 @@ namespace ProjectStorms
         public float animThrottleMult = 10.0f;
 
         /// <summary>
+        /// How strong to rumble.
+        /// </summary>
+        public float boostRumbleStr = 3.0f;
+        /// <summary>
+        /// How long to rumble for.
+        /// </summary>
+        public float boostRumbleDurr = 0.1f;
+
+        /// <summary>
         /// Handle to the airship camera script.
         /// </summary>
         public AirshipCamBehaviour airshipMainCam;
@@ -93,7 +102,7 @@ namespace ProjectStorms
             }
 
 			//Make controller vibrate - update every second
-			InputManager.SetControllerVibrate (gameObject.tag, 10, 10, 0.1f, true);
+            InputManager.SetControllerVibrate(gameObject.tag, boostRumbleStr, boostRumbleStr, boostRumbleDurr, true);
         }
 
         void FixedUpdate()
@@ -104,7 +113,7 @@ namespace ProjectStorms
 
         public void PlayerFireshipInputs(
             float a_Vertical,
-            float a_Horizontal, bool a_selectButton)
+            float a_Horizontal, bool a_leftClick)
         {
             // Zero input if not enabled
             if (!this.isActiveAndEnabled)
@@ -125,7 +134,7 @@ namespace ProjectStorms
 
                 // Set back button state
                 m_lastSelectHeld    = m_selectHeld;
-                m_selectHeld        = a_selectButton;
+                m_selectHeld        = a_leftClick;
             }
         }
 
