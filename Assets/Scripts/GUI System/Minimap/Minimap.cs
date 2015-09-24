@@ -20,18 +20,6 @@ namespace ProjectStorms
         [Tooltip("Prefab which will be the base for player and base icons")]
         public Image iconTemplatePrefab;
 
-        // TODO: Implement score indicators
-
-        [Space(10)]
-        public GameObject navyScoreIndicator;
-        public Color navyScoreColour;
-        public GameObject piratesScoreIndicator;
-        public Color piratesScoreColour;
-        public GameObject tinkererScoreIndicator;
-        public Color tinkerersScoreColour;
-        public GameObject vikingsScoreIndicator;
-        public Color vikingsScoreColour;
-
         // Player images
         [Space(10)]
         [Tooltip("Sprite to represent players within the navy faction")]
@@ -434,6 +422,11 @@ namespace ProjectStorms
             // Update icon position
             PositionIconToTransform(m_prisonshipImage.rectTransform,
                 m_prisonshipTransform);
+        }
+
+        void UpdateScoreIndicators()
+        {
+
         }
 	}
 }
