@@ -83,6 +83,7 @@ namespace ProjectStorms
         private Rigidbody m_rb = null;
         private ShipPartDestroy m_shipParts = null;
         private BroadsideWeaponsController m_broadSideWeapons = null;
+        private RotateCam m_camRotator = null;
 
         void Awake()
         {
@@ -90,6 +91,7 @@ namespace ProjectStorms
             m_rb = GetComponent<Rigidbody>();
             m_shipParts = GetComponent<ShipPartDestroy>();
             m_broadSideWeapons = GetComponent<BroadsideWeaponsController>();
+            m_camRotator = GetComponent<RotateCam>();
 
             m_rouletteScript = GetComponent<RouletteBehaviour>();
             m_airshipScript = GetComponent<AirshipControlBehaviour>();
@@ -117,6 +119,49 @@ namespace ProjectStorms
             //{
             DevHacks();
             //}
+
+            bool stallBtnDown = Input.GetButtonDown(gameObject.tag + "ClickLeft");
+            if (m_currentPlayerState == EPlayerState.Control)
+            {
+                if (stallBtnDown)
+                {
+                    if (timeBetweenStall < 0)
+                    {
+                        SetPlayerState(EPlayerState.Stalling);
+                    }
+                }
+            }
+
+            // Stop spamming stall
+            if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide || m_currentPlayerState == EPlayerState.Roulette)
+            {
+                timeBetweenStall = 5.0f;
+            }
+
+            // Hacky!! Make auto stall an option
+            if (m_currentPlayerState == EPlayerState.Stalling)
+            {
+
+                // If the button is not down, but the player is allowed to escape the stall anyway.
+                if (!stallBtnDown)
+                {
+                    if (escapeStall)
+                    {
+                        //Take a Stall value and pass it into the suicide script.
+                        float timer = m_stallingScript.timerUntilBoost;
+
+                        SetPlayerState(EPlayerState.Suicide);
+
+                        m_suicideScript.timerUntilReset = timer;
+                    }
+                }
+            }
+
+            if (m_currentPlayerState == EPlayerState.Control)
+            {
+                //Then player is not stalling
+                stallCommit = 1.0f;
+            }
 
             // Make the player commit to the STALL
             if (m_currentPlayerState == EPlayerState.Stalling)
@@ -259,49 +304,6 @@ namespace ProjectStorms
         private void ControlUpdate()
         {
             m_suicideScript.ResetTimer();
-
-            bool stallBtnDown = Input.GetButtonDown(gameObject.tag + "ClickLeft");
-            if (m_currentPlayerState == EPlayerState.Control)
-            {
-                if (stallBtnDown)
-                {
-                    if (timeBetweenStall < 0)
-                    {
-                        SetPlayerState(EPlayerState.Stalling);
-                    }
-                }
-            }
-
-            // Stop spamming stall
-            if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide || m_currentPlayerState == EPlayerState.Roulette)
-            {
-                timeBetweenStall = 5.0f;
-            }
-
-            // Hacky!! Make auto stall an option
-            if (m_currentPlayerState == EPlayerState.Stalling)
-            {
-
-                // If the button is not down, but the player is allowed to escape the stall anyway.
-                if (!stallBtnDown)
-                {
-                    if (escapeStall)
-                    {
-                        //Take a Stall value and pass it into the suicide script.
-                        float timer = m_stallingScript.timerUntilBoost;
-
-                        SetPlayerState(EPlayerState.Suicide);
-
-                        m_suicideScript.timerUntilReset = timer;
-                    }
-                }
-            }
-
-            if (m_currentPlayerState == EPlayerState.Control)
-            {
-                //Then player is not stalling
-                stallCommit = 1.0f;
-            }
         }
 
         private void RouletteUpdate()
@@ -313,6 +315,9 @@ namespace ProjectStorms
         {
             // Reset position
             m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+
+            // Reset camera orientation
+            m_camRotator.ResetCamRotation(true);
 
             // Reset velocity
             m_rb.velocity = Vector3.zero;
@@ -482,34 +487,6 @@ namespace ProjectStorms
             {
                 SetPlayerState(EPlayerState.Suicide);
             }
-
-            //Old code- consider removing
-            /*
-            //inputs
-            if (Input.GetButtonDown(gameObject.tag + "Select"))
-            {
-                if (currentPlayerState == EPlayerState.Roulette)
-                {
-                    currentPlayerState = EPlayerState.Control;
-                }
-                else
-                if (currentPlayerState == EPlayerState.Control)
-                {
-                    currentPlayerState = EPlayerState.Dying;
-                }
-                else
-                if (currentPlayerState == EPlayerState.Dying)
-                {
-                    //currentPlayerState = EPlayerState.Suicide;
-                }
-                else
-                if (currentPlayerState == EPlayerState.Suicide)
-                {
-                    //currentPlayerState = EPlayerState.Roulette;
-                    currentPlayerState = EPlayerState.Control;
-                }
-            }
-            */
         }
     } 
 }

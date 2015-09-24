@@ -23,7 +23,7 @@ namespace ProjectStorms
 
         public Renderer myRenderer;
         public Renderer myOtherRenderer;
-        private Color m_playerColor = Color.magenta;
+        private Color m_playerColor = Color.red;
 
         public GameObject airshipTopOfHierachy;
         public GameObject canvasChild;
@@ -121,12 +121,12 @@ namespace ProjectStorms
 				string myTag = tag;
 				if (myTag == "Player1_")
 				{
-					m_playerColor = Color.magenta;
+					m_playerColor = Color.red;
 				}
 				
 				if (myTag == "Player2_")
 				{
-					m_playerColor = Color.cyan;
+					m_playerColor = Color.blue;
 				}
 				
 				if (myTag == "Player3_")

@@ -59,6 +59,11 @@ namespace ProjectStorms
         public float balDestRumbleDurr = 0.2f;
 
         /// <summary>
+        /// Trigger the component on balloon destruction
+        /// </summary>
+        public AudioSource balloonPopNoise;
+
+        /// <summary>
         /// A collection object to contain part information.
         /// </summary>
         [System.Serializable]
@@ -329,6 +334,7 @@ namespace ProjectStorms
                 m_rb.AddForceAtPosition(m_trans.up * balDestForce, a_part.partObject.transform.position);
                 InputManager.SetControllerVibrate(gameObject.tag, balDestRumbleStr, 0.0f, balDestRumbleDurr, true);
 
+                
                 m_balLeftDest = true;
             }
             else if (a_part.partType == EShipPartType.RIGHT_BALLOON)
@@ -343,6 +349,13 @@ namespace ProjectStorms
             {
                 // Kill the player
                 m_shipStates.SetPlayerState(EPlayerState.Dying);
+            }
+
+
+            if (!balloonPopNoise.isPlaying)
+            {
+                //balloonPopNoise.pitch = Random.RandomRange(-0.75f, 1.25f);
+                balloonPopNoise.Play();
             }
         }
     } 

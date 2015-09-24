@@ -55,14 +55,14 @@ namespace ProjectStorms
 	            if (gameObject.tag == "Player1_")
 	            {
 	                teamNumber = 1;
-	                myRenderer.material.color = Color.magenta;
+	                myRenderer.material.color = Color.red;
 	                baseColour = myRenderer.material.color;
 
 	            }
 	            else if (gameObject.tag == "Player2_")
 	            {
 	                teamNumber = 2;
-	                myRenderer.material.color = Color.cyan;
+	                myRenderer.material.color = Color.blue;
 	                baseColour = myRenderer.material.color;
 	            }
 	            else if (gameObject.tag == "Player3_")

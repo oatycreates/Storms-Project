@@ -57,6 +57,11 @@ namespace ProjectStorms
         [Tooltip("Sprite colour tint to use on the prison ship icon, when dropping passengers")]
         public Color prisonshipDroppingColour;
 
+        // Score Indicator variables
+        [Space(10)]
+        [Tooltip("Uses texture offsetting for animation. 1 unit per second")]
+        public float scoreAnimationSpeed;
+
         // Player icon resizing
         [Space(10)]
         [Tooltip("Used to scale player icon, as carry more passengers. Ships carrying passengers more than this value won't increase in size, but will be at the maximum size")]
@@ -79,6 +84,16 @@ namespace ProjectStorms
         private bool m_useNormalPrisonColour    = false;
         private float m_currentPrisonFlashTime  = 0.0f;
         private List<SpawnPassengers> m_passengerSpawners;
+
+        // Score Indicators
+        private ScoreIndicator m_navyScoreIndicator;
+        private ScoreIndicator m_piratesScoreIndicator;
+        private ScoreIndicator m_tinkerersScoreIndicator;
+        private ScoreIndicator m_vikingScoreIndicator;
+        private DetectFallingPassenger m_navyBase;
+        private DetectFallingPassenger m_pirateBase;
+        private DetectFallingPassenger m_tinkerersBase;
+        private DetectFallingPassenger m_vikingBase;
 
         // Cached variables
         private Canvas m_captureCanvas;
@@ -218,11 +233,49 @@ namespace ProjectStorms
             }
         }
 
+        void SetupScoreIndicators()
+        {
+            // Get score indicator references
+            string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/";
+
+            m_navyScoreIndicator        = m_transform.FindChild(scoreBarPath + "Navy Score Bar").GetComponent<ScoreIndicator>();
+            m_piratesScoreIndicator     = m_transform.FindChild(scoreBarPath + "Pirates Score Bar").GetComponent<ScoreIndicator>();
+            m_vikingScoreIndicator      = m_transform.FindChild(scoreBarPath + "Viking Score Bar").GetComponent<ScoreIndicator>();
+            m_tinkerersScoreIndicator   = m_transform.FindChild(scoreBarPath + "Tinkerers Score Bar").GetComponent<ScoreIndicator>();
+
+            // Get base scoring references
+            for (int i = 0; i < m_baseTransforms.Count; ++i)
+            {
+                FactionIndentifier indentity = m_baseTransforms[i].GetComponent<FactionIndentifier>();
+                DetectFallingPassenger baseScorer = m_baseTransforms[i].GetComponentInChildren<DetectFallingPassenger>();
+
+                switch (indentity.faction)
+                {
+                    case FactionIndentifier.Faction.NAVY:
+                        m_navyBase = baseScorer;
+                        break;
+
+                    case FactionIndentifier.Faction.PIRATES:
+                        m_pirateBase = baseScorer;
+                        break;
+
+                    case FactionIndentifier.Faction.TINKERERS:
+                        m_tinkerersBase = baseScorer;
+                        break;
+
+                    case FactionIndentifier.Faction.VIKINGS:
+                        m_vikingBase = baseScorer;
+                        break;
+                }
+            }
+        }
+
         void Start()
         {
             PopulateCacheLists();
             CreateMapIcons();
             SetupCaptureCamera();
+            SetupScoreIndicators();
 
             // Get passenger spawner references
             SpawnPassengers[] passengerSpawners = GameObject.FindObjectsOfType<SpawnPassengers>();
@@ -253,6 +306,7 @@ namespace ProjectStorms
             UpdatePlayerIcons();
             UpdateBaseIcons();
             UpdatePrisonShipIcon();
+            UpdateScoreIndicators();
 
             // Update repair zone icons
             for (int i = 0; i < m_repairTransforms.Count; ++i)
@@ -426,7 +480,22 @@ namespace ProjectStorms
 
         void UpdateScoreIndicators()
         {
+            // Update animation speed
+            m_navyScoreIndicator.animationSpeed         = scoreAnimationSpeed;
+            m_piratesScoreIndicator.animationSpeed      = scoreAnimationSpeed;
+            m_tinkerersScoreIndicator.animationSpeed    = scoreAnimationSpeed;
+            m_vikingScoreIndicator.animationSpeed       = scoreAnimationSpeed;
 
+            // Update percentages
+            float navyScorePercent      = (m_navyBase.maxPeople - m_navyBase.peopleLeftToCatch) / m_navyBase.maxPeople;
+            float pirateScorePercent    = (m_pirateBase.maxPeople - m_pirateBase.peopleLeftToCatch) / m_pirateBase.maxPeople;
+            float tinkerersScorePercent = (m_tinkerersBase.maxPeople - m_tinkerersBase.peopleLeftToCatch) / m_tinkerersBase.maxPeople;
+            float vikingScorePercent    = (m_vikingBase.maxPeople - m_vikingBase.peopleLeftToCatch) / m_vikingBase.maxPeople;
+
+            m_navyScoreIndicator.scorePercent       = navyScorePercent;
+            m_piratesScoreIndicator.scorePercent    = pirateScorePercent;
+            m_tinkerersScoreIndicator.scorePercent  = tinkerersScorePercent;
+            m_vikingScoreIndicator.scorePercent     = vikingScorePercent;
         }
 	}
 }
