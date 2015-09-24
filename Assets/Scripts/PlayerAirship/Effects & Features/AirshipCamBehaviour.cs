@@ -44,13 +44,20 @@ namespace ProjectStorms
         // Cached variables
         Transform m_trans;
 
+        /// <summary>
+        /// Timer used for determining how long the camera should continue shaking for.
+        /// </summary>
+		private float m_shakeTime = 0.0f;
 		/// <summary>
-		/// Screenshake	function variables
+        /// The amount that the camera should shake.
 		/// </summary>
-		//Timer used for determining how long the camera should continue shaking for.
-		private float shakeTime = 0.0f;
-		//The amount that the camera should shake.
-		private float shakeAmount = 1.0f;
+		private float m_shakeAmount = 1.0f;
+
+        /// <summary>
+        /// Transform of the camera child.
+        /// </summary>
+        private Transform m_camTrans = null;
+        private Cam_DollyForward m_camDolly = null;
 
 
         void Awake()
@@ -66,6 +73,9 @@ namespace ProjectStorms
                 camHolder = new GameObject();
                 camHolder.name = "CamHolder";
             }
+
+            m_camDolly = GetComponentInChildren<Cam_DollyForward>();
+            m_camTrans = m_camDolly.transform;
 
             // Detach from parent on start!
             m_trans.SetParent(camHolder.transform, true);
@@ -85,12 +95,12 @@ namespace ProjectStorms
 			}
 #endif
 
-			shakeTime -= Time.deltaTime;
+			m_shakeTime -= Time.deltaTime;
 
 			// This has been updated - If cam IS following and screenshake is NOT in effect, then make the camera move to the right position.
             if (camFollowPlayer)
             {
-				if (shakeTime < 0)
+				if (m_shakeTime < 0)
 				{
                 	FollowCam();
 				}
@@ -113,11 +123,11 @@ namespace ProjectStorms
 			// Recommend shakeDuration = 0.6f and shakeStrength = 1.5f;
 
             // Only override shake if stronger or longer
-            if (a_shakeDuration >= shakeTime || a_shakeStrength >= shakeAmount)
+            if (a_shakeDuration >= m_shakeTime || a_shakeStrength >= m_shakeAmount)
             {
                 // Set shake time
-                shakeTime = a_shakeDuration;
-                shakeAmount = a_shakeStrength;
+                m_shakeTime = a_shakeDuration;
+                m_shakeAmount = a_shakeStrength;
             }
 			
 			// This changes the values in the update function.
@@ -129,6 +139,27 @@ namespace ProjectStorms
             {
                 // TODO Fix lerping
                 m_trans.position = camPosTarget.position;
+
+                // Move camera to take into account world obstacles
+                Vector3 lookOffset = m_camDolly.GetOriginalPosition() - camLookTarget.position;
+                RaycastHit[] rayHits = Physics.RaycastAll(camLookTarget.position, lookOffset, lookOffset.magnitude * 1.1f, Physics.DefaultRaycastLayers);
+                string myTag = gameObject.tag;
+                float nearDist = 999999.0f;
+                Vector3 nearPos = Vector3.zero;
+                for (int i = 0; i < rayHits.Length; ++i)
+                {
+                    // Find obstacles that aren't owned by this player
+                    if (rayHits[i].distance <= nearDist && !rayHits[i].collider.isTrigger && !rayHits[i].collider.gameObject.CompareTag(myTag))
+                    {
+                        //Debug.Log("Hit " + rayHits[i].collider.gameObject.name + ", tag: " + rayHits[i].collider.gameObject.tag + ", dist: " + rayHits[i].distance);
+                        nearDist = rayHits[i].distance;
+                        nearPos = rayHits[i].point;
+                    }
+                }
+                //Debug.DrawRay(camLookTarget.position, lookOffset, Color.yellow);
+
+                // Found nearest camera object, snap to
+                m_camDolly.SetCollisionFollowDist(nearPos);
             }
 
             if (camLookTarget != null)
@@ -136,7 +167,6 @@ namespace ProjectStorms
                 m_trans.rotation = camRotator.rotation;
             }
         }
-
 
         public void SuicideCam()
         {
@@ -168,7 +198,7 @@ namespace ProjectStorms
 			if (camPosTarget != null)
 			{
 				Vector3 tempPos = camPosTarget.position;
-				m_trans.position = tempPos + Random.insideUnitSphere * shakeAmount;
+				m_trans.position = tempPos + Random.insideUnitSphere * m_shakeAmount;
 
 				// Look at target
 				m_trans.rotation = camRotator.rotation;
