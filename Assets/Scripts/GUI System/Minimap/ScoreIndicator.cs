@@ -33,6 +33,11 @@ namespace ProjectStorms
         /// </summary>
         public float scorePercent
         {
+            get
+            {
+                return m_scorePercent;
+            }
+
             set
             {
                 m_scorePercent = value;

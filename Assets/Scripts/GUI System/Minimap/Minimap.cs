@@ -15,8 +15,8 @@ using System.Collections.Generic;
 
 namespace ProjectStorms
 {
-	public class Minimap : MonoBehaviour 
-	{
+    public class Minimap : MonoBehaviour
+    {
         [Header("General Prefabs")]
         [Tooltip("Prefab which will be the base for player and base icons")]
         public Image iconTemplatePrefab;
@@ -37,6 +37,8 @@ namespace ProjectStorms
         public uint passengerDisplayCutoff = 10;
         [Tooltip("Scale at which the player icons will scale towards, when reaching the max passenger display value, in passenger count")]
         public float passengerDisplayScale = 2.0f;
+        [Tooltip("Speed at which the player's icons will change scale, in scale units per second")]
+        public float passengerScaleSpeed = 0.5f;
 
         // Base images
         [Header("Bases")]
@@ -68,6 +70,8 @@ namespace ProjectStorms
         [Header("Scoring")]
         [Tooltip("Uses texture offsetting for animation. 1 unit per second")]
         public float scoreAnimationSpeed = 0.05f;
+        [Tooltip("Speed at which the score bars will increase in percentage, in scale units per second")]
+        public float scoreChangeSpeed = 0.5f;
 
         // Transforms
         private List<Transform> m_playerTransforms;
@@ -85,9 +89,9 @@ namespace ProjectStorms
         private Image m_prisonshipImage;
 
         // Passenger spawner
-        private bool m_passengersSpawning       = false;
-        private bool m_useNormalPrisonColour    = false;
-        private float m_currentPrisonFlashTime  = 0.0f;
+        private bool m_passengersSpawning = false;
+        private bool m_useNormalPrisonColour = false;
+        private float m_currentPrisonFlashTime = 0.0f;
         private List<SpawnPassengers> m_passengerSpawners;
 
         // Score Indicators
@@ -142,8 +146,8 @@ namespace ProjectStorms
             m_captureCanvas.transform.localPosition = Vector3.zero;
 
             // Cache common properties
-            m_transform     = transform;
-            m_gameObject    = gameObject;
+            m_transform = transform;
+            m_gameObject = gameObject;
         }
 
         /// <summary>
@@ -156,8 +160,8 @@ namespace ProjectStorms
             AirshipControlBehaviour[] players =
                 GameObject.FindObjectsOfType<AirshipControlBehaviour>();
 
-            m_playerTransforms  = new List<Transform>(players.Length);
-            m_passengerTrays    = new List<PassengerTray>(players.Length);
+            m_playerTransforms = new List<Transform>(players.Length);
+            m_passengerTrays = new List<PassengerTray>(players.Length);
 
             for (int i = 0; i < m_playerTransforms.Capacity; ++i)
             {
@@ -206,30 +210,30 @@ namespace ProjectStorms
 
             // Create base icons
             m_baseImages = new List<Image>(m_baseTransforms.Count);
-            
+
             for (int i = 0; i < m_baseImages.Capacity; ++i)
             {
                 Image image = Instantiate(iconTemplatePrefab);
                 image.transform.SetParent(captureCanvas_trans, false);
-            
+
                 m_baseImages.Add(image);
             }
-            
+
             // Create repair zone icons
             m_repairImages = new List<Image>(m_repairTransforms.Count);
-            
+
             for (int i = 0; i < m_repairImages.Capacity; ++i)
             {
                 Image image = Instantiate(iconTemplatePrefab);
                 image.overrideSprite = repairZoneSprite;
                 image.transform.SetParent(captureCanvas_trans, false);
-            
+
                 m_repairImages.Add(image);
             }
 
             // Create prisonship icon
-            m_prisonshipImage                   = Instantiate(iconTemplatePrefab);
-            m_prisonshipImage.overrideSprite    = prisonShipSprite;
+            m_prisonshipImage = Instantiate(iconTemplatePrefab);
+            m_prisonshipImage.overrideSprite = prisonShipSprite;
             m_prisonshipImage.rectTransform.SetParent(captureCanvas_trans, false);
 
             // Create player icons
@@ -249,10 +253,10 @@ namespace ProjectStorms
             // Get score indicator references
             string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/";
 
-            m_navyScoreIndicator        = m_transform.FindChild(scoreBarPath + "Navy Score Bar").GetComponent<ScoreIndicator>();
-            m_piratesScoreIndicator     = m_transform.FindChild(scoreBarPath + "Pirates Score Bar").GetComponent<ScoreIndicator>();
-            m_vikingScoreIndicator      = m_transform.FindChild(scoreBarPath + "Viking Score Bar").GetComponent<ScoreIndicator>();
-            m_tinkerersScoreIndicator   = m_transform.FindChild(scoreBarPath + "Tinkerers Score Bar").GetComponent<ScoreIndicator>();
+            m_navyScoreIndicator = m_transform.FindChild(scoreBarPath + "Navy Score Bar").GetComponent<ScoreIndicator>();
+            m_piratesScoreIndicator = m_transform.FindChild(scoreBarPath + "Pirates Score Bar").GetComponent<ScoreIndicator>();
+            m_vikingScoreIndicator = m_transform.FindChild(scoreBarPath + "Viking Score Bar").GetComponent<ScoreIndicator>();
+            m_tinkerersScoreIndicator = m_transform.FindChild(scoreBarPath + "Tinkerers Score Bar").GetComponent<ScoreIndicator>();
 
             // Get base scoring references
             for (int i = 0; i < m_baseTransforms.Count; ++i)
@@ -279,6 +283,12 @@ namespace ProjectStorms
                         break;
                 }
             }
+
+            // Set initial scores
+            m_navyScoreIndicator.scorePercent = 0.0f;
+            m_piratesScoreIndicator.scorePercent = 0.0f;
+            m_vikingScoreIndicator.scorePercent = 0.0f;
+            m_tinkerersScoreIndicator.scorePercent = 0.0f;
         }
 
         void Start()
@@ -322,8 +332,8 @@ namespace ProjectStorms
             // Update repair zone icons
             for (int i = 0; i < m_repairTransforms.Count; ++i)
             {
-                Transform repairZone_trans              = m_repairTransforms[i];
-                RectTransform repairZone_iconRectTrans  = m_repairImages[i].rectTransform;
+                Transform repairZone_trans = m_repairTransforms[i];
+                RectTransform repairZone_iconRectTrans = m_repairImages[i].rectTransform;
 
                 PositionIconToTransform(repairZone_iconRectTrans, repairZone_trans);
             }
@@ -389,19 +399,19 @@ namespace ProjectStorms
                 switch (identity.faction)
                 {
                     case FactionIndentifier.Faction.NAVY:
-                        baseIcon.overrideSprite = navyBaseSprite; 
+                        baseIcon.overrideSprite = navyBaseSprite;
                         break;
 
                     case FactionIndentifier.Faction.PIRATES:
-                        baseIcon.overrideSprite = piratesBaseSprite; 
+                        baseIcon.overrideSprite = piratesBaseSprite;
                         break;
 
                     case FactionIndentifier.Faction.TINKERERS:
-                        baseIcon.overrideSprite = tinkerersBaseSprite; 
+                        baseIcon.overrideSprite = tinkerersBaseSprite;
                         break;
 
                     case FactionIndentifier.Faction.VIKINGS:
-                        baseIcon.overrideSprite = vikingsBaseSprite; 
+                        baseIcon.overrideSprite = vikingsBaseSprite;
                         break;
                 }
 
@@ -417,16 +427,16 @@ namespace ProjectStorms
         {
             for (int i = 0; i < m_playerTransforms.Count; ++i)
             {
-                Image playerIconImage           = m_playerImages[i];
-                Transform playerTransform       = m_playerTransforms[i];
-                RectTransform playerIconTrans   = m_playerImages[i].rectTransform;
+                Image playerIconImage = m_playerImages[i];
+                Transform playerTransform = m_playerTransforms[i];
+                RectTransform playerIconTrans = m_playerImages[i].rectTransform;
 
                 // Set icon position
                 PositionIconToTransform(playerIconTrans, playerTransform);
 
                 // Set icon texture
                 FactionIndentifier identity = playerTransform.GetComponent<FactionIndentifier>();
-                
+
                 switch (identity.faction)
                 {
                     case FactionIndentifier.Faction.NAVY:
@@ -447,14 +457,19 @@ namespace ProjectStorms
                 }
 
                 // Set icon rotation
-                float playerRotationY           = playerTransform.rotation.eulerAngles.y;
-                playerIconTrans.localRotation   = Quaternion.Euler(new Vector3(0.0f, 0.0f, -playerRotationY));
+                float playerRotationY = playerTransform.rotation.eulerAngles.y;
+                playerIconTrans.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, -playerRotationY));
 
                 // Set scale
-                float passengerCount            = m_passengerTrays[i].passengerCount;
-                float scale                     = passengerDisplayScale * (passengerCount / passengerDisplayCutoff);
-                
-                playerIconTrans.localScale      = new Vector3(scale, scale, scale);
+                float passengerCount = m_passengerTrays[i].passengerCount;
+                float scale = passengerDisplayScale * (passengerCount / passengerDisplayCutoff);
+
+                // Keep scale above 1
+                scale = Mathf.Max(scale, 1.0f);
+
+                // Interpolate to new scale
+                playerIconTrans.localScale = Vector3.Lerp(playerIconTrans.localScale,
+                    new Vector3(scale, scale, scale), 0.5f * Time.deltaTime);
             }
         }
 
@@ -470,9 +485,9 @@ namespace ProjectStorms
                 if (m_currentPrisonFlashTime <= 0.0f)
                 {
                     // Reset flashing timer
-                    m_currentPrisonFlashTime    = prisonshipFlashRate;
+                    m_currentPrisonFlashTime = prisonshipFlashRate;
                     // Swap prison ship colour
-                    m_useNormalPrisonColour     = !m_useNormalPrisonColour;
+                    m_useNormalPrisonColour = !m_useNormalPrisonColour;
                 }
                 else
                 {
@@ -481,7 +496,7 @@ namespace ProjectStorms
                 }
 
                 // Assign prison ship icon flashing colour
-                m_prisonshipImage.color = 
+                m_prisonshipImage.color =
                     m_useNormalPrisonColour ? prisonshipNormalColour : prisonshipDroppingColour;
             }
             else
@@ -498,22 +513,22 @@ namespace ProjectStorms
         void UpdateScoreIndicators()
         {
             // Update animation speed
-            m_navyScoreIndicator.animationSpeed         = scoreAnimationSpeed;
-            m_piratesScoreIndicator.animationSpeed      = scoreAnimationSpeed;
-            m_tinkerersScoreIndicator.animationSpeed    = scoreAnimationSpeed;
-            m_vikingScoreIndicator.animationSpeed       = scoreAnimationSpeed;
+            m_navyScoreIndicator.animationSpeed = scoreAnimationSpeed;
+            m_piratesScoreIndicator.animationSpeed = scoreAnimationSpeed;
+            m_tinkerersScoreIndicator.animationSpeed = scoreAnimationSpeed;
+            m_vikingScoreIndicator.animationSpeed = scoreAnimationSpeed;
 
             // Update percentages
-            // (
-            float navyScorePercent      = 1.0f - ((float)m_navyBase.peopleLeftToCatch / (float)m_navyBase.maxPeople);
-            float pirateScorePercent    = 1.0f - ((float)m_pirateBase.peopleLeftToCatch / (float)m_pirateBase.maxPeople);
+            float navyScorePercent = 1.0f - ((float)m_navyBase.peopleLeftToCatch / (float)m_navyBase.maxPeople);
+            float pirateScorePercent = 1.0f - ((float)m_pirateBase.peopleLeftToCatch / (float)m_pirateBase.maxPeople);
             float tinkerersScorePercent = 1.0f - ((float)m_tinkerersBase.peopleLeftToCatch / (float)m_tinkerersBase.maxPeople);
-            float vikingScorePercent    = 1.0f - ((float)m_vikingBase.peopleLeftToCatch / (float)m_vikingBase.maxPeople);
+            float vikingScorePercent = 1.0f - ((float)m_vikingBase.peopleLeftToCatch / (float)m_vikingBase.maxPeople);
 
-            m_navyScoreIndicator.scorePercent       = navyScorePercent;
-            m_piratesScoreIndicator.scorePercent    = pirateScorePercent;
-            m_tinkerersScoreIndicator.scorePercent  = tinkerersScorePercent;
-            m_vikingScoreIndicator.scorePercent     = vikingScorePercent;
+            // Interpolate to new score percent
+            m_navyScoreIndicator.scorePercent = Mathf.Lerp(m_navyScoreIndicator.scorePercent, navyScorePercent, 0.5f * Time.deltaTime); //navyScorePercent;
+            m_piratesScoreIndicator.scorePercent = Mathf.Lerp(m_piratesScoreIndicator.scorePercent, pirateScorePercent, 0.5f * Time.deltaTime); //pirateScorePercent;
+            m_tinkerersScoreIndicator.scorePercent = Mathf.Lerp(m_tinkerersScoreIndicator.scorePercent, tinkerersScorePercent, 0.5f * Time.deltaTime); //tinkerersScorePercent;
+            m_vikingScoreIndicator.scorePercent = Mathf.Lerp(m_vikingScoreIndicator.scorePercent, vikingScorePercent, 0.5f * Time.deltaTime); //vikingScorePercent;
         }
-	}
+    }
 }
