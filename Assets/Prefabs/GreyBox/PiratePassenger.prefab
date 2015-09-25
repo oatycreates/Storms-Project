@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightTillDeath: -2000
-  expireTime: 60
+  expireTime: 300
   colDisableTime: 1
 --- !u!114 &11448062
 MonoBehaviour:
@@ -435,6 +435,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: randomChanceOfScream
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: expireTime
+      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

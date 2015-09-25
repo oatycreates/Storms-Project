@@ -25,7 +25,7 @@ namespace ProjectStorms
         /// <summary>
         /// Time till each passenger expires.
         /// </summary>
-        public float expireTime = 60.0f;
+        public float expireTime = 300.0f;
 
         /// <summary>
         /// How long to disable the collider for.
