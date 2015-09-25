@@ -266,7 +266,7 @@ namespace ProjectStorms
         void SetupScoreIndicators()
         {
             // Get score indicator references
-            string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/Four Factions/";
+            string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/";
 
             m_navyScoreIndicator = m_transform.FindChild(scoreBarPath + "Navy Score Bar").GetComponent<ScoreIndicator>();
             m_piratesScoreIndicator = m_transform.FindChild(scoreBarPath + "Pirates Score Bar").GetComponent<ScoreIndicator>();
