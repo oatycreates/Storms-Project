@@ -21,6 +21,8 @@ namespace ProjectStorms
         public Text winText;
         public Color myColour = Color.white;
 
+        private GameObject m_minimap = null;
+
 
         void Awake()
         {
@@ -28,6 +30,11 @@ namespace ProjectStorms
 
             //Go to sleep untill I'm needed
             gameObject.SetActive(false);
+        }
+
+        void Start()
+        {
+            m_minimap = GameObject.Find("Minimap");
         }
 
         void FixedUpdate()
@@ -40,6 +47,12 @@ namespace ProjectStorms
             winText.text = winnerNumberText;
             winText.color = winnerColour;
             pirateRenderer.material.color = winnerColour;
+
+            // Disable the minimap
+            if (m_minimap != null)
+            {
+                m_minimap.SetActive(false);
+            }
         }
     }
 }
