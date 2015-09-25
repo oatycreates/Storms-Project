@@ -268,10 +268,10 @@ namespace ProjectStorms
             // Get score indicator references
             string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/";
 
-            m_navyScoreIndicator = m_transform.FindChild(scoreBarPath + "Navy Score Bar").GetComponent<ScoreIndicator>();
-            m_piratesScoreIndicator = m_transform.FindChild(scoreBarPath + "Pirates Score Bar").GetComponent<ScoreIndicator>();
-            m_vikingScoreIndicator = m_transform.FindChild(scoreBarPath + "Viking Score Bar").GetComponent<ScoreIndicator>();
-            m_tinkerersScoreIndicator = m_transform.FindChild(scoreBarPath + "Tinkerers Score Bar").GetComponent<ScoreIndicator>();
+            m_navyScoreIndicator        = m_transform.FindChild(scoreBarPath + "Navy Score Bar").GetComponent<ScoreIndicator>();
+            m_piratesScoreIndicator     = m_transform.FindChild(scoreBarPath + "Pirates Score Bar").GetComponent<ScoreIndicator>();
+            m_vikingScoreIndicator      = m_transform.FindChild(scoreBarPath + "Viking Score Bar").GetComponent<ScoreIndicator>();
+            m_tinkerersScoreIndicator   = m_transform.FindChild(scoreBarPath + "Tinkerers Score Bar").GetComponent<ScoreIndicator>();
 
             // Get base scoring references
             for (int i = 0; i < m_baseTransforms.Count; ++i)
@@ -300,10 +300,10 @@ namespace ProjectStorms
             }
 
             // Set initial scores
-            m_navyScoreIndicator.scorePercent = 0.0f;
-            m_piratesScoreIndicator.scorePercent = 0.0f;
-            m_vikingScoreIndicator.scorePercent = 0.0f;
-            m_tinkerersScoreIndicator.scorePercent = 0.0f;
+            m_navyScoreIndicator.scorePercent       = 0.0f;
+            m_piratesScoreIndicator.scorePercent    = 0.0f;
+            m_vikingScoreIndicator.scorePercent     = 0.0f;
+            m_tinkerersScoreIndicator.scorePercent  = 0.0f;
         }
 
         void Start()
