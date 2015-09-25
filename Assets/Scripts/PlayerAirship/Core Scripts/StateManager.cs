@@ -120,7 +120,7 @@ namespace ProjectStorms
             DevHacks();
             //}
 
-            bool stallBtnDown = Input.GetButtonDown(gameObject.tag + "ClickLeft");
+            bool stallBtnDown = Input.GetButtonDown(gameObject.tag + "Select");
             if (m_currentPlayerState == EPlayerState.Control)
             {
                 if (stallBtnDown)

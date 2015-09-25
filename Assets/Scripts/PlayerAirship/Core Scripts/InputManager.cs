@@ -157,8 +157,8 @@ namespace ProjectStorms
             // Send variable data to individual scripts
             m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
             m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight);
-            m_fireshipControl.PlayerFireshipInputs(upDown, leftRight, clickLeft);
-            m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, select, clickRight);
+            m_fireshipControl.PlayerFireshipInputs(upDown, leftRight, select);
+            m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, clickLeft, clickRight);
             m_broadSideWeapons.PlayerInputs(bumperLeft, bumperRight);
         }
 

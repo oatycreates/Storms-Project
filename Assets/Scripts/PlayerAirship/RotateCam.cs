@@ -123,7 +123,7 @@ namespace ProjectStorms
 
         }
 
-        public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceDown, bool a_leftBumper, bool a_rightBumper, bool a_select, bool a_rightClick)
+        public void PlayerInputs(float a_camVertical, float a_camHorizontal, float a_triggerAxis, bool a_faceDown, bool a_leftBumper, bool a_rightBumper, bool a_leftClick, bool a_rightClick)
         {
             // Zero input if not enabled
             if (!this.isActiveAndEnabled)
@@ -133,7 +133,7 @@ namespace ProjectStorms
             else
             {
                 // Reset camera facing
-                if (a_select)
+                if (a_leftClick)
                 {
                     ResetCamRotation(true);
                 }
