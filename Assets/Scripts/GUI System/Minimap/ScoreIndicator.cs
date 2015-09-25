@@ -57,7 +57,7 @@ namespace ProjectStorms
 
         public void Awake()
         {
-            m_material = GetComponent<Renderer>().sharedMaterial;
+            m_material = GetComponent<Renderer>().material;
         }
 
 		void Start() 

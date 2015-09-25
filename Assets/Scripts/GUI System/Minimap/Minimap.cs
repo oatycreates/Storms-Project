@@ -17,6 +17,7 @@ namespace ProjectStorms
 {
     public class Minimap : MonoBehaviour
     {
+        // Prefabs
         [Header("General Prefabs")]
         [Tooltip("Prefab which will be the base for player and base icons")]
         public Image iconTemplatePrefab;
@@ -51,6 +52,7 @@ namespace ProjectStorms
         [Tooltip("Sprite to represent bases within the vikings faction")]
         public Sprite vikingsBaseSprite;
 
+        // Repair zones
         [Header("Repair Zones")]
         [Tooltip("Sprite to represent repair zones")]
         public Sprite repairZoneSprite;
@@ -68,10 +70,12 @@ namespace ProjectStorms
 
         // Score Indicator variables
         [Header("Scoring")]
-        [Tooltip("Uses texture offsetting for animation. 1 unit per second")]
+        [Tooltip("Uses texture offsetting for animation, in UV units per second")]
         public float scoreAnimationSpeed = 0.05f;
-        [Tooltip("Speed at which the score bars will increase in percentage, in scale units per second")]
-        public float scoreChangeSpeed = 0.5f;
+        [Tooltip("Time it will take for score bars to reach the current score. (Smaller values will speed this up)")]
+        public float scoreSmoothTime = 0.5f;
+        [Tooltip("Max speed at which the score bars will change")]
+        public float maxScoreChangeSpeed = 2.5f;
 
         // Transforms
         private List<Transform> m_playerTransforms;
@@ -89,9 +93,9 @@ namespace ProjectStorms
         private Image m_prisonshipImage;
 
         // Passenger spawner
-        private bool m_passengersSpawning = false;
-        private bool m_useNormalPrisonColour = false;
-        private float m_currentPrisonFlashTime = 0.0f;
+        private bool m_passengersSpawning       = false;
+        private bool m_useNormalPrisonColour    = false;
+        private float m_currentPrisonFlashTime  = 0.0f;
         private List<SpawnPassengers> m_passengerSpawners;
 
         // Score Indicators
@@ -103,6 +107,10 @@ namespace ProjectStorms
         private DetectFallingPassenger m_pirateBase;
         private DetectFallingPassenger m_tinkerersBase;
         private DetectFallingPassenger m_vikingBase;
+        private float m_navyScoreIndicatorVelo;
+        private float m_piratesScoreIndicatorVelo;
+        private float m_tinkerersScoreIndicatorVelo;
+        private float m_vikingScoreIndicatorVelo;
 
         // Cached variables
         private Canvas m_captureCanvas;
@@ -111,6 +119,7 @@ namespace ProjectStorms
         private GameObject m_gameObject;
 
         // TODO: Change display background depending on player count
+        // TODO: Support 1-4 players rather than the current 4 players
         // TODO: Flash player icons when they are dropping passengers
 
         /// <summary>
@@ -248,10 +257,16 @@ namespace ProjectStorms
             }
         }
 
+        /// <summary>
+        /// Gets references to the score bar scripts through this
+        /// game object's children (changing the hierachy in any way for the
+        /// minimap will break this code) and presets their score percentages
+        /// to zero
+        /// </summary>
         void SetupScoreIndicators()
         {
             // Get score indicator references
-            string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/";
+            string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/Four Factions/";
 
             m_navyScoreIndicator = m_transform.FindChild(scoreBarPath + "Navy Score Bar").GetComponent<ScoreIndicator>();
             m_piratesScoreIndicator = m_transform.FindChild(scoreBarPath + "Pirates Score Bar").GetComponent<ScoreIndicator>();
@@ -421,7 +436,9 @@ namespace ProjectStorms
         }
 
         /// <summary>
-        /// Updates all player icon's canvas position and rotation
+        /// Updates all player icon's canvas position and rotation,
+        /// as well as smoothly interpolates their scale as players
+        /// carry more or less passengers
         /// </summary>
         void UpdatePlayerIcons()
         {
@@ -510,25 +527,34 @@ namespace ProjectStorms
                 m_prisonshipTransform);
         }
 
+        /// <summary>
+        /// Updates animation speed of score indicators
+        /// for changes within the editor to be reflected, or other
+        /// gameplay elements affecting it. Also smoothly interpolates
+        /// score percentages as player score increases
+        /// </summary>
         void UpdateScoreIndicators()
         {
             // Update animation speed
-            m_navyScoreIndicator.animationSpeed = scoreAnimationSpeed;
-            m_piratesScoreIndicator.animationSpeed = scoreAnimationSpeed;
-            m_tinkerersScoreIndicator.animationSpeed = scoreAnimationSpeed;
-            m_vikingScoreIndicator.animationSpeed = scoreAnimationSpeed;
+            m_navyScoreIndicator.animationSpeed         = scoreAnimationSpeed;
+            m_piratesScoreIndicator.animationSpeed      = scoreAnimationSpeed;
+            m_tinkerersScoreIndicator.animationSpeed    = scoreAnimationSpeed;
+            m_vikingScoreIndicator.animationSpeed       = scoreAnimationSpeed;
 
             // Update percentages
-            float navyScorePercent = 1.0f - ((float)m_navyBase.peopleLeftToCatch / (float)m_navyBase.maxPeople);
-            float pirateScorePercent = 1.0f - ((float)m_pirateBase.peopleLeftToCatch / (float)m_pirateBase.maxPeople);
+            float navyScorePercent      = 1.0f - ((float)m_navyBase.peopleLeftToCatch / (float)m_navyBase.maxPeople);
+            float pirateScorePercent    = 1.0f - ((float)m_pirateBase.peopleLeftToCatch / (float)m_pirateBase.maxPeople);
             float tinkerersScorePercent = 1.0f - ((float)m_tinkerersBase.peopleLeftToCatch / (float)m_tinkerersBase.maxPeople);
-            float vikingScorePercent = 1.0f - ((float)m_vikingBase.peopleLeftToCatch / (float)m_vikingBase.maxPeople);
+            float vikingScorePercent    = 1.0f - ((float)m_vikingBase.peopleLeftToCatch / (float)m_vikingBase.maxPeople);
 
-            // Interpolate to new score percent
-            m_navyScoreIndicator.scorePercent = Mathf.Lerp(m_navyScoreIndicator.scorePercent, navyScorePercent, 0.5f * Time.deltaTime); //navyScorePercent;
-            m_piratesScoreIndicator.scorePercent = Mathf.Lerp(m_piratesScoreIndicator.scorePercent, pirateScorePercent, 0.5f * Time.deltaTime); //pirateScorePercent;
-            m_tinkerersScoreIndicator.scorePercent = Mathf.Lerp(m_tinkerersScoreIndicator.scorePercent, tinkerersScorePercent, 0.5f * Time.deltaTime); //tinkerersScorePercent;
-            m_vikingScoreIndicator.scorePercent = Mathf.Lerp(m_vikingScoreIndicator.scorePercent, vikingScorePercent, 0.5f * Time.deltaTime); //vikingScorePercent;
+            m_navyScoreIndicator.scorePercent =
+                Mathf.SmoothDamp(m_navyScoreIndicator.scorePercent, navyScorePercent, ref m_navyScoreIndicatorVelo, scoreSmoothTime, maxScoreChangeSpeed);
+            m_piratesScoreIndicator.scorePercent =
+                Mathf.SmoothDamp(m_piratesScoreIndicator.scorePercent, pirateScorePercent, ref m_piratesScoreIndicatorVelo, scoreSmoothTime, maxScoreChangeSpeed);
+            m_tinkerersScoreIndicator.scorePercent =
+                Mathf.SmoothDamp(m_tinkerersScoreIndicator.scorePercent, tinkerersScorePercent, ref m_tinkerersScoreIndicatorVelo, scoreSmoothTime, maxScoreChangeSpeed);
+            m_vikingScoreIndicator.scorePercent =
+                Mathf.SmoothDamp(m_vikingScoreIndicator.scorePercent, vikingScorePercent, ref m_vikingScoreIndicatorVelo, scoreSmoothTime, maxScoreChangeSpeed);
         }
     }
 }
