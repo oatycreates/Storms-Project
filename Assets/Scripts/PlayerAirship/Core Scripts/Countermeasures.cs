@@ -25,13 +25,13 @@ namespace ProjectStorms
 		public GameObject missilePrefab;
 		public int pooledMissiles = 3;
 		List<GameObject> missiles;
-		/*
+
 		public GameObject chaffPrefab;
 		public int pooledChaff = 3;
 		List<GameObject> chaff;
 
 		//Not ready for these yet
-
+		/*
 		public GameObject skyMinePrefab;
 		public int pooledSkyMines = 3;
 		List<GameObject> skyMines;
@@ -55,7 +55,7 @@ namespace ProjectStorms
 				missiles.Add(singleMissile);
 			}
 
-			/*
+
 			//Chaff
 			chaff = new List<GameObject> ();
 
@@ -66,6 +66,7 @@ namespace ProjectStorms
 				chaff.Add(singleChaff);
 			}
 
+			/*
 
 			//SkyMines
 			skyMines = new List<GameObject> ();
@@ -79,34 +80,30 @@ namespace ProjectStorms
 			*/
 		}
 
-		void Update () 
-		{
-		
-		}
 
 		public void DPad(bool a_down, bool a_up, bool a_left, bool a_right)
 		{
 			if (!buttonDown)
 			{
-				if (a_down)
+				if (a_left)
 				{
 					SpawnChaff ();
 					buttonDown = true;
 				}
 
-				if (a_up)
+				if (a_right)
 				{
 					SpawnMissile ();
 					buttonDown = true;
 				}
 
-				if (a_left)
+				if (a_up)
 				{
 					SpawnSkyMine ();
 					buttonDown = true;
 				}
 
-				if (a_right) 
+				if (a_down) 
 				{
 					print ("Nothing yet");
 					buttonDown = true;
@@ -144,7 +141,22 @@ namespace ProjectStorms
 
 		void SpawnChaff()
 		{
-			print ("Chaff");
+			Vector3 spawnOffset = new Vector3 (0, 5, -15);
+
+			//Loop and find the first non active Chaff
+			for (int i = 0; i < chaff.Count; i++)
+			{
+				if (!chaff[i].activeInHierarchy)
+				{
+					chaff[i].transform.position = m_trans.position + spawnOffset;
+
+					chaff[i].transform.rotation = Quaternion.identity;
+					chaff[i].SetActive(true);
+
+					//Dont forget t break loop
+					break;
+				}	
+			}
 		}
 
 		void SpawnSkyMine()

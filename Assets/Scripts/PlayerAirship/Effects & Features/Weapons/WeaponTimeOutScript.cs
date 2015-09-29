@@ -42,6 +42,7 @@ namespace ProjectStorms
 			{
 				rendererAlpha = attachedRenderer.material.color.a;
 			}
+
 		}
 
 		void  Update()
@@ -73,7 +74,7 @@ namespace ProjectStorms
 			}
 		}
 
-		void Disable()
+		void OnDisable()
 		{
 			if (attachedRenderer != null)
 			{
