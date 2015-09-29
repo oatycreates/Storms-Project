@@ -1633,6 +1633,7 @@ GameObject:
   - 114: {fileID: 11460276}
   - 114: {fileID: 11438696}
   - 114: {fileID: 11412004}
+  - 114: {fileID: 11440082}
   m_Layer: 0
   m_Name: Airship_Vikings
   m_TagString: Player4_
@@ -5285,6 +5286,21 @@ MonoBehaviour:
   cannonBallForce: 100
   shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
+--- !u!114 &11440082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 187888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f79490488ed5e49a4d532d45ff8d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 0}
+  pooledMissiles: 3
+  chaffPrefab: {fileID: 0}
+  pooledChaff: 3
 --- !u!114 &11440772
 MonoBehaviour:
   m_ObjectHideFlags: 1

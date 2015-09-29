@@ -19,23 +19,18 @@ namespace ProjectStorms
 
 		private Rigidbody myRigid;
 
-		private bool moving = false;
+		private bool attacking = false;
+		private bool startWait = false;
 
-		//public float jumpForce = 30;
 		public float movementVelocity = 1;
 		public float turnSpeed = 5;
-		//public float spiralSpeed = 10;
 
 		private GameObject targetProxy;
-		//public float retargetSpeed = 2;
 
-
+		//This is the key value
 		public float closeRangeThreshold = 20;
-		//Colour stuff
-		/*
-		private Color status = Color.white;
-		public GameObject childRenderer;
-		*/
+
+		public float secondsTillTimeout = 5;
 
 		void Awake()
 		{
@@ -45,63 +40,33 @@ namespace ProjectStorms
 			targetProxy.name = "MissileTarget";
 		}
 
-		void Start () 
-		{
-			if (target != null)
-			{
-				//Fire();
-				print("Target");
-			}
-			else
-			if (target == null)
-			{
-				target = GameObject.FindGameObjectWithTag("Player1_");
-				//Fire();
-				print("Found Target");
-			}
-		}
-
 		void Update () 
 		{
-			//if (Application.isEditor) //Quick Reset
-			//{
-				if (Input.GetKeyDown(KeyCode.Space))
-				{
-					Fire();
-				}
-			//}
-
-
 			//Raycast
 			Vector3 rayDirection = (targetProxy.transform.position - gameObject.transform.position).normalized;
 			float rayDistance = Vector3.Distance (targetProxy.transform.position, gameObject.transform.position);
 
-			if (moving)
+			if (attacking)
 			{
 				Debug.DrawRay (gameObject.transform.position, rayDirection * rayDistance, Color.red);
 			}
 			else
-			if (!moving)
+			if (!attacking)
 			{
 				Debug.DrawRay(gameObject.transform.position, rayDirection * rayDistance, Color.green);
 			}
 
-			/*
-			//Set colours
-			if (childRenderer != null)
+			if (!attacking && !startWait)
 			{
-				childRenderer.GetComponent<MeshRenderer>().material.color = status;
+				//When there is no more target, begin to time out the object
+				Invoke ("GoToSleep", secondsTillTimeout);
 			}
-			else
-			{
-				print("No child object attached.");
-			}*/
-
 		}
+
 
 		void FixedUpdate()
 		{
-			if (moving) 
+			if (attacking) 
 			{
 				myRigid.velocity = transform.forward * movementVelocity;
 
@@ -109,17 +74,16 @@ namespace ProjectStorms
 				Quaternion targetDirection = Quaternion.LookRotation (targetProxy.transform.position - myRigid.transform.position);
 					
 				myRigid.MoveRotation (Quaternion.RotateTowards (myRigid.transform.rotation, targetDirection, turnSpeed));
-
-
 			} 
 			else
-			if (!moving) 
+			if (!attacking) 
 			{
 				//Move forward in a straight line
 				myRigid.velocity = transform.forward * movementVelocity;
 			}
 
 			float distanceToProxyPoint = Vector3.Distance(targetProxy.transform.position, myRigid.transform.position);
+
 
 			if (distanceToProxyPoint > closeRangeThreshold)
 			{
@@ -130,46 +94,50 @@ namespace ProjectStorms
 			if (distanceToProxyPoint < closeRangeThreshold)
 			{
 				//Turn off Movement
-				moving = false;
-				print("Free");
+				attacking = false;
 			}
-
-			/*
-			//Set the colour
-			if (distanceToProxyPoint > closeRangeThreshold + 10)
-			{
-				//Colour - do this with rgb
-				//status = Color.white;
-				status = new Color(1,1,1, childRenderer.GetComponent<Renderer>().material.color.a);
-			}
-			else
-			if (distanceToProxyPoint < closeRangeThreshold + 10)
-			{
-				//Colour - custom red
-				//status = Color.red;
-				status = new Color(1,0,0, childRenderer.GetComponent<Renderer>().material.color.a);
-			}
-			*/
-		
 		}
 
-		void Fire()
+		void FindTarget()
 		{
 			//Reset angular velocity?
 			myRigid.angularVelocity = Vector3.zero;
 
-			print ("Fire");
-
-			if  (!moving)
-			{
-				moving = true;
-			}
+			//Only airships have the AirshipControlBehaviour scipt so look for them
+			target = GameObject.FindObjectOfType<AirshipControlBehaviour> ().gameObject;
+			print (target.gameObject.transform.root.gameObject.name);
 
 			//Give the missile a target
 			targetProxy.transform.position = target.transform.position;
+			
+			if  (!attacking)
+			{
+				attacking = true;
+			}
+
+			startWait = false;
 		}
 
 
+		void OnEnable()
+		{
+			//Invoke ("GoToSleep", secondsTillTimeout);
+			///FindTarget ();
+			/// //Don't try and find target straight away, because it'll just find the player that shot the missile.
+			Invoke ("FindTarget", 1);
+			//Fire ();
+			startWait = true;
+		}
+
+		void GoToSleep()
+		{
+			if (!attacking)
+			{
+				gameObject.SetActive (false);
+			}
+		}
+		
+		
 		/*
 		void Spiral()
 		{
@@ -183,5 +151,19 @@ namespace ProjectStorms
 			myRigid.MovePosition (pos + dir);
 		}*/
 
+		/*
+		void Fire()
+		{
+			//Reset angular velocity?
+			//myRigid.angularVelocity = Vector3.zero;
+
+			if  (!attacking)
+			{
+				attacking = true;
+			}
+
+			//Give the missile a target
+			//targetProxy.transform.position = target.transform.position;
+		}*/
 	}
 }

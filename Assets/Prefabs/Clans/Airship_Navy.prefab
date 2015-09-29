@@ -1735,6 +1735,7 @@ GameObject:
   - 114: {fileID: 11431612}
   - 114: {fileID: 11440284}
   - 114: {fileID: 11458632}
+  - 114: {fileID: 11423164}
   m_Layer: 0
   m_Name: Airship_Navy
   m_TagString: Player2_
@@ -5133,6 +5134,21 @@ MonoBehaviour:
   cannonBallForce: 100
   shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
+--- !u!114 &11423164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f79490488ed5e49a4d532d45ff8d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 0}
+  pooledMissiles: 3
+  chaffPrefab: {fileID: 0}
+  pooledChaff: 3
 --- !u!114 &11428262
 MonoBehaviour:
   m_ObjectHideFlags: 1
