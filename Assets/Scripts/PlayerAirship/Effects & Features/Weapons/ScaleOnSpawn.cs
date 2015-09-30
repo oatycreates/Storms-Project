@@ -19,6 +19,7 @@ namespace ProjectStorms
 	{
 		private float scaleFactor = 1;
 		public float maxScaleSize = 1;
+		public bool useZaxis = false;
 		
 		void OnEnable () 
 		{
@@ -34,8 +35,16 @@ namespace ProjectStorms
 			{
 				scaleFactor += 1 * Time.deltaTime;
 			}
-			
-			gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, 1);
+
+			if (!useZaxis)
+			{
+				gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, 1);
+			}
+			else
+			if (useZaxis)
+			{
+				gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, scaleFactor);
+			}
 		}
 	}
 }

@@ -22,6 +22,9 @@ namespace ProjectStorms
 		private Transform m_trans = null;
 		private bool buttonDown = false;
 
+		//CannonPort
+		private GameObject port;
+
 		public GameObject missilePrefab;
 		public int pooledMissiles = 3;
 		List<GameObject> missiles;
@@ -30,12 +33,10 @@ namespace ProjectStorms
 		public int pooledChaff = 3;
 		List<GameObject> chaff;
 
-		//Not ready for these yet
-		/*
 		public GameObject skyMinePrefab;
 		public int pooledSkyMines = 3;
 		List<GameObject> skyMines;
-		*/
+
 
 		void Awake()
 		{
@@ -44,6 +45,10 @@ namespace ProjectStorms
 
 		void Start() 
 		{
+			//Create a gameobject as a spawn point
+			port = new GameObject("CannonPort")as GameObject;
+			port.transform.position = new Vector3 (m_trans.position.x, m_trans.position.y, m_trans.position.z+20);
+			port.transform.parent = gameObject.transform;
 
 			//Missiles
 			missiles = new List<GameObject> ();
@@ -66,7 +71,6 @@ namespace ProjectStorms
 				chaff.Add(singleChaff);
 			}
 
-			/*
 
 			//SkyMines
 			skyMines = new List<GameObject> ();
@@ -77,7 +81,6 @@ namespace ProjectStorms
 				singleMine.SetActive(false);
 				skyMines.Add(singleMine);
 			}
-			*/
 		}
 
 
@@ -120,18 +123,15 @@ namespace ProjectStorms
 
 		void SpawnMissile()
 		{
-			Vector3 spawnOffset = new Vector3 (8, 10, 0);
-
 			//Loop and find the first non-active missile
 			for (int i = 0; i < missiles.Count; i++)
 			{
 				if (!missiles[i].activeInHierarchy)
 				{
-					missiles[i].transform.position = m_trans.position + spawnOffset;
-					//missiles[i].transform.position = new Vector3(0,0,0);
-					missiles[i].transform.rotation = Quaternion.identity;
+					//missiles[i].transform.position = spawnOffset;
+					missiles[i].transform.position = port.transform.position;
+					missiles[i].transform.rotation = m_trans.rotation;
 					missiles[i].SetActive(true);
-
 
 					//Don't forget to break loop
 					break;
@@ -141,16 +141,13 @@ namespace ProjectStorms
 
 		void SpawnChaff()
 		{
-			Vector3 spawnOffset = new Vector3 (0, 5, -15);
-
 			//Loop and find the first non active Chaff
 			for (int i = 0; i < chaff.Count; i++)
 			{
 				if (!chaff[i].activeInHierarchy)
 				{
-					chaff[i].transform.position = m_trans.position + spawnOffset;
-
-					chaff[i].transform.rotation = Quaternion.identity;
+					chaff[i].transform.position = m_trans.position;
+					chaff[i].transform.rotation = m_trans.rotation;
 					chaff[i].SetActive(true);
 
 					//Dont forget t break loop
@@ -161,7 +158,17 @@ namespace ProjectStorms
 
 		void SpawnSkyMine()
 		{
-			print ("SkyMine");
+			for (int i = 0; i < skyMines.Count; i++)
+			{
+				if (!skyMines[i].activeInHierarchy)
+				{
+					skyMines[i].transform.position = m_trans.position;
+					skyMines[i].transform.rotation = m_trans.rotation;
+					skyMines[i].SetActive(true);
+
+					break;
+				}
+			}
 		}
 
 	}

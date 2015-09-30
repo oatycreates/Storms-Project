@@ -30,7 +30,11 @@ namespace ProjectStorms
 		//This is the key value
 		public float closeRangeThreshold = 20;
 
-		public float secondsTillTimeout = 5;
+		//Trail renderer
+		private TrailRenderer childTrail;
+
+		public float missileLifetime = 6;
+
 
 		void Awake()
 		{
@@ -38,6 +42,8 @@ namespace ProjectStorms
 
 			targetProxy = new GameObject();
 			targetProxy.name = "MissileTarget";
+
+			childTrail = gameObject.GetComponentInChildren<TrailRenderer> ();
 		}
 
 		void Update () 
@@ -56,10 +62,12 @@ namespace ProjectStorms
 				Debug.DrawRay(gameObject.transform.position, rayDirection * rayDistance, Color.green);
 			}
 
-			if (!attacking && !startWait)
+
+			//Condition to disable the object
+			if (!startWait)
 			{
-				//When there is no more target, begin to time out the object
-				Invoke ("GoToSleep", secondsTillTimeout);
+				//GoToSleep();
+				Invoke("GoToSleep", missileLifetime);
 			}
 		}
 
@@ -126,6 +134,8 @@ namespace ProjectStorms
 			/// //Don't try and find target straight away, because it'll just find the player that shot the missile.
 			Invoke ("FindTarget", 1);
 			//Fire ();
+			//Fix the trail time
+			childTrail.time = 1;
 			startWait = true;
 		}
 
@@ -133,6 +143,8 @@ namespace ProjectStorms
 		{
 			if (!attacking)
 			{
+				//Fix the trail time
+				childTrail.time = -1;
 				gameObject.SetActive (false);
 			}
 		}
