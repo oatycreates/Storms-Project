@@ -1975,7 +1975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &197894
 GameObject:
   m_ObjectHideFlags: 1
@@ -2654,8 +2654,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158946}
-  m_LocalRotation: {x: 0, y: .382683456, z: 0, w: .923879504}
-  m_LocalPosition: {x: -1550, y: 50, z: -1550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 409020}
@@ -5476,10 +5476,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f79490488ed5e49a4d532d45ff8d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missilePrefab: {fileID: 0}
-  pooledMissiles: 3
-  chaffPrefab: {fileID: 0}
+  missilePrefab: {fileID: 133982, guid: a4a46434d1bb8284e982c7d11e4374f0, type: 2}
+  pooledMissiles: 2
+  chaffPrefab: {fileID: 176804, guid: 51c1189e727dd794a92747d696c77e62, type: 2}
   pooledChaff: 3
+  skyMinePrefab: {fileID: 107992, guid: a6ccf0fb192ba2144857dd8d073db124, type: 2}
+  pooledSkyMines: 3
 --- !u!114 &11401736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6363,8 +6365,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -.000122070312, y: 9.58499908, z: 1.01391602}
-    m_Extent: {x: 6.29214525, y: 3.3842659, z: 6.29214525}
+    m_Center: {x: 0, y: 9.58499813, z: 1.01382446}
+    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.6091156}
   m_DirtyAABB: 0
 --- !u!183 &18366390
 Cloth:

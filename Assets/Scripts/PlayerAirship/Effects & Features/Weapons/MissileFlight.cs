@@ -113,7 +113,7 @@ namespace ProjectStorms
 
 			//Only airships have the AirshipControlBehaviour scipt so look for them
 			target = GameObject.FindObjectOfType<AirshipControlBehaviour> ().gameObject;
-			print (target.gameObject.transform.root.gameObject.name);
+			//print (target.gameObject.transform.root.gameObject.name);
 
 			//Give the missile a target
 			targetProxy.transform.position = target.transform.position;
