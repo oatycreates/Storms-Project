@@ -19,7 +19,7 @@ namespace ProjectStorms
 	{
 
 		private float scale = 0.1f;
-		public float scaleSpeed = 300.0f;
+		private float scaleSpeed = 50.0f;
 		[HideInInspector]
 		public float maxSize = 50;
 		
@@ -33,7 +33,8 @@ namespace ProjectStorms
 			if (scale > maxSize)
 			{
 				//scale = 0.1f;
-				Invoke("TimeOut", 1);
+				//Timeout just after the explosion reaches its maximum radius.
+				Invoke("TimeOut", 0.1f);
 			}
 			
 			gameObject.transform.localScale = new Vector3 (scale, scale, scale);
@@ -41,7 +42,7 @@ namespace ProjectStorms
 		
 		void OnTriggerEnter(Collider other)
 		{
-			other.attachedRigidbody.AddExplosionForce (100, gameObject.transform.position, 0, 100, ForceMode.Impulse);
+			other.attachedRigidbody.AddExplosionForce (25, gameObject.transform.position, 0, 0, ForceMode.Impulse);
 		}
 
 		void OnEnable()
@@ -52,6 +53,7 @@ namespace ProjectStorms
 		void TimeOut()
 		{
 			gameObject.SetActive (false);
+			//Destroy (gameObject);
 		}
 	}
 }

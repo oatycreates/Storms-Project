@@ -23,7 +23,9 @@ namespace ProjectStorms
 		private bool buttonDown = false;
 
 		//CannonPort
+		/*
 		private GameObject port;
+		*/
 
 		public GameObject missilePrefab;
 		public int pooledMissiles = 3;
@@ -45,10 +47,12 @@ namespace ProjectStorms
 
 		void Start() 
 		{
-			//Create a gameobject as a spawn point
+			//Create a gameobject as a spawn point?
+			/*
 			port = new GameObject("CannonPort")as GameObject;
 			port.transform.position = new Vector3 (m_trans.position.x, m_trans.position.y, m_trans.position.z+20);
 			port.transform.parent = gameObject.transform;
+			*/
 
 			//Missiles
 			missiles = new List<GameObject> ();
@@ -123,13 +127,19 @@ namespace ProjectStorms
 
 		void SpawnMissile()
 		{
+			//Local offset
+			Vector3 localOffset = new Vector3 (0, 0, 20);
+			Vector3 worldOffest = m_trans.rotation * localOffset;
+			Vector3 spawnPos = m_trans.position + worldOffest;
+
 			//Loop and find the first non-active missile
 			for (int i = 0; i < missiles.Count; i++)
 			{
 				if (!missiles[i].activeInHierarchy)
 				{
 					//missiles[i].transform.position = spawnOffset;
-					missiles[i].transform.position = port.transform.position;
+					//missiles[i].transform.position = port.transform.position;
+					missiles[i].transform.position = spawnPos;
 					missiles[i].transform.rotation = m_trans.rotation;
 					missiles[i].SetActive(true);
 
@@ -141,12 +151,17 @@ namespace ProjectStorms
 
 		void SpawnChaff()
 		{
+			//Local offset
+			Vector3 localOffset = new Vector3 (0, 5, -18);
+			Vector3 worldOffest = m_trans.rotation * localOffset;
+			Vector3 spawnPos = m_trans.position + worldOffest;
+
 			//Loop and find the first non active Chaff
 			for (int i = 0; i < chaff.Count; i++)
 			{
 				if (!chaff[i].activeInHierarchy)
 				{
-					chaff[i].transform.position = m_trans.position;
+					chaff[i].transform.position = spawnPos;
 					chaff[i].transform.rotation = m_trans.rotation;
 					chaff[i].SetActive(true);
 
@@ -158,11 +173,17 @@ namespace ProjectStorms
 
 		void SpawnSkyMine()
 		{
+			//Local offset
+			Vector3 localOffset = new Vector3 (8, 10, -25);
+			Vector3 worldOffest = m_trans.rotation * localOffset;
+			Vector3 spawnPos = m_trans.position + worldOffest;
+
 			for (int i = 0; i < skyMines.Count; i++)
 			{
 				if (!skyMines[i].activeInHierarchy)
 				{
-					skyMines[i].transform.position = m_trans.position;
+					//skyMines[i].transform.position = m_trans.position;
+					skyMines[i].transform.position = spawnPos;
 					skyMines[i].transform.rotation = m_trans.rotation;
 					skyMines[i].SetActive(true);
 
