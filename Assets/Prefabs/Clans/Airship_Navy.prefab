@@ -1975,8 +1975,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194162}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -.707106829, z: 0, w: .707106709}
+  m_LocalPosition: {x: 200, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 496100}
@@ -5151,6 +5151,8 @@ MonoBehaviour:
   pooledChaff: 3
   skyMinePrefab: {fileID: 107992, guid: a6ccf0fb192ba2144857dd8d073db124, type: 2}
   pooledSkyMines: 3
+  pinwheelPrefab: {fileID: 180144, guid: f5400e541fe588743b9fd758804f8513, type: 2}
+  pooledPinwheels: 2
 --- !u!114 &11428262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5780,8 +5782,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58499813, z: 1.01382661}
-    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.60911703}
+    m_Center: {x: -1.29655746e-07, y: 9.58499718, z: 1.01382446}
+    m_Extent: {x: 4.68305969, y: 3.38426399, z: 1.60911608}
   m_DirtyAABB: 0
 --- !u!183 &18325980
 Cloth:

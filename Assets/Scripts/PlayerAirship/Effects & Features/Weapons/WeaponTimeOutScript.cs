@@ -20,10 +20,14 @@ namespace ProjectStorms
 		private float internalTimer = 1;
 		public float secondsBeforeTimeout = 60.0f;
 
+		//This shit doesn't seem to be working.
+		/*
 		public Renderer attachedRenderer;
 		private float rendererAlpha = 1;
 		private float startAlphaValue;
+		*/
 
+		/*
 		void Awake()
 		{
 			//Keep a reference of the alpha value
@@ -31,34 +35,45 @@ namespace ProjectStorms
 			{
 				startAlphaValue = attachedRenderer.material.color.a;
 			}
-		}
+		}*/
 
 		void OnEnable()
 		{
 			internalTimer = secondsBeforeTimeout;
 
+			/*
 			//Get the object's materaial alpha
 			if (attachedRenderer != null)
 			{
 				rendererAlpha = attachedRenderer.material.color.a;
 			}
-
+			*/
 		}
 
 		void  Update()
 		{
+			/*
 			if (internalTimer > 0) 
 			{
 				internalTimer -= Time.deltaTime;
 			} 
-			else
+			else*/
+			internalTimer -= Time.deltaTime;
+
+			//print (internalTimer);
+
 			if (internalTimer <= 0) 
 			{
+				gameObject.SetActive(false);
+
+				/*
 				//Go to sleep on timeout if there is no renderer
 				if (attachedRenderer == null) {
 					gameObject.SetActive (false);
 				}
+				*/
 			
+				/*
 				//Otherwise, fade out the colour, THEN go to sleep
 				if (attachedRenderer != null) 
 				{
@@ -70,10 +85,11 @@ namespace ProjectStorms
 					{
 						gameObject.SetActive(false);
 					}
-				}
+				}*/
 			}
 		}
 
+		/*
 		void OnDisable()
 		{
 			if (attachedRenderer != null)
@@ -83,6 +99,6 @@ namespace ProjectStorms
 			}
 
 			//print (gameObject.name + " has gone to sleep.");
-		}
+		}*/
 	}
 }

@@ -39,6 +39,9 @@ namespace ProjectStorms
 		public int pooledSkyMines = 3;
 		List<GameObject> skyMines;
 
+		public GameObject pinwheelPrefab;
+		public int pooledPinwheels = 2;
+		List<GameObject> pinwheels;
 
 		void Awake()
 		{
@@ -47,13 +50,6 @@ namespace ProjectStorms
 
 		void Start() 
 		{
-			//Create a gameobject as a spawn point?
-			/*
-			port = new GameObject("CannonPort")as GameObject;
-			port.transform.position = new Vector3 (m_trans.position.x, m_trans.position.y, m_trans.position.z+20);
-			port.transform.parent = gameObject.transform;
-			*/
-
 			//Missiles
 			missiles = new List<GameObject> ();
 
@@ -85,6 +81,16 @@ namespace ProjectStorms
 				singleMine.SetActive(false);
 				skyMines.Add(singleMine);
 			}
+
+			//Pinwheels
+			pinwheels = new List<GameObject> ();
+
+			for (int i = 0; i < pooledPinwheels; i++)
+			{
+				GameObject singlePinwheel = Instantiate(pinwheelPrefab, m_trans.position, Quaternion.identity)as GameObject;
+				singlePinwheel.SetActive(false);
+				pinwheels.Add(singlePinwheel);
+			}
 		}
 
 
@@ -92,6 +98,7 @@ namespace ProjectStorms
 		{
 			if (!buttonDown)
 			{
+				//Dunno why these buttons don't map exactly to the right axis... ? Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
 				if (a_left)
 				{
 					SpawnChaff ();
@@ -112,7 +119,7 @@ namespace ProjectStorms
 
 				if (a_down) 
 				{
-					print ("Nothing yet");
+					SpawnPinwheel();
 					buttonDown = true;
 				}
 			}
@@ -187,6 +194,26 @@ namespace ProjectStorms
 					skyMines[i].transform.rotation = m_trans.rotation;
 					skyMines[i].SetActive(true);
 
+					break;
+				}
+			}
+		}
+
+		void SpawnPinwheel()
+		{
+			//Spawn offset
+			Vector3 localOffset = new Vector3 (0, 0, 0);
+			Vector3 worldOffset = m_trans.rotation * localOffset;
+			Vector3 spawnPos = m_trans.position + worldOffset;
+
+			for (int i = 0; i < pinwheels.Count; i++)
+			{
+				if (!pinwheels[i].activeInHierarchy)
+				{
+					pinwheels[i].transform.position = spawnPos;
+					pinwheels[i].transform.rotation = m_trans.rotation;
+					pinwheels[i].SetActive(true);
+					//break the loop
 					break;
 				}
 			}
