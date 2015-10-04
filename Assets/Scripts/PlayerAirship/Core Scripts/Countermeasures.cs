@@ -50,45 +50,51 @@ namespace ProjectStorms
 
 		void Start() 
 		{
-			//Missiles
+            string myTag = gameObject.tag;
+
+			// Missiles
 			missiles = new List<GameObject> ();
 
 			for (int i = 0; i < pooledMissiles; i++)
 			{
 				GameObject singleMissile = Instantiate(missilePrefab, m_trans.position, Quaternion.identity)as GameObject;
 				singleMissile.SetActive(false);
+                singleMissile.tag = myTag;
 				missiles.Add(singleMissile);
 			}
 
 
-			//Chaff
+			// Chaff
 			chaff = new List<GameObject> ();
 
 			for (int i = 0; i < pooledChaff; i++)
 			{
 				GameObject singleChaff = Instantiate(chaffPrefab, m_trans.position, Quaternion.identity)as GameObject;
-				singleChaff.SetActive(false);
+                singleChaff.SetActive(false);
+                singleChaff.tag = myTag;
 				chaff.Add(singleChaff);
 			}
 
 
-			//SkyMines
+			// SkyMines
 			skyMines = new List<GameObject> ();
 
 			for (int i = 0; i < pooledSkyMines; i++)
 			{
 				GameObject singleMine = Instantiate(skyMinePrefab, m_trans.position, Quaternion.identity)as GameObject;
-				singleMine.SetActive(false);
+                singleMine.SetActive(false);
+                singleMine.tag = myTag;
 				skyMines.Add(singleMine);
 			}
 
-			//Pinwheels
+			// Pinwheels
 			pinwheels = new List<GameObject> ();
 
 			for (int i = 0; i < pooledPinwheels; i++)
 			{
 				GameObject singlePinwheel = Instantiate(pinwheelPrefab, m_trans.position, Quaternion.identity)as GameObject;
-				singlePinwheel.SetActive(false);
+                singlePinwheel.SetActive(false);
+                singlePinwheel.tag = myTag;
 				pinwheels.Add(singlePinwheel);
 			}
 		}
