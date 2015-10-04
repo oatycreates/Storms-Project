@@ -99,6 +99,11 @@ namespace ProjectStorms
             }
 		}
 
+        public Transform GetTarget()
+        {
+            return m_currFrontTarget;
+        }
+
         private void FindLockTarget()
         {
             // Find all players in the scene
@@ -111,7 +116,7 @@ namespace ProjectStorms
             Vector3 tempPos = Vector3.zero, offsetVec = Vector3.zero, offsetVecNorm = Vector3.zero;
             foreach (GameObject obj in playerObjs)
             {
-                if (obj != null && obj.name.CompareTo(playerName) == 0 && !obj.CompareTag(playerTag))
+                if (obj != null)
                 {
                     tempTrans = obj.transform;
                     tempPos = tempTrans.position;
@@ -137,12 +142,16 @@ namespace ProjectStorms
                         }
                     }
                 }
+                else
+                {
+                    Debug.Log("Null player object found on the TargetLock script of " + playerName + ", make sure all are set as needed!");
+                }
             }
 
             // Assign the target
             if (closestTar != null)
             {
-                Debug.Log("Targetted! " + playerTag + ", tar: " + closestTar.tag);
+                Debug.Log("Targeted! " + playerTag + ", tar: " + closestTar.tag);
                 m_currFrontTarget = closestTar;
             }
             else

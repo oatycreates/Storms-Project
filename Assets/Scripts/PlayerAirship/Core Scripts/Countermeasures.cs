@@ -43,9 +43,15 @@ namespace ProjectStorms
 		public int pooledPinwheels = 2;
 		List<GameObject> pinwheels;
 
+        /// <summary>
+        /// For the homing missile's target.
+        /// </summary>
+        private TargetLock m_tarLock = null;
+
 		void Awake()
 		{
 			m_trans = gameObject.transform;
+            m_tarLock = gameObject.GetComponent<TargetLock>();
 		}
 
 		void Start() 
@@ -155,6 +161,11 @@ namespace ProjectStorms
 					missiles[i].transform.position = spawnPos;
 					missiles[i].transform.rotation = m_trans.rotation;
 					missiles[i].SetActive(true);
+                    if (m_tarLock != null)
+                    {
+                        MissileFlight missileScript = missiles[i].GetComponent<MissileFlight>();
+                        missileScript.SetTarget(m_tarLock.GetTarget());
+                    }
 
 					//Don't forget to break loop
 					break;

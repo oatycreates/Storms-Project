@@ -16,9 +16,10 @@ namespace ProjectStorms
 	[RequireComponent(typeof(Rigidbody))]
 	public class MissileFlight : MonoBehaviour 
 	{
-		public GameObject target;
+		private Transform m_target = null;
 
-		private Rigidbody myRigid;
+		private Rigidbody m_myRigid = null;
+        private Transform m_trans = null;
 
 		private bool attacking = false;
 		private bool startWait = false;
@@ -26,7 +27,7 @@ namespace ProjectStorms
 		public float movementVelocity = 1;
 		public float turnSpeed = 5;
 
-		private GameObject targetProxy;
+		private Transform m_targetProxy;
 
 		//This is the key value
 		public float closeRangeThreshold = 20;
@@ -45,10 +46,13 @@ namespace ProjectStorms
 
 		void Awake()
 		{
-			myRigid = gameObject.GetComponent<Rigidbody> ();
+			m_myRigid = gameObject.GetComponent<Rigidbody> ();
+            m_trans = transform;
 
-			targetProxy = new GameObject();
-			targetProxy.name = "MissileTarget";
+            GameObject tarProxyObj = new GameObject();
+            tarProxyObj.name = "MissileTarget";
+            m_targetProxy = tarProxyObj.transform;
+            // Just leverage the cannonball holder for now
 
 			childTrail = gameObject.GetComponentInChildren<TrailRenderer> ();
 			
@@ -60,6 +64,11 @@ namespace ProjectStorms
 			m_Audio = gameObject.GetComponent<AudioSource>();
 		}
 
+        void Start()
+        {
+            m_targetProxy.parent = GameObject.FindGameObjectWithTag("BallHolder").transform;
+        }
+
 		void Update () 
 		{
 			//Clamp pitch 
@@ -67,56 +76,57 @@ namespace ProjectStorms
 			m_Audio.pitch = customPitch;
 		
 		
-			//Raycast
-			Vector3 rayDirection = (targetProxy.transform.position - gameObject.transform.position).normalized;
-			float rayDistance = Vector3.Distance (targetProxy.transform.position, gameObject.transform.position);
+			/*//Raycast
+			Vector3 rayDirection = (m_targetProxy.position - m_trans.position).normalized;
+            float rayDistance = Vector3.Distance(m_targetProxy.position, m_trans.position);
 
 			if (attacking)
 			{
-				Debug.DrawRay (gameObject.transform.position, rayDirection * rayDistance, Color.red);
+                Debug.DrawRay(m_trans.position, rayDirection * rayDistance, Color.red);
 			}
 			else
 			if (!attacking)
 			{
-				Debug.DrawRay(gameObject.transform.position, rayDirection * rayDistance, Color.green);
-			}
-
-
-			//Condition to disable the object
-			if (!startWait)
-			{
-				//GoToSleep();
-				Invoke("GoToSleep", missileLifetime);
-			}
+                Debug.DrawRay(m_trans.position, rayDirection * rayDistance, Color.green);
+			}*/
 			
 		}
 
 
 		void FixedUpdate()
-		{
+        {
+            //Prevent angular velocity
+            m_myRigid.angularVelocity = Vector3.zero;
+
+            // Don't chase an invalid target
+            if (m_target == null)
+            {
+                attacking = false;
+            }
+
 			if (attacking) 
 			{
-				myRigid.velocity = transform.forward * movementVelocity;
+                m_myRigid.velocity = m_trans.forward * movementVelocity;
 
 				//Try it with targetProxy
-				Quaternion targetDirection = Quaternion.LookRotation (targetProxy.transform.position - myRigid.transform.position);
+				Quaternion targetDirection = Quaternion.LookRotation (m_targetProxy.position - m_trans.position);
 					
-				myRigid.MoveRotation (Quaternion.RotateTowards (myRigid.transform.rotation, targetDirection, turnSpeed));
+				m_myRigid.MoveRotation (Quaternion.RotateTowards (m_trans.rotation, targetDirection, turnSpeed));
 			} 
 			else
 			if (!attacking) 
 			{
 				//Move forward in a straight line
-				myRigid.velocity = transform.forward * movementVelocity;
+                m_myRigid.velocity = m_trans.forward * movementVelocity;
 			}
 
-			float distanceToProxyPoint = Vector3.Distance(targetProxy.transform.position, myRigid.transform.position);
+			float distanceToProxyPoint = Vector3.Distance(m_targetProxy.position, m_trans.position);
 
 
-			if (distanceToProxyPoint > closeRangeThreshold)
+            if (distanceToProxyPoint > closeRangeThreshold && m_target != null)
 			{
 				//only update the target pos if target is more than 10 meters away from missile
-				targetProxy.transform.position = target.transform.position;
+				m_targetProxy.position = m_target.position;
 			}
 			else
 			if (distanceToProxyPoint < closeRangeThreshold)
@@ -143,15 +153,12 @@ namespace ProjectStorms
 
 		void FindTarget()
 		{
-			//Reset angular velocity?
-			myRigid.angularVelocity = Vector3.zero;
-
-			//Only airships have the AirshipControlBehaviour scipt so look for them
-			target = GameObject.FindObjectOfType<AirshipControlBehaviour> ().gameObject;
+			//Only airships have the AirshipControlBehaviour script so look for them
+			m_target = GameObject.FindObjectOfType<AirshipControlBehaviour>().transform;
 			//print (target.gameObject.transform.root.gameObject.name);
 
 			//Give the missile a target
-			targetProxy.transform.position = target.transform.position;
+            m_targetProxy.position = m_target.position;
 			
 			if  (!attacking)
 			{
@@ -167,7 +174,7 @@ namespace ProjectStorms
 			//Invoke ("GoToSleep", secondsTillTimeout);
 			///FindTarget ();
 			/// //Don't try and find target straight away, because it'll just find the player that shot the missile.
-			Invoke ("FindTarget", 1);
+			//Invoke ("FindTarget", 1);
 			//Fire ();
 			//Fix the trail time
 			childTrail.time = 1;
@@ -177,11 +184,29 @@ namespace ProjectStorms
 			//m_Audio.pitch = 0.75f;
 			//use custom pitch instead
 			customPitch = 0.75f;
-			m_Audio.Play();
+            m_Audio.Play();
+
+            Invoke("GoToSleep", missileLifetime);
 		}
+
+        public void SetTarget(Transform a_trans)
+        {
+            if (a_trans != null)
+            {
+                m_target = a_trans;
+
+                startWait = false;
+                attacking = true;
+
+                //Give the missile a target
+                m_targetProxy.position = m_target.position;
+            }
+        }
 
 		void GoToSleep()
 		{
+            m_target = null;
+
 			if (!attacking)
 			{
 				//Fix the trail time
@@ -218,5 +243,5 @@ namespace ProjectStorms
 			//Give the missile a target
 			//targetProxy.transform.position = target.transform.position;
 		}*/
-	}
+    }
 }
