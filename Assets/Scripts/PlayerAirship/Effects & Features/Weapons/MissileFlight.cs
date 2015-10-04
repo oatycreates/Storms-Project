@@ -41,17 +41,31 @@ namespace ProjectStorms
 		private AudioSource m_Audio;
 		public AudioClip beepSFX;
 		public AudioClip launchSFX;
-		private float customPitch = 0.75f;
+        private float customPitch = 0.75f;
 
+        private static GameObject ms_powerupHolder = null;
 
 		void Awake()
 		{
 			m_myRigid = gameObject.GetComponent<Rigidbody> ();
             m_trans = transform;
 
+            // Find the powerup holder object
+            if (ms_powerupHolder == null)
+            {
+                ms_powerupHolder = GameObject.FindGameObjectWithTag("PowerupHolder");
+                if (ms_powerupHolder == null)
+                {
+                    ms_powerupHolder = new GameObject();
+                    ms_powerupHolder.name = "PowerupHolder";
+                    ms_powerupHolder.tag = "PowerupHolder";
+                }
+            }
+
             GameObject tarProxyObj = new GameObject();
             tarProxyObj.name = "MissileTarget";
             m_targetProxy = tarProxyObj.transform;
+            m_targetProxy.parent = ms_powerupHolder.transform;
             // Just leverage the cannonball holder for now
 
 			childTrail = gameObject.GetComponentInChildren<TrailRenderer> ();
@@ -63,11 +77,6 @@ namespace ProjectStorms
 			
 			m_Audio = gameObject.GetComponent<AudioSource>();
 		}
-
-        void Start()
-        {
-            m_targetProxy.parent = GameObject.FindGameObjectWithTag("BallHolder").transform;
-        }
 
 		void Update () 
 		{

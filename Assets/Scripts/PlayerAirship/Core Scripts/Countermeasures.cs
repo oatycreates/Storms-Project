@@ -48,10 +48,24 @@ namespace ProjectStorms
         /// </summary>
         private TargetLock m_tarLock = null;
 
+        private static GameObject ms_powerupHolder = null;
+
 		void Awake()
 		{
 			m_trans = gameObject.transform;
             m_tarLock = gameObject.GetComponent<TargetLock>();
+
+            // Find the powerup holder object
+            if (ms_powerupHolder == null)
+            {
+                ms_powerupHolder = GameObject.FindGameObjectWithTag("PowerupHolder");
+                if (ms_powerupHolder == null)
+                {
+                    ms_powerupHolder = new GameObject();
+                    ms_powerupHolder.name = "PowerupHolder";
+                    ms_powerupHolder.tag = "PowerupHolder";
+                }
+            }
 		}
 
 		void Start() 
@@ -66,6 +80,7 @@ namespace ProjectStorms
 				GameObject singleMissile = Instantiate(missilePrefab, m_trans.position, Quaternion.identity)as GameObject;
 				singleMissile.SetActive(false);
                 singleMissile.tag = myTag;
+                singleMissile.transform.parent = ms_powerupHolder.transform;
 				missiles.Add(singleMissile);
 			}
 
@@ -78,6 +93,7 @@ namespace ProjectStorms
 				GameObject singleChaff = Instantiate(chaffPrefab, m_trans.position, Quaternion.identity)as GameObject;
                 singleChaff.SetActive(false);
                 singleChaff.tag = myTag;
+                singleChaff.transform.parent = ms_powerupHolder.transform;
 				chaff.Add(singleChaff);
 			}
 
@@ -90,6 +106,7 @@ namespace ProjectStorms
 				GameObject singleMine = Instantiate(skyMinePrefab, m_trans.position, Quaternion.identity)as GameObject;
                 singleMine.SetActive(false);
                 singleMine.tag = myTag;
+                singleMine.transform.parent = ms_powerupHolder.transform;
 				skyMines.Add(singleMine);
 			}
 
@@ -101,6 +118,7 @@ namespace ProjectStorms
 				GameObject singlePinwheel = Instantiate(pinwheelPrefab, m_trans.position, Quaternion.identity)as GameObject;
                 singlePinwheel.SetActive(false);
                 singlePinwheel.tag = myTag;
+                singlePinwheel.transform.parent = ms_powerupHolder.transform;
 				pinwheels.Add(singlePinwheel);
 			}
 		}
