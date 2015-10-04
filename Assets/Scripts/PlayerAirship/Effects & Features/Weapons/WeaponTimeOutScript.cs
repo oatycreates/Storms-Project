@@ -20,85 +20,53 @@ namespace ProjectStorms
 		private float internalTimer = 1;
 		public float secondsBeforeTimeout = 60.0f;
 
-		//This shit doesn't seem to be working.
-		/*
-		public Renderer attachedRenderer;
-		private float rendererAlpha = 1;
-		private float startAlphaValue;
-		*/
-
-		/*
+		private AudioSource optionalAudio;
+		
 		void Awake()
 		{
-			//Keep a reference of the alpha value
-			if (attachedRenderer != null)
+			if (gameObject.GetComponent<AudioSource>() != null)
 			{
-				startAlphaValue = attachedRenderer.material.color.a;
+				optionalAudio = gameObject.GetComponent<AudioSource>();
 			}
-		}*/
-
+		}
+		
 		void OnEnable()
 		{
 			internalTimer = secondsBeforeTimeout;
 
-			/*
-			//Get the object's materaial alpha
-			if (attachedRenderer != null)
-			{
-				rendererAlpha = attachedRenderer.material.color.a;
-			}
-			*/
 		}
 
 		void  Update()
 		{
-			/*
-			if (internalTimer > 0) 
-			{
-				internalTimer -= Time.deltaTime;
-			} 
-			else*/
+		
 			internalTimer -= Time.deltaTime;
 
-			//print (internalTimer);
+			//Check audio status
+			if (optionalAudio != null)
+			{
+				if (internalTimer < 3 && internalTimer > 0)
+				{
+					FadeOutNoise();
+				}
+			}
+			
+			//print("InternalTimer " + internalTimer + " Volume " + optionalAudio.volume);
+		
 
 			if (internalTimer <= 0) 
 			{
 				gameObject.SetActive(false);
 
-				/*
-				//Go to sleep on timeout if there is no renderer
-				if (attachedRenderer == null) {
-					gameObject.SetActive (false);
-				}
-				*/
-			
-				/*
-				//Otherwise, fade out the colour, THEN go to sleep
-				if (attachedRenderer != null) 
-				{
-					rendererAlpha -= 0.1f * Time.deltaTime;
-					attachedRenderer.material.color = new Color (attachedRenderer.material.color.r, attachedRenderer.material.color.g, attachedRenderer.material.color.b, rendererAlpha);
-				
-					//When invisible, go to sleep
-					if (rendererAlpha <= 0)
-					{
-						gameObject.SetActive(false);
-					}
-				}*/
 			}
 		}
-
-		/*
-		void OnDisable()
+		
+		void FadeOutNoise()
 		{
-			if (attachedRenderer != null)
+			if (optionalAudio.volume > 0)
 			{
-				//reset opacity to start alpha
-				attachedRenderer.material.color = new Color (attachedRenderer.material.color.r, attachedRenderer.material.color.g, attachedRenderer.material.color.b, startAlphaValue);
+				//optionalAudio.volume -= 0.01f;
+				optionalAudio.volume = Mathf.Lerp(optionalAudio.volume, 0, Time.deltaTime);
 			}
-
-			//print (gameObject.name + " has gone to sleep.");
-		}*/
+		}
 	}
 }

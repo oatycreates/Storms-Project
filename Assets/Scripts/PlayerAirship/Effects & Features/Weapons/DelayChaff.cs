@@ -107,20 +107,7 @@ namespace ProjectStorms
 					//This seems to be the best value for the time being- adjust this as necessary.
 					playerBody.velocity *= 0.985f;
 				}
-				
-
-				//RoDo's stuff
-				/*
-				if (other.gameObject.tag == "Player1_" || other.gameObject.tag == "Player2_" || other.gameObject.tag == "Player3_" || other.gameObject.tag == "Player4_")
-				{
-					Rigidbody slowPlayer = other.transform.root.gameObject.GetComponent<Rigidbody>();
-
-					slowPlayer.AddTorque(Vector3.up * 30);
-
-					print("Bang! " + slowPlayer.gameObject.name + " just got hurt.");
-
-				}*/
-				}
+			}
 		}
 
 	}

@@ -38,6 +38,11 @@ namespace ProjectStorms
 		private float scaleFactor = 1;
 		public float maxScaleSize = 25;
 		public float scaleSpeed = 1.0f;
+		
+		private WeaponSFX sfx;
+		private AudioSource m_Audio;
+		//private float startVolume;
+		public AudioClip extraSound;
 
 		void Awake() 
 		{
@@ -49,6 +54,12 @@ namespace ProjectStorms
 			//Take a reference of this number.
 			//explosionScaleStartReference = explosionScale;
 
+			if (gameObject.GetComponent<WeaponSFX>() != null)
+			{
+				sfx = gameObject.GetComponent<WeaponSFX>();
+				m_Audio = gameObject.GetComponent<AudioSource>();
+				//startVolume = m_Audio.volume;
+			}
 		}
 
 		void Start()
@@ -82,6 +93,14 @@ namespace ProjectStorms
 
 			//Reset the number of explosions
 			numberOfExplosions = numberExplosionStartReference;
+			
+			//Take a reference of audio level
+			
+		}
+		
+		void OnDisable()
+		{
+			bang = false;
 		}
 
 		void Update () 
@@ -123,6 +142,23 @@ namespace ProjectStorms
 					Invoke("KillMine", 1.5f);
 				}
 			}
+			
+			//AUdio stuff
+			if (bang == false)
+			{
+				if (!m_Audio.isPlaying)
+				{
+					if (extraSound != null)
+					{
+						sfx.SetSound(extraSound, true, false);
+						
+						//The beeping noise is very loud - lower volume here, and reset it on collision (under Spawn Explosion)
+						m_Audio.volume = 0.1f;
+						m_Audio.pitch = 0.25f;
+						
+					}
+				}
+			}
 		}
 
 		void OnCollisionEnter(Collision other)
@@ -132,6 +168,8 @@ namespace ProjectStorms
 			m_myRenderer.enabled = false;
 
 			bang = true;
+			//Kill sounds
+			m_Audio.Stop();
 		}
 
 		void SpawnExplosion(float explosionScale)
@@ -157,6 +195,9 @@ namespace ProjectStorms
 					break;
 				}
 			}
+			
+			//Reset Audio volume -- nah do this in the WeaponSFX script
+			//m_Audio.volume = startVolume;
 		}
 
 		void KillMine()
