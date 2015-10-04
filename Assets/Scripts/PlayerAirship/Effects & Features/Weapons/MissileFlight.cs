@@ -12,6 +12,7 @@ using System.Collections;
 
 namespace ProjectStorms
 {
+	[RequireComponent(typeof(AudioSource))]
 	[RequireComponent(typeof(Rigidbody))]
 	public class MissileFlight : MonoBehaviour 
 	{
@@ -34,6 +35,12 @@ namespace ProjectStorms
 		private TrailRenderer childTrail;
 
 		public float missileLifetime = 6;
+		
+		//AUdio stuff
+		private AudioSource m_Audio;
+		public AudioClip beepSFX;
+		public AudioClip launchSFX;
+		private float customPitch = 0.75f;
 
 
 		void Awake()
@@ -44,10 +51,22 @@ namespace ProjectStorms
 			targetProxy.name = "MissileTarget";
 
 			childTrail = gameObject.GetComponentInChildren<TrailRenderer> ();
+			
+			if (gameObject.GetComponent<AudioSource>() == null)
+			{
+				gameObject.AddComponent<AudioSource>();
+			}
+			
+			m_Audio = gameObject.GetComponent<AudioSource>();
 		}
 
 		void Update () 
 		{
+			//Clamp pitch 
+			customPitch = Mathf.Clamp(customPitch, 0.75f, 3.5f);
+			m_Audio.pitch = customPitch;
+		
+		
 			//Raycast
 			Vector3 rayDirection = (targetProxy.transform.position - gameObject.transform.position).normalized;
 			float rayDistance = Vector3.Distance (targetProxy.transform.position, gameObject.transform.position);
@@ -69,6 +88,7 @@ namespace ProjectStorms
 				//GoToSleep();
 				Invoke("GoToSleep", missileLifetime);
 			}
+			
 		}
 
 
@@ -104,6 +124,21 @@ namespace ProjectStorms
 				//Turn off Movement
 				attacking = false;
 			}
+			
+			//Play other audio
+			if (!m_Audio.isPlaying)
+			{
+				m_Audio.clip = beepSFX;
+				
+				if (attacking)
+				{
+					//m_Audio.pitch = Mathf.Lerp(m_Audio.pitch, 3, 1);
+					//m_Audio.pitch += 0.25f;
+					//Use custom pitch instead
+					customPitch += 0.25f;
+					m_Audio.Play();
+				}
+			}
 		}
 
 		void FindTarget()
@@ -137,6 +172,12 @@ namespace ProjectStorms
 			//Fix the trail time
 			childTrail.time = 1;
 			startWait = true;
+			
+			m_Audio.clip = launchSFX;
+			//m_Audio.pitch = 0.75f;
+			//use custom pitch instead
+			customPitch = 0.75f;
+			m_Audio.Play();
 		}
 
 		void GoToSleep()

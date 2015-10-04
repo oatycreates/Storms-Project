@@ -127,10 +127,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11440082, guid: e3e2d235d97a4c44ba9c0f499c10fa2a, type: 2}
-      propertyPath: pinwheelPrefab
-      value: 
-      objectReference: {fileID: 180144, guid: f5400e541fe588743b9fd758804f8513, type: 2}
     - target: {fileID: 187888, guid: e3e2d235d97a4c44ba9c0f499c10fa2a, type: 2}
       propertyPath: m_IsActive
       value: 0
@@ -283,7 +279,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 422878, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
@@ -430,7 +426,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 414978, guid: 511ee756bbfeef0478f496da5ad82a27, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 194162, guid: 511ee756bbfeef0478f496da5ad82a27, type: 2}
       propertyPath: m_IsActive
@@ -444,6 +440,21 @@ Camera:
   m_PrefabParentObject: {fileID: 2035808, guid: 511ee756bbfeef0478f496da5ad82a27,
     type: 2}
   m_PrefabInternal: {fileID: 1367783680}
+--- !u!1 &1371584334 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 180144, guid: f5400e541fe588743b9fd758804f8513, type: 2}
+  m_PrefabInternal: {fileID: 1297560593}
+--- !u!114 &1371584339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1371584334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6feaf40be9c811e43ab03bc433152418, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &1538503502 stripped
 Camera:
   m_PrefabParentObject: {fileID: 2089972, guid: 703593058d53ea447836fb9a2ea40a50,
@@ -491,7 +502,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 440704, guid: 9bc2812c9a3812f4b9379048a448b83a, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 158946, guid: 9bc2812c9a3812f4b9379048a448b83a, type: 2}
       propertyPath: m_IsActive
