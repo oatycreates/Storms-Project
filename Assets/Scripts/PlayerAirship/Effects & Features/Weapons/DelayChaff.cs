@@ -20,6 +20,7 @@ namespace ProjectStorms
 	public class DelayChaff : MonoBehaviour 
 	{
 		private BoxCollider myCollider;
+		public float delayFactor = 0.985f;
 
 		public void Awake() 
 		{
@@ -40,7 +41,9 @@ namespace ProjectStorms
             if (rigid != null)
             {
                 //This seems to be the best value for the time being- adjust this as necessary.
-                rigid.velocity *= 0.985f;
+                //rigid.velocity *= 0.985f;
+                rigid.velocity *= (delayFactor/2);
+                rigid.angularVelocity *= delayFactor; //-- Too much?
             }
 		}
 	}

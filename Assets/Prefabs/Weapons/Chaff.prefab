@@ -63,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 101448}
   m_LocalRotation: {x: 0, y: 0, z: .382683456, w: .923879504}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 65, y: 65, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 467300}
   m_RootOrder: 0
@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 172182}
   m_LocalRotation: {x: 0, y: 0, z: .382683456, w: .923879504}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 60, y: 60, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 467300}
   m_RootOrder: 1
@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5318765687049a14883b06e35a5943c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayFactor: .899999976
 --- !u!114 &11420040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,8 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb58e2d620177424095a0ac4dd4e20ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScaleSize: 2
+  maxScaleSize: 100
   useZaxis: 0
+  speed: 90
 --- !u!114 &11488528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1359,6 +1361,30 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Volume
       value: .600000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxScaleSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: speed
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: delayFactor
+      value: .899999976
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

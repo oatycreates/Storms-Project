@@ -216,7 +216,7 @@ namespace ProjectStorms
 		void SpawnSkyMine()
 		{
 			//Local offset
-			Vector3 localOffset = new Vector3 (8, 10, -25);
+			Vector3 localOffset = new Vector3 (0, 10, -45);
 			Vector3 worldOffest = m_trans.rotation * localOffset;
 			Vector3 spawnPos = m_trans.position + worldOffest;
 

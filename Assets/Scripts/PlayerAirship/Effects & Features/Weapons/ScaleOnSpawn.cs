@@ -20,6 +20,7 @@ namespace ProjectStorms
 		private float scaleFactor = 1;
 		public float maxScaleSize = 1;
 		public bool useZaxis = false;
+		public float speed = 1.0f;
 		
 		void OnEnable () 
 		{
@@ -33,7 +34,7 @@ namespace ProjectStorms
 			
 			if (scaleFactor < maxScaleSize)
 			{
-				scaleFactor += 1 * Time.deltaTime;
+				scaleFactor += 1 * Time.deltaTime*speed;
 			}
 
 			if (!useZaxis)
