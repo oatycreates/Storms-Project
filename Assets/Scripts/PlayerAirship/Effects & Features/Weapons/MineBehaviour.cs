@@ -172,6 +172,17 @@ namespace ProjectStorms
 			m_Audio.Stop();
 		}
 
+        //Alternative 
+        void OnTriggerEnter(Collider other)
+        {
+            m_myCollider.enabled = false;
+            m_myRenderer.enabled = false;
+
+            bang = true;
+            m_Audio.Stop();
+
+        }
+
 		void SpawnExplosion(float explosionScale)
 		{
 			/*
