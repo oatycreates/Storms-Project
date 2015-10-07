@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace ProjectStorms
 {
-    [RequireComponent(typeof(AudioSource))]
+    //[RequireComponent(typeof(AudioSource))]
     public class SlipStream : MonoBehaviour
     {
         public float force = 100.0f;
@@ -125,9 +125,12 @@ namespace ProjectStorms
                     rumbleCooldown = rumbleDurr;
 
                     //Trigger a sound
-                    if (!m_AudioSource.isPlaying)
-                    { 
-                        m_AudioSource.Play(); 
+                    if (m_AudioSource != null)
+                    {
+	                    if (!m_AudioSource.isPlaying)
+	                    { 
+	                        m_AudioSource.Play(); 
+	                    }
                     }
                 }
             }
