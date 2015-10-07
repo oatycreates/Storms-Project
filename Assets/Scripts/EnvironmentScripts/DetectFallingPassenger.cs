@@ -24,7 +24,7 @@ namespace ProjectStorms
         [HideInInspector]
         public int maxPeople = 100;
 
-        public Color textColour = Color.white;
+        public Color textColour;
 
         void Start()
         {
@@ -40,11 +40,8 @@ namespace ProjectStorms
                 peopleLeftToCatch = 0;
             }
 
-            if (scoreText != null)
-            {
-                scoreText.color = textColour;
-                scoreText.text = ((maxPeople - peopleLeftToCatch) + "/" + maxPeople);
-            }
+            scoreText.color = textColour;
+            scoreText.text = ((maxPeople - peopleLeftToCatch) + "/" + maxPeople);
         }
 
         void OnTriggerEnter(Collider a_other)

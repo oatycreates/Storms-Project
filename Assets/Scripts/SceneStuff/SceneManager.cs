@@ -33,7 +33,7 @@ namespace ProjectStorms
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                	Application.Quit();
+                Application.Quit();
             }
         }
 
@@ -75,11 +75,6 @@ namespace ProjectStorms
 		public void ExperimentalX()
 		{
 			Application.LoadLevel ("TestSceneX");
-		}
-		
-		public void DemoScene()
-		{
-			Application.LoadLevel("RoDo_DemoScene");
 		}
 		                       
     } 

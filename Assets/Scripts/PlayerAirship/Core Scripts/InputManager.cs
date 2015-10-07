@@ -76,7 +76,6 @@ namespace ProjectStorms
         private RouletteBehaviour m_rouletteControl;
         private RotateCam m_rotateCam;
         private BroadsideWeaponsController m_broadSideWeapons;
-		private Countermeasures m_countermeasures;
 
         // TODO: We might need to add more script references here as we progress
 
@@ -92,7 +91,6 @@ namespace ProjectStorms
             m_rouletteControl   = GetComponent<RouletteBehaviour>();
             m_rotateCam         = GetComponent<RotateCam>();
             m_broadSideWeapons  = GetComponent<BroadsideWeaponsController>();
-			m_countermeasures 	= GetComponent<Countermeasures> ();
         }
 
         void Start()
@@ -162,7 +160,6 @@ namespace ProjectStorms
             m_fireshipControl.PlayerFireshipInputs(upDown, leftRight, select);
             m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, clickLeft, clickRight);
             m_broadSideWeapons.PlayerInputs(bumperLeft, bumperRight);
-			m_countermeasures.DPad (dpadDown, dpadUp, dpadLeft, dpadRight);
         }
 
         private static void ApplyRumble()

@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -11,8 +11,6 @@ Material:
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _DETAIL_MULX2
   m_LightmapFlags: 5
   m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -22,7 +20,7 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: 177fc5e89bb33f9419a09ff06d12f387, type: 3}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: -.823993504, y: .5}
+          m_Offset: {x: 0, y: -.00999999046}
       data:
         first:
           name: _BumpMap
@@ -78,7 +76,7 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: 2cfc3c2ef6bdeda49896a76d5475dcdb, type: 3}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: -124.355392}
+          m_Offset: {x: 0, y: 1.05019045}
       data:
         first:
           name: _DetailTex
@@ -89,20 +87,20 @@ Material:
     m_Floats:
       data:
         first:
-          name: _SrcBlend
-        second: 1
-      data:
-        first:
-          name: _DstBlend
-        second: 10
-      data:
-        first:
           name: _Cutoff
         second: .5
       data:
         first:
           name: PixelSnap
         second: 0
+      data:
+        first:
+          name: _SrcBlend
+        second: 1
+      data:
+        first:
+          name: _DstBlend
+        second: 10
       data:
         first:
           name: _ZWrite

@@ -24,9 +24,7 @@ namespace ProjectStorms
         /// </summary>
         public float bobSpeed = 50.0f;
 
-        private float m_timer = 0;
-
-        private float m_direction = 1;
+        private float timer = 0;
 
         // Cached variables
         private Vector3 m_startPos = Vector3.zero;
@@ -40,17 +38,16 @@ namespace ProjectStorms
 
 		void Start()
         {
-            //timer = Random.value * 500;
-            m_direction = Random.value >= 0.5f ? 1 : -1;
+            timer = Random.value * 500;
             bobAmplitude += ((Random.value - 0.5f) * 2) * bobAmplitude * 0.5f;
 		}
 		
 		void Update() 
 		{
-            m_timer += Time.deltaTime;
+            timer += Time.deltaTime;
 
 		    // Bob
-            Vector3 goalPos = Vector3.up * bobAmplitude * Mathf.Sin(bobSpeed * m_timer * m_direction);
+            Vector3 goalPos = Vector3.up * bobAmplitude * Mathf.Sin(bobSpeed * timer);
             m_trans.position = m_startPos + goalPos;
 		}
 	}

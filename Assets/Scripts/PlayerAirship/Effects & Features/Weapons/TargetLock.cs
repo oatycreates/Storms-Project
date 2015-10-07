@@ -99,68 +99,56 @@ namespace ProjectStorms
             }
 		}
 
-        public Transform GetTarget()
-        {
-            return m_currFrontTarget;
-        }
-
         private void FindLockTarget()
         {
-            if (isActiveAndEnabled)
+            // Find all players in the scene
+            string playerName = gameObject.name, playerTag = gameObject.tag;
+            float closestToLook = -1.0f, closestTarDist = 99999.0f;
+            Transform closestTar = null, tempTrans = null;
+            Vector3 myPos = m_trans.position;
+            Vector3 lookDir = (m_tarTrans != null) ? (m_tarTrans.position - myPos).normalized : m_trans.forward;
+            float currLookDist = 0, currDist = 0;
+            Vector3 tempPos = Vector3.zero, offsetVec = Vector3.zero, offsetVecNorm = Vector3.zero;
+            foreach (GameObject obj in playerObjs)
             {
-                // Find all players in the scene
-                string playerName = gameObject.name, playerTag = gameObject.tag;
-                float closestToLook = -1.0f, closestTarDist = 99999.0f;
-                Transform closestTar = null, tempTrans = null;
-                Vector3 myPos = m_trans.position;
-                Vector3 lookDir = (m_tarTrans != null) ? (m_tarTrans.position - myPos).normalized : m_trans.forward;
-                float currLookDist = 0, currDist = 0;
-                Vector3 tempPos = Vector3.zero, offsetVec = Vector3.zero, offsetVecNorm = Vector3.zero;
-                foreach (GameObject obj in playerObjs)
+                if (obj != null && obj.name.CompareTo(playerName) == 0 && !obj.CompareTag(playerTag))
                 {
-                    if (obj != null)
+                    tempTrans = obj.transform;
+                    tempPos = tempTrans.position;
+                    offsetVec = tempPos - myPos;
+                    currDist = offsetVec.magnitude;
+                    // If target is in range
+                    if (currDist <= maximumTarDist)
                     {
-                        tempTrans = obj.transform;
-                        tempPos = tempTrans.position;
-                        offsetVec = tempPos - myPos;
-                        currDist = offsetVec.magnitude;
-                        // If target is in range
-                        if (currDist <= maximumTarDist)
-                        {
-                            offsetVecNorm = offsetVec.normalized;
+                        offsetVecNorm = offsetVec.normalized;
 
-                            // Check if closer to camera first and in view cone
-                            currLookDist = Vector3.Dot(offsetVecNorm, lookDir);
-                            if (Vector3.Dot(offsetVecNorm, m_trans.forward) >= frontCannonLockAngle && currLookDist >= closestToLook)
+                        // Check if closer to camera first and in view cone
+                        currLookDist = Vector3.Dot(offsetVecNorm, lookDir);
+                        if (Vector3.Dot(offsetVecNorm, m_trans.forward) >= frontCannonLockAngle && currLookDist >= closestToLook)
+                        {
+                            // Check for targets closer to the player ship
+                            if (currDist <= closestTarDist)
                             {
-                                // Check for targets closer to the player ship
-                                if (currDist <= closestTarDist)
-                                {
-                                    // Potential target found
-                                    closestToLook = currLookDist;
-                                    closestTarDist = currDist;
-                                    closestTar = tempTrans;
-                                }
+                                // Potential target found
+                                closestToLook = currLookDist;
+                                closestTarDist = currDist;
+                                closestTar = tempTrans;
                             }
                         }
                     }
-                    else
-                    {
-                        Debug.Log("Null player object found on the TargetLock script of " + playerName + ", make sure all are set as needed!");
-                    }
                 }
+            }
 
-                // Assign the target
-                if (closestTar != null)
-                {
-                    //Debug.Log("Targeted! " + playerTag + ", tar: " + closestTar.tag);
-                    m_currFrontTarget = closestTar;
-                }
-                else
-                {
-                    //Debug.Log("Cleared target! " + playerTag);
-                    m_currFrontTarget = null;
-                }
+            // Assign the target
+            if (closestTar != null)
+            {
+                Debug.Log("Targetted! " + playerTag + ", tar: " + closestTar.tag);
+                m_currFrontTarget = closestTar;
+            }
+            else
+            {
+                //Debug.Log("Cleared target! " + playerTag);
+                m_currFrontTarget = null;
             }
         }
 	}
