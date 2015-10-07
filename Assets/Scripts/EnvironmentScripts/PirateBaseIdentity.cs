@@ -58,9 +58,9 @@ namespace ProjectStorms
 	                teamNumber = 1;
                     if (myRenderer != null)
                     {
-                        myRenderer.material.color = Color.red; 
+                        myRenderer.material.color = Color.red;
+                        baseColour = myRenderer.material.color;
                     }
-	                baseColour = myRenderer.material.color;
 
 	            }
                 else if (myTag.CompareTo("Player2_") == 0)
@@ -68,27 +68,27 @@ namespace ProjectStorms
 	                teamNumber = 2;
                     if (myRenderer != null)
                     {
-                        myRenderer.material.color = Color.blue; 
+                        myRenderer.material.color = Color.blue;
+                        baseColour = myRenderer.material.color;
                     }
-	                baseColour = myRenderer.material.color;
 	            }
                 else if (myTag.CompareTo("Player3_") == 0)
 	            {
 	                teamNumber = 3;
                     if (myRenderer != null)
                     {
-                        myRenderer.material.color = Color.green; 
+                        myRenderer.material.color = Color.green;
+                        baseColour = myRenderer.material.color;
                     }
-	                baseColour = myRenderer.material.color;
 	            }
                 else if (myTag.CompareTo("Player4_") == 0)
 	            {
 	                teamNumber = 4;
                     if (myRenderer != null)
                     {
-                        myRenderer.material.color = Color.yellow; 
+                        myRenderer.material.color = Color.yellow;
+                        baseColour = myRenderer.material.color;
                     }
-	                baseColour = myRenderer.material.color;
 	            }
                 else if (myTag.CompareTo("Untagged") == 0)
 	            {
