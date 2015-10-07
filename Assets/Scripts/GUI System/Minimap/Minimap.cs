@@ -147,6 +147,8 @@ namespace ProjectStorms
 
         public void Awake()
         {
+            PopulateCacheLists();
+
             // Get capture camera reference
             m_captureCamera = GetComponentInChildren<Camera>();
 
@@ -308,7 +310,6 @@ namespace ProjectStorms
 
         void Start()
         {
-            PopulateCacheLists();
             CreateMapIcons();
             SetupCaptureCamera();
             SetupScoreIndicators();
