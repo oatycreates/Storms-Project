@@ -45,7 +45,7 @@ namespace ProjectStorms
         {
             baseColour = Color.clear;
 
-            m_flagAlpha = flagRenderer.material.color.a;
+            m_flagAlpha = flagRenderer != null ? flagRenderer.material.color.a : 1.0f;
         }
 
         void Update()
