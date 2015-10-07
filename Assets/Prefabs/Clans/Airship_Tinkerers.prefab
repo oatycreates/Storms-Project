@@ -1183,6 +1183,7 @@ GameObject:
   - 114: {fileID: 11422214}
   - 114: {fileID: 11424278}
   - 114: {fileID: 11434316}
+  - 114: {fileID: 11401664}
   m_Layer: 0
   m_Name: Airship_Tinkerers
   m_TagString: Player3_
@@ -1974,7 +1975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &197894
 GameObject:
   m_ObjectHideFlags: 1
@@ -2654,7 +2655,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158946}
   m_LocalRotation: {x: 0, y: .382683456, z: 0, w: .923879504}
-  m_LocalPosition: {x: -1550, y: 50, z: -1550}
+  m_LocalPosition: {x: -600, y: 250, z: -600}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 409020}
@@ -5464,6 +5465,25 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!114 &11401664
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f79490488ed5e49a4d532d45ff8d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 133982, guid: a4a46434d1bb8284e982c7d11e4374f0, type: 2}
+  pooledMissiles: 2
+  chaffPrefab: {fileID: 176804, guid: 51c1189e727dd794a92747d696c77e62, type: 2}
+  pooledChaff: 3
+  skyMinePrefab: {fileID: 107992, guid: a6ccf0fb192ba2144857dd8d073db124, type: 2}
+  pooledSkyMines: 3
+  pinwheelPrefab: {fileID: 180144, guid: f5400e541fe588743b9fd758804f8513, type: 2}
+  pooledPinwheels: 2
 --- !u!114 &11401736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5689,9 +5709,9 @@ MonoBehaviour:
   lookTarget: {fileID: 437080}
   frontCannon: {fileID: 433384}
   playerObjs:
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 158946}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
 --- !u!114 &11425746
 MonoBehaviour:
@@ -6125,13 +6145,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   woodenSounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  rumblePerc: .200000003
-  rumbleDurr: .200000003
+  - {fileID: 8300000, guid: e0ec86ded20111b4bad2cd8c092764e0, type: 3}
+  - {fileID: 8300000, guid: 532f650dc015fc14ca7d2dcd041b2702, type: 3}
+  - {fileID: 8300000, guid: b0cd857b35ba852498c63d2c4509bb07, type: 3}
+  - {fileID: 8300000, guid: 5d6ad16356fabfa41a09fcbf3a20133b, type: 3}
+  - {fileID: 8300000, guid: ae3b95493c634b145b87fb8ff381200f, type: 3}
+  rumblePerc: 0
+  rumbleDurr: 0
 --- !u!114 &11483432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6347,8 +6367,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -.000122070312, y: 9.58499908, z: 1.01391602}
-    m_Extent: {x: 6.29214525, y: 3.3842659, z: 6.29214525}
+    m_Center: {x: 0, y: 9.58500671, z: 1.01379395}
+    m_Extent: {x: 6.29214525, y: 3.38427734, z: 6.29214525}
   m_DirtyAABB: 0
 --- !u!183 &18366390
 Cloth:
@@ -6453,7 +6473,7 @@ Cloth:
     collisionSphereDistance: 3.40282347e+38
   - maxDistance: 3.40282347e+38
     collisionSphereDistance: 3.40282347e+38
-  - maxDistance: .75
+  - maxDistance: 0
     collisionSphereDistance: 3.40282347e+38
   - maxDistance: 3.40282347e+38
     collisionSphereDistance: 3.40282347e+38

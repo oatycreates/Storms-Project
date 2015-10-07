@@ -48,8 +48,11 @@ namespace ProjectStorms
         {
             // Random pitch
             m_mySource.pitch = Random.Range(0.85f, 1.15f);
-            // Play clip
-            m_mySource.Play();
+            if (m_mySource.enabled)
+            {
+                // Play clip
+                m_mySource.Play();
+            }
         }
     } 
 }

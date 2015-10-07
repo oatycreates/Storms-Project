@@ -33,7 +33,6 @@ namespace ProjectStorms
 
         public int passengersToWin = 50;
 
-        public Text winText;
 
         public PirateBaseIdentity pirateBase1;
         public PirateBaseIdentity pirateBase2;
@@ -49,6 +48,8 @@ namespace ProjectStorms
 		public Color omegaTeamColour = Color.black;
 
 
+		
+		public Text winText;
         private Color m_winnerColour;
         private int m_winnerNumber;
 
