@@ -205,7 +205,7 @@ namespace ProjectStorms
             }
 
             // Get prison ship transform
-            PrisonFortressRotate prisonship = GameObject.FindObjectOfType<PrisonFortressRotate>();
+            GameObject prisonship = GameObject.FindGameObjectWithTag("Objective");
             m_prisonshipTransform = prisonship.transform;
         }
 
