@@ -2654,8 +2654,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158946}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -200}
+  m_LocalRotation: {x: 0, y: .382683456, z: 0, w: .923879504}
+  m_LocalPosition: {x: -600, y: 250, z: -600}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 409020}
@@ -5709,9 +5709,9 @@ MonoBehaviour:
   lookTarget: {fileID: 437080}
   frontCannon: {fileID: 433384}
   playerObjs:
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 158946}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
 --- !u!114 &11425746
 MonoBehaviour:
@@ -6367,8 +6367,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58499813, z: 1.01382446}
-    m_Extent: {x: 4.68306112, y: 3.38426399, z: 1.6091156}
+    m_Center: {x: 0, y: 9.58500671, z: 1.01379395}
+    m_Extent: {x: 6.29214525, y: 3.38427734, z: 6.29214525}
   m_DirtyAABB: 0
 --- !u!183 &18366390
 Cloth:
@@ -6473,7 +6473,7 @@ Cloth:
     collisionSphereDistance: 3.40282347e+38
   - maxDistance: 3.40282347e+38
     collisionSphereDistance: 3.40282347e+38
-  - maxDistance: .75
+  - maxDistance: 0
     collisionSphereDistance: 3.40282347e+38
   - maxDistance: 3.40282347e+38
     collisionSphereDistance: 3.40282347e+38

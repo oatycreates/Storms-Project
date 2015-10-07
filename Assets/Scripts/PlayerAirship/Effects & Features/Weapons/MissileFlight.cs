@@ -224,7 +224,6 @@ namespace ProjectStorms
 			}
 		}
 		
-		
 		/*
 		void Spiral()
 		{
