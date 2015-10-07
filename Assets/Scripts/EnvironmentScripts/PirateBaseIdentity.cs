@@ -52,67 +52,95 @@ namespace ProjectStorms
         {
 			if (teamGame == false)
 			{
-	            if (gameObject.tag == "Player1_")
+                string myTag = gameObject.tag;
+	            if (myTag.CompareTo("Player1_") == 0)
 	            {
 	                teamNumber = 1;
-	                myRenderer.material.color = Color.red;
+                    if (myRenderer != null)
+                    {
+                        myRenderer.material.color = Color.red; 
+                    }
 	                baseColour = myRenderer.material.color;
 
 	            }
-	            else if (gameObject.tag == "Player2_")
+                else if (myTag.CompareTo("Player2_") == 0)
 	            {
 	                teamNumber = 2;
-	                myRenderer.material.color = Color.blue;
+                    if (myRenderer != null)
+                    {
+                        myRenderer.material.color = Color.blue; 
+                    }
 	                baseColour = myRenderer.material.color;
 	            }
-	            else if (gameObject.tag == "Player3_")
+                else if (myTag.CompareTo("Player3_") == 0)
 	            {
 	                teamNumber = 3;
-	               myRenderer.material.color = Color.green;
+                    if (myRenderer != null)
+                    {
+                        myRenderer.material.color = Color.green; 
+                    }
 	                baseColour = myRenderer.material.color;
 	            }
-	            else if (gameObject.tag == "Player4_")
+                else if (myTag.CompareTo("Player4_") == 0)
 	            {
 	                teamNumber = 4;
-	                myRenderer.material.color = Color.yellow;
+                    if (myRenderer != null)
+                    {
+                        myRenderer.material.color = Color.yellow; 
+                    }
 	                baseColour = myRenderer.material.color;
 	            }
-	            else if (gameObject.tag == "Untagged")
+                else if (myTag.CompareTo("Untagged") == 0)
 	            {
-	                Debug.Log("Four player - NO TAG!!");
+	                Debug.Log(gameObject.name +  " player - NO TAG!!");
 	            }
 			}
 			else
 			if (teamGame)
 			{
-				//Set the colour for the team base (black or white)
-				if (!omegaBlack)
-				{
-					myRenderer.material.color = Color.red;
-				}
-				else
-				if (omegaBlack)
-				{
-					myRenderer.material.color = Color.black;
-				}
+                if (myRenderer != null)
+                {
+                    //Set the colour for the team base (black or white)
+                    if (!omegaBlack)
+                    {
+                        myRenderer.material.color = Color.red;
+                    }
+                    else
+                        if (omegaBlack)
+                        {
+                            myRenderer.material.color = Color.black;
+                        }
 
-				baseColour = myRenderer.material.color;
+                    baseColour = myRenderer.material.color; 
+                }
 			}
              
 
             // Set the flag's colour
             Color flagColour = baseColour;
             flagColour.a = m_flagAlpha;
-            flagRenderer.material.color = flagColour;
-            flagBackRenderer.material.color = flagColour;
+            if (flagRenderer != null)
+            {
+                flagRenderer.material.color = flagColour;
+            }
+            if (flagBackRenderer != null)
+            {
+                flagBackRenderer.material.color = flagColour;
+            }
 
             // Set the drop-zone's colour
             Color dropzoneColour = baseColour;
             dropzoneColour.a = dropZoneAlpha;
-            dropzoneLineRenderer.SetColors(dropzoneColour, dropzoneColour);
+            if (dropzoneLineRenderer != null)
+            {
+                dropzoneLineRenderer.SetColors(dropzoneColour, dropzoneColour);
+            }
 
-            // Set the colour of text in DetectFallingPassengersScript
-            baseTriggerZone.textColour = myRenderer.material.color;
+            if (myRenderer != null)
+            {
+                // Set the colour of text in DetectFallingPassengersScript
+                baseTriggerZone.textColour = myRenderer.material.color; 
+            }
 
             // Set the score for the ScoreManager script
             baseScore = baseTriggerZone.peopleLeftToCatch;
