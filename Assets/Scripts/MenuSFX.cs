@@ -27,7 +27,7 @@ namespace ProjectStorms
 
         public void OnSelect(BaseEventData eventData)
         {
-            print(this.gameObject.name + " Was Selected");
+            //print(this.gameObject.name + " Was Selected");
 
             if (!m_myAudioSource.isPlaying)
             {
