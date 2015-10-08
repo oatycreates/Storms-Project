@@ -594,5 +594,14 @@ namespace ProjectStorms
             }
             return false;
         }
+
+        /// <summary>
+        /// Called each physics tick that other objects are colliding with this trigger.
+        /// </summary>
+        /// <param name="a_other"></param>
+        void OnTriggerStay(Collider a_other)
+        {
+            // This is in place to trigger the trigger on the child
+        }
     } 
 }
