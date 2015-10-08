@@ -226,7 +226,7 @@ namespace ProjectStorms
             // Break the part if the collision is fast enough
             if (!IsPartDestroyed(a_part) && a_colVelSqr >= a_part.cached_breakVelocitySqr)
             {
-                BreakPart(a_part);
+                //BreakPart(a_part);
             }
         }
 
