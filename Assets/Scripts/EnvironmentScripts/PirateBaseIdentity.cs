@@ -58,9 +58,7 @@ namespace ProjectStorms
         }
 
         void Update()
-        {
-        	Debug.Log(demoColour.r + " " + demoColour.g + " " + demoColour.b);
-        
+        {        
 			if (teamGame == false)
 			{
 				if (myFaction.faction == FactionIndentifier.Faction.PIRATES)
