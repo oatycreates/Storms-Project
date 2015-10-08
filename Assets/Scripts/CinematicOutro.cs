@@ -17,7 +17,7 @@ namespace ProjectStorms
     {
         public GameObject rotator;
         public GameObject pirate;
-        private Renderer pirateRenderer;
+       // private Renderer pirateRenderer;
         public Text winText;
         public Color myColour = Color.white;
 
@@ -26,7 +26,7 @@ namespace ProjectStorms
 
         void Awake()
         {
-            pirateRenderer = pirate.GetComponent<Renderer>();
+            //pirateRenderer = pirate.GetComponent<Renderer>();
 
             //Go to sleep untill I'm needed
             gameObject.SetActive(false);
@@ -46,7 +46,7 @@ namespace ProjectStorms
         {
             winText.text = winnerNumberText;
             winText.color = winnerColour;
-            pirateRenderer.material.color = winnerColour;
+            //pirateRenderer.material.color = winnerColour;
 
             // Disable the minimap
             if (m_minimap != null)

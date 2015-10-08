@@ -15,15 +15,20 @@ namespace ProjectStorms
 	public class MarioKartCopyMechanics : MonoBehaviour 
 	{
 		public AirshipControlBehaviour[] overrideControls;
-		public float speed = 400;
-		public float leftRightYaw = 5000;
+		//public float speed = 400;
+		//public float leftRightYaw = 5000;
+        public float roll = 0;
+        public float pitch = 0;
 	
 		void Awake () 
 		{
 			foreach (AirshipControlBehaviour airship in overrideControls)
 			{
-				airship.generalSpeed = speed;
-				airship.yawForce = 5000;
+				//airship.generalSpeed = speed;
+               // airship.yawForce = leftRightYaw;
+                airship.rollForce = roll;
+                airship.pitchForce = pitch;
+
 			}
 		}
 		
