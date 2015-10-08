@@ -15,22 +15,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &106648
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 408978}
-  - 120: {fileID: 12017404}
-  m_Layer: 0
-  m_Name: DropzoneBeam
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &110510
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +233,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &195440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 424716}
+  - 33: {fileID: 3360914}
+  - 23: {fileID: 2310836}
+  m_Layer: 0
+  m_Name: DropzoneBeam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &406496
 Transform:
   m_ObjectHideFlags: 1
@@ -263,18 +264,6 @@ Transform:
   - {fileID: 490506}
   m_Father: {fileID: 482448}
   m_RootOrder: 2
---- !u!4 &408978
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 106648}
-  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 482448}
-  m_RootOrder: 5
 --- !u!4 &411302
 Transform:
   m_ObjectHideFlags: 1
@@ -288,6 +277,18 @@ Transform:
   - {fileID: 426790}
   m_Father: {fileID: 406496}
   m_RootOrder: 0
+--- !u!4 &424716
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195440}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
+  m_LocalPosition: {x: 0, y: 8, z: 0}
+  m_LocalScale: {x: 3.5, y: 500, z: 3.5}
+  m_Children: []
+  m_Father: {fileID: 482448}
+  m_RootOrder: 5
 --- !u!4 &426790
 Transform:
   m_ObjectHideFlags: 1
@@ -378,7 +379,7 @@ Transform:
   - {fileID: 406496}
   - {fileID: 471436}
   - {fileID: 452068}
-  - {fileID: 408978}
+  - {fileID: 424716}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &484282
@@ -436,6 +437,30 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2310836
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195440}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 9b0e7160435da65419ab8cad10bf20b5, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_ReflectionProbeUsage: 0
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
   m_ImportantGI: 0
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
@@ -560,6 +585,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126452}
   m_Mesh: {fileID: 4300000, guid: fda7310c0429ca7449902a9b50b93ccc, type: 3}
+--- !u!33 &3360914
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195440}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &3360962
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -646,10 +678,8 @@ MonoBehaviour:
   baseColour: {r: 0, g: 0, b: 0, a: 0}
   teamGame: 0
   omegaBlack: 0
-  myRenderer: {fileID: 2370788}
-  flagRenderer: {fileID: 2370788}
-  flagBackRenderer: {fileID: 2398364}
-  dropzoneLineRenderer: {fileID: 12017404}
+  demoColour: {r: 0, g: 0, b: 0, a: 0}
+  dropzoneRenderer: {fileID: 2310836}
   dropZoneAlpha: .200000003
 --- !u!114 &11437840
 MonoBehaviour:
@@ -664,6 +694,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 30
@@ -704,43 +740,6 @@ MonoBehaviour:
   peopleLeftToCatch: 10
   maxPeople: 100
   textColour: {r: 0, g: 0, b: 0, a: 0}
---- !u!120 &12017404
-LineRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 106648}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_ReflectionProbeUsage: 0
-  m_ProbeAnchor: {fileID: 408978}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 500}
-  m_Parameters:
-    startWidth: 10
-    endWidth: 10
-    m_StartColor:
-      serializedVersion: 2
-      rgba: 855638015
-    m_EndColor:
-      serializedVersion: 2
-      rgba: 855638015
-  m_UseWorldSpace: 0
 --- !u!137 &13754794
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

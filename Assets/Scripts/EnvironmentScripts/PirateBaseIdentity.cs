@@ -45,7 +45,7 @@ namespace ProjectStorms
         private float m_flagAlpha = 1.0f;
         */
 
-        public LineRenderer dropzoneLineRenderer;
+        public Renderer dropzoneRenderer;
         public float dropZoneAlpha = 1.0f;
 
 
@@ -175,11 +175,10 @@ namespace ProjectStorms
             */
 
             // Set the drop-zone's colour
-            Color dropzoneColour = baseColour;
-            dropzoneColour.a = dropZoneAlpha;
-            if (dropzoneLineRenderer != null)
+            if (dropzoneRenderer != null)
             {
-                dropzoneLineRenderer.SetColors(dropzoneColour, dropzoneColour);
+                //dropzoneRenderer.material.color = dropzoneColour;
+                dropzoneRenderer.material.color = new Color(baseColour.r / 255.0f, baseColour.g / 255.0f, baseColour.b / 255.0f, dropZoneAlpha);
             }
 			/*
             if (myRenderer != null)
