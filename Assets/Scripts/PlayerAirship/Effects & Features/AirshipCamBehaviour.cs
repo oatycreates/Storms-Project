@@ -36,6 +36,11 @@ namespace ProjectStorms
         public float camPosSmooth = 2.0f;
 
         /// <summary>
+        /// Minimum distance that the camera will snap to.
+        /// </summary>
+        public float minCamSnapDist = 31.0f;
+
+        /// <summary>
         /// Keep a reference to the start position, so we can reset to the roulette position.
         /// </summary>
         private Vector3 m_myStartPos;
@@ -148,13 +153,16 @@ namespace ProjectStorms
                 Vector3 nearPos = Vector3.zero;
                 for (int i = 0; i < rayHits.Length; ++i)
                 {
-                    // Find obstacles that aren't owned by this player
-                    if (rayHits[i].distance <= nearDist && !rayHits[i].collider.isTrigger && 
-                        !rayHits[i].collider.gameObject.tag.Contains("Player") && rayHits[i].collider.gameObject.tag.CompareTo("Passengers") != 0)
+                    if (rayHits[i].distance > minCamSnapDist)
                     {
-                        //Debug.Log("Hit " + rayHits[i].collider.gameObject.name + ", tag: " + rayHits[i].collider.gameObject.tag + ", dist: " + rayHits[i].distance);
-                        nearDist = rayHits[i].distance;
-                        nearPos = rayHits[i].point;
+                        // Find obstacles that aren't owned by this player
+                        if (rayHits[i].distance <= nearDist && !rayHits[i].collider.isTrigger &&
+                            !rayHits[i].collider.gameObject.tag.Contains("Player") && rayHits[i].collider.gameObject.tag.CompareTo("Passengers") != 0)
+                        {
+                            //Debug.Log("Hit " + rayHits[i].collider.gameObject.name + ", tag: " + rayHits[i].collider.gameObject.tag + ", dist: " + rayHits[i].distance);
+                            nearDist = rayHits[i].distance;
+                            nearPos = rayHits[i].point;
+                        }
                     }
                 }
                 //Debug.DrawRay(camLookTarget.position, lookOffset, Color.yellow);
