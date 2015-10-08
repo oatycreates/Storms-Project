@@ -41,7 +41,7 @@ namespace ProjectStorms
 		private AudioSource m_Audio;
 		public AudioClip beepSFX;
 		public AudioClip launchSFX;
-        private float customPitch = 0.75f;
+        private float customPitch = 0.1f;
 
         private static GameObject ms_powerupHolder = null;
 
@@ -81,7 +81,7 @@ namespace ProjectStorms
 		void Update () 
 		{
 			//Clamp pitch 
-			customPitch = Mathf.Clamp(customPitch, 0.75f, 3.5f);
+			customPitch = Mathf.Clamp(customPitch, 0.1f, 1.0f);
 			m_Audio.pitch = customPitch;
 		
 		
