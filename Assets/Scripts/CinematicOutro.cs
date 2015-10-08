@@ -23,7 +23,6 @@ namespace ProjectStorms
 
         private GameObject m_minimap = null;
 
-
         void Awake()
         {
             //pirateRenderer = pirate.GetComponent<Renderer>();
@@ -41,7 +40,7 @@ namespace ProjectStorms
         {
             rotator.transform.Rotate(Vector3.down * Time.deltaTime * 60);
         }
-
+        
         public void WinCam(string winnerNumberText, Color winnerColour)
         {
             winText.text = winnerNumberText;

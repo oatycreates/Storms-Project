@@ -56,7 +56,6 @@ namespace ProjectStorms
         public FadeCamWhite fadeOutScene;
 
 		public CinematicOutro optionalWinnerCam;
-
 		//is game ending
 		private bool gameOver = false;
 
@@ -213,7 +212,7 @@ namespace ProjectStorms
             winText.text = ("Player " +winner + "\nWins!");
             winText.color = m_winnerColour;
 
-			Invoke ("GameOver", 5.0f);
+			Invoke ("GameOver", 2.0f);
 
 
 
@@ -228,7 +227,7 @@ namespace ProjectStorms
 
 				if (fadeOutScene != null)
 				{
-					Invoke("FadeOut", 8.0f);
+					Invoke("FadeOut", 15.0f);
 				}
 			}
 			else

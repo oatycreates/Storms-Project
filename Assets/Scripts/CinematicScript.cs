@@ -116,6 +116,7 @@ namespace ProjectStorms
         		{
 					shot += 1;
 				}
+				
 				//Reset the timer
 				transitionTimer = startTimerValue;
         	}
