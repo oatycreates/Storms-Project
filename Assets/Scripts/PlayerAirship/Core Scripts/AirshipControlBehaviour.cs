@@ -279,9 +279,9 @@ namespace ProjectStorms
                 }
 
                 //roll = 0.25f * a_Horizontal + rollFloat;
-                pitch = a_Vertical + a_camVertical;
+                pitch = a_Vertical;// +a_camVertical;
                 yaw = a_Horizontal;
-                roll = a_camHorizontal;
+                //roll = a_camHorizontal;
                 throttle = a_triggers;
 
                 // Reverse yaw if play is moving backwards
