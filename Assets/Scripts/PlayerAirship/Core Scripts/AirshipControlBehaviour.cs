@@ -278,9 +278,10 @@ namespace ProjectStorms
                     rollFloat = 1;
                 }
 
-                //roll = 0.25f * a_Horizontal + a_camHorizontal;
-                roll = 0.25f * a_Horizontal + rollFloat;
-                pitch = a_Vertical;
+                //roll = 0.25f * a_Horizontal + rollFloat;
+                pitch = a_Vertical + a_camVertical;
+                yaw = a_Horizontal;
+                roll = a_camHorizontal;
                 throttle = a_triggers;
 
                 // Reverse yaw if play is moving backwards
@@ -290,13 +291,11 @@ namespace ProjectStorms
                     if (Vector3.Dot(m_myRigid.velocity, m_trans.forward) < 0)
                     {
                         m_isReversing = true;
-                        yaw = a_Horizontal;
                     }
                 }
                 else
                 {
                     // Player is moving forwards, or reverse trigger not held
-                    yaw = a_Horizontal;
                     m_isReversing = false;
                 }
 
@@ -535,7 +534,7 @@ namespace ProjectStorms
 
             // Ship right on the XZ plane
             Vector3 shipRightXZ = m_trans.forward;
-            shipRightXZ = Vector3.Cross(Vector3.up, shipRightXZ);
+            shipRightXZ = Vector3.Normalize(Vector3.Cross(Vector3.up, shipRightXZ));
 
             torque += handleMod * -pitch * reverseMult * shipRightXZ * pitchForce;
             torque += handleMod * yaw * (1.0f - rudderYawMult) * reverseMult * Vector3.up * yawForce;
