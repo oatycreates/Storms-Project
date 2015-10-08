@@ -37,9 +37,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
---- !u!127 &3
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -68,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 112000000, guid: 89b0e40aa2d78fc45bf8810923066e9d,
     type: 2}
   m_RuntimeCPUUsage: 25
@@ -260,6 +258,14 @@ Prefab:
     - target: {fileID: 13763318, guid: e3e2d235d97a4c44ba9c0f499c10fa2a, type: 2}
       propertyPath: m_AABB.m_Extent.z
       value: 6.29214525
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433972, guid: e3e2d235d97a4c44ba9c0f499c10fa2a, type: 2}
+      propertyPath: generalSpeed
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 11433972, guid: e3e2d235d97a4c44ba9c0f499c10fa2a, type: 2}
+      propertyPath: yawForce
+      value: 3500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e3e2d235d97a4c44ba9c0f499c10fa2a, type: 2}
@@ -1540,6 +1546,14 @@ Prefab:
       propertyPath: m_AABB.m_Extent.z
       value: 6.29214573
       objectReference: {fileID: 0}
+    - target: {fileID: 11479436, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
+      propertyPath: generalSpeed
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 11479436, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
+      propertyPath: yawForce
+      value: 3500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
   m_IsPrefabParent: 0
@@ -2023,6 +2037,7 @@ ReflectionProbe:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IntensityMultiplier: 1
+  m_BlendDistance: 1
   m_HDR: 1
   m_BoxProjection: 0
   m_RenderDynamicObjects: 0
@@ -3436,6 +3451,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -4091,6 +4107,14 @@ Prefab:
       propertyPath: m_AABB.m_Extent.z
       value: 6.29214573
       objectReference: {fileID: 0}
+    - target: {fileID: 11498346, guid: 511ee756bbfeef0478f496da5ad82a27, type: 2}
+      propertyPath: generalSpeed
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 11498346, guid: 511ee756bbfeef0478f496da5ad82a27, type: 2}
+      propertyPath: yawForce
+      value: 3500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 511ee756bbfeef0478f496da5ad82a27, type: 2}
   m_IsPrefabParent: 0
@@ -4138,6 +4162,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 35
@@ -4755,6 +4785,7 @@ ReflectionProbe:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IntensityMultiplier: 1
+  m_BlendDistance: 1
   m_HDR: 1
   m_BoxProjection: 0
   m_RenderDynamicObjects: 0
@@ -6206,6 +6237,14 @@ Prefab:
     - target: {fileID: 13771314, guid: 9bc2812c9a3812f4b9379048a448b83a, type: 2}
       propertyPath: m_AABB.m_Extent.y
       value: 3.38427734
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421916, guid: 9bc2812c9a3812f4b9379048a448b83a, type: 2}
+      propertyPath: generalSpeed
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 11421916, guid: 9bc2812c9a3812f4b9379048a448b83a, type: 2}
+      propertyPath: yawForce
+      value: 3500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9bc2812c9a3812f4b9379048a448b83a, type: 2}
