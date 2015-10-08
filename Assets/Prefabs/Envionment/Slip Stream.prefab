@@ -148,6 +148,7 @@ AudioSource:
   m_Pitch: 2
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -213,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e44c222455197cd429897f783f64668b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 100
+  force: 1
   rumbleStr: 1
   rumbleDurr: .100000001
 --- !u!198 &19836054
@@ -1318,7 +1319,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: force
-      value: 300
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
