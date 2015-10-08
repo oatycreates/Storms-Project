@@ -67,7 +67,7 @@ namespace ProjectStorms
 		//private bool open = false;
 		
 		//LineRenderer reference;
-		public LineRenderer myLaser;
+		public Renderer myLaser;
 
         void Awake()
         {
@@ -282,12 +282,12 @@ namespace ProjectStorms
             if (sternPassengerSpawn.spawnHelperLaser != null)
             {
                 laserColour.a = sternPassengerSpawn.GetSpawnLaserAlpha();
-                sternPassengerSpawn.spawnHelperLaser.SetColors(laserColour, laserColour);
+                sternPassengerSpawn.spawnHelperLaser.material.color = laserColour;
             }
             if (hullPassengerSpawn.spawnHelperLaser != null)
             {
                 laserColour.a = hullPassengerSpawn.GetSpawnLaserAlpha();
-                hullPassengerSpawn.spawnHelperLaser.SetColors(laserColour, laserColour);
+                hullPassengerSpawn.spawnHelperLaser.material.color = laserColour;
             }
         }
 

@@ -45,7 +45,7 @@ namespace ProjectStorms
 
         public GameObject passengerPrefab;
 
-        public LineRenderer spawnHelperLaser;
+        public Renderer spawnHelperLaser;
         public float spawnLaserAlpha = 1.0f;
 
         // Detect player presence
