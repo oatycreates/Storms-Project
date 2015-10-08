@@ -153,8 +153,8 @@ namespace ProjectStorms
                 }
 
                 // Sample look input
-                m_totalVert += a_camVertical * camTurnSpeed * Time.deltaTime;
-                m_totalHoriz += a_camHorizontal * camTurnSpeed * Time.deltaTime;
+                //m_totalVert += a_camVertical * camTurnSpeed * Time.deltaTime;
+                //m_totalHoriz += a_camHorizontal * camTurnSpeed * Time.deltaTime;
 
                 // Clamp the total rotation values
                 m_totalHoriz = Mathf.Clamp(m_totalHoriz, -1.0f, 1.0f);
