@@ -74,7 +74,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -260.60379, y: 108.146568, z: 131.610199}
+  m_LocalPosition: {x: 485.262939, y: -66.1300812, z: 546.900024}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 407372}
@@ -151,6 +151,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -243,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb58e2d620177424095a0ac4dd4e20ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScaleSize: 100
+  maxScaleSize: 75
   useZaxis: 0
   speed: 90
 --- !u!114 &11488528
@@ -257,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c7cf1b72a76e142bb994693c2ca26d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsBeforeTimeout: 15
+  secondsBeforeTimeout: 6
 --- !u!198 &19888290
 ParticleSystem:
   m_ObjectHideFlags: 1
