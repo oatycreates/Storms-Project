@@ -149,9 +149,13 @@ namespace ProjectStorms
                 {
                     EvaluatePartCollision(contact.thisCollider, a_colInfo.relativeVelocity.sqrMagnitude);
 
+                    // If slamming into a wall
                     if (a_colInfo.relativeVelocity.sqrMagnitude >= m_bumpVelSqr)
                     {
                         InputManager.SetControllerVibrate(gameObject.tag, bumpRumbleStr, bumpRumbleStr, bumpRumbleDurr, true);
+
+                        // Turn off the passenger tray for a bit
+                        m_shipTray.PowerDownTray();
                     }
                 }
             }

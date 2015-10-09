@@ -54,6 +54,11 @@ namespace ProjectStorms
         private float m_portTimer         = 0.0f;
 
         /// <summary>
+        /// Passenger tray script.
+        /// </summary>
+        private PassengerTray m_passTray = null;
+
+        /// <summary>
         /// Returns a quaternion which ignores the rotation on the Y axis
         /// </summary>
         private Quaternion rotationQuaternion
@@ -72,6 +77,7 @@ namespace ProjectStorms
         public void Awake()
         {
             m_rigidBody = GetComponent<Rigidbody>();
+            m_passTray = GetComponentInChildren<PassengerTray>();
         }
 
         private void Start()
@@ -155,7 +161,17 @@ namespace ProjectStorms
         /// <param name="a_direction">Direction of shunt being applied</param>
         private void ApplyShunt(Vector3 a_direction)
         {
-            m_rigidBody.AddForce(a_direction * shuntingForce, ForceMode.Impulse);
+            Vector3 force = a_direction * shuntingForce;
+            ForceMode forceType = ForceMode.VelocityChange;
+            m_rigidBody.AddForce(force, forceType);
+            if (m_passTray != null)
+            {
+                m_passTray.ApplyTrayForce(force, forceType);
+            }
+            else
+            {
+                Debug.Log("Passenger tray is null! BroadsideWeaponController.cs");
+            }
 
             if (a_direction.x > 0)
             {

@@ -113,7 +113,9 @@ namespace ProjectStorms
                 // Ensure that player has a rigidbody
                 if (playerBody != null)
                 {
-                    playerBody.AddForce(transform.forward * force, ForceMode.VelocityChange);
+                    Vector3 forceDir = transform.forward;
+                    float forceMag = force + Mathf.Sqrt(playerBody.velocity.magnitude * 0.001f);
+                    playerBody.AddForce(forceDir * forceMag, ForceMode.VelocityChange);
                 }
 
                 if (isPlayer && rumbleCooldown <= 0)

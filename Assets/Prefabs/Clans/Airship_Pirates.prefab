@@ -2059,7 +2059,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
   m_LocalRotation: {x: 0, y: .923879564, z: 0, w: .382683307}
-  m_LocalPosition: {x: -1550, y: 50, z: -50}
+  m_LocalPosition: {x: -600, y: 250, z: 600}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -5154,7 +5154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb357257157cc5342b94636dc8ab7adc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shuntingForce: 2000
+  shuntingForce: 200
   cooldownTime: 1
   portCannons:
   - {fileID: 11435538}
@@ -5640,9 +5640,9 @@ MonoBehaviour:
   generalSpeed: 200
   reverseSpeedMult: .25
   pitchForce: 1500
-  yawForce: 2500
+  yawForce: 3750
   rollForce: 1000
-  pitchLimitMult: .300000012
+  pitchLimitMult: 1.5
   rollLimitMult: .800000012
   animThrottleMult: 2.5
   animLowThrottleMult: 0
@@ -5823,6 +5823,7 @@ MonoBehaviour:
   - Passengers
   prisonerMassAdd: 1
   shipPartMassAdd: 0
+  trayPowerDownTime: .200000003
   explosionForce: 30
   explosionRadius: 15
   explosionCentreTrans: {fileID: 490864}
@@ -5837,7 +5838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ce800254132449a2e6f9f47072e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bumpVelThreshold: 90
+  bumpVelThreshold: 60
   bumpRumbleStr: 1
   bumpRumbleDurr: .300000012
   balDestForce: 500
@@ -5938,8 +5939,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58499527, z: 1.01391602}
-    m_Extent: {x: 6.29216194, y: 3.38426208, z: 6.29216194}
+    m_Center: {x: 0, y: 9.58500671, z: 1.01367188}
+    m_Extent: {x: 6.29214573, y: 3.38427734, z: 6.29214573}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:

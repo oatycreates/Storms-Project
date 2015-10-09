@@ -34,6 +34,11 @@ namespace ProjectStorms
         public float shipPartMassAdd = 0.0f;
 
         /// <summary>
+        /// How long to keep the tray powered down for.
+        /// </summary>
+        public float trayPowerDownTime = 0.2f;
+
+        /// <summary>
         /// How hard to explode the ship's contents away.
         /// </summary>
         public float explosionForce = 10.0f;
@@ -59,6 +64,11 @@ namespace ProjectStorms
         private Vector3 m_lastShipVel = Vector3.zero;
 
         /// <summary>
+        /// Angular velocity of the ship last tick.
+        /// </summary>
+        private Vector3 m_lastShipAngVel = Vector3.zero;
+
+        /// <summary>
         /// Set to true when the players ship actually starts moving.
         /// </summary>
         private bool m_hasStarted = false;
@@ -72,6 +82,16 @@ namespace ProjectStorms
         /// List of objects in the tray that match the passenger tag type.
         /// </summary>
         private List<GameObject> m_trayContents = new List<GameObject>();
+
+        /// <summary>
+        /// Time until the tray powers back up.
+        /// </summary>
+        private float m_trayPowerDownCooldown = 0.0f;
+
+        /// <summary>
+        /// Whether the tray has been powered down.
+        /// </summary>
+        private bool m_trayIsPoweredDown = false;
 
         // Cached variables
         private Rigidbody m_shipRb;
@@ -116,7 +136,18 @@ namespace ProjectStorms
         /// </summary>
         void Update()
         {
-
+            if (m_trayIsPoweredDown)
+            {
+                if (m_trayPowerDownCooldown <= 0.0f)
+                {
+                    enabled = true;
+                    m_trayIsPoweredDown = false;
+                }
+                else
+                {
+                    m_trayPowerDownCooldown -= Time.deltaTime;
+                }
+            }
         }
 
         /// <summary>
@@ -124,33 +155,37 @@ namespace ProjectStorms
         /// </summary>
         void FixedUpdate()
         {
-            Vector3 currShipVel = m_shipRb.velocity;
-
-            // Only start applying velocity forces when the player starts moving, this avoids passengers in the first tick being launched
-            if (!m_hasStarted && currShipVel.magnitude > 0)
+            if (isActiveAndEnabled)
             {
-                m_hasStarted = true;
-            }
+                Vector3 currShipVel = m_shipRb.velocity;
 
-            if (m_shipStartMass == 0)
-            {
-                m_shipStartMass = m_shipRb.mass;
-            }
-            else
-            {
-                //Debug.Log(m_shipRb.mass + " " + m_shipStartMass);
+                // Only start applying velocity forces when the player starts moving, this avoids passengers in the first tick being launched
+                if (!m_hasStarted && currShipVel.magnitude > 0)
+                {
+                    m_hasStarted = true;
+                }
 
-                // Set the mass
-                m_shipRb.mass = m_shipStartMass + shipPartMassAdd + m_trayContents.Count * prisonerMassAdd;
-            }
+                if (m_shipStartMass == 0)
+                {
+                    m_shipStartMass = m_shipRb.mass;
+                }
+                else
+                {
+                    //Debug.Log(m_shipRb.mass + " " + m_shipStartMass);
 
-            if (m_hasStarted)
-            {
-                // Calculate ship velocity over the past tick. a = (v - u) / t
-                m_currShipAccel = (m_shipRb.velocity - m_lastShipVel) / Time.deltaTime;
+                    // Set the mass
+                    m_shipRb.mass = m_shipStartMass + shipPartMassAdd + m_trayContents.Count * prisonerMassAdd;
+                }
 
-                // Store ship velocity for the next tick
-                m_lastShipVel = m_shipRb.velocity;
+                if (m_hasStarted)
+                {
+                    // Calculate ship velocity over the past tick. a = (v - u) / t
+                    m_currShipAccel = (m_shipRb.velocity - m_lastShipVel) / Time.deltaTime;
+
+                    // Store ship velocity for the next tick
+                    m_lastShipVel = m_shipRb.velocity;
+                    m_lastShipAngVel = m_shipRb.angularVelocity;
+                }
             }
 
             m_trayContents.Clear();
@@ -162,23 +197,55 @@ namespace ProjectStorms
         /// <param name="a_other"></param>
         void OnTriggerStay(Collider a_other)
         {
-            if (IsTrayObject(a_other.tag))
+            if (isActiveAndEnabled)
             {
-                // Apply the cumulative ship force for the tick to this object
-                Rigidbody rb = a_other.GetComponent<Rigidbody>();
-                if (rb != null)
+                if (IsTrayObject(a_other.tag))
                 {
-                    // Add force
-                    rb.AddForce(m_currShipAccel, ForceMode.Acceleration);
+                    // Apply the cumulative ship force for the tick to this object
+                    Rigidbody rb = a_other.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        // Add force
+                        //rb.AddForce(m_currShipAccel, ForceMode.Acceleration);
 
-                    // Cumulate mass
-                    m_trayContents.Add(rb.gameObject);
+                        rb.velocity = m_lastShipVel;
+                        rb.angularVelocity = m_lastShipAngVel;
+                        rb.AddForce(Physics.gravity, ForceMode.VelocityChange);
+
+                        // Cumulate mass
+                        m_trayContents.Add(rb.gameObject);
+                    }
+
+                    PassengerDestroyScript pass = a_other.GetComponent<PassengerDestroyScript>();
+                    if (pass != null)
+                    {
+                        pass.ResetExpireTimer();
+                    }
                 }
-
-                PassengerDestroyScript pass = a_other.GetComponent<PassengerDestroyScript>();
-                if (pass != null)
+            }
+        }
+        
+        /// <summary>
+        /// Applies a force to all objects in this tray.
+        /// </summary>
+        /// <param name="a_force">Force vector.</param>
+        /// <param name="a_forceType">Unity force type.</param>
+        public void ApplyTrayForce(Vector3 a_force, ForceMode a_forceType)
+        {
+            if (isActiveAndEnabled)
+            {
+                Rigidbody rb;
+                foreach (GameObject go in m_trayContents)
                 {
-                    pass.ResetExpireTimer();
+                    rb = go.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        // First match ship velocity
+                        rb.velocity = m_shipRb.velocity;
+
+                        // Then apply the force
+                        rb.AddForce(a_force, a_forceType);
+                    }
                 }
             }
         }
@@ -193,6 +260,17 @@ namespace ProjectStorms
             {
                 go.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionCentreTrans.position, explosionRadius);
             }
+        }
+
+        /// <summary>
+        /// Powers down the tray for a short duration, will make the contents fly out.
+        /// </summary>
+        public void PowerDownTray()
+        {
+            enabled = false;
+
+            m_trayPowerDownCooldown = trayPowerDownTime;
+            m_trayIsPoweredDown = true;
         }
 
         /// <summary>
