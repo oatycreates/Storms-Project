@@ -37,5 +37,12 @@ namespace ProjectStorms
             return;
 #endif
         }
+
+        public void StartMatch(string a_level)
+        {
+            // TODO: Use a loading screen
+            
+            Application.LoadLevel(a_level);
+        }
 	}
 }
