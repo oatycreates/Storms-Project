@@ -129,7 +129,7 @@ namespace ProjectStorms
 				maxPush = true;
 			}
 			*/
-			print(currentPos);
+			//print(currentPos);
 		}
 	}
 }
