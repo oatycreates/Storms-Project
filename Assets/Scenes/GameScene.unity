@@ -470,6 +470,11 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 187888, guid: e3e2d235d97a4c44ba9c0f499c10fa2a, type: 2}
   m_PrefabInternal: {fileID: 1516183609}
+--- !u!54 &56918415 stripped
+Rigidbody:
+  m_PrefabParentObject: {fileID: 5434884, guid: e3e2d235d97a4c44ba9c0f499c10fa2a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1516183609}
 --- !u!1 &58214464
 GameObject:
   m_ObjectHideFlags: 0
@@ -7763,6 +7768,11 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 194162, guid: 511ee756bbfeef0478f496da5ad82a27, type: 2}
   m_PrefabInternal: {fileID: 726286122}
+--- !u!54 &1083953280 stripped
+Rigidbody:
+  m_PrefabParentObject: {fileID: 5476574, guid: 511ee756bbfeef0478f496da5ad82a27,
+    type: 2}
+  m_PrefabInternal: {fileID: 726286122}
 --- !u!4 &1086774136 stripped
 Transform:
   m_PrefabParentObject: {fileID: 408104, guid: 14aed5c10ed89574cbc839720eb6e636, type: 2}
@@ -10193,6 +10203,11 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 158946, guid: 9bc2812c9a3812f4b9379048a448b83a, type: 2}
   m_PrefabInternal: {fileID: 906661171}
+--- !u!54 &1310168960 stripped
+Rigidbody:
+  m_PrefabParentObject: {fileID: 5415508, guid: 9bc2812c9a3812f4b9379048a448b83a,
+    type: 2}
+  m_PrefabInternal: {fileID: 906661171}
 --- !u!1001 &1312089283
 Prefab:
   m_ObjectHideFlags: 0
@@ -10414,6 +10429,11 @@ Prefab:
 --- !u!1 &1338514681 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 193358, guid: 703593058d53ea447836fb9a2ea40a50, type: 2}
+  m_PrefabInternal: {fileID: 698346409}
+--- !u!54 &1338514692 stripped
+Rigidbody:
+  m_PrefabParentObject: {fileID: 5442436, guid: 703593058d53ea447836fb9a2ea40a50,
+    type: 2}
   m_PrefabInternal: {fileID: 698346409}
 --- !u!4 &1340095559 stripped
 Transform:
@@ -11161,6 +11181,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 11492030, guid: 4cb407090366ae24a977379e8ceff2b4, type: 2}
+      propertyPath: player1RigidBody
+      value: 
+      objectReference: {fileID: 1338514692}
+    - target: {fileID: 11492030, guid: 4cb407090366ae24a977379e8ceff2b4, type: 2}
+      propertyPath: player2RigidBody
+      value: 
+      objectReference: {fileID: 1083953280}
+    - target: {fileID: 11492030, guid: 4cb407090366ae24a977379e8ceff2b4, type: 2}
+      propertyPath: player3RigidBody
+      value: 
+      objectReference: {fileID: 1310168960}
+    - target: {fileID: 11492030, guid: 4cb407090366ae24a977379e8ceff2b4, type: 2}
+      propertyPath: player4RigidBody
+      value: 
+      objectReference: {fileID: 56918415}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4cb407090366ae24a977379e8ceff2b4, type: 2}
   m_IsPrefabParent: 0
