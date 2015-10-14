@@ -70,21 +70,21 @@ namespace ProjectStorms
             if (m_player2OutOfBounds && player2RigidBody != null)
             {
                 Vector3 force = levelOrigin - player2RigidBody.transform.position;
-                player1RigidBody.AddForce(force, ForceMode.Impulse);
+                player2RigidBody.AddForce(force, ForceMode.Impulse);
             }
 
             // Keep player 3 within level bounds
             if (m_player3OutOfBounds && player3RigidBody != null)
             {
                 Vector3 force = levelOrigin - player3RigidBody.transform.position;
-                player1RigidBody.AddForce(force, ForceMode.Impulse);
+                player3RigidBody.AddForce(force, ForceMode.Impulse);
             }
 
             // Keep player 4 within level bounds
             if (m_player4OutOfBounds && player4RigidBody != null)
             {
                 Vector3 force = levelOrigin - player4RigidBody.transform.position;
-                player1RigidBody.AddForce(force, ForceMode.Impulse);
+                player4RigidBody.AddForce(force, ForceMode.Impulse);
             }
         }
 
