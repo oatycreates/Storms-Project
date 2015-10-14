@@ -17,6 +17,21 @@ namespace ProjectStorms
 {
 	public class MainMenu : MonoBehaviour 
 	{
+        private enum GameModes
+        {
+            TEAMS,
+            FFA
+        }
+
+        private GameModes m_gameMode;
+        private string m_mapName;
+        private PlayerSetupMenu m_setupMenu;
+
+        public void Awake()
+        {
+            m_setupMenu = FindObjectOfType<PlayerSetupMenu>();
+        }
+
 		void Start() 
 		{
 			
@@ -38,11 +53,24 @@ namespace ProjectStorms
 #endif
         }
 
-        public void StartMatch(string a_level)
+        public void SetMap(string a_name)
         {
-            // TODO: Use a loading screen
-            
-            Application.LoadLevel(a_level);
+            m_mapName = a_name;
+        }
+
+        public void SetGamemodeTeams()
+        {
+            m_gameMode = GameModes.TEAMS;
+        }
+
+        public void SetGamemodeFFA()
+        {
+            m_gameMode = GameModes.FFA;
+        }
+
+        public void StartMatch()
+        {
+            // TODO: Load map with specified settings
         }
 	}
 }
