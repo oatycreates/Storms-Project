@@ -50,6 +50,10 @@ namespace ProjectStorms
 
         private static GameObject ms_powerupHolder = null;
 
+        //A public bool that determines whether or not I can fire a countermeasure
+       // [HideInInspector]
+        public bool gotPickup = true;
+
 		void Awake()
 		{
 			m_trans = gameObject.transform;
@@ -128,30 +132,40 @@ namespace ProjectStorms
 		{
 			if (!buttonDown)
 			{
-				//Dunno why these buttons don't map exactly to the right axis... ? Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
-				if (a_left)
-				{
-					SpawnChaff ();
-					buttonDown = true;
-				}
+                //Check to see if I can fire any countermeasures
+               if (gotPickup)
+                {
 
-				if (a_right)
-				{
-					SpawnMissile ();
-					buttonDown = true;
-				}
+                    //Dunno why these buttons don't map exactly to the right axis... ? Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
+                    if (a_left)
+                    {
+                        SpawnChaff();
+                        buttonDown = true;
+                        gotPickup = false;
+                    }
 
-				if (a_up)
-				{
-					SpawnSkyMine ();
-					buttonDown = true;
-				}
+                    if (a_right)
+                    {
+                        SpawnMissile();
+                        buttonDown = true;
+                        gotPickup = false;
+                    }
 
-				if (a_down) 
-				{
-					SpawnPinwheel();
-					buttonDown = true;
-				}
+                    if (a_up)
+                    {
+                        SpawnSkyMine();
+                        buttonDown = true;
+                        gotPickup = false;
+                    }
+
+                    if (a_down)
+                    {
+                        SpawnPinwheel();
+                        buttonDown = true;
+                        gotPickup = false;
+                    }
+                }
+
 			}
 	
 			//Reset button
