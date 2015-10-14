@@ -163,7 +163,7 @@ public class TypogenicText : MonoBehaviour
 		_stationary = Stationary;
 		_enableClickSupport = EnableClickSupport;
 		_currentMaterial = 0;
-		_materialCount = renderer.sharedMaterials.Length;
+		_materialCount = GetComponent<Renderer>().sharedMaterials.Length;
 
 		m_Mesh.Clear();
 		m_Vertices.Clear();
@@ -258,7 +258,7 @@ public class TypogenicText : MonoBehaviour
 		m_Mesh.uv2 = null;
 		m_Mesh.normals = null;
 
-		m_Mesh.subMeshCount = renderer.sharedMaterials.Length;
+		m_Mesh.subMeshCount = GetComponent<Renderer>().sharedMaterials.Length;
 
 		for (int i = 0; i < m_Mesh.subMeshCount; i++)
 			m_Mesh.SetTriangles(m_SubmeshTriangles[i].ToArray(), i);
