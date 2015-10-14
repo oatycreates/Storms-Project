@@ -133,7 +133,7 @@ namespace ProjectStorms
 			if (!buttonDown)
 			{
                 //Check to see if I can fire any countermeasures
-               if (gotPickup)
+                //if (gotPickup)
                 {
 
                     //Dunno why these buttons don't map exactly to the right axis... ? Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
