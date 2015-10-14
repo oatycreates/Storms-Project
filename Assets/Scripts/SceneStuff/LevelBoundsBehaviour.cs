@@ -90,43 +90,53 @@ namespace ProjectStorms
 
         public void OnTriggerEnter(Collider a_other)
         {
-            // Flag players which re-enter level bounds
-            if (a_other.CompareTag("Player1_"))
+            bool isPlayer =  a_other.GetComponent<AirshipControlBehaviour>() != null;
+
+            if (isPlayer)
             {
-                m_player1OutOfBounds = false;
-            }
-            else if (a_other.CompareTag("Player2_"))
-            {
-                m_player2OutOfBounds = false;
-            }
-            else if (a_other.CompareTag("Player3_"))
-            {
-                m_player3OutOfBounds = false;
-            }
-            else if (a_other.CompareTag("Player4_"))
-            {
-                m_player4OutOfBounds = false;
+                // Flag players which re-enter level bounds
+                if (a_other.CompareTag("Player1_"))
+                {
+                    m_player1OutOfBounds = false;
+                }
+                else if (a_other.CompareTag("Player2_"))
+                {
+                    m_player2OutOfBounds = false;
+                }
+                else if (a_other.CompareTag("Player3_"))
+                {
+                    m_player3OutOfBounds = false;
+                }
+                else if (a_other.CompareTag("Player4_"))
+                {
+                    m_player4OutOfBounds = false;
+                }
             }
         }
 
         public void OnTriggerExit(Collider a_other)
         {
-            // Flag players which leave level bounds
-            if (a_other.CompareTag("Player1_"))
+            bool isPlayer =  a_other.GetComponent<AirshipControlBehaviour>() != null;
+
+            if (isPlayer)
             {
-                m_player1OutOfBounds = true;
-            }
-            else if (a_other.CompareTag("Player2_"))
-            {
-                m_player2OutOfBounds = true;
-            }
-            else if (a_other.CompareTag("Player3_"))
-            {
-                m_player3OutOfBounds = true;
-            }
-            else if (a_other.CompareTag("Player4_"))
-            {
-                m_player4OutOfBounds = true;
+                // Flag players which leave level bounds
+                if (a_other.CompareTag("Player1_"))
+                {
+                    m_player1OutOfBounds = true;
+                }
+                else if (a_other.CompareTag("Player2_"))
+                {
+                    m_player2OutOfBounds = true;
+                }
+                else if (a_other.CompareTag("Player3_"))
+                {
+                    m_player3OutOfBounds = true;
+                }
+                else if (a_other.CompareTag("Player4_"))
+                {
+                    m_player4OutOfBounds = true;
+                }
             }
         }
 	}
