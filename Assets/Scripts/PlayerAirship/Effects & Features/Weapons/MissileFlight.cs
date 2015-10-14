@@ -201,12 +201,13 @@ namespace ProjectStorms
             Invoke("GoToSleep", missileLifetime);
 		}
 
-        void OnCollisionEnter()
+        void OnCollisionEnter(Collision a_other)
         {
             // Apply force to other
-            Rigidbody rb = gameObject.GetComponentInParent<Rigidbody>();
+            Rigidbody rb = a_other.rigidbody;
             if (rb != null)
             {
+                Debug.Log("Forcing " + m_trans.forward * ramForce);
                 rb.AddForce(m_trans.forward * ramForce, ForceMode.VelocityChange);
             }
 
