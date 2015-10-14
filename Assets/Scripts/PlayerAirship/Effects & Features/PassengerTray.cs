@@ -155,7 +155,7 @@ namespace ProjectStorms
         /// </summary>
         void FixedUpdate()
         {
-            if (isActiveAndEnabled)
+            if (!m_trayIsPoweredDown)
             {
                 Vector3 currShipVel = m_shipRb.velocity;
 
@@ -197,7 +197,7 @@ namespace ProjectStorms
         /// <param name="a_other"></param>
         void OnTriggerStay(Collider a_other)
         {
-            if (isActiveAndEnabled)
+            if (!m_trayIsPoweredDown)
             {
                 if (IsTrayObject(a_other.tag))
                 {
@@ -208,6 +208,7 @@ namespace ProjectStorms
                         // Add force
                         //rb.AddForce(m_currShipAccel, ForceMode.Acceleration);
 
+                        // Stick the passenger in the ship tray
                         rb.velocity = m_lastShipVel;
                         rb.angularVelocity = m_lastShipAngVel;
                         rb.AddForce(Physics.gravity, ForceMode.VelocityChange);
@@ -232,7 +233,7 @@ namespace ProjectStorms
         /// <param name="a_forceType">Unity force type.</param>
         public void ApplyTrayForce(Vector3 a_force, ForceMode a_forceType)
         {
-            if (isActiveAndEnabled)
+            if (!m_trayIsPoweredDown)
             {
                 Rigidbody rb;
                 foreach (GameObject go in m_trayContents)
@@ -267,8 +268,6 @@ namespace ProjectStorms
         /// </summary>
         public void PowerDownTray()
         {
-            enabled = false;
-
             m_trayPowerDownCooldown = trayPowerDownTime;
             m_trayIsPoweredDown = true;
         }
