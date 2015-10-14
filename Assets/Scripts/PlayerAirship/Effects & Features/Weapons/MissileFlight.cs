@@ -16,6 +16,9 @@ namespace ProjectStorms
 	[RequireComponent(typeof(Rigidbody))]
 	public class MissileFlight : MonoBehaviour 
 	{
+        [Tooltip("How much force to apply on hit.")]
+        public float ramForce = 150.0f;
+
 		private Transform m_target = null;
 
 		private Rigidbody m_myRigid = null;
@@ -197,6 +200,18 @@ namespace ProjectStorms
 
             Invoke("GoToSleep", missileLifetime);
 		}
+
+        void OnCollisionEnter()
+        {
+            // Apply force to other
+            Rigidbody rb = gameObject.GetComponentInParent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddForce(m_trans.forward * ramForce, ForceMode.VelocityChange);
+            }
+
+            gameObject.SetActive(false);
+        }
 
         public void SetTarget(Transform a_trans)
         {
