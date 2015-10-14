@@ -2947,6 +2947,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -4351,6 +4352,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -4420,6 +4422,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -4577,6 +4580,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 165176, guid: e563f3dcaebeca94c87a3244c35a8ca0, type: 2}
   cannonBallForce: 100
+  shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
 --- !u!114 &11404896
 MonoBehaviour:
@@ -4650,6 +4654,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 165176, guid: e563f3dcaebeca94c87a3244c35a8ca0, type: 2}
   cannonBallForce: 100
+  shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
 --- !u!114 &11413364
 MonoBehaviour:
@@ -4745,7 +4750,6 @@ MonoBehaviour:
   - {fileID: 142384}
   - {fileID: 115276}
   camTurnSpeed: 1.5
-  shotCooldown: 2.50999999
   movingCamResetTime: 1.5
   camResetMoveSpeed: 3
 --- !u!114 &11421512
@@ -4761,6 +4765,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -4819,6 +4829,7 @@ MonoBehaviour:
   cannon: 0
   cannonBallPrefab: {fileID: 128906, guid: 93680e6f48de6ce4b8e8129c860c0fa5, type: 2}
   cannonBallForce: 100
+  shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
 --- !u!114 &11428686
 MonoBehaviour:
@@ -4835,6 +4846,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 165176, guid: e563f3dcaebeca94c87a3244c35a8ca0, type: 2}
   cannonBallForce: 100
+  shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
 --- !u!114 &11428984
 MonoBehaviour:
@@ -4851,6 +4863,7 @@ MonoBehaviour:
   - Passengers
   prisonerMassAdd: .25
   shipPartMassAdd: 0
+  trayPowerDownTime: .200000003
   explosionForce: 30
   explosionRadius: 15
   explosionCentreTrans: {fileID: 437454}
@@ -4975,6 +4988,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5005,6 +5024,7 @@ MonoBehaviour:
   cannon: 1
   cannonBallPrefab: {fileID: 165176, guid: e563f3dcaebeca94c87a3244c35a8ca0, type: 2}
   cannonBallForce: 100
+  shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
 --- !u!114 &11444942
 MonoBehaviour:
@@ -5019,6 +5039,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5066,6 +5092,8 @@ MonoBehaviour:
   pitch: 0
   yaw: 0
   animThrottleMult: 10
+  boostRumbleStr: 3
+  boostRumbleDurr: .100000001
   airshipMainCam: {fileID: 11476918}
 --- !u!114 &11451094
 MonoBehaviour:
@@ -5080,6 +5108,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5144,6 +5178,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5188,6 +5228,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 165176, guid: e563f3dcaebeca94c87a3244c35a8ca0, type: 2}
   cannonBallForce: 100
+  shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
 --- !u!114 &11470350
 MonoBehaviour:
@@ -5200,6 +5241,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482ce800254132449a2e6f9f47072e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bumpVelThreshold: 90
+  bumpRumbleStr: 1
+  bumpRumbleDurr: .75
+  balDestForce: 500
+  balDestRumbleStr: 1
+  balDestRumbleDurr: .200000003
+  balloonPopNoise: {fileID: 0}
   destructableParts:
   - partObject: {fileID: 111452}
     partType: 1
@@ -5289,6 +5337,7 @@ MonoBehaviour:
   camLookTarget: {fileID: 481600}
   camLookSmooth: 2
   camPosSmooth: 25
+  minCamSnapDist: 31
 --- !u!114 &11487712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5318,6 +5367,7 @@ MonoBehaviour:
   cannon: 2
   cannonBallPrefab: {fileID: 165176, guid: e563f3dcaebeca94c87a3244c35a8ca0, type: 2}
   cannonBallForce: 100
+  shotCooldown: 2.50999999
   lookAtTarget: {fileID: 0}
 --- !u!124 &12475972
 Behaviour:
