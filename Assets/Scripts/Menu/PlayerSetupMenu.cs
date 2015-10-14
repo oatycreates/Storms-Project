@@ -26,7 +26,7 @@ namespace ProjectStorms
         }
 
         [System.Serializable]
-        private struct Player
+        private class Player
         {
             public bool ready;
             public Faction faction;
@@ -44,15 +44,18 @@ namespace ProjectStorms
         private MainMenu m_mainMenu;
 
         // Player states
-        private Player[] m_players = new Player[4];
+        private Player[] m_players;
 
         public void Awake()
         {
             m_mainMenu = GameObject.FindObjectOfType<MainMenu>();
 
             // Initialise array for storing player settings
+            m_players = new Player[4];
+
             for (int i = 0; i < m_players.Length; ++i)
             {
+                m_players[i]            = new Player();
                 m_players[i].ready      = false;
                 m_players[i].faction    = Faction.NONE;
             }
