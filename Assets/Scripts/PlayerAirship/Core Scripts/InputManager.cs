@@ -121,8 +121,8 @@ namespace ProjectStorms
             float camLeftRight = Input.GetAxis(gameObject.tag + "CamHorizontal");
 
             // Dpad buttons
-            float dpadVert = Input.GetAxis(gameObject.tag + "DPadHorizontal");
-            float dpadHoriz = Input.GetAxis(gameObject.tag + "DPadVertical");
+            float dpadHoriz = Input.GetAxis(gameObject.tag + "DPadHorizontal");
+            float dpadVert = Input.GetAxis(gameObject.tag + "DPadVertical");
             bool dpadDown = dpadVert < 0;
             bool dpadUp = dpadVert > 0;
             bool dpadLeft = dpadHoriz < 0;

@@ -22,6 +22,15 @@ namespace ProjectStorms
 		private Transform m_trans = null;
 		private bool buttonDown = false;
 
+        /// <summary>
+        /// Time between each powerup.
+        /// </summary>
+        public float powerUpCooldown = 1.5f;
+        /// <summary>
+        /// Current powerup cooldown.
+        /// </summary>
+        private float m_currPowerupCooldown = 0.0f;
+
 		//CannonPort
 		/*
 		private GameObject port;
@@ -125,44 +134,57 @@ namespace ProjectStorms
                 singlePinwheel.transform.parent = ms_powerupHolder.transform;
 				pinwheels.Add(singlePinwheel);
 			}
+
+            // Start on cooldown
+            m_currPowerupCooldown = powerUpCooldown;
 		}
 
+        void Update()
+        {
+            // Decrease powerup cooldown if waiting
+            if (m_currPowerupCooldown > 0)
+            {
+                m_currPowerupCooldown -= Time.deltaTime;
+            }
+        }
 
 		public void DPad(bool a_down, bool a_up, bool a_left, bool a_right)
 		{
 			if (!buttonDown)
 			{
-                //Check to see if I can fire any countermeasures
+                // Check to see if I can fire any countermeasures
                 //if (gotPickup)
                 {
-
-                    //Dunno why these buttons don't map exactly to the right axis... ? Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
-                    if (a_left)
+                    if (m_currPowerupCooldown <= 0)
                     {
-                        SpawnChaff();
-                        buttonDown = true;
-                        gotPickup = false;
-                    }
+                        // Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
+                        if (a_down)
+                        {
+                            SpawnChaff();
+                            buttonDown = true;
+                            gotPickup = false;
+                        }
 
-                    if (a_right)
-                    {
-                        SpawnMissile();
-                        buttonDown = true;
-                        gotPickup = false;
-                    }
+                        if (a_up)
+                        {
+                            SpawnMissile();
+                            buttonDown = true;
+                            gotPickup = false;
+                        }
 
-                    if (a_up)
-                    {
-                        SpawnSkyMine();
-                        buttonDown = true;
-                        gotPickup = false;
-                    }
+                        if (a_right)
+                        {
+                            SpawnSkyMine();
+                            buttonDown = true;
+                            gotPickup = false;
+                        }
 
-                    if (a_down)
-                    {
-                        SpawnPinwheel();
-                        buttonDown = true;
-                        gotPickup = false;
+                        if (a_left)
+                        {
+                            SpawnPinwheel();
+                            buttonDown = true;
+                            gotPickup = false;
+                        }
                     }
                 }
 
@@ -191,6 +213,9 @@ namespace ProjectStorms
                     // Rumble the controller
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
 
+                    // Go on cooldown
+                    m_currPowerupCooldown = powerUpCooldown;
+
                     //missiles[i].transform.position = spawnOffset;
 					//missiles[i].transform.position = port.transform.position;
 					missiles[i].transform.position = spawnPos;
@@ -213,7 +238,7 @@ namespace ProjectStorms
 			//Local offset
 			Vector3 localOffset = new Vector3 (0, 5, -18);
 			Vector3 worldOffest = m_trans.rotation * localOffset;
-			Vector3 spawnPos = m_trans.position + worldOffest;
+            Vector3 spawnPos = m_trans.position + worldOffest;
 
 			//Loop and find the first non active Chaff
 			for (int i = 0; i < chaff.Count; i++)
@@ -222,6 +247,9 @@ namespace ProjectStorms
 				{
                     // Rumble the controller
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
+
+                    // Go on cooldown
+                    m_currPowerupCooldown = powerUpCooldown;
 
                     chaff[i].transform.position = spawnPos;
 					chaff[i].transform.rotation = m_trans.rotation;
@@ -247,6 +275,9 @@ namespace ProjectStorms
                     // Rumble the controller
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
 
+                    // Go on cooldown
+                    m_currPowerupCooldown = powerUpCooldown;
+
                     //skyMines[i].transform.position = m_trans.position;
 					skyMines[i].transform.position = spawnPos;
 					skyMines[i].transform.rotation = m_trans.rotation;
@@ -270,6 +301,9 @@ namespace ProjectStorms
 				{
                     // Rumble the controller
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
+
+                    // Go on cooldown
+                    m_currPowerupCooldown = powerUpCooldown;
 
 					pinwheels[i].transform.position = spawnPos;
 					pinwheels[i].transform.rotation = m_trans.rotation;
