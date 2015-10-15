@@ -198,8 +198,32 @@ namespace ProjectStorms
 			customPitch = 0.75f;
             m_Audio.Play();
 
+            // Disable trail renderer on spawn, scheduled re-enable
+            ResetTrail(childTrail, this);
+
             Invoke("GoToSleep", missileLifetime);
 		}
+
+        /// <summary>
+        /// Reset the trail renderer to prevent the trail from joining
+        /// </summary>
+        public static void ResetTrail(TrailRenderer a_trail, MonoBehaviour a_inst)
+        {
+            a_inst.StartCoroutine(ResetTrailCoroutine(a_trail));
+        }
+
+        /// <summary>
+        /// Coroutine to reset trail renderer trail.
+        /// </summary>
+        /// <param name="a_trail">Trail renderer to reset.</param>
+        /// <returns>Enumerator for yield statement.</returns>
+        static IEnumerator ResetTrailCoroutine(TrailRenderer a_trail)
+        {
+            var trailTime = a_trail.time;
+            a_trail.time = 0;
+            yield return new WaitForEndOfFrame();
+            a_trail.time = trailTime;
+        }
 
         void OnCollisionEnter(Collision a_other)
         {
