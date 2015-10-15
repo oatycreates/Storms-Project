@@ -22,19 +22,19 @@ namespace ProjectStorms
         [Header("References")]
         public RawImage m_rawImage;
 
-        void Start()
+        private Button m_button;
+
+        public void Awake()
         {
-
-        }
-
-        void Update()
-        {
-
+            m_button = GetComponent<Button>();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            m_rawImage.texture = renderTexture;
+            if (m_button.interactable)
+            {
+                m_rawImage.texture = renderTexture;
+            }
         }
     }
 }

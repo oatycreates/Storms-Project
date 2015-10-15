@@ -20,12 +20,21 @@ namespace ProjectStorms
         private enum GameModes
         {
             TEAMS,
-            FFA
+            FFA,
+            NONE
         }
 
-        private GameModes m_gameMode;
+        private GameModes m_gameMode = GameModes.NONE;
         private string m_mapName;
         private PlayerSetupMenu m_setupMenu;
+
+        public bool isTeamsGameMode
+        {
+            get
+            {
+                return m_gameMode == GameModes.TEAMS;
+            }
+        }
 
         public void Awake()
         {
@@ -70,6 +79,13 @@ namespace ProjectStorms
 
         public void StartMatch()
         {
+            if (m_mapName == "" ||
+                m_gameMode == GameModes.NONE)
+            {
+                Debug.LogError("Map and gamemode misconfiguration... unable to start game");
+                return;
+            }
+
             // TODO: Load map with specified settings
         }
 	}
