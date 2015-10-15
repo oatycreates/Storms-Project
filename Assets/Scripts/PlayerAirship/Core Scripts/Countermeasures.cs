@@ -188,7 +188,10 @@ namespace ProjectStorms
 			{
 				if (!missiles[i].activeInHierarchy)
 				{
-					//missiles[i].transform.position = spawnOffset;
+                    // Rumble the controller
+                    InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
+
+                    //missiles[i].transform.position = spawnOffset;
 					//missiles[i].transform.position = port.transform.position;
 					missiles[i].transform.position = spawnPos;
 					missiles[i].transform.rotation = m_trans.rotation;
@@ -217,7 +220,10 @@ namespace ProjectStorms
 			{
 				if (!chaff[i].activeInHierarchy)
 				{
-					chaff[i].transform.position = spawnPos;
+                    // Rumble the controller
+                    InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
+
+                    chaff[i].transform.position = spawnPos;
 					chaff[i].transform.rotation = m_trans.rotation;
 					chaff[i].SetActive(true);
 
@@ -238,7 +244,10 @@ namespace ProjectStorms
 			{
 				if (!skyMines[i].activeInHierarchy)
 				{
-					//skyMines[i].transform.position = m_trans.position;
+                    // Rumble the controller
+                    InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
+
+                    //skyMines[i].transform.position = m_trans.position;
 					skyMines[i].transform.position = spawnPos;
 					skyMines[i].transform.rotation = m_trans.rotation;
 					skyMines[i].SetActive(true);
@@ -259,6 +268,9 @@ namespace ProjectStorms
 			{
 				if (!pinwheels[i].activeInHierarchy)
 				{
+                    // Rumble the controller
+                    InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
+
 					pinwheels[i].transform.position = spawnPos;
 					pinwheels[i].transform.rotation = m_trans.rotation;
 					pinwheels[i].SetActive(true);
