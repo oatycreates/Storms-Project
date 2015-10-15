@@ -118,6 +118,11 @@ namespace ProjectStorms
         public float killY = -2000.0f;
 
         /// <summary>
+        /// Time to wait between each drop rumble pulse.
+        /// </summary>
+        public float trapdoorRumbleCooldown = 0.75f;
+
+        /// <summary>
         /// Multiplier values for when various ship parts get destroyed.
         /// </summary>
         public ShipPartInputConnection[] shipPartConns;
@@ -159,7 +164,7 @@ namespace ProjectStorms
         [HideInInspector]
         public float throttle;
         [HideInInspector]
-        public bool openHatch;
+        public bool openHatch = false;
 
         //Last Vibration values
         private float previousYaw = 0;
@@ -176,6 +181,11 @@ namespace ProjectStorms
 		private float v_leftRoll = 0;
 		private float v_rightRoll = 0;
 
+        /// <summary>
+        /// Passenger tray.
+        /// </summary>
+        private PassengerTray m_tray = null;
+
         void Awake()
         {
             // Get Rigidbody variables
@@ -189,6 +199,8 @@ namespace ProjectStorms
             m_shipPartDestroy = GetComponent<ShipPartDestroy>();
             m_shipStallScript = GetComponent<AirshipStallingBehaviour>();
             m_shipStates = GetComponent<StateManager>();
+
+            m_tray = GetComponentInChildren<PassengerTray>();
 
             m_camTrans = airshipMainCam.transform;
         }
@@ -299,6 +311,12 @@ namespace ProjectStorms
                     m_isReversing = false;
                 }
 
+                // If about to open hatch
+                if (!openHatch && a_faceUp)
+                {
+                    Invoke("TrapdoorRumblePulse", trapdoorRumbleCooldown);
+                }
+
                 // Check buttonPresses
                 openHatch = a_faceUp;//(a_faceUp || a_faceDown);
 
@@ -325,6 +343,24 @@ namespace ProjectStorms
 
 				Vibrate();
 			}
+        }
+
+        /// <summary>
+        /// Executes a pulse of rumble, repeats if button is still held down.
+        /// </summary>
+        void TrapdoorRumblePulse()
+        {
+            if (m_tray.passengerCount > 0)
+            {
+                // Vibrate if tray has passengers
+                InputManager.SetControllerVibrate(gameObject.tag, 0.25f, 0.25f, 0.25f, false);
+            }
+
+            // Repeat if button is still held down
+            if (openHatch)
+            {
+                Invoke("TrapdoorRumblePulse", trapdoorRumbleCooldown);
+            }
         }
 
 		void Vibrate()
