@@ -5488,6 +5488,7 @@ MonoBehaviour:
   pooledSkyMines: 3
   pinwheelPrefab: {fileID: 180144, guid: f5400e541fe588743b9fd758804f8513, type: 2}
   pooledPinwheels: 2
+  gotPickup: 1
 --- !u!114 &11401736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5640,7 +5641,7 @@ MonoBehaviour:
   yawForce: 3750
   rollForce: 1000
   pitchLimitMult: 1.5
-  rollLimitMult: .800000012
+  rollLimitMult: 1.5
   animThrottleMult: 2.5
   animLowThrottleMult: 0
   airshipMainCam: {fileID: 11420182}
@@ -5649,6 +5650,7 @@ MonoBehaviour:
   rudderJoint: {fileID: 11488866}
   stallY: 1000
   killY: -1479.59998
+  trapdoorRumbleCooldown: .75
   shipPartConns:
   - partType: 1
     partValueMult: 0
