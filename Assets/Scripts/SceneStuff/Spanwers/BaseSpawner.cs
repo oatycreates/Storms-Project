@@ -25,6 +25,9 @@ namespace ProjectStorms
         [Header("Editor Only")]
         public bool overrideBaseType = false;
 
+        public Faction overrideFaction = Faction.NONE;
+#endif
+
         public enum Faction
         {
             NONE,
@@ -33,8 +36,6 @@ namespace ProjectStorms
             TINKERERS,
             VIKINGS,
         }
-        public Faction overrideFaction = Faction.NONE;
-#endif
 
         public void Awake()
         {
