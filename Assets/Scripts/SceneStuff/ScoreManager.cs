@@ -59,6 +59,12 @@ namespace ProjectStorms
 		//is game ending
 		private bool gameOver = false;
 
+        //check each base identity
+        private string player1tag;
+        private string player2tag;
+        private string player3tag;
+        private string player4tag;
+
         void Start()
         {
             winText.text = " ";
@@ -89,6 +95,11 @@ namespace ProjectStorms
 
 				//make the reference
 				teamGame = true;
+
+
+
+                //check the tag
+                
 			}
         }
 

@@ -9,6 +9,7 @@
 		
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 namespace ProjectStorms
@@ -20,6 +21,10 @@ namespace ProjectStorms
         public float lifeTime = 1.0f;
         public float fadeMod = 1.5f;
 
+        public List<string> happyNoise = new List<string>();
+
+        private Color m_myColour;
+
         void Awake()
         {
             m_text = gameObject.GetComponent<Text>();
@@ -27,11 +32,16 @@ namespace ProjectStorms
 
         void OnEnable()
         {
-            
+          
+           m_text.text =  happyNoise[Random.Range(0, happyNoise.Count - 1)];
+           
         }
 
         void Update()
         {
+            //Set colour
+            m_text.color = m_myColour;
+
             lifeTime -= (Time.deltaTime)/fadeMod;
 
             m_text.color = new Color(m_text.color.r, m_text.color.g, m_text.color.b, lifeTime);
@@ -40,6 +50,11 @@ namespace ProjectStorms
             {
                 Destroy(gameObject);
             }
+        }
+
+        public void SetColour(Color textColour)
+        {
+            m_myColour = textColour;
         }
     }
 }

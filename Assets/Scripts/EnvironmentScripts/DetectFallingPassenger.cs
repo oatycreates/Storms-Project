@@ -26,6 +26,16 @@ namespace ProjectStorms
 
         public Color textColour = Color.white;
 
+        private PirateBaseIdentity m_base = null;
+        private AnnouncerEffects m_annoucner = null;
+        public string baseTag;
+
+        void Awake()
+        {
+            m_base = gameObject.GetComponentInParent<PirateBaseIdentity>();
+            m_annoucner = GameObject.FindObjectOfType<AnnouncerEffects>();
+        }
+
         void Start()
         {
             textColour = Color.black;
@@ -56,6 +66,28 @@ namespace ProjectStorms
                 	peopleLeftToCatch -= 1;
 				}
                 a_other.gameObject.SetActive(false);
+
+                baseTag = m_base.gameObject.tag;
+
+                if (baseTag == "Player1_")
+                {
+                    m_annoucner.Pirate();
+                }
+                else
+                if (baseTag == "Player2_")
+                {
+                    m_annoucner.Navy();
+                }
+                else
+                if (baseTag == "Player3_")
+                {
+                    m_annoucner.Tinkerer();
+                }
+                else
+                if (baseTag == "Player4_")
+                {
+                    m_annoucner.Viking();
+                }
             }
         }
     }
