@@ -62,14 +62,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_text: {fileID: 11408594}
-  lifeTime: 1
-  fadeMod: 1
-  happyNoise:
-  - Much Win!
+  messageType: 0
+  scoringMessages:
+  - Much Success!
   - Score!
-  - Points!
-  - Great!
+  - Great Job!
   - Fantastic!
+  - Rescue!
+  warningMessages:
+  - Warning!
+  - Prison Break!
+  - Falling Passengers!
+  winningMessages:
+  - Player Escaping!
+  - Gameover Imminent!
+  - Takes the Lead!
+  - Out in Front!
 --- !u!222 &22289302
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -101,6 +109,18 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: scoringMessages.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: warningMessages.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: winningMessages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
@@ -110,6 +130,62 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: fadeMod
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: scoringMessages.Array.data[0]
+      value: Much Success!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: scoringMessages.Array.data[1]
+      value: Score!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: scoringMessages.Array.data[2]
+      value: Great Job!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: scoringMessages.Array.data[3]
+      value: Fantastic!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: scoringMessages.Array.data[4]
+      value: Rescue!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: warningMessages.Array.data[0]
+      value: Warning!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: warningMessages.Array.data[1]
+      value: Prison Break!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: warningMessages.Array.data[2]
+      value: Falling Passengers!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: winningMessages.Array.data[0]
+      value: Player Escaping!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: winningMessages.Array.data[1]
+      value: Gameover Imminent!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: winningMessages.Array.data[2]
+      value: Takes the Lead!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: winningMessages.Array.data[3]
+      value: Out in Front!
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
