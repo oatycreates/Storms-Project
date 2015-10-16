@@ -15,14 +15,17 @@ namespace ProjectStorms
 {
     public class PlayerSpawner : MonoBehaviour
     {
+        [Header("Prefabs")]
+        public GameObject navyPlayer;
+        public GameObject piratesPlayer;
+        public GameObject tinkerersPlayer;
+        public GameObject vikingsPlayer;
 
-        // Use this for initialization
         void Start()
         {
 
         }
 
-        // Update is called once per frame
         void Update()
         {
 
