@@ -22,6 +22,7 @@ namespace ProjectStorms
 	{
 		private Renderer m_myRenderer;
 		private SphereCollider m_myCollider;
+        private Transform m_trans = null;
 
 		public GameObject explosionPrefab;
 		public int numberOfExplosions;
@@ -34,11 +35,16 @@ namespace ProjectStorms
 
 		private bool bang = false;
 
-		//Scale mine on activation
+		// Scale mine on activation
 		private float scaleFactor = 1;
 		public float maxScaleSize = 25;
 		public float scaleSpeed = 1.0f;
-		
+
+        // Mine homing
+        public float homingRadius = 100.0f;
+        public float homingSpeed = 1.0f;
+        public Transform homingTarget = null;
+
 		private WeaponSFX sfx;
 		private AudioSource m_Audio;
 		//private float startVolume;
@@ -60,6 +66,8 @@ namespace ProjectStorms
 				m_Audio = gameObject.GetComponent<AudioSource>();
 				//startVolume = m_Audio.volume;
 			}
+
+            m_trans = transform;
 		}
 
 		void Start()
@@ -73,28 +81,31 @@ namespace ProjectStorms
 				singleExplosion.SetActive(false);
 				explosions.Add(singleExplosion);
 			}
+
+            // Begin the homing timer
+            InvokeRepeating("FindHomingTarget", 0.5f, 0.5f);
 		}
 
 		void OnEnable()
 		{
-			//Turn everything on when I start;
+			// Turn everything on when I start;
 			m_myCollider.enabled = true;
 			m_myRenderer.enabled = true;
 
 			//numberOfExplosions = numberExplosionStartReference;
 
-			//Reset the explosion values every time the mine is activated.s
+			// Reset the explosion values every time the mine is activated.s
 			delayTimer = 0.1f;
 			//explosionScale = explosionScaleStartReference;
 
-			//Start the mine small
+			// Start the mine small
 			scaleFactor = 0.01f;
 			gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, scaleFactor);
 
-			//Reset the number of explosions
+			// Reset the number of explosions
 			numberOfExplosions = numberExplosionStartReference;
 			
-			//Take a reference of audio level
+			// Take a reference of audio level
 			
 		}
 		
@@ -105,7 +116,7 @@ namespace ProjectStorms
 
 		void Update () 
 		{
-			//The scale behaviour
+			// The scale behaviour
 			scaleFactor = Mathf.Clamp (scaleFactor, 0, maxScaleSize);
 
 			if (scaleFactor < maxScaleSize)
@@ -115,11 +126,10 @@ namespace ProjectStorms
 
 			gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, scaleFactor);
 
-
-			//should I be exploding?
+			// Should I be exploding?
 		 	if (bang == true)
 			{
-				//Cap the number of explosion waves.
+				// Cap the number of explosion waves.
 				if (numberOfExplosions > 0)
 				{
 
@@ -138,12 +148,12 @@ namespace ProjectStorms
 				else
 				if (numberOfExplosions <= 0)
 				{
-					//Remember to turn Mine object off - but let the explosions kill themselves.
+					// Remember to turn Mine object off - but let the explosions kill themselves.
 					Invoke("KillMine", 1.5f);
 				}
 			}
 			
-			//AUdio stuff
+			// Audio stuff
 			if (bang == false)
 			{
 				if (!m_Audio.isPlaying)
@@ -159,6 +169,13 @@ namespace ProjectStorms
 					}
 				}
 			}
+
+            if (homingTarget != null)
+            {
+                // Home tomwards target
+                Vector3 offsetDir = (homingTarget.position - m_trans.position).normalized;
+                m_trans.position += offsetDir * homingSpeed * Time.deltaTime;
+            }
 		}
 
 		void OnCollisionEnter(Collision other)
@@ -181,6 +198,29 @@ namespace ProjectStorms
             bang = true;
             m_Audio.Stop();
 
+        }
+
+        void FindHomingTarget()
+        {
+            // Home towards target
+            AirshipControlBehaviour[] shipScripts = GameObject.FindObjectsOfType<AirshipControlBehaviour>();
+            Transform currTrans = null;
+            float currDist = 0, nearDist = homingRadius;
+            homingTarget = null;
+            foreach (AirshipControlBehaviour tempScr in shipScripts)
+            {
+                currTrans = tempScr.transform;
+                if (currTrans != null)
+                {
+                    currDist = (currTrans.position - m_trans.position).magnitude;
+                    // Pick nearest player ship not sharing the same tag
+                    if (!currTrans.CompareTag(gameObject.tag) && currDist < nearDist)
+                    {
+                        currDist = nearDist;
+                        homingTarget = currTrans;
+                    }
+                }
+            }
         }
 
 		void SpawnExplosion(float explosionScale)
