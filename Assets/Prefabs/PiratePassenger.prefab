@@ -222,6 +222,7 @@ MonoBehaviour:
   heightTillDeath: -2000
   expireTime: 300
   colDisableTime: 1
+  horizSlowRate: .949999988
 --- !u!114 &11448062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -333,6 +334,10 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: abe614283849fc14d9438f61007cfbd6, type: 3}
+    - target: {fileID: 0}
+      propertyPath: horizSlowRate
+      value: .949999988
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 169638}

@@ -33,6 +33,11 @@ namespace ProjectStorms
         public float colDisableTime = 1.0f;
 
         /// <summary>
+        /// Percentage to slow the prisoner's horizontal movement per second.
+        /// </summary>
+        public float horizSlowRate = 0.5f;
+
+        /// <summary>
         /// When the prisoner was spawned.
         /// </summary>
         private float m_spawnTime = 0.0f;
@@ -44,12 +49,14 @@ namespace ProjectStorms
 
         // Cached variables
         private Transform m_trans;
+        private Rigidbody m_rigid;
         private Collider m_col;
         private FallingScream m_scream;
 
         void Awake()
         {
             m_trans = transform;
+            m_rigid = GetComponent<Rigidbody>();
             m_col = GetComponent<Collider>();
             m_scream = GetComponent<FallingScream>();
 
@@ -90,6 +97,11 @@ namespace ProjectStorms
                     {
                         m_col.enabled = true;
                     }
+
+                    // Slow horizontal movement to make vertical dropping easier
+                    Vector3 currVel = m_rigid.velocity;
+                    currVel.x *= 1 - (horizSlowRate * Time.deltaTime);
+                    m_rigid.velocity = currVel;
                 }
             }
         }
