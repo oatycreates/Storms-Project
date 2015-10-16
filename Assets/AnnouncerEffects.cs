@@ -38,7 +38,7 @@ namespace ProjectStorms
 
         void Start()
         {
-            print(m_navyWhite);
+           // print(m_navyWhite);
            // InvokeRepeating("Spawning", 0, 0.1f);
             //Invoke("Spawning", 0.1f);
         }
