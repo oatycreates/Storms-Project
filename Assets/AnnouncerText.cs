@@ -14,26 +14,48 @@ using UnityEngine.UI;
 
 namespace ProjectStorms
 {
+    public enum MessageType { scoring, warning, winning};
+
     public class AnnouncerText : MonoBehaviour
     {
-
         public Text m_text;
-        public float lifeTime = 1.0f;
-        public float fadeMod = 1.5f;
+        private float lifeTime = 1.0f;
+        private float fadeMod = 2.0f;
 
-        public List<string> happyNoise = new List<string>();
+
+
+        public MessageType messageType;
+
+        public List<string> scoringMessages = new List<string>();
+        public List<string> warningMessages = new List<string>();
+        public List<string> winningMessages = new List<string>();
 
         private Color m_myColour;
 
         void Awake()
         {
             m_text = gameObject.GetComponent<Text>();
+            m_text.color = Color.clear;
         }
 
         void OnEnable()
         {
-          
-           m_text.text =  happyNoise[Random.Range(0, happyNoise.Count - 1)];
+
+            if (messageType == MessageType.scoring)
+            {
+                m_text.text = scoringMessages[Random.Range(0, scoringMessages.Count - 1)];
+            }
+            else
+            if (messageType == MessageType.warning)
+            {
+                m_text.text = warningMessages[Random.Range(0, warningMessages.Count - 1)];
+            }
+            else
+            if (messageType == MessageType.winning)
+            {
+                m_text.text = winningMessages[Random.Range(0, winningMessages.Count - 1)];
+            }
+           
            
         }
 
@@ -43,6 +65,7 @@ namespace ProjectStorms
             m_text.color = m_myColour;
 
             lifeTime -= (Time.deltaTime)/fadeMod;
+            //lifeTime -= Time.deltaTime;
 
             m_text.color = new Color(m_text.color.r, m_text.color.g, m_text.color.b, lifeTime);
 
