@@ -35,6 +35,19 @@ namespace ProjectStorms
 
         void Start()
         {
+
+        }
+
+        void Update()
+        {
+
+        }
+
+        /// <summary>
+        /// Should be called after all player cameras have been initialised.
+        /// </summary>
+        public void InitialiseMasterCamera()
+        {
             if (currentCamera == ECamerasInScene.One)
             {
                 cam1.enabled = true;
@@ -103,11 +116,6 @@ namespace ProjectStorms
                 cam3.rect = new Rect(0f, 0f, 0.5f, 0.5f);
                 cam4.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
             }
-        }
-
-        void Update()
-        {
-
         }
     } 
 }

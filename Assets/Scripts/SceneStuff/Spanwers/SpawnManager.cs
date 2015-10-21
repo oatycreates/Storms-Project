@@ -59,6 +59,7 @@ namespace ProjectStorms
                     break;
 
                 default:
+                    m_masterCamera.currentCamera = ECamerasInScene.One;
                     Debug.LogError("Less than 2 players are within the scene, or spawn manager is unable to find them!");
                     return;
             }
@@ -67,6 +68,11 @@ namespace ProjectStorms
             for (int i = 0; i < a_playersArray.Length; ++i)
             {
                 Camera playerCam = GetPlayerCamera(a_playersArray[i]);
+
+                if (playerCam != null)
+                {
+                    Debug.Log("Player cam was null!");
+                }
 
                 switch (i)
                 {
@@ -90,12 +96,14 @@ namespace ProjectStorms
                         break;
                 }
             }
+
+            // Finished initialising the player camera
+            m_masterCamera.InitialiseMasterCamera();
         }
 
         Camera GetPlayerCamera(GameObject a_player)
         {
-            GameObject cameraObject = a_player.transform.FindChild("Cameras/Rotator/CamProxyPos/SecondLevelProxy/Camera").gameObject;
-            return cameraObject.GetComponent<Camera>();
+            return a_player.GetComponentInChildren<Camera>();
         }
     }
 }

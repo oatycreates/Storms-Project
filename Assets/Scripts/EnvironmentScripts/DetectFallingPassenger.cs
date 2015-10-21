@@ -27,13 +27,12 @@ namespace ProjectStorms
         public Color textColour = Color.white;
 
         private PirateBaseIdentity m_base = null;
-        private AnnouncerEffects m_annoucner = null;
+        private AnnouncerEffects m_announcer = null;
         public string baseTag;
 
         void Awake()
         {
             m_base = gameObject.GetComponentInParent<PirateBaseIdentity>();
-            m_annoucner = GameObject.FindObjectOfType<AnnouncerEffects>();
         }
 
         void Start()
@@ -61,6 +60,16 @@ namespace ProjectStorms
         {
             if (a_other.tag == "Passengers")
             {
+                if (m_announcer == null)
+                {
+                    m_announcer = GameObject.FindObjectOfType<AnnouncerEffects>();
+
+                    if (m_announcer == null)
+                    {
+                        Debug.Log("Announcer object was null!");
+                    }
+                }
+
 				if (peopleLeftToCatch > 0)
 				{
                 	peopleLeftToCatch -= 1;
@@ -71,22 +80,22 @@ namespace ProjectStorms
 
                 if (baseTag == "Player1_")
                 {
-                    m_annoucner.Pirate();
+                    m_announcer.Pirate();
                 }
                 else
                 if (baseTag == "Player2_")
                 {
-                    m_annoucner.Navy();
+                    m_announcer.Navy();
                 }
                 else
                 if (baseTag == "Player3_")
                 {
-                    m_annoucner.Tinkerer();
+                    m_announcer.Tinkerer();
                 }
                 else
                 if (baseTag == "Player4_")
                 {
-                    m_annoucner.Viking();
+                    m_announcer.Viking();
                 }
             }
         }
