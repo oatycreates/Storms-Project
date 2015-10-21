@@ -50,6 +50,7 @@ namespace ProjectStorms
 
         public void Awake()
         {
+            // Ensure prefabs are set
             if (navyBase        == null ||
                 piratesBase     == null ||
                 tinkerersBase   == null ||
@@ -58,11 +59,12 @@ namespace ProjectStorms
                 Debug.LogError("Prefabs not correctly set!");
             }
 
+            // Get reference to score manager within the scene
             m_scoreManager = FindObjectOfType<ScoreManager>();
 
             if (m_scoreManager == null)
             {
-                Debug.LogError("No scene manager within scene");
+                Debug.LogError("Unable to find the Score manager within the scene!");
             }
         }
 
@@ -79,6 +81,7 @@ namespace ProjectStorms
             return;
 #endif
 
+            // TODO: Spawn base using settings from main menu
             DestroyImmediate(this.gameObject);
         }
 
