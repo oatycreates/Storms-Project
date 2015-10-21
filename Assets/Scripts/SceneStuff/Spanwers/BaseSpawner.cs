@@ -76,9 +76,6 @@ namespace ProjectStorms
             {
                 SpawnBase(overrideFaction);
             }
-
-            DestroyImmediate(this.gameObject);
-            return;
 #endif
 
             // TODO: Spawn base using settings from main menu
