@@ -82,7 +82,7 @@ namespace ProjectStorms
 
                 default:
                     m_masterCamera.currentCamera = ECamerasInScene.One;
-                    Debug.LogError("Less than 2 players are within the scene, or spawn manager is unable to find them!");
+                    Debug.LogWarning("Less than 2 players are within the scene, or spawn manager is unable to find them!");
                     return;
             }
 
