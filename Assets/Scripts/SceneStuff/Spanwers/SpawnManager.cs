@@ -34,7 +34,29 @@ namespace ProjectStorms
             GameObject[] playerObjects = new GameObject[inputManagers.Length];
             for (int i = 0; i < playerObjects.Length; ++i)
             {
-                playerObjects[i] = inputManagers[i].gameObject;
+                // TODO: NOTE!! Refactor this when better player object spawning is in
+
+                // Assign to the relevant slot
+                int playerSlot = i;
+                GameObject go = inputManagers[i].gameObject;
+                switch (go.tag)
+                {
+                    case "Player1_":
+                        playerSlot = 0;
+                        break;
+                    case "Player2_":
+                        playerSlot = 1;
+                        break;
+                    case "Player3_":
+                        playerSlot = 2;
+                        break;
+                    case "Player4_":
+                        playerSlot = 3;
+                        break;
+                    default:
+                        break;
+                }
+                playerObjects[playerSlot] = inputManagers[i].gameObject;
             }
 
             // Setup camera settings
@@ -60,7 +82,7 @@ namespace ProjectStorms
 
                 default:
                     m_masterCamera.currentCamera = ECamerasInScene.One;
-                    Debug.LogError("Less than 2 players are within the scene, or spawn manager is unable to find them!");
+                    Debug.LogWarning("Less than 2 players are within the scene, or spawn manager is unable to find them!");
                     return;
             }
 
@@ -68,41 +90,33 @@ namespace ProjectStorms
             for (int i = 0; i < a_playersArray.Length; ++i)
             {
                 Camera playerCam = GetPlayerCamera(a_playersArray[i]);
-
-                if (playerCam == null)
+                AirshipCamBehaviour camScript = playerCam.GetComponentInParent<AirshipCamBehaviour>();
+                if (camScript != null)
                 {
-                    Debug.Log("Player cam for " + a_playersArray[i].name + " was null!");
+                    // Set up the camera
+                    camScript.InitialiseCam();
                 }
-                else
+
+                switch (i)
                 {
-                    AirshipCamBehaviour camScript = playerCam.GetComponentInParent<AirshipCamBehaviour>();
-                    if (camScript != null)
-                    {
-                        // Set up the camera
-                        camScript.InitialiseCam();
-                    }
+                    case 0:
+                        m_masterCamera.cam1 = playerCam;
+                        break;
 
-                    switch (i)
-                    {
-                        case 0:
-                            m_masterCamera.cam1 = playerCam;
-                            break;
+                    case 1:
+                        m_masterCamera.cam2 = playerCam;
+                        break;
 
-                        case 1:
-                            m_masterCamera.cam2 = playerCam;
-                            break;
+                    case 2:
+                        m_masterCamera.cam3 = playerCam;
+                        break;
 
-                        case 2:
-                            m_masterCamera.cam3 = playerCam;
-                            break;
+                    case 3:
+                        m_masterCamera.cam4 = playerCam;
+                        break;
 
-                        case 3:
-                            m_masterCamera.cam4 = playerCam;
-                            break;
-
-                        default:
-                            break;
-                    }
+                    default:
+                        break;
                 }
             }
 

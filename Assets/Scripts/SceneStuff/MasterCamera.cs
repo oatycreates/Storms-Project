@@ -33,6 +33,8 @@ namespace ProjectStorms
         public Camera cam3;
         public Camera cam4;
 
+        private bool m_isInitialised = false;
+
         void Start()
         {
 
@@ -40,7 +42,10 @@ namespace ProjectStorms
 
         void Update()
         {
-
+            if (!m_isInitialised)
+            {
+                Debug.LogError("InitialiseMasterCamera() has not been run!");
+            }
         }
 
         /// <summary>
@@ -48,6 +53,8 @@ namespace ProjectStorms
         /// </summary>
         public void InitialiseMasterCamera()
         {
+            m_isInitialised = true;
+
             if (currentCamera == ECamerasInScene.One)
             {
                 cam1.enabled = true;

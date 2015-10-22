@@ -58,7 +58,7 @@ namespace ProjectStorms
         /// </summary>
         void OnGUI()
         {
-            // TODO Update this code to function with the updated Unity 5 canvas APIs.
+            // TODO: Update this code to function with the updated Unity 5 canvas APIs.
 
             Camera cam = GetComponent<Camera>();
 

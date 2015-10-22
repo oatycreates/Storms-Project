@@ -64,6 +64,7 @@ namespace ProjectStorms
         //private Transform m_camTrans = null;
         private Cam_DollyForward m_camDolly = null;
 
+        private bool m_isInitialised = false;
 
         void Awake()
         {
@@ -77,6 +78,11 @@ namespace ProjectStorms
 
         void Update()
         {
+            if (!m_isInitialised)
+            {
+                Debug.LogError("InitialiseCam() has not been called!");
+            }
+
 #if UNITY_EDITOR
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
@@ -109,6 +115,8 @@ namespace ProjectStorms
         /// </summary>
         public void InitialiseCam()
         {
+            m_isInitialised = true;
+
             GameObject camHolder = GameObject.Find("CamHolder");
             if (camHolder == null)
             {
@@ -146,7 +154,7 @@ namespace ProjectStorms
         {
             if (camPosTarget != null)
             {
-                // TODO Fix lerping
+                // TODO: Fix lerping
                 m_trans.position = camPosTarget.position;
 
                 // Move camera to take into account world obstacles

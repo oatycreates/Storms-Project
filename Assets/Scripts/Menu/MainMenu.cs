@@ -17,38 +17,22 @@ namespace ProjectStorms
 {
 	public class MainMenu : MonoBehaviour 
 	{
-        private enum GameModes
-        {
-            TEAMS,
-            FFA,
-            NONE
-        }
-
-        private GameModes m_gameMode = GameModes.NONE;
-        private string m_mapName;
-
         public bool isTeamsGameMode
         {
             get
             {
-                return m_gameMode == GameModes.TEAMS;
+                return m_gameMode == Gamemode.TEAMS;
             }
         }
 
-        public void Awake()
-        {
+#if UNITY_EDITOR
+        [Header("Editor Only")]
+        public bool overrideLevel = false;
+        public string overrodeLevelName;
+#endif
 
-        }
-
-		void Start() 
-		{
-			
-		}
-		
-		void Update() 
-		{
-			
-		}
+        private Gamemode m_gameMode = Gamemode.NONE;
+        private string m_mapName;
 
         public void ExitGame()
         {
@@ -68,24 +52,31 @@ namespace ProjectStorms
 
         public void SetGamemodeTeams()
         {
-            m_gameMode = GameModes.TEAMS;
+            m_gameMode = Gamemode.TEAMS;
         }
 
         public void SetGamemodeFFA()
         {
-            m_gameMode = GameModes.FFA;
+            m_gameMode = Gamemode.FFA;
         }
 
         public void StartMatch()
         {
             if (m_mapName == "" ||
-                m_gameMode == GameModes.NONE)
+                m_gameMode == Gamemode.NONE)
             {
                 Debug.LogError("Map and gamemode misconfiguration... unable to start game");
                 return;
             }
 
-            // TODO: Load map with specified settings
+#if UNITY_EDITOR
+            if (overrideLevel)
+            {
+                m_mapName = overrodeLevelName;
+            }
+#endif
+
+            Application.LoadLevel(m_mapName);
         }
 	}
 }
