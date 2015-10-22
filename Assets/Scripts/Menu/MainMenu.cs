@@ -26,7 +26,6 @@ namespace ProjectStorms
 
         private GameModes m_gameMode = GameModes.NONE;
         private string m_mapName;
-        private PlayerSetupMenu m_setupMenu;
 
         public bool isTeamsGameMode
         {
@@ -38,7 +37,7 @@ namespace ProjectStorms
 
         public void Awake()
         {
-            m_setupMenu = FindObjectOfType<PlayerSetupMenu>();
+
         }
 
 		void Start() 

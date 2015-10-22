@@ -50,7 +50,7 @@ namespace ProjectStorms
 				if (anotherRigidbody != null)
 				{
 					anotherRigidbody.AddRelativeTorque(new Vector3 (0, -pinwheelForce, 0), ForceMode.Acceleration);
-					anotherRigidbody.AddForce(Vector3.down * pinwheelForce*2, ForceMode.Acceleration);
+					anotherRigidbody.AddForce(Vector3.up * pinwheelForce*2, ForceMode.Acceleration);
 				}
 			}
 		}

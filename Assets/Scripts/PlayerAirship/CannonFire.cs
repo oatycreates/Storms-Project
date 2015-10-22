@@ -81,16 +81,11 @@ namespace ProjectStorms
         static private GameObject ms_ballHolder = null;
 
         // Cached variables
-        private Rigidbody m_shipRB = null;
         private Transform m_trans = null;
-        private Transform m_shipTrans = null;
 
         void Awake()
         {
             m_trans = transform;
-
-            m_shipRB = parentAirship.GetComponent<Rigidbody>();
-            m_shipTrans = parentAirship.transform;
 
             // Find the cannonball holder object
             if (ms_ballHolder == null)
@@ -110,9 +105,6 @@ namespace ProjectStorms
             Transform holderTrans = ms_ballHolder.transform;
             GameObject firstBall = CreateCannonball(holderTrans);
             
-            // Calculate pooling amount
-            RotateCam camRot = GetComponentInParent<RotateCam>();
-
             float ballLife = 0;
             CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
             if (ballScript != null)

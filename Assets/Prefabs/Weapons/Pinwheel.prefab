@@ -368,6 +368,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -883,8 +884,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb58e2d620177424095a0ac4dd4e20ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScaleSize: 1
+  maxScaleSize: 1.75
   useZaxis: 1
+  speed: 1
 --- !u!114 &11410074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -975,6 +977,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: loopOnSpawn
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: maxScaleSize
+      value: 1.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

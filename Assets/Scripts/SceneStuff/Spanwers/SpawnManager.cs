@@ -59,6 +59,7 @@ namespace ProjectStorms
                     break;
 
                 default:
+                    m_masterCamera.currentCamera = ECamerasInScene.One;
                     Debug.LogError("Less than 2 players are within the scene, or spawn manager is unable to find them!");
                     return;
             }
@@ -68,34 +69,50 @@ namespace ProjectStorms
             {
                 Camera playerCam = GetPlayerCamera(a_playersArray[i]);
 
-                switch (i)
+                if (playerCam == null)
                 {
-                    case 0:
-                        m_masterCamera.cam1 = playerCam;
-                        break;
+                    Debug.Log("Player cam for " + a_playersArray[i].name + " was null!");
+                }
+                else
+                {
+                    AirshipCamBehaviour camScript = playerCam.GetComponentInParent<AirshipCamBehaviour>();
+                    if (camScript != null)
+                    {
+                        // Set up the camera
+                        camScript.InitialiseCam();
+                    }
 
-                    case 1:
-                        m_masterCamera.cam2 = playerCam;
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            m_masterCamera.cam1 = playerCam;
+                            break;
 
-                    case 2:
-                        m_masterCamera.cam3 = playerCam;
-                        break;
+                        case 1:
+                            m_masterCamera.cam2 = playerCam;
+                            break;
 
-                    case 3:
-                        m_masterCamera.cam4 = playerCam;
-                        break;
+                        case 2:
+                            m_masterCamera.cam3 = playerCam;
+                            break;
 
-                    default:
-                        break;
+                        case 3:
+                            m_masterCamera.cam4 = playerCam;
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
+
+            // Finished initialising the player camera
+            m_masterCamera.InitialiseMasterCamera();
         }
 
         Camera GetPlayerCamera(GameObject a_player)
         {
-            GameObject cameraObject = a_player.transform.FindChild("Cameras/Rotator/CamProxyPos/SecondLevelProxy/Camera").gameObject;
-            return cameraObject.GetComponent<Camera>();
+            return a_player.GetComponentInChildren<Camera>();
         }
     }
 }

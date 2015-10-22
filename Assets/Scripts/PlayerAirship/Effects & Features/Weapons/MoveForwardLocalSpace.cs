@@ -19,7 +19,6 @@ namespace ProjectStorms
 	{
 		public float speed = 5.0f;
 		private float startSpeed;
-		private bool shouldIDecelerate = false;
 		public float decelerationFactor = 2.0f;
 		//public float slowDownDelay = 5;
 
