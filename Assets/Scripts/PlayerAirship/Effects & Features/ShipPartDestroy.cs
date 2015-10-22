@@ -161,10 +161,12 @@ namespace ProjectStorms
 
                     if (rbOther != null)
                     {
+                        Debug.Log("Entered RB collision!");
                         // Evaluate player collision if ramming other
                         if (a_colInfo.gameObject.tag.Contains("Player") &&
                             m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
                         {
+                            Debug.Log("Ramming player! Me: " + gameObject.tag + ", them: " + a_colInfo.gameObject.tag);
                             EvaluatePlayerCollision(a_colInfo.collider, offsetVel, velDiffSqr);
                         }
                     }
@@ -265,7 +267,7 @@ namespace ProjectStorms
                 Debug.Log("Collision - From Above!");
             }
 
-            // Above - My ship onto them from below
+            // Below - My ship onto them from above
             if (upDot <= -1 + colDirThreshold)
             {
                 // Sanity check
@@ -276,6 +278,13 @@ namespace ProjectStorms
 
                 // TODO Make them lose passengers
                 Debug.Log("Collision - From Above!");
+            }
+
+            // Horizontal/Side by side - My ship gently bumping them
+            if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
+            {
+                // TODO Make them lose passengers
+                Debug.Log("Collision - Horiztonal bump!");
             }
         }
         
