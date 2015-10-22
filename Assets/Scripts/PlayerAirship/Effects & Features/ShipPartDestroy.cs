@@ -151,25 +151,23 @@ namespace ProjectStorms
             if (!a_colInfo.gameObject.tag.Contains("Passengers"))
             {
                 Rigidbody rbOther = a_colInfo.rigidbody;
-                foreach (ContactPoint contact in a_colInfo.contacts)
+
+                // Work out relative collision velocity
+                Vector3 offsetVel = a_colInfo.relativeVelocity;
+                float velDiffSqr = offsetVel.sqrMagnitude;
+
+                if (rbOther != null)
                 {
-                    // Work out relative collision velocity
-                    Vector3 offsetVel = a_colInfo.relativeVelocity;
-                    float velDiffSqr = offsetVel.sqrMagnitude;
-
-                    EvaluatePartCollision(contact.thisCollider, velDiffSqr);
-
-                    if (rbOther != null)
+                    // Evaluate player collision if ramming other
+                    if (a_colInfo.gameObject.tag.Contains("Player") &&
+                        m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
                     {
-                        // Evaluate player collision if ramming other
-                        if (a_colInfo.gameObject.tag.Contains("Player") &&
-                            m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
-                        {
-                            Debug.Log("Ramming player! Me: " + gameObject.tag + ", them: " + a_colInfo.gameObject.tag);
-                            EvaluatePlayerCollision(a_colInfo.collider, offsetVel, velDiffSqr);
-                        }
+                        Debug.Log("Ramming player! Me: " + gameObject.tag + ", them: " + a_colInfo.gameObject.tag);
+                        EvaluatePlayerCollision(a_colInfo.collider, offsetVel, velDiffSqr);
                     }
-
+                }
+                else
+                {
                     // If slamming into a wall
                     if (a_colInfo.relativeVelocity.sqrMagnitude >= m_bumpVelSqr)
                     {
@@ -179,6 +177,9 @@ namespace ProjectStorms
                         m_shipTray.PowerDownTray();
                     }
                 }
+
+                // Check part destruction
+                EvaluatePartCollision(a_colInfo.collider, velDiffSqr);
             }
         }
 
@@ -227,12 +228,15 @@ namespace ProjectStorms
             Vector3 offset = otherPos - myPos;
 
             // For evaluating whether the collision is from below/above
-            float upDot = Vector3.Dot(offset, otherTrans.up);
+            float upDot = Vector3.Dot(offset.normalized, otherTrans.up);
 
             // Get scripts
-            PassengerTray otherTray = a_otherCol.GetComponentInParent<PassengerTray>();
+            PassengerTray otherTray = a_otherCol.GetComponentInParent<AirshipControlBehaviour>().gameObject.GetComponentInChildren<PassengerTray>();
 
-            Debug.Log(Mathf.Abs(forwardDot) + " " + colDirThreshold);
+            Debug.Log("Front dot: " + Mathf.Abs(forwardDot) +
+                ", right dot: " + Mathf.Abs(rightDot) +
+                ", up dot: " + Mathf.Abs(upDot) + 
+                ", threshold: " + colDirThreshold);
 
             if (Mathf.Abs(forwardDot) <= colDirThreshold)
             {
@@ -240,6 +244,7 @@ namespace ProjectStorms
 
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From T-Bone!");
+                otherTray.PowerDownTray();
             }
             else if (forwardDot <= -1 + colDirThreshold)
             {
@@ -247,6 +252,8 @@ namespace ProjectStorms
 
                 // TODO: Make both lose passengers
                 Debug.Log("Collision - From Head On!");
+                m_shipTray.PowerDownTray();
+                otherTray.PowerDownTray();
             }
             else if (forwardDot >= 1 - colDirThreshold)
             {
@@ -254,38 +261,31 @@ namespace ProjectStorms
 
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From Behind!");
+                otherTray.PowerDownTray();
             }
-            else if (upDot >= 1 - colDirThreshold)
+            else if (upDot >= 1 - colDirThreshold &&
+                offset.y > 0)
             {
                 // Above - My ship onto them from above
 
-                // Sanity check
-                if (offset.y >= 0)
-                {
-                    Debug.LogWarning("Invalid above collision! Player is actually in the same spot or below.");
-                }
-
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From Above!");
+                otherTray.PowerDownTray();
             }
-            else if (upDot <= -1 + colDirThreshold)
+            else if (upDot <= -1 + colDirThreshold && 
+                offset.y < 0)
             {
                 // Below - My ship onto them from above
 
-                // Sanity check
-                if (offset.y >= 0)
-                {
-                    Debug.LogWarning("Invalid above collision! Player is actually in the same spot or below.");
-                }
-
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From Above!");
+                otherTray.PowerDownTray();
             }
             else if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
             {
                 // Horizontal/Side by side - My ship gently bumping them
 
-                // TODO: Make them lose passengers
+                // Make nobody lose passengers
                 Debug.Log("Collision - Horiztonal bump!");
             }
         }
