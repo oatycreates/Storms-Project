@@ -129,17 +129,7 @@ namespace ProjectStorms
 
                 if (passengerRigidbody.gameObject.tag == "Passengers")
                 {
-                   // print("Passengers only wind");
-
-                    Vector3 direction = passengerRigidbody.transform.position - gameObject.transform.position;
-
-                    //Local offset
-                   // Vector3 localOffset = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 10, gameObject.transform.position.z);
-
-                    //Debug.DrawRay(localOffset, Vector3.down * 10, Color.green);
-                   
-                   // passengerRigidbody.transform.LookAt(worldOffest);
-                    passengerRigidbody.AddForce(Vector3.up * 0.5f, ForceMode.Force);
+                    //passengerRigidbody.AddForce(Vector3.up * 0.5f, ForceMode.Force);
 
                     passengerRigidbody.transform.LookAt(gameObject.transform.position);
 
@@ -153,6 +143,20 @@ namespace ProjectStorms
             {
                 other.gameObject.GetComponent<PassengerTray>().PowerDownTray();
             }
+            
+            //if there is both a passenger tray, and a passenger in it,
+            // make the passenger in it "jump" in the tray's local space
+            if (other.gameObject.GetComponent<PassengerTray>() != null && passengerRigidbody != null)
+            {
+            	if (passengerRigidbody.gameObject.tag == "Passengers")
+            	{
+					//Vector3 direction = passengerRigidbody.transform.position - gameObject.transform.position;
+					Vector3 trayUpDirection = other.gameObject.transform.up;
+					passengerRigidbody.AddForce(trayUpDirection * 1.5f, ForceMode.Force);	
+					Debug.Log("HERE!");
+            	}
+            }
+            
         }
 
         /*

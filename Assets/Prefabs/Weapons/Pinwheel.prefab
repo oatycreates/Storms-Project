@@ -188,7 +188,6 @@ GameObject:
   - 4: {fileID: 438806}
   - 114: {fileID: 11452134}
   - 114: {fileID: 11404040}
-  - 114: {fileID: 11467588}
   - 82: {fileID: 8293132}
   - 114: {fileID: 11410074}
   m_Layer: 0
@@ -368,7 +367,6 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -927,17 +925,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pinwheelForce: 100
---- !u!114 &11467588
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 180144}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96c7cf1b72a76e142bb994693c2ca26d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   secondsBeforeTimeout: 10
 --- !u!114 &11485242
 MonoBehaviour:
@@ -954,7 +941,6 @@ MonoBehaviour:
   maxAmplitude: 5
   speedMod: 5
   zigzag: 0
-  secondsBeforeTimeout: 10
 --- !u!136 &13675228
 CapsuleCollider:
   m_ObjectHideFlags: 1
