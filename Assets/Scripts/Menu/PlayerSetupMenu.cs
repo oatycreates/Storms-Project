@@ -17,29 +17,31 @@ namespace ProjectStorms
 {
     public class PlayerSetupMenu : MonoBehaviour
     {
-        public enum Faction
-        {
-            NONE,
-            NAVY,
-            PIRATES,
-            TINKERERS,
-            VIKINGS,
-        }
-
-        private enum Team
-        {
-            FFA,
-            TEAM_ONE,
-            TEAM_TWO,
-            NONE
-        }
-
         [System.Serializable]
         private class Player
         {
             public bool ready       = false;
             public Faction faction  = Faction.NONE;
             public Team team        = Team.NONE;
+        }
+
+        private int playersReadyCount
+        {
+            get
+            {
+                int count = 0;
+
+                // Iterate through array, counting which players are ready
+                for (int i = 0; i < m_playersReady.Length; ++i)
+                {
+                    if (m_playersReady[i])
+                    {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
         }
 
         // References to child objects
@@ -64,40 +66,14 @@ namespace ProjectStorms
         private Faction m_team1Faction;
         private Faction m_team2Faction;
 
-        // Reference to MainMenu utilities object
+        private bool[] m_playersReady = new bool[4];
+
+        // Level script references
         private MainMenu m_mainMenu;
-
-        // Player states
-        private Player[] m_players;
-
-        private int playersReadyCount
-        {
-            get
-            {
-                int count = 0;
-                for (int i = 0; i < m_players.Length; ++i)
-                {
-                    if (m_players[i].ready)
-                    {
-                        count++;
-                    }
-                }
-
-                return count;
-            }
-        }
 
         public void Awake()
         {
-            m_mainMenu = GameObject.FindObjectOfType<MainMenu>();
-
-            // Initialise array for storing player settings
-            m_players = new Player[4];
-
-            for (int i = 0; i < m_players.Length; ++i)
-            {
-                m_players[i] = new Player();
-            }
+            m_mainMenu = FindObjectOfType<MainMenu>();
 
             // Ensure coundown text reference and Start Game Menu
             // isn't null
@@ -119,22 +95,12 @@ namespace ProjectStorms
             }
         }
 
-        private void Start()
-        {
-
-        }
-
         private void Update()
         {
             if (m_allPlayersReady)
             {
                 UpdateCountDown();
             }
-        }
-
-        public void OnDisable()
-        {
-            
         }
 
         public void ResetButtons()
@@ -149,8 +115,8 @@ namespace ProjectStorms
         {
             if (m_currentCountdownTime >= (float)countdownTime)
             {
-                //m_mainMenu.StartMatch("levelName");
-                Debug.Log("Match starting! (not implemented)");
+                m_mainMenu.StartMatch();
+                //Debug.Log("Match starting! (not implemented)");
             }
             else
             {
@@ -185,10 +151,14 @@ namespace ProjectStorms
             m_allPlayersReady       = false;
 
             // Reset player preferences
-            for (int i = 0; i < m_players.Length; ++i)
+            for (int i = 0; i < m_playersReady.Length; ++i)
             {
-                m_players[i].ready      = false;
-                m_players[i].faction    = Faction.NONE;
+                m_playersReady[i] = false;
+            }
+
+            for (int i = 1; i < 5; ++i)
+            {
+                LevelSettings.Instance.ResetPlayer(i);
             }
         }
 
@@ -229,22 +199,25 @@ namespace ProjectStorms
                 return;
             }
 
+            PlayerSettings playerSettings = new PlayerSettings();
+
             // Set player preferences, and flag
             // player as ready
-            m_players[a_id - 1].ready   = true;
-            m_players[a_id - 1].faction = a_faction;
+            m_playersReady[a_id - 1]    = true;
+            playerSettings.playing      = true;
+            playerSettings.faction      = a_faction;
 
             if (m_mainMenu.isTeamsGameMode)
             {
                 // Set Team 1's faction
                 if (m_team1Faction == Faction.NONE &&
-                    m_players[a_id - 1].faction != m_team2Faction)
+                    playerSettings.faction != m_team2Faction)
                 {
                     m_team1Faction = a_faction;
                 }
                 // Set Team 2's faction
                 else if (m_team2Faction == Faction.NONE &&
-                         m_players[a_id - 1].faction != m_team1Faction)
+                         playerSettings.faction != m_team1Faction)
                 {
                     m_team2Faction = a_faction;
                 }
@@ -296,22 +269,25 @@ namespace ProjectStorms
             // Set player's faction
             if (a_faction == m_team1Faction)
             {
-                m_players[a_id - 1].team = Team.TEAM_ONE;
+                playerSettings.team = Team.ALPHA;
             }
             else if (a_faction == m_team2Faction)
             {
-                m_players[a_id - 1].team = Team.TEAM_TWO;
+                playerSettings.team = Team.OMEGA;
             }
 
             // Show Start Game menu if all players
             // are ready
-            if (m_players[0].ready &&
-                m_players[1].ready &&
-                m_players[2].ready &&
-                m_players[3].ready)
+            if (m_playersReady[0] &&
+                m_playersReady[1] &&
+                m_playersReady[2] &&
+                m_playersReady[3])
             {
                 ShowStartGameMenu();
             }
+
+            // Update player settings
+            LevelSettings.Instance.SetPlayerSettings(a_id, playerSettings);
 
             Debug.Log(string.Format("Player {0} ready with faction: {1}", a_id, a_faction));
         }
@@ -464,27 +440,29 @@ namespace ProjectStorms
                 return;
             }
 
+            PlayerSettings playerSettings = LevelSettings.Instance.GetPlayerSettings(a_id);
+
             // Renable all factions if only one player is ready
             if (playersReadyCount == 2)
             {
                 EnableAllTeamButtons();
 
-                if (m_players[a_id - 1].faction == m_team1Faction)
+                if (playerSettings.faction == m_team1Faction)
                 {
                     m_team1Faction = Faction.NONE;
                 }
-                else if (m_players[a_id - 1].faction == m_team2Faction)
+                else if (playerSettings.faction == m_team2Faction)
                 {
                     m_team2Faction = Faction.NONE;
                 }
             }
             else if (playersReadyCount < 2)
             {
-                if (m_players[a_id - 1].faction == m_team1Faction)
+                if (playerSettings.faction == m_team1Faction)
                 {
                     m_team1Faction = Faction.NONE;
                 }
-                else if (m_players[a_id - 1].faction == m_team2Faction)
+                else if (playerSettings.faction == m_team2Faction)
                 {
                     m_team2Faction = Faction.NONE;
                 }
@@ -497,8 +475,8 @@ namespace ProjectStorms
 
             // Reset player preferences,
             // and unready player
-            m_players[a_id - 1].ready   = false;
-            m_players[a_id - 1].faction = Faction.NONE;
+            m_playersReady[a_id - 1] = false;
+            LevelSettings.Instance.ResetPlayer(a_id);
 
             Debug.Log(string.Format("Player {0} unready", a_id));
         }
