@@ -34,7 +34,29 @@ namespace ProjectStorms
             GameObject[] playerObjects = new GameObject[inputManagers.Length];
             for (int i = 0; i < playerObjects.Length; ++i)
             {
-                playerObjects[i] = inputManagers[i].gameObject;
+                // TODO NOTE!! Refactor this when better player object spawning is in
+
+                // Assign to the relevant slot
+                int playerSlot = i;
+                GameObject go = inputManagers[i].gameObject;
+                switch (go.tag)
+                {
+                    case "Player1_":
+                        playerSlot = 0;
+                        break;
+                    case "Player2_":
+                        playerSlot = 1;
+                        break;
+                    case "Player3_":
+                        playerSlot = 2;
+                        break;
+                    case "Player4_":
+                        playerSlot = 3;
+                        break;
+                    default:
+                        break;
+                }
+                playerObjects[playerSlot] = inputManagers[i].gameObject;
             }
 
             // Setup camera settings
