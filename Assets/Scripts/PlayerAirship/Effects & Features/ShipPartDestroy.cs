@@ -150,9 +150,24 @@ namespace ProjectStorms
             // Ignore losing parts to prisoners
             if (!a_colInfo.gameObject.tag.Contains("Passengers"))
             {
+                Rigidbody rbOther = a_colInfo.rigidbody;
                 foreach (ContactPoint contact in a_colInfo.contacts)
                 {
-                    EvaluatePartCollision(contact.thisCollider, a_colInfo.relativeVelocity.sqrMagnitude);
+                    // Work out relative collision velocity
+                    Vector3 offsetVel = a_colInfo.relativeVelocity;
+                    float velDiffSqr = offsetVel.sqrMagnitude;
+
+                    EvaluatePartCollision(contact.thisCollider, velDiffSqr);
+
+                    if (rbOther != null)
+                    {
+                        // Evaluate player collision if ramming other
+                        if (a_colInfo.gameObject.tag.Contains("Player") &&
+                            m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
+                        {
+                            EvaluatePlayerCollision(a_colInfo.collider, offsetVel, velDiffSqr);
+                        }
+                    }
 
                     // If slamming into a wall
                     if (a_colInfo.relativeVelocity.sqrMagnitude >= m_bumpVelSqr)
@@ -181,13 +196,6 @@ namespace ProjectStorms
                     // Work out relative collision velocity
                     Vector3 offsetVel = (m_rb.velocity - rbOther.velocity);
                     float velDiffSqr = offsetVel.sqrMagnitude;
-
-                    // Evaluate player collision if ramming other
-                    if (a_otherCol.tag.Contains("Player") && 
-                        m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
-                    {
-                        EvaluatePlayerCollision(a_otherCol, offsetVel, velDiffSqr);
-                    }
 
                     // Run on the other ship because OnTriggerEnter only allows us to get the other component, not our own collider
                     ShipPartDestroy scriptOther = a_otherCol.GetComponentInParent<ShipPartDestroy>();
