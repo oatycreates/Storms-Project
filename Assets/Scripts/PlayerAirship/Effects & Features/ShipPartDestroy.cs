@@ -161,7 +161,6 @@ namespace ProjectStorms
 
                     if (rbOther != null)
                     {
-                        Debug.Log("Entered RB collision!");
                         // Evaluate player collision if ramming other
                         if (a_colInfo.gameObject.tag.Contains("Player") &&
                             m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
@@ -233,30 +232,33 @@ namespace ProjectStorms
             // Get scripts
             PassengerTray otherTray = a_otherCol.GetComponentInParent<PassengerTray>();
 
-            // T-Bone - My front into their side
+            Debug.Log(Mathf.Abs(forwardDot) + " " + colDirThreshold);
+
             if (Mathf.Abs(forwardDot) <= colDirThreshold)
             {
+                // T-Bone - My front into their side
+
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From T-Bone!");
             }
-
-            // Head on - My front into their front
-            if (forwardDot <= -1 + colDirThreshold)
+            else if (forwardDot <= -1 + colDirThreshold)
             {
+                // Head on - My front into their front
+
                 // TODO: Make both lose passengers
                 Debug.Log("Collision - From Head On!");
             }
-
-            // Behind - My front into their back
-            if (forwardDot >= 1 - colDirThreshold)
+            else if (forwardDot >= 1 - colDirThreshold)
             {
+                // Behind - My front into their back
+
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From Behind!");
             }
-
-            // Above - My ship onto them from above
-            if (upDot >= 1 - colDirThreshold)
+            else if (upDot >= 1 - colDirThreshold)
             {
+                // Above - My ship onto them from above
+
                 // Sanity check
                 if (offset.y >= 0)
                 {
@@ -266,10 +268,10 @@ namespace ProjectStorms
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From Above!");
             }
-
-            // Below - My ship onto them from above
-            if (upDot <= -1 + colDirThreshold)
+            else if (upDot <= -1 + colDirThreshold)
             {
+                // Below - My ship onto them from above
+
                 // Sanity check
                 if (offset.y >= 0)
                 {
@@ -279,10 +281,10 @@ namespace ProjectStorms
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - From Above!");
             }
-
-            // Horizontal/Side by side - My ship gently bumping them
-            if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
+            else if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
             {
+                // Horizontal/Side by side - My ship gently bumping them
+
                 // TODO: Make them lose passengers
                 Debug.Log("Collision - Horiztonal bump!");
             }
