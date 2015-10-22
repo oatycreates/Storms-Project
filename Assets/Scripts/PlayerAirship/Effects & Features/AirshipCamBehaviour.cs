@@ -146,7 +146,7 @@ namespace ProjectStorms
         {
             if (camPosTarget != null)
             {
-                // TODO Fix lerping
+                // TODO: Fix lerping
                 m_trans.position = camPosTarget.position;
 
                 // Move camera to take into account world obstacles

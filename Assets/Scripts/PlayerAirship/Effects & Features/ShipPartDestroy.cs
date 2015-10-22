@@ -236,21 +236,21 @@ namespace ProjectStorms
             // T-Bone - My front into their side
             if (Mathf.Abs(forwardDot) <= colDirThreshold)
             {
-                // TODO Make them lose passengers
+                // TODO: Make them lose passengers
                 Debug.Log("Collision - From T-Bone!");
             }
 
             // Head on - My front into their front
             if (forwardDot <= -1 + colDirThreshold)
             {
-                // TODO Make both lose passengers
+                // TODO: Make both lose passengers
                 Debug.Log("Collision - From Head On!");
             }
 
             // Behind - My front into their back
             if (forwardDot >= 1 - colDirThreshold)
             {
-                // TODO Make them lose passengers
+                // TODO: Make them lose passengers
                 Debug.Log("Collision - From Behind!");
             }
 
@@ -263,7 +263,7 @@ namespace ProjectStorms
                     Debug.LogWarning("Invalid above collision! Player is actually in the same spot or below.");
                 }
 
-                // TODO Make them lose passengers
+                // TODO: Make them lose passengers
                 Debug.Log("Collision - From Above!");
             }
 
@@ -276,14 +276,14 @@ namespace ProjectStorms
                     Debug.LogWarning("Invalid above collision! Player is actually in the same spot or below.");
                 }
 
-                // TODO Make them lose passengers
+                // TODO: Make them lose passengers
                 Debug.Log("Collision - From Above!");
             }
 
             // Horizontal/Side by side - My ship gently bumping them
             if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
             {
-                // TODO Make them lose passengers
+                // TODO: Make them lose passengers
                 Debug.Log("Collision - Horiztonal bump!");
             }
         }

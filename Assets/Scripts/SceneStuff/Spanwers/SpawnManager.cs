@@ -34,7 +34,7 @@ namespace ProjectStorms
             GameObject[] playerObjects = new GameObject[inputManagers.Length];
             for (int i = 0; i < playerObjects.Length; ++i)
             {
-                // TODO NOTE!! Refactor this when better player object spawning is in
+                // TODO: NOTE!! Refactor this when better player object spawning is in
 
                 // Assign to the relevant slot
                 int playerSlot = i;

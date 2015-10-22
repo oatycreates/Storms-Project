@@ -188,7 +188,7 @@ namespace ProjectStorms
                     passengerRb = m_passengers[i].GetComponent<Rigidbody>();
                     passengerRb.mass = m_passengerMass;
 
-                    // TODO Ignore collision with the spawner colliders and the prison fortress
+                    // TODO: Ignore collision with the spawner colliders and the prison fortress
 
                     // Reset velocity before adding to it
                     passengerRb.velocity = Vector3.zero;
