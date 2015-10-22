@@ -25,7 +25,6 @@ namespace ProjectStorms
         private Transform m_trans = null;
 
 		private bool attacking = false;
-		private bool startWait = false;
 
 		public float movementVelocity = 1;
 		public float turnSpeed = 5;
@@ -176,8 +175,6 @@ namespace ProjectStorms
 			{
 				attacking = true;
 			}
-
-			startWait = false;
 		}
 
 
@@ -190,7 +187,6 @@ namespace ProjectStorms
 			//Fire ();
 			//Fix the trail time
 			childTrail.time = 1;
-			startWait = true;
 			
 			m_Audio.clip = launchSFX;
 			//m_Audio.pitch = 0.75f;
@@ -244,7 +240,6 @@ namespace ProjectStorms
             {
                 m_target = a_trans;
 
-                startWait = false;
                 attacking = true;
 
                 //Give the missile a target

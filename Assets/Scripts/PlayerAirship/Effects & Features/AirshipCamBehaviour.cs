@@ -61,7 +61,7 @@ namespace ProjectStorms
         /// <summary>
         /// Transform of the camera child.
         /// </summary>
-        private Transform m_camTrans = null;
+        //private Transform m_camTrans = null;
         private Cam_DollyForward m_camDolly = null;
 
 
@@ -80,7 +80,6 @@ namespace ProjectStorms
             }
 
             m_camDolly = GetComponentInChildren<Cam_DollyForward>();
-            m_camTrans = m_camDolly.transform;
 
             // Detach from parent on start!
             m_trans.SetParent(camHolder.transform, true);
@@ -148,7 +147,6 @@ namespace ProjectStorms
                 // Move camera to take into account world obstacles
                 Vector3 lookOffset = m_camDolly.GetOriginalPosition() - camLookTarget.position;
                 RaycastHit[] rayHits = Physics.RaycastAll(camLookTarget.position, lookOffset, lookOffset.magnitude * 1.1f, Physics.DefaultRaycastLayers);
-                string myTag = gameObject.tag;
                 float nearDist = 999999.0f;
                 Vector3 nearPos = Vector3.zero;
                 for (int i = 0; i < rayHits.Length; ++i)

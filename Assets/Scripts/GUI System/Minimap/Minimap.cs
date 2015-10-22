@@ -93,7 +93,6 @@ namespace ProjectStorms
         private Image m_prisonshipImage;
 
         // Passenger spawner
-        private bool m_passengersSpawning       = false;
         private bool m_useNormalPrisonColour    = false;
         private float m_currentPrisonFlashTime  = 0.0f;
         private List<SpawnPassengers> m_passengerSpawners;
@@ -116,7 +115,6 @@ namespace ProjectStorms
         private Canvas m_captureCanvas;
         private Camera m_captureCamera;
         private Transform m_transform;
-        private GameObject m_gameObject;
 
         // TODO: Change display background depending on player count
         // TODO: Support 1-4 players rather than the current 4 players
@@ -158,7 +156,6 @@ namespace ProjectStorms
 
             // Cache common properties
             m_transform = transform;
-            m_gameObject = gameObject;
         }
 
         /// <summary>

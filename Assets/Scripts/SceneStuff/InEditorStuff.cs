@@ -34,8 +34,8 @@ namespace ProjectStorms
 
 		//Private check for game type
 		private bool amIATeamGame;
-		private Color alphaTeamColour;
-		private Color omegaTeamColour;
+		private Color alphaTeamColour = Color.magenta;
+        private Color omegaTeamColour = Color.magenta;
 
         void Awake()
         {

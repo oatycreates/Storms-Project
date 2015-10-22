@@ -47,7 +47,6 @@ namespace ProjectStorms
         }
 
         private PlayerSettings[] m_playerSettings;
-        private Gamemode m_gamemode = Gamemode.NONE;
 
         public void Awake()
         {

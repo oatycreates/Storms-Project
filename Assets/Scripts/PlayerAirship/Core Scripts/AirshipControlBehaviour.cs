@@ -140,7 +140,6 @@ namespace ProjectStorms
         // Cached variables
         private Rigidbody m_myRigid = null;            // Rigidbody of player
         private Transform m_trans = null;         // Transform for above rigidbody
-        private Transform m_camTrans = null;
         private Animator m_anim = null;
         private ShipPartDestroy m_shipPartDestroy = null;
         private StateManager m_shipStates = null;
@@ -167,19 +166,19 @@ namespace ProjectStorms
         public bool openHatch = false;
 
         //Last Vibration values
-        private float previousYaw = 0;
-        private float previousRoll = 0;
-        private float previousPitch = 0;
-        private float previousThrottle = 0;
+        //private float previousYaw = 0;
+        //private float previousRoll = 0;
+        //private float previousPitch = 0;
+        //private float previousThrottle = 0;
 
 
 		//Vibration values
-		private float v_leftYaw = 0;
-		private float v_rightYaw = 0;
-		private float v_throttleVibrate = 0;
-		private float v_pitchVibrate = 0;
-		private float v_leftRoll = 0;
-		private float v_rightRoll = 0;
+		//private float v_leftYaw = 0;
+		//private float v_rightYaw = 0;
+		//private float v_throttleVibrate = 0;
+		//private float v_pitchVibrate = 0;
+		//private float v_leftRoll = 0;
+		//private float v_rightRoll = 0;
 
         /// <summary>
         /// Passenger tray.
@@ -201,8 +200,6 @@ namespace ProjectStorms
             m_shipStates = GetComponent<StateManager>();
 
             m_tray = GetComponentInChildren<PassengerTray>();
-
-            m_camTrans = airshipMainCam.transform;
         }
 
         void Start()
@@ -260,10 +257,10 @@ namespace ProjectStorms
             bool a_faceLeft,    // X - Fire broadside left
             bool a_faceRight)   // B - Fire broadside right
         {
-            previousYaw = yaw;
-            previousPitch = pitch;
-            previousRoll = roll;
-            previousThrottle = throttle;
+            //previousYaw = yaw;
+            //previousPitch = pitch;
+            //previousRoll = roll;
+            //previousThrottle = throttle;
 
             // Zero input if not enabled
             if (!this.isActiveAndEnabled)
@@ -279,7 +276,7 @@ namespace ProjectStorms
             else
             {
                 // Use this to convert buttonpresses to axis input;
-                float rollFloat = 0;
+                /*float rollFloat = 0;
 
                 if (a_faceLeft)
                 {
@@ -288,7 +285,7 @@ namespace ProjectStorms
                 else if (a_faceRight)
                 {
                     rollFloat = 1;
-                }
+                }*/
 
                 //roll = 0.25f * a_Horizontal + rollFloat;
                 pitch = a_Vertical;// +a_camVertical;
@@ -365,7 +362,7 @@ namespace ProjectStorms
 
 		void Vibrate()
 		{
-			//Control Vibration
+			/*//Control Vibration
 
 			//Yaw
 			//if (yaw < 0)
@@ -423,7 +420,7 @@ namespace ProjectStorms
 				v_pitchVibrate = 0;
 			}
 
-			/*//Roll
+			//Roll
 			//if (roll > 0)
             if (roll == 1 && previousRoll != 1)
 			{
@@ -440,7 +437,7 @@ namespace ProjectStorms
 			{
 				v_leftRoll = 0;
 				v_rightRoll = 0;
-			}*/
+			}
 			
 			//Calculate vibration values
 			float leftForces = (v_throttleVibrate + v_pitchVibrate + v_leftRoll + v_leftYaw);
@@ -450,7 +447,7 @@ namespace ProjectStorms
             //Debug.Log("Yaw: " + yaw + "Previous Yaw: " + previousYaw);
 			
 			// Vibrate
-			//InputManager.SetControllerVibrate(gameObject.tag, leftForces, rightForces, 0.5f);
+			//InputManager.SetControllerVibrate(gameObject.tag, leftForces, rightForces, 0.5f);*/
 		}
 
         void FixedUpdate()

@@ -54,11 +54,6 @@ namespace ProjectStorms
         public Transform explosionCentreTrans;
 
         /// <summary>
-        /// Cumulative ship acceleration for the tick.
-        /// </summary>
-        private Vector3 m_currShipAccel = Vector3.zero;
-
-        /// <summary>
         /// Velocity of the ship last tick.
         /// </summary>
         private Vector3 m_lastShipVel = Vector3.zero;
@@ -111,7 +106,6 @@ namespace ProjectStorms
         void Awake()
         {
             // Zero variables
-            m_currShipAccel = Vector3.zero;
             m_lastShipVel = Vector3.zero;
             shipPartMassAdd = 0.0f;
 
@@ -180,7 +174,7 @@ namespace ProjectStorms
                 if (m_hasStarted)
                 {
                     // Calculate ship velocity over the past tick. a = (v - u) / t
-                    m_currShipAccel = (m_shipRb.velocity - m_lastShipVel) / Time.deltaTime;
+                    //m_currShipAccel = (m_shipRb.velocity - m_lastShipVel) / Time.deltaTime;
 
                     // Store ship velocity for the next tick
                     m_lastShipVel = m_shipRb.velocity;
