@@ -29,6 +29,8 @@ namespace ProjectStorms
 		private Vector3 localPos;
 		public bool zigzag = false;
 
+     
+
 		void Start () 
 		{
 			localPos = gameObject.transform.localPosition;
@@ -39,6 +41,7 @@ namespace ProjectStorms
 			//reset pos
 			gameObject.transform.localPosition = localPos;
 			amplitude = 0;
+
 		}
 
 

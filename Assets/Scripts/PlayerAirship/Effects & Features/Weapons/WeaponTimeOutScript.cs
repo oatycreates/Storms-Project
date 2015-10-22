@@ -55,7 +55,7 @@ namespace ProjectStorms
 
 			if (internalTimer <= 0) 
 			{
-				gameObject.SetActive(false);
+                gameObject.SetActive(false);
 
 			}
 		}
