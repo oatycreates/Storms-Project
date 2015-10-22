@@ -59,6 +59,11 @@ namespace ProjectStorms
         public float balDestRumbleDurr = 0.2f;
 
         /// <summary>
+        /// Cone angle for detecting directional collisions.
+        /// </summary>
+        public float colDirThreshold = 0.258819f; // Sin(15*);
+
+        /// <summary>
         /// Trigger the component on balloon destruction
         /// </summary>
         public AudioSource balloonPopNoise;
@@ -164,33 +169,114 @@ namespace ProjectStorms
         /// <summary>
         /// Called when a trigger enter begins to objects.
         /// </summary>
-        /// <param name="a_col">Other collider.</param>
-        void OnTriggerEnter(Collider a_col)
+        /// <param name="a_otherCol">Other collider.</param>
+        void OnTriggerEnter(Collider a_otherCol)
         {
             // Ignore losing parts to prisoners
-            if (!a_col.tag.Contains("Passengers"))
+            if (!a_otherCol.tag.Contains("Passengers"))
             {
-                Rigidbody rbOther = a_col.GetComponentInParent<Rigidbody>();
+                Rigidbody rbOther = a_otherCol.GetComponentInParent<Rigidbody>();
                 if (rbOther != null)
                 {
                     // Work out relative collision velocity
-                    float velDiffSqr = (m_rb.velocity - rbOther.velocity).sqrMagnitude;
+                    Vector3 offsetVel = (m_rb.velocity - rbOther.velocity);
+                    float velDiffSqr = offsetVel.sqrMagnitude;
+
+                    // Evaluate player collision if ramming other
+                    if (a_otherCol.tag.Contains("Player") && 
+                        m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
+                    {
+                        EvaluatePlayerCollision(a_otherCol, offsetVel, velDiffSqr);
+                    }
 
                     // Run on the other ship because OnTriggerEnter only allows us to get the other component, not our own collider
-                    ShipPartDestroy scriptOther = a_col.GetComponentInParent<ShipPartDestroy>();
+                    ShipPartDestroy scriptOther = a_otherCol.GetComponentInParent<ShipPartDestroy>();
                     if (scriptOther != null)
                     {
-                        scriptOther.EvaluatePartCollision(a_col, velDiffSqr);
+                        scriptOther.EvaluatePartCollision(a_otherCol, velDiffSqr);
                     }
                 }
             }
         }
-
+        
         /// <summary>
-        /// 
+        /// Evaluates the collision with the input collider.
         /// </summary>
-        /// <param name="a_colInfo">Collision information</param>
-        public void EvaluatePartCollision(Collider a_col, float a_colVelSqr)
+        /// <param name="a_colInfo">Collision information.</param>
+        /// <param name="a_velDiff">Relative collision velocity.</param>
+        /// <param name="a_colVelSqr">Squared relative collision velocity magnitude.</param>
+        private void EvaluatePlayerCollision(Collider a_otherCol, Vector3 a_velDiff, float a_colVelSqr)
+        {
+            // Establish collision direction
+            Transform otherTrans = a_otherCol.transform;
+            float forwardDot = Vector3.Dot(m_trans.forward, otherTrans.forward);
+            float rightDot = Vector3.Dot(m_trans.right, otherTrans.right);
+
+            // Get positions
+            Vector3 myPos = m_trans.position;
+            Vector3 otherPos = otherTrans.position;
+            Vector3 offset = otherPos - myPos;
+
+            // For evaluating whether the collision is from below/above
+            float upDot = Vector3.Dot(offset, otherTrans.up);
+
+            // Get scripts
+            PassengerTray otherTray = a_otherCol.GetComponentInParent<PassengerTray>();
+
+            // T-Bone - My front into their side
+            if (Mathf.Abs(forwardDot) <= colDirThreshold)
+            {
+                // TODO Make them lose passengers
+                Debug.Log("Collision - From T-Bone!");
+            }
+
+            // Head on - My front into their front
+            if (forwardDot <= -1 + colDirThreshold)
+            {
+                // TODO Make both lose passengers
+                Debug.Log("Collision - From Head On!");
+            }
+
+            // Behind - My front into their back
+            if (forwardDot >= 1 - colDirThreshold)
+            {
+                // TODO Make them lose passengers
+                Debug.Log("Collision - From Behind!");
+            }
+
+            // Above - My ship onto them from above
+            if (upDot >= 1 - colDirThreshold)
+            {
+                // Sanity check
+                if (offset.y >= 0)
+                {
+                    Debug.LogWarning("Invalid above collision! Player is actually in the same spot or below.");
+                }
+
+                // TODO Make them lose passengers
+                Debug.Log("Collision - From Above!");
+            }
+
+            // Above - My ship onto them from below
+            if (upDot <= -1 + colDirThreshold)
+            {
+                // Sanity check
+                if (offset.y >= 0)
+                {
+                    Debug.LogWarning("Invalid above collision! Player is actually in the same spot or below.");
+                }
+
+                // TODO Make them lose passengers
+                Debug.Log("Collision - From Above!");
+            }
+        }
+        
+        /// <summary>
+        /// Evaluates the collision with the input collider.
+        /// </summary>
+        /// <param name="a_colInfo">Collision information.</param>
+        /// <param name="a_colVelSqr">Squared relative collision velocity magnitude.</param>
+        public void EvaluatePartCollision(Collider a_otherCol, float a_colVelSqr)
         {
             // Find the part being collided with
             Collider[] childColliders;
@@ -200,7 +286,7 @@ namespace ProjectStorms
                 foreach (Collider col in childColliders)
                 {
                     // Check if the collision actually involves the part
-                    if (col == a_col)
+                    if (col == a_otherCol)
                     {
                         //Debug.Log("Colliding with: " + col + ", part : " + part.partObject.name);
                         //Debug.Log(colVelSqr);
