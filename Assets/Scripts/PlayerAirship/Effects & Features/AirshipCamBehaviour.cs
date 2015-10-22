@@ -72,22 +72,7 @@ namespace ProjectStorms
 
         void Start()
         {
-            GameObject camHolder = GameObject.Find("CamHolder");
-            if (camHolder == null)
-            {
-                camHolder = new GameObject();
-                camHolder.name = "CamHolder";
-            }
-
             m_camDolly = GetComponentInChildren<Cam_DollyForward>();
-
-            // Detach from parent on start!
-            m_trans.SetParent(camHolder.transform, true);
-
-            m_myStartPos = m_trans.position;
-            m_myStartRot = m_trans.rotation;
-
-            m_trans.localPosition = Vector3.zero;
         }
 
         void Update()
@@ -117,6 +102,26 @@ namespace ProjectStorms
             {
                 WatchCam();
             }
+        }
+
+        /// <summary>
+        /// Initialises the camera object.
+        /// </summary>
+        public void InitialiseCam()
+        {
+            GameObject camHolder = GameObject.Find("CamHolder");
+            if (camHolder == null)
+            {
+                camHolder = new GameObject();
+                camHolder.name = "CamHolder";
+            }
+
+            // Detach from parent on start!
+            m_trans.SetParent(camHolder.transform, true);
+            m_trans.localPosition = Vector3.zero;
+
+            m_myStartPos = m_trans.position;
+            m_myStartRot = m_trans.rotation;
         }
 
 		/// <summary>
