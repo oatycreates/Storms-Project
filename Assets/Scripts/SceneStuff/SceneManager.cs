@@ -79,7 +79,8 @@ namespace ProjectStorms
 		
 		public void DemoScene()
 		{
-			Application.LoadLevel("RoDo_DemoScene");
+			//Application.LoadLevel("RoDo_DemoScene");
+            Application.LoadLevel("GameSceneAlphaVersion");
 		}
 		                       
     } 
