@@ -254,6 +254,7 @@ namespace ProjectStorms
             foreach (GameObject go in m_trayContents)
             {
                 go.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionCentreTrans.position, explosionRadius);
+                print("Rowan! It works!!!");
             }
         }
 

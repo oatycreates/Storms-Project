@@ -129,7 +129,7 @@ namespace ProjectStorms
 
                 if (passengerRigidbody.gameObject.tag == "Passengers")
                 {
-                    //passengerRigidbody.AddForce(Vector3.up * 0.5f, ForceMode.Force);
+                    passengerRigidbody.AddForce(Vector3.up * 0.7f, ForceMode.Force);
 
                     passengerRigidbody.transform.LookAt(gameObject.transform.position);
 
@@ -144,6 +144,7 @@ namespace ProjectStorms
                 other.gameObject.GetComponent<PassengerTray>().PowerDownTray();
             }
             
+            /*
             //if there is both a passenger tray, and a passenger in it,
             // make the passenger in it "jump" in the tray's local space
             if (other.gameObject.GetComponent<PassengerTray>() != null && passengerRigidbody != null)
@@ -155,7 +156,7 @@ namespace ProjectStorms
 					passengerRigidbody.AddForce(trayUpDirection * 1.5f, ForceMode.Force);	
 					Debug.Log("HERE!");
             	}
-            }
+            }*/
             
         }
 
