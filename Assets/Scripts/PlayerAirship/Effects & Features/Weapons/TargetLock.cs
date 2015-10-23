@@ -109,7 +109,7 @@ namespace ProjectStorms
             if (isActiveAndEnabled)
             {
                 // Find all players in the scene
-                string playerName = gameObject.name, playerTag = gameObject.tag;
+                string playerName = gameObject.name;
                 float closestToLook = -1.0f, closestTarDist = 99999.0f;
                 Transform closestTar = null, tempTrans = null;
                 Vector3 myPos = m_trans.position;

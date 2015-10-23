@@ -153,7 +153,7 @@ namespace ProjectStorms
 			if (!buttonDown)
 			{
                 // Check to see if I can fire any countermeasures
-                //if (gotPickup)
+                if (gotPickup)
                 {
                     if (m_currPowerupCooldown <= 0)
                     {

@@ -61,9 +61,10 @@ namespace ProjectStorms
         /// <summary>
         /// Transform of the camera child.
         /// </summary>
-        private Transform m_camTrans = null;
+        //private Transform m_camTrans = null;
         private Cam_DollyForward m_camDolly = null;
 
+        private bool m_isInitialised = false;
 
         void Awake()
         {
@@ -72,27 +73,16 @@ namespace ProjectStorms
 
         void Start()
         {
-            GameObject camHolder = GameObject.Find("CamHolder");
-            if (camHolder == null)
-            {
-                camHolder = new GameObject();
-                camHolder.name = "CamHolder";
-            }
-
             m_camDolly = GetComponentInChildren<Cam_DollyForward>();
-            m_camTrans = m_camDolly.transform;
-
-            // Detach from parent on start!
-            m_trans.SetParent(camHolder.transform, true);
-
-            m_myStartPos = m_trans.position;
-            m_myStartRot = m_trans.rotation;
-
-            m_trans.localPosition = Vector3.zero;
         }
 
         void Update()
         {
+            if (!m_isInitialised)
+            {
+                Debug.LogError("InitialiseCam() has not been called!");
+            }
+
 #if UNITY_EDITOR
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
@@ -120,6 +110,28 @@ namespace ProjectStorms
             }
         }
 
+        /// <summary>
+        /// Initialises the camera object.
+        /// </summary>
+        public void InitialiseCam()
+        {
+            m_isInitialised = true;
+
+            GameObject camHolder = GameObject.Find("CamHolder");
+            if (camHolder == null)
+            {
+                camHolder = new GameObject();
+                camHolder.name = "CamHolder";
+            }
+
+            // Detach from parent on start!
+            m_trans.SetParent(camHolder.transform, true);
+            m_trans.localPosition = Vector3.zero;
+
+            m_myStartPos = m_trans.position;
+            m_myStartRot = m_trans.rotation;
+        }
+
 		/// <summary>
 		/// This triggers the camera shake.		
 		/// </summary>
@@ -142,13 +154,12 @@ namespace ProjectStorms
         {
             if (camPosTarget != null)
             {
-                // TODO Fix lerping
+                // TODO: Fix lerping
                 m_trans.position = camPosTarget.position;
 
                 // Move camera to take into account world obstacles
                 Vector3 lookOffset = m_camDolly.GetOriginalPosition() - camLookTarget.position;
                 RaycastHit[] rayHits = Physics.RaycastAll(camLookTarget.position, lookOffset, lookOffset.magnitude * 1.1f, Physics.DefaultRaycastLayers);
-                string myTag = gameObject.tag;
                 float nearDist = 999999.0f;
                 Vector3 nearPos = Vector3.zero;
                 for (int i = 0; i < rayHits.Length; ++i)

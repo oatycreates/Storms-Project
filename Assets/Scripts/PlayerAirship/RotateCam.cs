@@ -43,10 +43,6 @@ namespace ProjectStorms
         public float camPositionFactor = 2.0f;
         public float camDistanceFactor = 15.0f;
 
-        private float m_yPos = 0;
-        private float m_xPos = 0;
-        private float m_zPos = 0;
-
         public CannonFire frontCannon = null;
 
         // Link to Cannons
@@ -80,8 +76,6 @@ namespace ProjectStorms
         // Cached variables
         private Transform m_shipTrans = null;
         private Transform m_camRotTrans = null;
-        private Transform m_lookTarTrans = null;
-        private Transform m_camProxyTrans = null;
 
         void Start()
         {
@@ -89,8 +83,6 @@ namespace ProjectStorms
             m_referenceStateManager = GetComponent<StateManager>();
             m_shipTrans = transform;
             m_camRotTrans = rotateCam.transform;
-            m_lookTarTrans = lookyHereTarget.transform;
-            m_camProxyTrans = camProxyTarget.transform;
         }
 
         public void ResetCamRotation(bool a_snap)

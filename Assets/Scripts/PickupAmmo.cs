@@ -14,11 +14,9 @@ namespace ProjectStorms
 {
     public class PickupAmmo : MonoBehaviour
     {
-        private SphereCollider myCollider;
-
         void Awake()
         {
-            myCollider = gameObject.GetComponent<SphereCollider>();
+
         }
 
         void Update()
@@ -28,13 +26,14 @@ namespace ProjectStorms
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.transform.root.gameObject.GetComponent<Countermeasures>() as Countermeasures != null)
+            Countermeasures counter = other.gameObject.transform.root.gameObject.GetComponent<Countermeasures>() as Countermeasures;
+            if (counter != null)
             {
-               if (other.gameObject.transform.root.gameObject.GetComponent<Countermeasures>().gotPickup == false)
-               {
-                   other.gameObject.transform.root.gameObject.GetComponent<Countermeasures>().gotPickup = true;
-                   print("Give ammo");
-               }
+                if (counter.gotPickup == false)
+                {
+                    counter.gotPickup = true;
+                    print("Give ammo");
+                }
             }
         }
     }

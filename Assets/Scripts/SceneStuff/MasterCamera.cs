@@ -33,8 +33,28 @@ namespace ProjectStorms
         public Camera cam3;
         public Camera cam4;
 
+        private bool m_isInitialised = false;
+
         void Start()
         {
+
+        }
+
+        void Update()
+        {
+            if (!m_isInitialised)
+            {
+                Debug.LogError("InitialiseMasterCamera() has not been run!");
+            }
+        }
+
+        /// <summary>
+        /// Should be called after all player cameras have been initialised.
+        /// </summary>
+        public void InitialiseMasterCamera()
+        {
+            m_isInitialised = true;
+
             if (currentCamera == ECamerasInScene.One)
             {
                 cam1.enabled = true;
@@ -103,11 +123,6 @@ namespace ProjectStorms
                 cam3.rect = new Rect(0f, 0f, 0.5f, 0.5f);
                 cam4.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
             }
-        }
-
-        void Update()
-        {
-
         }
     } 
 }

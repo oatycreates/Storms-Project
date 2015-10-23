@@ -13,49 +13,57 @@ using System.Collections;
 
 namespace ProjectStorms
 {
-    public class LevelSettings : MonoBehaviour
+    public enum Gamemode
     {
-        public enum Gamemode
-        {
-            NONE,
-            FFA,
-            TEAMS
-        }
+        NONE,
+        FFA,
+        TEAMS
+    }
 
-        public enum Faction
-        {
-            NONE,
-            NAVY,
-            PIRATES,
-            TINKERERS,
-            VIKINGS,
-        }
+    public enum Faction
+    {
+        NONE,
+        NAVY,
+        PIRATES,
+        TINKERERS,
+        VIKINGS,
+    }
 
-        public enum Team
-        {
-            NONE,
-            ALPHA,
-            OMEGA
-        }
+    public enum Team
+    {
+        NONE,
+        ALPHA,
+        OMEGA
+    }
 
-        public class PlayerSettings
-        {
-            public bool invertY     = false;
-            public bool playing     = false;
-            public Faction faction  = Faction.NONE;
-            public Team team        = Team.NONE;
-        }
+    [System.Serializable]
+    public class PlayerSettings
+    {
+        public bool invertY = false;
+        public bool playing = false;
+        public Faction faction = Faction.NONE;
+        public Team team = Team.NONE;
+    }
 
+    public class LevelSettings : Singleton<LevelSettings>
+    {
         private PlayerSettings[] m_playerSettings;
-        private Gamemode m_gamemode = Gamemode.NONE;
+
+        /// <summary>
+        /// Protected constructor, to ensure this script is
+        /// used as a singleton
+        /// </summary>
+        protected LevelSettings() {}
 
         public void Awake()
         {
             // Initialise player settings array
             m_playerSettings = new PlayerSettings[4];
 
-            // Ensure this object persists across levels
-            DontDestroyOnLoad(this.gameObject);
+            for (int i = 0; i < m_playerSettings.Length; ++i)
+            {
+                m_playerSettings[i] = new PlayerSettings();
+            }
         }
 
         public PlayerSettings GetPlayerSettings(int a_playerNo)
@@ -80,17 +88,30 @@ namespace ProjectStorms
                 Debug.LogError(string.Format("Unable to set settings for player {0}", a_playerNo));
                 return;
             }
+
+            // Set requested player settings
+            m_playerSettings[a_playerNo - 1].faction    = a_settings.faction;
+            m_playerSettings[a_playerNo - 1].invertY    = a_settings.invertY;
+            m_playerSettings[a_playerNo - 1].playing    = a_settings.playing;
+            m_playerSettings[a_playerNo - 1].team       = a_settings.team;
+            m_playerSettings[a_playerNo - 1].playing    = a_settings.playing;
         }
 
-        public void Reset()
+        public void ResetPlayer(int a_playerNo)
         {
-            for (int i = 0; i < m_playerSettings.Length; ++i)
+            // Ensure parameters are valid
+            if (a_playerNo < 1 ||
+                a_playerNo > 4)
             {
-                m_playerSettings[i].faction = Faction.NONE;
-                m_playerSettings[i].invertY = false;
-                m_playerSettings[i].playing = false;
-                m_playerSettings[i].team    = Team.NONE;
+                Debug.LogError("Unable to reset player settings for player:" + a_playerNo);
+                return;
             }
+
+            // Reset requested player settings
+            m_playerSettings[a_playerNo - 1].faction = Faction.NONE;
+            m_playerSettings[a_playerNo - 1].invertY = false;
+            m_playerSettings[a_playerNo - 1].playing = false;
+            m_playerSettings[a_playerNo - 1].team = Team.NONE;
         }
     }
 }

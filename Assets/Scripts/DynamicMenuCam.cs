@@ -26,7 +26,7 @@ namespace ProjectStorms
 		
 		public int currentPos = 1;
 		//private int leftRight = 0;
-		private bool maxPush = false;
+		//private bool maxPush = false;
 		
 		public SceneManager sceneManager;
 	

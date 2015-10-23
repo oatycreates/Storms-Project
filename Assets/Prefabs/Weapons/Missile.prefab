@@ -148,7 +148,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -159,7 +159,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
+  BypassEffects: 1
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
@@ -263,11 +263,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c69ec18421d792489278dc843203cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ramForce: 50
-  movementVelocity: 150
+  ramForce: 200
+  movementVelocity: 300
   turnSpeed: 7
   closeRangeThreshold: 28
-  missileLifetime: 6
+  missileLifetime: 8
   beepSFX: {fileID: 8300000, guid: 38cc61186d48c9b46af029cf238063a5, type: 3}
   launchSFX: {fileID: 8300000, guid: 62b2761f2764f7940bc73b03ad1ee092, type: 3}
 --- !u!136 &13646470
@@ -313,7 +313,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: ramForce
-      value: 50
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: movementVelocity
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: missileLifetime
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: closeRangeThreshold
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BypassEffects
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Volume
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

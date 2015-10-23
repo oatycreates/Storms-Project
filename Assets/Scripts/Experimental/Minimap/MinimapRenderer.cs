@@ -30,7 +30,6 @@ namespace ProjectStorms.Experimental
         public List<Transform> playerBasesTranforms;
 
         Canvas m_canvas;
-        Camera m_camera;
 
         List<Text> m_playerImages;
         List<Text> m_playerBaseImages;
@@ -40,9 +39,6 @@ namespace ProjectStorms.Experimental
             // Get canvas reference
             m_canvas = GetComponentInChildren<Canvas>();
             m_canvas.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
-
-            // Get camera reference
-            m_camera = GetComponentInChildren<Camera>();
 
             // Create player icons
             m_playerImages      = new List<Text>(playersTransfroms.Count);

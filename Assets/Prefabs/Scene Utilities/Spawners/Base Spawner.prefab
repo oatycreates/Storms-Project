@@ -44,7 +44,7 @@ MonoBehaviour:
   tinkerersBase: {fileID: 186162, guid: bd33f7be5567d11478439ffcb6aff804, type: 2}
   vikingsBase: {fileID: 118810, guid: 6a3f3239ff8a50c40a817774bc082ca5, type: 2}
   baseType: 0
-  overrideBaseType: 1
+  overrideBaseType: 0
   overrideFaction: 1
 --- !u!1001 &100100000
 Prefab:
@@ -52,7 +52,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: overrideBaseType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 175690}

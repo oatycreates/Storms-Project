@@ -58,11 +58,6 @@ namespace ProjectStorms
         private int m_currWaveSpawned = 0;
 
         /// <summary>
-        /// Stored ship name.
-        /// </summary>
-        private string m_shipName = "";
-
-        /// <summary>
         /// Whether to spawn a wave of enemies.
         /// </summary>
         private bool m_spawnAWave = false;
@@ -171,7 +166,6 @@ namespace ProjectStorms
         private void SpawnPassengerFor(Transform a_trans)
         {
             // Variables for loop
-            Vector3 relativeSpace;
             Rigidbody passengerRb;
             Transform passengerTrans;
 
@@ -183,8 +177,6 @@ namespace ProjectStorms
                 // Search for inactive passengers
                 if (!m_passengers[i].activeInHierarchy)
                 {
-                    Quaternion sprayQuat = Quaternion.identity;
-
                     passengerTrans = m_passengers[i].transform;
                     //passengerTrans.position = m_trans.position;
                     passengerTrans.position = a_trans.position + spawnOffset;
@@ -192,14 +184,11 @@ namespace ProjectStorms
 
                     m_passengers[i].SetActive(true);
 
-                    // Use relative space to spawn
-                    relativeSpace = m_trans.forward;
-
                     // Set up player rigidbody
                     passengerRb = m_passengers[i].GetComponent<Rigidbody>();
                     passengerRb.mass = m_passengerMass;
 
-                    // TODO Ignore collision with the spawner colliders and the prison fortress
+                    // TODO: Ignore collision with the spawner colliders and the prison fortress
 
                     // Reset velocity before adding to it
                     passengerRb.velocity = Vector3.zero;
