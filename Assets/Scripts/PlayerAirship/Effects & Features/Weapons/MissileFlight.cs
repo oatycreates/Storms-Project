@@ -227,12 +227,28 @@ namespace ProjectStorms
             Rigidbody rb = a_other.rigidbody;
             if (rb != null)
             {
-                rb.AddForce(m_trans.forward * ramForce, ForceMode.VelocityChange);
+                //rb.AddForce(m_trans.forward * ramForce, ForceMode.VelocityChange);
+                rb.AddExplosionForce(ramForce, m_target.position, 9, 9);
+
             }
 
             // Disable on hit
-            gameObject.SetActive(false);
+           //gameObject.SetActive(false);
+           Invoke("GoToSleep", 0.1f);
         }
+
+        /*
+        void OnTriggerEnter(Collider a_other)
+        {
+            //passenger tray stuff
+            if ( a_other.gameObject.GetComponent<PassengerTray>() != null)
+            {
+                print("Yess!");
+                a_other.gameObject.GetComponent<PassengerTray>().PowerDownTray();
+                a_other.gameObject.GetComponent<PassengerTray>().ExplodeTray();
+            }
+        }
+        */
 
         public void SetTarget(Transform a_trans)
         {
