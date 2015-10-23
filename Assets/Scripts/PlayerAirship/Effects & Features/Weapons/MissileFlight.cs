@@ -20,6 +20,9 @@ namespace ProjectStorms
         [Tooltip("How much force to apply on hit.")]
         public float ramForce = 150.0f;
 
+        [Tooltip("How much force to apply to passengers on hit.")]
+        public float passengerRamForce = 15.0f;
+
 		private Transform m_target = null;
 
 		private Rigidbody m_myRigid = null;
@@ -245,7 +248,7 @@ namespace ProjectStorms
                         rbTemp = passenger.GetComponent<Rigidbody>();
                         if (rbTemp != null)
                         {
-                            rbTemp.AddForce(missileVel.normalized * ramForce, ForceMode.VelocityChange);
+                            rbTemp.AddForce(missileVel.normalized * passengerRamForce, ForceMode.VelocityChange);
                         }
                     }
                 }

@@ -237,6 +237,11 @@ namespace ProjectStorms
 
                     Rigidbody rbOther = a_otherCol.GetComponent<Rigidbody>();
 
+                    if (rbOther == null)
+                    {
+                        rbOther = a_otherCol.GetComponentInParent<Rigidbody>();
+                    }
+
                     // For evaluating whether the collision is from below/above
                     float upDot = Vector3.Dot(offset.normalized, otherTrans.up);
 
