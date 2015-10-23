@@ -245,7 +245,7 @@ namespace ProjectStorms
                         rbTemp = passenger.GetComponent<Rigidbody>();
                         if (rbTemp != null)
                         {
-                            rbTemp.AddForce(missileVel, ForceMode.VelocityChange);
+                            rbTemp.AddForce(ramForce, ForceMode.VelocityChange);
                         }
                     }
                 }
