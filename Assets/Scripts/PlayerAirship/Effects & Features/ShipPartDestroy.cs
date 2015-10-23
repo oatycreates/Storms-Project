@@ -288,6 +288,16 @@ namespace ProjectStorms
                 // Make nobody lose passengers
                 Debug.Log("Collision - Horiztonal bump!");
             }
+            else if (a_colVelSqr >= m_bumpVelSqr)
+            {
+                // Colliding above rumble threshold from random angle, both lose passengers
+                InputManager.SetControllerVibrate(gameObject.tag, bumpRumbleStr, bumpRumbleStr, bumpRumbleDurr, true);
+
+                // Turn off the passenger tray for a bit
+                m_shipTray.PowerDownTray();
+                m_shipTray.PowerDownTray();
+                otherTray.PowerDownTray();
+            }
         }
         
         /// <summary>
