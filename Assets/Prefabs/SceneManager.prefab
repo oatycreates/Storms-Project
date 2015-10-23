@@ -35,7 +35,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &122272
 GameObject:
   m_ObjectHideFlags: 1
@@ -101,7 +101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &154868
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &402546
 Transform:
   m_ObjectHideFlags: 1
@@ -346,7 +346,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -417,8 +417,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeMusicIn: 1
-  maxMusicVolume: 1
-  music: {fileID: 8300000, guid: cd9f8f3aaf7d04a449bcdaa36bc63b5f, type: 3}
+  maxMusicVolume: .100000001
+  music: {fileID: 8300000, guid: 1e9a7e726d3667641a238b9b0621137d, type: 3}
 --- !u!114 &11429548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -503,7 +503,7 @@ MonoBehaviour:
   fadeEnd: 0
   fadeSpeed: .5
   whitePanel: {fileID: 11476936}
-  fadeToThisScene: 5
+  fadeToThisScene: 1
 --- !u!114 &11447414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -526,8 +526,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c897f4a6c96a41147ab0994fa973b7f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  condition: 7
   textPrefab: {fileID: 115102, guid: c67db845666708d40ab2ab8668d1bb93, type: 2}
-  scoringColour: 0
+  pooledAmount: 2000
+  scoreManager: {fileID: 11497332}
 --- !u!114 &11454760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -633,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameType: 0
-  passengersToWin: 15
+  passengersToWin: 20
   pirateBase1: {fileID: 0}
   pirateBase2: {fileID: 0}
   pirateBase3: {fileID: 0}

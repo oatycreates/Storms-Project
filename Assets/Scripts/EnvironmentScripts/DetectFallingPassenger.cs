@@ -79,21 +79,25 @@ namespace ProjectStorms
                 {
                     //m_announcer.Pirate();
                     //m_announcer.TestText();
+                    m_announcer.condition = Player.SoulsLost;
                 }
                 else if (baseTag == "Player2_")
                 {
                     //m_announcer.Navy();
                     //m_announcer.TestText();
+                    m_announcer.condition = Player.SoulsLost;
                 }
                 else if (baseTag == "Player3_")
                 {
                     //m_announcer.Tinkerer();
                     //m_announcer.TestText();
+                    m_announcer.condition = Player.SoulsLost;
                 }
                 else if (baseTag == "Player4_")
                 {
                     //m_announcer.Viking();
                     //m_announcer.TestText();
+                    m_announcer.condition = Player.SoulsLost;
                 }
             }
         }

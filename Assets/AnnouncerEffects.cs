@@ -18,7 +18,8 @@ public enum Player {        IsScoring,
                             HasManyPassengers, 
                             IsBeingMissileTracked, 
                             IsBehindOtherPlayer, 
-                            PassengersSpawning 
+                            PassengersSpawning,
+                            SoulsLost
                     }; 
 
 
@@ -64,6 +65,8 @@ namespace ProjectStorms
         private Color m_warning = new Color(0, 0, 0);
          */
 
+        //Get a component on the same gameobject
+        public ScoreManager scoreManager;
 
         void Awake()
         {
@@ -96,10 +99,16 @@ namespace ProjectStorms
             InvokeRepeating("SpawnText", 0, 0.5f);
         }
 
-        void Update()
+        void Update() 
         {
             SetString(); 
 
+            if (scoreManager.pirateBase1.baseScore < (scoreManager.pirateBase1.baseScore/2))
+            {
+                condition = Player.IsWinning;
+            }
+
+            //Come back to this!
         }
         
 
@@ -181,6 +190,11 @@ namespace ProjectStorms
            {
                // Passenger Spawner
                textText = "Rescue the Passengers!";
+           }
+
+           if (condition == Player.SoulsLost)
+           {
+               textText = "<int> souls lost";
            }
        }
 
