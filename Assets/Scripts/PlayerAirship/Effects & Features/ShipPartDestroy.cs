@@ -162,7 +162,6 @@ namespace ProjectStorms
                     if (a_colInfo.gameObject.tag.Contains("Player") &&
                         m_rb.velocity.sqrMagnitude >= rbOther.velocity.sqrMagnitude)
                     {
-                        Debug.Log("Ramming player! Me: " + gameObject.tag + ", them: " + a_colInfo.gameObject.tag);
                         EvaluatePlayerCollision(a_colInfo.collider, offsetVel, velDiffSqr);
                     }
                 }
@@ -233,70 +232,73 @@ namespace ProjectStorms
             // Get scripts
             PassengerTray otherTray = a_otherCol.GetComponentInParent<AirshipControlBehaviour>().gameObject.GetComponentInChildren<PassengerTray>();
 
-            Debug.Log("Front dot: " + Mathf.Abs(forwardDot) +
-                ", right dot: " + Mathf.Abs(rightDot) +
-                ", up dot: " + Mathf.Abs(upDot) + 
-                ", threshold: " + colDirThreshold);
-
-            if (Mathf.Abs(forwardDot) <= colDirThreshold)
+            if (otherTray != null)
             {
-                // T-Bone - My front into their side
+                /*Debug.Log("Front dot: " + Mathf.Abs(forwardDot) +
+                    ", right dot: " + Mathf.Abs(rightDot) +
+                    ", up dot: " + Mathf.Abs(upDot) +
+                    ", threshold: " + colDirThreshold);*/
 
-                // TODO: Make them lose passengers
-                Debug.Log("Collision - From T-Bone!");
-                otherTray.PowerDownTray();
-            }
-            else if (forwardDot <= -1 + colDirThreshold)
-            {
-                // Head on - My front into their front
+                if (upDot >= 1 - colDirThreshold &&
+                    offset.y > 0)
+                {
+                    // Above - My ship onto them from above
 
-                // TODO: Make both lose passengers
-                Debug.Log("Collision - From Head On!");
-                m_shipTray.PowerDownTray();
-                otherTray.PowerDownTray();
-            }
-            else if (forwardDot >= 1 - colDirThreshold)
-            {
-                // Behind - My front into their back
+                    // Make them lose passengers
+                    //Debug.Log("Collision - From Above!");
+                    otherTray.PowerDownTray();
+                }
+                else if (upDot <= -1 + colDirThreshold &&
+                    offset.y < 0)
+                {
+                    // Below - My ship onto them from below
 
-                // TODO: Make them lose passengers
-                Debug.Log("Collision - From Behind!");
-                otherTray.PowerDownTray();
-            }
-            else if (upDot >= 1 - colDirThreshold &&
-                offset.y > 0)
-            {
-                // Above - My ship onto them from above
+                    // Make them lose passengers
+                    //Debug.Log("Collision - From Below!");
+                    otherTray.PowerDownTray();
+                }
+                else if (Mathf.Abs(forwardDot) <= colDirThreshold)
+                {
+                    // T-Bone - My front into their side
 
-                // TODO: Make them lose passengers
-                Debug.Log("Collision - From Above!");
-                otherTray.PowerDownTray();
-            }
-            else if (upDot <= -1 + colDirThreshold && 
-                offset.y < 0)
-            {
-                // Below - My ship onto them from above
+                    // Make them lose passengers
+                    //Debug.Log("Collision - From T-Bone!");
+                    otherTray.PowerDownTray();
+                }
+                else if (forwardDot <= -1 + colDirThreshold)
+                {
+                    // Head on - My front into their front
 
-                // TODO: Make them lose passengers
-                Debug.Log("Collision - From Above!");
-                otherTray.PowerDownTray();
-            }
-            else if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
-            {
-                // Horizontal/Side by side - My ship gently bumping them
+                    // Make both lose passengers
+                    //Debug.Log("Collision - From Head On!");
+                    m_shipTray.PowerDownTray();
+                    otherTray.PowerDownTray();
+                }
+                else if (forwardDot >= 1 - colDirThreshold)
+                {
+                    // Behind - My front into their back
 
-                // Make nobody lose passengers
-                Debug.Log("Collision - Horiztonal bump!");
-            }
-            else if (a_colVelSqr >= m_bumpVelSqr)
-            {
-                // Colliding above rumble threshold from random angle, both lose passengers
-                InputManager.SetControllerVibrate(gameObject.tag, bumpRumbleStr, bumpRumbleStr, bumpRumbleDurr, true);
+                    // Make them lose passengers
+                    //Debug.Log("Collision - From Behind!");
+                    otherTray.PowerDownTray();
+                }
+                else if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
+                {
+                    // Horizontal/Side by side - My ship gently bumping them
 
-                // Turn off the passenger tray for a bit
-                m_shipTray.PowerDownTray();
-                m_shipTray.PowerDownTray();
-                otherTray.PowerDownTray();
+                    // Make nobody lose passengers
+                    //Debug.Log("Collision - Horiztonal bump!");
+                }
+                else if (a_colVelSqr >= m_bumpVelSqr)
+                {
+                    // Colliding above rumble threshold from random angle, both lose passengers
+                    InputManager.SetControllerVibrate(gameObject.tag, bumpRumbleStr, bumpRumbleStr, bumpRumbleDurr, true);
+
+                    // Turn off the passenger tray for a bit
+                    m_shipTray.PowerDownTray();
+                    m_shipTray.PowerDownTray();
+                    otherTray.PowerDownTray();
+                }
             }
         }
         
