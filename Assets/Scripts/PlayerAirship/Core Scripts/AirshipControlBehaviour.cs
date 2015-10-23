@@ -255,7 +255,9 @@ namespace ProjectStorms
             bool a_faceUp,      // Y - Open hatch
             bool a_faceDown,    // A - Fire cannon forwards
             bool a_faceLeft,    // X - Fire broadside left
-            bool a_faceRight)   // B - Fire broadside right
+            bool a_faceRight,   // B - Fire broadside right
+            float a_dPadHorizontal,
+            float a_dPadVertical)
         {
             //previousYaw = yaw;
             //previousPitch = pitch;
@@ -308,17 +310,30 @@ namespace ProjectStorms
                     m_isReversing = false;
                 }
 
+
+
                 // If about to open hatch
-                if (!openHatch && a_faceUp)
+                // if (!openHatch && a_faceUp)
+                if (!openHatch && a_dPadVertical < 0)
                 {
                     Invoke("TrapdoorRumblePulse", trapdoorRumbleCooldown);
                 }
 
                 // Check buttonPresses
-                openHatch = a_faceUp;//(a_faceUp || a_faceDown);
+               // openHatch = a_faceUp;//(a_faceUp || a_faceDown);
+                if (a_dPadVertical < 0)
+                {
+                    openHatch = true;
+                }
+                else
+                {
+                    openHatch = false;
+                }
 
                 // Keep the inputs in reasonable ranges, see the standard asset examples for more
                 ClampInputs();
+
+
 
                 /*
                 // Open/close the hatches

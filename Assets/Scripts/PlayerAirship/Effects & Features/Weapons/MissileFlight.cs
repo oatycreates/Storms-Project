@@ -227,8 +227,9 @@ namespace ProjectStorms
             Rigidbody rb = a_other.rigidbody;
             if (rb != null)
             {
-                //rb.AddForce(m_trans.forward * ramForce, ForceMode.VelocityChange);
-                rb.AddExplosionForce(ramForce, m_target.position, 9, 9);
+               // rb.AddForce(m_trans.forward * ramForce, ForceMode.VelocityChange);
+                //rb.AddExplosionForce(ramForce, m_target.position, 9, 9);
+                rb.AddExplosionForce(ramForce, a_other.contacts[0].point, 9, 9);
 
             }
 

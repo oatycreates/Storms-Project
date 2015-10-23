@@ -148,7 +148,8 @@ namespace ProjectStorms
             }
         }
 
-		public void DPad(bool a_down, bool a_up, bool a_left, bool a_right)
+		//public void DPad(bool a_down, bool a_up, bool a_left, bool a_right)
+        public void FacePad(bool a_faceDown, bool a_faceUp, bool a_faceLeft, bool a_faceRight)
 		{
 			if (!buttonDown)
 			{
@@ -158,28 +159,28 @@ namespace ProjectStorms
                     if (m_currPowerupCooldown <= 0)
                     {
                         // Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
-                        if (a_down)
+                        if (a_faceDown)//(a_down)
                         {
                             SpawnChaff();
                             buttonDown = true;
                             gotPickup = false;
                         }
 
-                        if (a_up)
+                        if (a_faceUp) //(a_up)
                         {
                             SpawnMissile();
                             buttonDown = true;
                             gotPickup = false;
                         }
 
-                        if (a_right)
+                        if (a_faceRight) //(a_right)
                         {
                             SpawnSkyMine();
                             buttonDown = true;
                             gotPickup = false;
                         }
 
-                        if (a_left)
+                        if (a_faceLeft) //(a_left)
                         {
                             SpawnPinwheel();
                             buttonDown = true;
@@ -191,7 +192,8 @@ namespace ProjectStorms
 			}
 	
 			//Reset button
-			if (!a_down && !a_up && !a_left && !a_right)
+			//if (!a_down && !a_up && !a_left && !a_right)
+            if (!a_faceDown && !a_faceUp && !a_faceLeft && !a_faceRight)
 			{
 				buttonDown = false;
 			}
