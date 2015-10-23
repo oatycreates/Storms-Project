@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ProjectStorms
 {
@@ -231,6 +232,22 @@ namespace ProjectStorms
                 //rb.AddExplosionForce(ramForce, m_target.position, 9, 9);
                 rb.AddExplosionForce(ramForce, a_other.contacts[0].point, 9, 9);
 
+                PassengerTray tray = rb.GetComponentInChildren<PassengerTray>();
+                if (tray != null)
+                {
+                    Vector3 missileVel = m_myRigid.velocity;
+
+                    Rigidbody rbTemp = null;
+                    List<GameObject> contents = tray.trayContents;
+                    foreach (GameObject passenger in contents)
+                    {
+                        rbTemp = passenger.GetComponent<Rigidbody>();
+                        if (rbTemp != null)
+                        {
+                            rbTemp.AddForce(missileVel, ForceMode.VelocityChange);
+                        }
+                    }
+                }
             }
 
             // Disable on hit

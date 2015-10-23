@@ -77,6 +77,13 @@ namespace ProjectStorms
         /// List of objects in the tray that match the passenger tag type.
         /// </summary>
         private List<GameObject> m_trayContents = new List<GameObject>();
+        public List<GameObject> trayContents
+        {
+            get
+            {
+                return m_trayContents;
+            }
+        }
 
         /// <summary>
         /// Time until the tray powers back up.
