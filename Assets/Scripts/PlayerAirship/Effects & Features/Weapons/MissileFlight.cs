@@ -237,6 +237,7 @@ namespace ProjectStorms
                 {
                     Vector3 missileVel = m_myRigid.velocity;
 
+                    // Launch passengers with missile velocity
                     Rigidbody rbTemp = null;
                     List<GameObject> contents = tray.trayContents;
                     foreach (GameObject passenger in contents)

@@ -8,6 +8,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ProjectStorms
 {
@@ -234,6 +235,8 @@ namespace ProjectStorms
                     Vector3 otherPos = otherTrans.position;
                     Vector3 offset = otherPos - myPos;
 
+                    Rigidbody rbOther = a_otherCol.GetComponent<Rigidbody>();
+
                     // For evaluating whether the collision is from below/above
                     float upDot = Vector3.Dot(offset.normalized, otherTrans.up);
 
@@ -242,6 +245,9 @@ namespace ProjectStorms
                         ", up dot: " + Mathf.Abs(upDot) +
                         ", threshold: " + colDirThreshold);*/
 
+                    bool powerDownOther = false;
+                    bool powerDownMe = false;
+
                     if (upDot >= 1 - colDirThreshold &&
                         offset.y > 0)
                     {
@@ -249,7 +255,7 @@ namespace ProjectStorms
 
                         // Make them lose passengers
                         //Debug.Log("Collision - From Above!");
-                        otherTray.PowerDownTray();
+                        powerDownOther = true;
                     }
                     else if (upDot <= -1 + colDirThreshold &&
                         offset.y < 0)
@@ -258,7 +264,7 @@ namespace ProjectStorms
 
                         // Make them lose passengers
                         //Debug.Log("Collision - From Below!");
-                        otherTray.PowerDownTray();
+                        powerDownOther = true;
                     }
                     else if (Mathf.Abs(forwardDot) <= colDirThreshold)
                     {
@@ -266,7 +272,7 @@ namespace ProjectStorms
 
                         // Make them lose passengers
                         //Debug.Log("Collision - From T-Bone!");
-                        otherTray.PowerDownTray();
+                        powerDownOther = true;
                     }
                     else if (forwardDot <= -1 + colDirThreshold)
                     {
@@ -274,8 +280,8 @@ namespace ProjectStorms
 
                         // Make both lose passengers
                         //Debug.Log("Collision - From Head On!");
-                        m_shipTray.PowerDownTray();
-                        otherTray.PowerDownTray();
+                        powerDownMe = true;
+                        powerDownOther = true;
                     }
                     else if (forwardDot >= 1 - colDirThreshold)
                     {
@@ -283,7 +289,7 @@ namespace ProjectStorms
 
                         // Make them lose passengers
                         //Debug.Log("Collision - From Behind!");
-                        otherTray.PowerDownTray();
+                        powerDownOther = true;
                     }
                     else if (Mathf.Abs(rightDot) >= 1 - colDirThreshold)
                     {
@@ -298,9 +304,41 @@ namespace ProjectStorms
                         InputManager.SetControllerVibrate(gameObject.tag, bumpRumbleStr, bumpRumbleStr, bumpRumbleDurr, true);
 
                         // Turn off the passenger tray for a bit
+                        powerDownMe = true;
+                        powerDownOther = true;
+                    }
+
+                    if (powerDownMe)
+                    {
                         m_shipTray.PowerDownTray();
+
+                        // Launch passengers with relative velocity
+                        Rigidbody rbTemp = null;
+                        List<GameObject> contents = m_shipTray.trayContents;
+                        foreach (GameObject passenger in contents)
+                        {
+                            rbTemp = passenger.GetComponent<Rigidbody>();
+                            if (rbTemp != null)
+                            {
+                                rbTemp.AddForce(rbOther.velocity, ForceMode.VelocityChange);
+                            }
+                        }
+                    }
+                    if (powerDownOther)
+                    {
                         m_shipTray.PowerDownTray();
-                        otherTray.PowerDownTray();
+
+                        // Launch passengers with relative velocity
+                        Rigidbody rbTemp = null;
+                        List<GameObject> contents = otherTray.trayContents;
+                        foreach (GameObject passenger in contents)
+                        {
+                            rbTemp = passenger.GetComponent<Rigidbody>();
+                            if (rbTemp != null)
+                            {
+                                rbTemp.AddForce(m_rb.velocity, ForceMode.VelocityChange);
+                            }
+                        }
                     }
                 }
             }
