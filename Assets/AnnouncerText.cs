@@ -14,48 +14,41 @@ using UnityEngine.UI;
 
 namespace ProjectStorms
 {
-    public enum MessageType { scoring, warning, winning};
+    //public enum MessageType { playerWinning, playerScoring, playerScoringScore, playerHowManyMoreToGo, playerHasWonGame, playerHasManyPassengers, playerIsBeingMissileTracked, playerIsBehindOtherPlayer, passengersAreSpawning }; 
 
     public class AnnouncerText : MonoBehaviour
     {
-        public Text m_text;
+        private Text m_text;
+       
         private float lifeTime = 1.0f;
         private float fadeMod = 2.0f;
 
 
-
-        public MessageType messageType;
-
-        public List<string> scoringMessages = new List<string>();
-        public List<string> warningMessages = new List<string>();
-        public List<string> winningMessages = new List<string>();
-
-        private Color m_myColour;
+        [HideInInspector]
+        public string m_myWords;
+        [HideInInspector]
+        public Color m_myColour;
 
         void Awake()
         {
             m_text = gameObject.GetComponent<Text>();
             m_text.color = Color.clear;
+
+            m_myWords = "Nothing Set Yet";
         }
 
         void OnEnable()
         {
+            //Reset life time on enable
+            lifeTime = 1.0f;
 
-            if (messageType == MessageType.scoring)
+            /*
+            //if (messageType == MessageType.playerScoring)
             {
-                m_text.text = scoringMessages[Random.Range(0, scoringMessages.Count - 1)];
+                //m_text.text = PlayerScoring[Random.Range(0, PlayerScoring.Count-1)];
+               
             }
-            else
-            if (messageType == MessageType.warning)
-            {
-                m_text.text = warningMessages[Random.Range(0, warningMessages.Count - 1)];
-            }
-            else
-            if (messageType == MessageType.winning)
-            {
-                m_text.text = winningMessages[Random.Range(0, winningMessages.Count - 1)];
-            }
-           
+            */
            
         }
 
@@ -63,6 +56,7 @@ namespace ProjectStorms
         {
             //Set colour
             m_text.color = m_myColour;
+            m_text.text = m_myWords;
 
             lifeTime -= (Time.deltaTime)/fadeMod;
             //lifeTime -= Time.deltaTime;
@@ -71,7 +65,8 @@ namespace ProjectStorms
 
             if (lifeTime < 0)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
 

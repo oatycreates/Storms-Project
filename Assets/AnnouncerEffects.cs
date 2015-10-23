@@ -11,18 +11,50 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum Player {        IsScoring,
+                            IsWinning, 
+                            HowManyMoreToGo, 
+                            HasWonGame, 
+                            HasManyPassengers, 
+                            IsBeingMissileTracked, 
+                            IsBehindOtherPlayer, 
+                            PassengersSpawning 
+                    }; 
+
+
 namespace ProjectStorms
 {
-    public enum PlayerColour { pirateRed, navyWhite, tinkererGreen, vikingYellow, spawningPassengers};
 
     public class AnnouncerEffects : MonoBehaviour
     {
+        //State management
+        public Player condition;
+
+
+        //Object pooling
         public GameObject textPrefab;
+        public int pooledAmount = 2000;
+        List<GameObject> textObjects;
+        
+
+        //Give the text a random pos in local space
         private Vector3 randomPos;
 
-        public PlayerColour scoringColour;
+        //Values to feed into the text
+        private GameObject player1 = null;
+        private string player1Name = " ";
+        private GameObject player2 = null;
+        private string player2Name = " ";
+        private Color player1Colour = Color.black;
+        private float player1Score = 0;
+        private float player1Tray = 0;
 
+
+        //Set values stuff
         private Color textColour = Color.clear;
+        private string textText = "Bump, nothing yet";
+
+        /*
         private Color m_pirateRed = new Color(0.779f, 0.126f, 0.126f);
         //private Color m_navyWhite = new Color(1f, 1f, 1f);
         //Actually, change this colour to navy blue...
@@ -30,97 +62,127 @@ namespace ProjectStorms
         private Color m_tinkererGreen = new Color(0.145f, 0.588f, 0.108f);
         private Color m_vikingYellow = new Color(0.926f, 0.842f, 0.163f);
         private Color m_warning = new Color(0, 0, 0);
+         */
 
 
-        //Spawntimer
-        private float spawnTimer = 0.0f;
-        private float timerValue = 0.5f;
+        void Awake()
+        {
+            //Always introduce the list first
+            textObjects = new List<GameObject>();
+
+            //pool the text prefabs
+            for (int i = 0; i < pooledAmount; i++)
+            {
+                GameObject singleTextObject = Instantiate(textPrefab, gameObject.transform.position, Quaternion.identity) as GameObject;
+
+                singleTextObject.transform.SetParent(gameObject.transform);
+
+                //Check for the right script
+                if (singleTextObject.GetComponent<AnnouncerText>() == null)
+                {
+                    singleTextObject.AddComponent<AnnouncerText>();
+                }
+
+                singleTextObject.SetActive(false);
+
+                textObjects.Add(singleTextObject);
+            }
+        }
+
 
         void Start()
         {
-           // print(m_navyWhite);
-           // InvokeRepeating("Spawning", 0, 0.1f);
-            //Invoke("Spawning", 0.1f);
+           //Use the demo TestText function
+            InvokeRepeating("SpawnText", 0, 0.5f);
         }
 
         void Update()
         {
-            //When to spawn text
-            if (spawnTimer > 0)
-            {
-                spawnTimer -= Time.deltaTime;
+            SetString(); 
 
-                //SpawnText();
-                //InvokeRepeating("SpawnText", 0, 0.01f);
-                //Set this in same place we start the spawn timer
-            }
-            else
-            if (spawnTimer <= 0)
-            {
-                CancelInvoke("SpawnText");
-            }
-
-            //Details of spawning text
-            if (scoringColour == PlayerColour.pirateRed)
-            {
-                textColour = m_pirateRed;
-            }
-            else
-            if (scoringColour == PlayerColour.navyWhite)
-            {
-                textColour = m_navyWhite;
-            }
-            if (scoringColour == PlayerColour.tinkererGreen)
-            {
-                textColour = m_tinkererGreen;
-            }
-            else
-            if (scoringColour == PlayerColour.vikingYellow)
-            {
-                textColour = m_vikingYellow;
-            }
-            else
-            if (scoringColour == PlayerColour.spawningPassengers)
-            {
-                textColour = m_warning;
-            }
         }
+        
 
        public void SpawnText()
         {
             RandomPos();
 
-           GameObject go = Instantiate(textPrefab, gameObject.transform.position + randomPos, Quaternion.identity) as GameObject;
-           go.transform.SetParent(gameObject.transform);
-          // go.gameObject.GetComponent<AnnouncerText>().SetColour(playerTeamColour);
-           go.gameObject.GetComponent<AnnouncerText>().SetColour(textColour);
+            for (int i = 0; i < textObjects.Count; i++)
+            {
+                if (!textObjects[i].activeInHierarchy)
+                {
+                    textObjects[i].transform.position = gameObject.transform.position + randomPos;
+                    textObjects[i].transform.rotation = Quaternion.identity;
 
-           if (textColour == m_pirateRed)
-           {
-               go.gameObject.GetComponent<AnnouncerText>().messageType = MessageType.scoring;
-           }
-           else
-           if (textColour == m_navyWhite)
-           {
-               go.gameObject.GetComponent<AnnouncerText>().messageType = MessageType.scoring;
-           }
-           else
-           if (textColour == m_tinkererGreen)
-           {
-               go.gameObject.GetComponent<AnnouncerText>().messageType = MessageType.scoring;
-           }
-           else
-           if (textColour == m_vikingYellow)
-           {
-               go.gameObject.GetComponent<AnnouncerText>().messageType = MessageType.scoring;
-           }
-           else
-           if (textColour == m_warning)
-           {
-               go.gameObject.GetComponent<AnnouncerText>().messageType = MessageType.warning;
-           }
-           
+                    //Check for the right script
+                    if (textObjects[i].GetComponent<AnnouncerText>() != null)
+                    {
+                        textObjects[i].GetComponent<AnnouncerText>().m_myWords = textText;
+                    }
+
+                    textObjects[i].SetActive(true);
+
+                    break;
+                }
+            }
         }
+
+        void SetString()
+       {
+           //Conditional logic - what do I need to trigger each text condition
+
+           if (condition == Player.IsScoring)
+           {
+               // Need Player, Base
+
+               textText = "<Player> Scores!";
+           }
+
+           if (condition == Player.IsWinning)
+           {
+               // Player, Base, Score
+               textText = "<Player> takes the lead!";
+           }
+
+           if (condition == Player.HowManyMoreToGo)
+           {
+               // Player, Base, Score
+               //textText = "Only <int> left!";
+               //or 
+               textText = "<Player> Needs <int>";
+           }
+
+           if (condition == Player.HasWonGame)
+           {
+               // Player, Base, Score
+               textText = "<Player> Wins!!!";
+           }
+
+
+           if (condition == Player.HasManyPassengers)
+           {
+               // Player, Passengers in Tray
+               textText = "Greedy <Player> Escaping!";
+           }
+
+           if (condition == Player.IsBeingMissileTracked)
+           {
+               // Player 1, Missile, Target Lock
+               textText = "Missile Tracking <Player>";
+           }
+
+           if (condition == Player.IsBehindOtherPlayer)
+           {
+               // Player 1, Player 2, Direcional Info
+               textText = "<Player2> Chasing <Player1>";
+           }
+
+           if (condition == Player.PassengersSpawning)
+           {
+               // Passenger Spawner
+               textText = "Rescue the Passengers!";
+           }
+       }
 
         void RandomPos()
         {
@@ -131,48 +193,6 @@ namespace ProjectStorms
         }
 
 
-
-        //Differen public functions to be called
-        public void Pirate()
-        {
-            scoringColour = PlayerColour.pirateRed;
-            spawnTimer = timerValue;
-            InvokeRepeating("SpawnText", 0, 0.5f);
-        }
-
-        public void Navy()
-        {
-            scoringColour = PlayerColour.navyWhite;
-            spawnTimer = timerValue;
-            InvokeRepeating("SpawnText", 0, 0.5f);
-        }
-
-        public void Tinkerer()
-        {
-            scoringColour = PlayerColour.tinkererGreen;
-            spawnTimer = timerValue;
-            InvokeRepeating("SpawnText", 0, 0.5f);
-        }
-
-        public void Viking()
-        {
-            scoringColour = PlayerColour.vikingYellow;
-            spawnTimer = timerValue;
-            InvokeRepeating("SpawnText", 0, 0.5f);
-        }
-
-        public void Spawning()
-        {
-            scoringColour = PlayerColour.spawningPassengers;
-            spawnTimer = timerValue;
-            InvokeRepeating("SpawnText", 0, 0.5f);
-        }
-
-        /*
-        public void TakesTheLead()
-        {
-            spawnTimer = timerValue;
-        }*/
     }
 
 }

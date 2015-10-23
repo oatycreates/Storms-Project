@@ -77,19 +77,23 @@ namespace ProjectStorms
 
                 if (baseTag == "Player1_")
                 {
-                    m_announcer.Pirate();
+                    //m_announcer.Pirate();
+                    //m_announcer.TestText();
                 }
                 else if (baseTag == "Player2_")
                 {
-                    m_announcer.Navy();
+                    //m_announcer.Navy();
+                    //m_announcer.TestText();
                 }
                 else if (baseTag == "Player3_")
                 {
-                    m_announcer.Tinkerer();
+                    //m_announcer.Tinkerer();
+                    //m_announcer.TestText();
                 }
                 else if (baseTag == "Player4_")
                 {
-                    m_announcer.Viking();
+                    //m_announcer.Viking();
+                    //m_announcer.TestText();
                 }
             }
         }
