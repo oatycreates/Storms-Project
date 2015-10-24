@@ -154,7 +154,7 @@ namespace ProjectStorms
 			if (!buttonDown)
 			{
                 // Check to see if I can fire any countermeasures
-                if (gotPickup)
+                //if (gotPickup)
                 {
                     if (m_currPowerupCooldown <= 0)
                     {
@@ -293,7 +293,7 @@ namespace ProjectStorms
 		void SpawnPinwheel()
 		{
 			//Spawn offset
-			Vector3 localOffset = new Vector3 (0, 0, 0);
+			Vector3 localOffset = new Vector3 (-10, 15, 0);
 			Vector3 worldOffset = m_trans.rotation * localOffset;
 			Vector3 spawnPos = m_trans.position + worldOffset;
 

@@ -150,8 +150,17 @@ namespace ProjectStorms
 				{
 					// Remember to turn Mine object off - but let the explosions kill themselves.
 					Invoke("KillMine", 1.5f);
+					
+					
 				}
 			}
+			
+			//Reset explosion maz size and scale
+			if (bang == false)
+			{
+				explosionScale = 0.0f;
+			}
+			
 			
 			// Audio stuff
 			if (bang == false)
@@ -169,6 +178,7 @@ namespace ProjectStorms
 					}
 				}
 			}
+		
 
             if (homingTarget != null)
             {

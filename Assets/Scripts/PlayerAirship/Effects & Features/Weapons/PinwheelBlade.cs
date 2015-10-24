@@ -25,6 +25,7 @@ namespace ProjectStorms
         private float internalTimer = 1;
         public float secondsBeforeTimeout = 10.0f;
 
+		private bool velocityCancel = false;
 		
         void Awake()
         {
@@ -40,13 +41,22 @@ namespace ProjectStorms
 
             //timer
             internalTimer = secondsBeforeTimeout;
+            
+            //allow passenger velocity to be manipulated
+            velocityCancel = false;
         }
 
         void Update()
         {
             //timer stuff
             internalTimer -= Time.deltaTime;
-
+            
+            //turn off velocity just before we deactivate the pinwheel
+            if (internalTimer < 0.1f)
+            {
+            	velocityCancel = true;
+            }
+			// Now deactivate the gameobject
             if (internalTimer <= 0)
             {
                 //This is the pinwheel child, kill parent object instead
@@ -67,73 +77,40 @@ namespace ProjectStorms
 			//print ("READY");
 		}
 
-
-        //For Airship Effects
-        /*
-		void OnTriggerEnter(Collider other)
-		{
-			Rigidbody anotherRigidbody = other.gameObject.transform.root.gameObject.GetComponent<Rigidbody> ();
-
-			//Has the delay finished?
-			if (delayFinished)
-			{
-				if (anotherRigidbody != null)
-                {
-                    //Check rigidbody
-                   print("Airship wind");
-
-                    anotherRigidbody.AddRelativeTorque(new Vector3(0, -pinwheelForce, 0), ForceMode.Acceleration);
-                    anotherRigidbody.AddForce(Vector3.up * pinwheelForce * 2, ForceMode.Acceleration);
-                }
-			}
-		}
-        */
-
-        /*
-        void OnTriggerEnter(Collider other)
-        {
-            Rigidbody passengerRigidbody = other.gameObject.GetComponent<Rigidbody>();
-
-            if (passengerRigidbody != null)
-            {
-
-                if (passengerRigidbody.gameObject.tag == "Passengers")
-                {
-                    if (delayFinished)
-                    {
-                        // Make passengers jump in the air
-                        //passengerRigidbody.velocity = new Vector3(0, 0, 0);
-
-                        passengerRigidbody.AddForce(Vector3.up * 2.0f, ForceMode.Force);
-                    }
-                }
-
-            }
-
-            
-            //Do passenger tray stuff
-            if (other.gameObject.GetComponent<PassengerTray>() != null)
-            {
-                other.gameObject.GetComponent<PassengerTray>().PowerDownTray();
-            }
-
-        }
-         */
          
         void OnTriggerStay(Collider other)
         {
             Rigidbody passengerRigidbody = other.gameObject.GetComponent<Rigidbody>();
 
+			//Local offset - just makes the passengers gather a little bit higher than the actual center of the gameObject.
+			Vector3 localOffset = new Vector3 (0, 15, 0);
+			Vector3 worldOffest = gameObject.transform.rotation * localOffset;
+			Vector3 lookPos = gameObject.transform.position + worldOffest; 
+		
             if (passengerRigidbody != null)
             {
-
-                if (passengerRigidbody.gameObject.tag == "Passengers")
-                {
-                    passengerRigidbody.AddForce(Vector3.up * 0.7f, ForceMode.Force);
-
-                    passengerRigidbody.transform.LookAt(gameObject.transform.position);
-
-                    passengerRigidbody.AddRelativeForce(Vector3.forward * 10, ForceMode.Force);
+            	//DOn't forget this bit!
+            	if (delayFinished)
+            	{
+	                if (passengerRigidbody.gameObject.tag == "Passengers")
+	                {
+	                	//Do different things depending on the remaining lifetime of the pinwheel
+	                	
+	                	if (!velocityCancel) //suck passengers in
+	                	{
+		                    passengerRigidbody.AddForce(Vector3.up * 0.7f, ForceMode.Force);
+		
+		                    passengerRigidbody.transform.LookAt(lookPos);
+		
+		                    passengerRigidbody.AddRelativeForce(Vector3.forward * 10, ForceMode.Force);
+	                    }
+	                    else
+	                    if (velocityCancel) // cancel out velocity
+	                    {
+	                    	passengerRigidbody.velocity = Vector3.zero;
+	                    	passengerRigidbody.angularVelocity = Vector3.zero;
+	                    }
+	                }
                 }
             }
 

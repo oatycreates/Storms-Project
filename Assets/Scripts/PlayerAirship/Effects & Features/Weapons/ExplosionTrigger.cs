@@ -23,6 +23,7 @@ namespace ProjectStorms
 		[HideInInspector]
 		public float maxSize = 50;
 		
+			
 		void Update () 
 		{
 			if (scale < maxSize)
@@ -34,6 +35,7 @@ namespace ProjectStorms
 			{
 				//scale = 0.1f;
 				//Timeout just after the explosion reaches its maximum radius.
+				scale = 0.0f;
 				Invoke("TimeOut", 0.1f);
 			}
 			
@@ -47,8 +49,9 @@ namespace ProjectStorms
 
 		void OnEnable()
 		{
-			scale = 0.1f;
+			scale = 0.1f;		
 		}
+			
 
 		void TimeOut()
 		{
