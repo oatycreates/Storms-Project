@@ -15,31 +15,50 @@ namespace ProjectStorms
 {
 	public class DynamicMenuCam : MonoBehaviour 
 	{
-        /*
-		public GameObject target1;
-		public GameObject target2;
-		public GameObject target3;
-		public GameObject target4;
-         * */
-
+	
         public GameObject[] target;
 		
 		public int currentPos = 1;
-		//private int leftRight = 0;
-		//private bool maxPush = false;
-		
 		public SceneManager sceneManager;
+		public float lerpSpeed = 5;
+		
+		public bool useTimer = false;
+		public float cycleTimer = 2.0f;
+		private float internalTimer = 1;
 	
+		void Awake()
+		{
+			//Get rid of all children on Start
+			gameObject.transform.DetachChildren();
+		}
 	
 		void Start () 
 		{
 			currentPos = 1;
+			
+			//Reset timer
+			internalTimer = cycleTimer;
+			
+			
 		}
 		
 		void Update () 
 		{
-			//if (currentPos > 4)
-            if (currentPos > target.Length-1)
+			//CountDown timer
+			if (useTimer)
+			{
+				internalTimer -= Time.deltaTime;
+				
+				if (internalTimer < 0)
+				{
+					Next();
+				}
+			}
+			
+		
+		
+			//Change the current pos
+			if (currentPos > target.Length-1)
 			{
 				currentPos = 1;
 			}
@@ -54,51 +73,39 @@ namespace ProjectStorms
                 if (currentPos == i)
                 {
                     gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, target[i].transform.rotation, Time.fixedDeltaTime * 2);
-                    gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, target[i].transform.position, Time.fixedDeltaTime * 5);
+                  	gameObject.transform.position = Vector3.Slerp(gameObject.transform.position, target[i].transform.position, Time.fixedDeltaTime * lerpSpeed);
+                    
                 }
 
             }
-
-                /*
-                    if (currentPos == 1)
-                    {
-                        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, target1.transform.rotation, Time.fixedDeltaTime * 2);
-                        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, target1.transform.position, Time.fixedDeltaTime * 5);
-                    }
-                    else
-                    if (currentPos == 2)
-                    {
-                        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, target2.transform.rotation, Time.fixedDeltaTime * 2);
-                        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, target2.transform.position, Time.fixedDeltaTime * 5);
-                    }
-                    else
-                    if (currentPos == 3)
-                    {
-                        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, target3.transform.rotation, Time.fixedDeltaTime * 2);
-                        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, target3.transform.position, Time.fixedDeltaTime * 5);
-                    }
-                    else
-                    if (currentPos == 4)
-                    {
-                        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, target4.transform.rotation, Time.fixedDeltaTime * 2);
-                        gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, target4.transform.position, Time.fixedDeltaTime * 5);
-                    }
-                 */
 
 
                 InputData();
 		}
 		
+		void Next()
+		{
+			currentPos += 1;
+			internalTimer = cycleTimer;
+		}
+		
+		void Previous()
+		{
+			currentPos -= 1;
+			internalTimer = cycleTimer;
+		}
+		
+		
 		void InputData()
 		{	
 			if (Input.GetButtonDown ("Player1_FaceDown") || Input.GetButtonDown ("Player2_FaceDown") ||Input.GetButtonDown ("Player3_FaceDown") ||Input.GetButtonDown ("Player4_FaceDown") || Input.GetKeyDown(KeyCode.Space))
 			{
-				currentPos += 1;
+				Next();
 			}
             else
             if (Input.GetButtonDown("Player1_FaceRight") || Input.GetButtonDown("Player2_FaceRight") || Input.GetButtonDown("Player3_FaceRight") || Input.GetButtonDown("Player4_FaceRight") || Input.GetKeyDown(KeyCode.Return))
             {
-                currentPos -= 1;
+                Previous();
             }
 			
 			if (Input.GetButtonDown("Player1_Start") || Input.GetButtonDown("Player2_Start") || Input.GetButtonDown("Player3_Start") || Input.GetButtonDown("Player4_Start") || Input.GetKeyDown(KeyCode.Escape))
@@ -106,30 +113,7 @@ namespace ProjectStorms
 				sceneManager.MenuScene();
 			}
 		
-							/*		
-			if (!maxPush)
-			{
-				if (Input.GetAxis("Player1_Horizontal") == 1 || Input.GetAxis("Player2_Horizontal") == 1 || Input.GetAxis("Player3_Horizontal") == 1|| Input.GetAxis("Player4_Horizontal") == 1)
-				{
-					currentPos += 1;
-					maxPush = true;
-				}
-				else
-				if (Input.GetAxis("Player1_Horizontal") == -1 || Input.GetAxis("Player2_Horizontal") == -1 || Input.GetAxis("Player3_Horizontal") == -1|| Input.GetAxis("Player4_Horizontal") == -1)
-				{
-					currentPos -= 1;
-					maxPush = true;
-				}
-			}
 			
-			
-			//Reset button push
-			if (Input.GetAxis("Player1_Horizontal") != 0 || Input.GetAxis("Player2_Horizontal") != 0 || Input.GetAxis("Player3_Horizontal") != 0|| Input.GetAxis("Player4_Horizontal") != 0)
-			{
-				maxPush = true;
-			}
-			*/
-			//print(currentPos);
 		}
 	}
 }
