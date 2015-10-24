@@ -18,7 +18,7 @@ namespace ProjectStorms
     public enum EPlayerState
     {
         Pregame,
-        Roulette,
+        //Roulette,
         Control,
         Dying,
         Stalling,
@@ -29,7 +29,7 @@ namespace ProjectStorms
     /// This script organises all the different 'States' the player can be in. If we need to add more States, make sure to do them here.
     /// The State Manager will automatically add these 6 scripts - they are vital to how the airship works.
     /// </summary>
-    [RequireComponent(typeof(RouletteBehaviour))]
+    //[RequireComponent(typeof(RouletteBehaviour))]
     [RequireComponent(typeof(AirshipControlBehaviour))]
     [RequireComponent(typeof(AirshipDyingBehaviour))]
     [RequireComponent(typeof(AirshipStallingBehaviour))]
@@ -41,7 +41,7 @@ namespace ProjectStorms
         private EPlayerState m_currentPlayerState;
 
         // References to all the different state scripts
-        private RouletteBehaviour m_rouletteScript;
+       // private RouletteBehaviour m_rouletteScript;
         private AirshipControlBehaviour m_airshipScript;
         private AirshipDyingBehaviour m_dyingScript;
         private AirshipStallingBehaviour m_stallingScript;
@@ -82,7 +82,7 @@ namespace ProjectStorms
         private Transform m_trans = null;
         private Rigidbody m_rb = null;
         private ShipPartDestroy m_shipParts = null;
-        private BroadsideWeaponsController m_broadSideWeapons = null;
+        //private BroadsideWeaponsController m_broadSideWeapons = null;
         private RotateCam m_camRotator = null;
 
         void Awake()
@@ -90,10 +90,10 @@ namespace ProjectStorms
             m_trans = transform;
             m_rb = GetComponent<Rigidbody>();
             m_shipParts = GetComponent<ShipPartDestroy>();
-            m_broadSideWeapons = GetComponent<BroadsideWeaponsController>();
+            //m_broadSideWeapons = GetComponent<BroadsideWeaponsController>();
             m_camRotator = GetComponent<RotateCam>();
 
-            m_rouletteScript = GetComponent<RouletteBehaviour>();
+           // m_rouletteScript = GetComponent<RouletteBehaviour>();
             m_airshipScript = GetComponent<AirshipControlBehaviour>();
             m_dyingScript = GetComponent<AirshipDyingBehaviour>();
             m_stallingScript = GetComponent<AirshipStallingBehaviour>();
@@ -133,7 +133,7 @@ namespace ProjectStorms
             }
 
             // Stop spamming stall
-            if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide || m_currentPlayerState == EPlayerState.Roulette)
+            if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide)// || m_currentPlayerState == EPlayerState.Roulette)
             {
                 timeBetweenStall = 5.0f;
             }
@@ -188,10 +188,11 @@ namespace ProjectStorms
             }
 
             // The player airship is not being used while the roulette wheel is spinning, the airship is deactivated
+            /*
             if (m_currentPlayerState == EPlayerState.Roulette)
             {
                 RouletteUpdate();
-            }
+            }*/
 
             // Standard player airship control
             if (m_currentPlayerState == EPlayerState.Control)
@@ -239,11 +240,11 @@ namespace ProjectStorms
                         ChangeToPregame();
                         break;
                     }
-                case EPlayerState.Roulette:
+                /*case EPlayerState.Roulette:
                     {
-                        ChangeToRoulette();
-                        break;
-                    }
+                        //ChangeToRoulette();
+                        //break;
+                    }*/
                 case EPlayerState.Control:
                     {
                         ChangeToControl();
@@ -314,7 +315,7 @@ namespace ProjectStorms
         private void ResetPlayerShip()
         {
             // Reset position
-            m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
+            //m_rouletteScript.ResetPosition(m_worldStartPos, m_worldStartRotation);
 
             // Reset camera orientation
             m_camRotator.ResetCamRotation(true);
@@ -330,12 +331,12 @@ namespace ProjectStorms
         private void ChangeToPregame()
         {
             // Disable all scripts
-            m_rouletteScript.enabled = false;
+            //m_rouletteScript.enabled = false;
             m_airshipScript.enabled = false;
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
-            m_broadSideWeapons.enabled = false;
+            //m_broadSideWeapons.enabled = false;
 
             // Revert the ship back to the start
             ResetPlayerShip();
@@ -346,12 +347,12 @@ namespace ProjectStorms
         private void ChangeToSuicide()
         {
             // Airship behaves like a rocket
-            m_rouletteScript.enabled = false;
+            //m_rouletteScript.enabled = false;
             m_airshipScript.enabled = false;
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = true;
-            m_broadSideWeapons.enabled = false;
+            //m_broadSideWeapons.enabled = false;
 
             ToggleShipParts(true, true, true, false, true, false);
         }
@@ -359,12 +360,12 @@ namespace ProjectStorms
         private void ChangeToDying()
         {
             // No Control, gravity makes airship fall
-            m_rouletteScript.enabled = false;
+            //m_rouletteScript.enabled = false;
             m_airshipScript.enabled = false;
             m_dyingScript.enabled = true;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
-            m_broadSideWeapons.enabled = false;
+            //m_broadSideWeapons.enabled = false;
 
             ToggleShipParts(true, true, true, false, true, false);
         }
@@ -372,12 +373,12 @@ namespace ProjectStorms
         private void ChangeToStalling()
         {
             // No Control, gravity makes airship fall
-            m_rouletteScript.enabled = false;
+            //m_rouletteScript.enabled = false;
             m_airshipScript.enabled = false;
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = true;
             m_suicideScript.enabled = false;
-            m_broadSideWeapons.enabled = false;
+            //m_broadSideWeapons.enabled = false;
 
             ToggleShipParts(true, true, true, false, true, false);
         }
@@ -385,12 +386,12 @@ namespace ProjectStorms
         private void ChangeToControl()
         {
             // Standard Physics Control
-            m_rouletteScript.enabled = false;
+            //m_rouletteScript.enabled = false;
             m_airshipScript.enabled = true;
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
-            m_broadSideWeapons.enabled = true;
+            //m_broadSideWeapons.enabled = true;
 
             ToggleShipParts(true, true, true, false, true, true);
         }
@@ -398,12 +399,12 @@ namespace ProjectStorms
         private void ChangeToRoulette()
         {
             // Roulette control
-            m_rouletteScript.enabled = true;
+           // m_rouletteScript.enabled = true;
             m_airshipScript.enabled = false;
             m_dyingScript.enabled = false;
             m_stallingScript.enabled = false;
             m_suicideScript.enabled = false;
-            m_broadSideWeapons.enabled = false;
+            //m_broadSideWeapons.enabled = false;
 
             // Revert the ship back to the start
             ResetPlayerShip();

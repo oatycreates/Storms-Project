@@ -1728,11 +1728,9 @@ GameObject:
   - 114: {fileID: 11410956}
   - 114: {fileID: 11498346}
   - 54: {fileID: 5476574}
-  - 114: {fileID: 11478372}
   - 114: {fileID: 11400928}
   - 114: {fileID: 11487124}
   - 114: {fileID: 11403946}
-  - 114: {fileID: 11431612}
   - 114: {fileID: 11440284}
   - 114: {fileID: 11458632}
   - 114: {fileID: 11423164}
@@ -3091,7 +3089,6 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -4616,7 +4613,6 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -4686,7 +4682,6 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -4756,7 +4751,6 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -4935,6 +4929,7 @@ MonoBehaviour:
   balDestForce: 500
   balDestRumbleStr: 1
   balDestRumbleDurr: .75
+  colDirThreshold: .258819014
   balloonPopNoise: {fileID: 8298254}
   destructableParts:
   - partObject: {fileID: 152488}
@@ -5076,12 +5071,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5155,6 +5144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f79490488ed5e49a4d532d45ff8d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUpCooldown: 1.5
   missilePrefab: {fileID: 133982, guid: a4a46434d1bb8284e982c7d11e4374f0, type: 2}
   pooledMissiles: 2
   chaffPrefab: {fileID: 176804, guid: 51c1189e727dd794a92747d696c77e62, type: 2}
@@ -5194,27 +5184,6 @@ MonoBehaviour:
   maxRotationDegrees: 10
   airshipControlBehaviour: {fileID: 11498346}
   isRudderJoint: 0
---- !u!114 &11431612
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 194162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb357257157cc5342b94636dc8ab7adc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shuntingForce: 200
-  cooldownTime: 1
-  portCannons:
-  - {fileID: 11470568}
-  - {fileID: 11446664}
-  - {fileID: 11441930}
-  starboardCannons:
-  - {fileID: 11418944}
-  - {fileID: 11445574}
-  - {fileID: 11468884}
 --- !u!114 &11433262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5481,12 +5450,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5502,20 +5465,6 @@ MonoBehaviour:
   m_Text: 'Hello World
 
 '
---- !u!114 &11478372
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 194162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d35c181227fcee479fcce0006c7b8f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireParticleEffect: {fileID: 134026}
-  spinWheel: {fileID: 11409678}
-  airshipMainCam: {fileID: 11464088}
 --- !u!114 &11480128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5548,12 +5497,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5582,12 +5525,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -5661,12 +5598,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .196078435, g: .196078435, b: .196078435, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -7066,7 +6997,6 @@ ReflectionProbe:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IntensityMultiplier: 1
-  m_BlendDistance: 1
   m_HDR: 1
   m_BoxProjection: 0
   m_RenderDynamicObjects: 0
@@ -7098,7 +7028,6 @@ ReflectionProbe:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IntensityMultiplier: 1
-  m_BlendDistance: 1
   m_HDR: 1
   m_BoxProjection: 0
   m_RenderDynamicObjects: 0
@@ -7310,6 +7239,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: yawForce
       value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

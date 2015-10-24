@@ -161,7 +161,7 @@ namespace ProjectStorms
             m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight, dpadHoriz, dpadVert);
             m_fireshipControl.PlayerFireshipInputs(upDown, leftRight, select);
             m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, clickLeft, clickRight);
-            m_broadSideWeapons.PlayerInputs(bumperLeft, bumperRight);
+            //m_broadSideWeapons.PlayerInputs(bumperLeft, bumperRight);
 			//m_countermeasures.DPad (dpadDown, dpadUp, dpadLeft, dpadRight);
             m_countermeasures.FacePad(faceDown, faceUp, faceLeft, faceRight);
         }

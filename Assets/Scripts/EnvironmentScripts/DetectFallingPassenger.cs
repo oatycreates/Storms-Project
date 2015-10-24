@@ -27,19 +27,23 @@ namespace ProjectStorms
         public Color textColour = Color.white;
 
         private PirateBaseIdentity m_base = null;
+        /*
         private AnnouncerEffects m_announcer = null;
         public string baseTag;
+        */
 
         void Awake()
         {
             m_base = gameObject.GetComponentInParent<PirateBaseIdentity>();
 
             // This will be null if the AnnouncerEffects gameobject parent is disabled
+            /*
             m_announcer = GameObject.FindObjectOfType<AnnouncerEffects>();
             if (m_announcer == null)
             {
                 Debug.LogError("Announcer object was null!");
             }
+            */
         }
 
         void Start()
@@ -73,6 +77,7 @@ namespace ProjectStorms
 				}
                 a_other.gameObject.SetActive(false);
 
+/*
                 baseTag = m_base.gameObject.tag;
 
                 if (baseTag == "Player1_")
@@ -99,6 +104,7 @@ namespace ProjectStorms
                     //m_announcer.TestText();
                     m_announcer.condition = Player.SoulsLost;
                 }
+                */
             }
         }
     }

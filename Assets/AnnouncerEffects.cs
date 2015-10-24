@@ -68,7 +68,7 @@ namespace ProjectStorms
         //Get a component on the same gameobject
         public ScoreManager scoreManager;
 
-        void Awake()
+        void Start()
         {
             //Always introduce the list first
             textObjects = new List<GameObject>();
@@ -90,13 +90,12 @@ namespace ProjectStorms
 
                 textObjects.Add(singleTextObject);
             }
-        }
-
-
-        void Start()
-        {
+      
+        
            //Use the demo TestText function
             InvokeRepeating("SpawnText", 0, 0.5f);
+            
+            condition = Player.PassengersSpawning;
         }
 
         void Update() 

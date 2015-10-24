@@ -144,6 +144,7 @@ namespace ProjectStorms
         /// </summary>
         /// <param name="a_fireStarboard">If true, will fire starboard side cannons, 
         /// else will fire portside cannons</param>
+        
         private void FireCannons(bool a_fireStarboard)
         {
             // Fire cannons
