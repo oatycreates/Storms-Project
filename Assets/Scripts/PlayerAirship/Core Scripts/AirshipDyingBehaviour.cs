@@ -26,7 +26,7 @@ namespace ProjectStorms
         /// <summary>
         /// How long should the player watch their ship falling until it resets and takes them to the Roulette screen - experiment with this.
         /// </summary>
-        public float timerUntilReset = 4.0f;
+       	public float timerUntilReset = 4.0f;
 
         /// <summary>
         /// Handle to the airship camera script.
@@ -57,7 +57,7 @@ namespace ProjectStorms
 
         void Start()
         {
-            m_resetTimer = timerUntilReset;
+           m_resetTimer = timerUntilReset;
         }
 
         void OnEnable()

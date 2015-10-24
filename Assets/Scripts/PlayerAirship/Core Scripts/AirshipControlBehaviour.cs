@@ -313,15 +313,18 @@ namespace ProjectStorms
 
 
                 // If about to open hatch
-                // if (!openHatch && a_faceUp)
-                if (!openHatch && a_dPadVertical < 0)
+                //if (!openHatch && a_faceUp)
+                //if (!openHatch && a_dPadVertical < 0)
+                //if (!openHatch)
+                if (openHatch)  // is this the best solution?
                 {
                     Invoke("TrapdoorRumblePulse", trapdoorRumbleCooldown);
                 }
 
                 // Check buttonPresses
                // openHatch = a_faceUp;//(a_faceUp || a_faceDown);
-                if (a_dPadVertical < 0)
+                //if (a_dPadVertical < 0)
+				if (a_bumperLeft || a_bumperRight)
                 {
                     openHatch = true;
                 }
@@ -515,7 +518,7 @@ namespace ProjectStorms
             // Slow down when mast is gone
             float tempNotUsed = 0.0f;
             float mastSpeedMult = 0.0f;
-            GetPartInputMults(ShipPartDestroy.EShipPartType.MAST, out mastSpeedMult, out tempNotUsed);
+            //GetPartInputMults(ShipPartDestroy.EShipPartType.MAST, out mastSpeedMult, out tempNotUsed);
             speedMod *= (1.0f - mastSpeedMult);
 
             m_myRigid.AddRelativeForce(Vector3.forward * speedMod, ForceMode.Acceleration);
@@ -623,6 +626,7 @@ namespace ProjectStorms
         /// <param name="ao_primMult">Primary input multiplier. E.g. Balloon affecting roll.</param>
         /// <param name="ao_auxMult">Auxiliary input multiplier. E.g. Balloon causing constant roll input.</param>
         /// <returns>True if the part has been destroyed, false if not.</returns>
+        
         private bool GetPartInputMults(ShipPartDestroy.EShipPartType a_partType, out float ao_primMult, out float ao_auxMult)
         {
             ao_primMult = 0;

@@ -77,6 +77,7 @@ namespace ProjectStorms
         private RotateCam m_rotateCam;
         private BroadsideWeaponsController m_broadSideWeapons;
 		private Countermeasures m_countermeasures;
+		private StateManager m_stateManager;
 
         // TODO: We might need to add more script references here as we progress
 
@@ -93,6 +94,7 @@ namespace ProjectStorms
             m_rotateCam         = GetComponent<RotateCam>();
             m_broadSideWeapons  = GetComponent<BroadsideWeaponsController>();
 			m_countermeasures 	= GetComponent<Countermeasures> ();
+			m_stateManager 		= GetComponent<StateManager>();
         }
 
         void Start()
@@ -157,14 +159,15 @@ namespace ProjectStorms
             #endregion
 
             // Send variable data to individual scripts
-            m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
+            //m_rouletteControl.PlayerInput(faceDown, faceUp);	// Use the face button inputs to Stop/Start the roulette wheel
             m_standardControl.PlayerInputs(upDown, leftRight, camUpDown, camLeftRight, triggers, bumperLeft, bumperRight, faceUp, faceDown, faceLeft, faceRight, dpadHoriz, dpadVert);
             m_fireshipControl.PlayerFireshipInputs(upDown, leftRight, select);
             m_rotateCam.PlayerInputs(camUpDown, camLeftRight, triggers, faceDown, bumperLeft, bumperRight, clickLeft, clickRight);
             //m_broadSideWeapons.PlayerInputs(bumperLeft, bumperRight);
 			//m_countermeasures.DPad (dpadDown, dpadUp, dpadLeft, dpadRight);
             m_countermeasures.FacePad(faceDown, faceUp, faceLeft, faceRight);
-        }
+            m_stateManager.BoostButton(select, dpadUp, dpadDown);
+      	}
 
         private static void ApplyRumble()
         {

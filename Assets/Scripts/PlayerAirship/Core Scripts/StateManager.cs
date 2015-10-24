@@ -31,7 +31,7 @@ namespace ProjectStorms
     /// </summary>
     //[RequireComponent(typeof(RouletteBehaviour))]
     [RequireComponent(typeof(AirshipControlBehaviour))]
-    [RequireComponent(typeof(AirshipDyingBehaviour))]
+   // [RequireComponent(typeof(AirshipDyingBehaviour))]
     [RequireComponent(typeof(AirshipStallingBehaviour))]
     [RequireComponent(typeof(AirshipSuicideBehaviour))]
     [RequireComponent(typeof(InputManager))]
@@ -84,6 +84,9 @@ namespace ProjectStorms
         private ShipPartDestroy m_shipParts = null;
         //private BroadsideWeaponsController m_broadSideWeapons = null;
         private RotateCam m_camRotator = null;
+        
+        //Stall button
+        private bool stallBtnDown;
 
         void Awake()
         {
@@ -111,6 +114,11 @@ namespace ProjectStorms
             // Set the starting state
             SetPlayerState(EPlayerState.Pregame);
         }
+        
+        public void BoostButton(bool a_selectButton, bool a_dpadUp, bool a_dpadDown)
+        {
+        	stallBtnDown = a_dpadUp;
+        }
 
         void Update()
         {
@@ -120,25 +128,36 @@ namespace ProjectStorms
             DevHacks();
             //}
 
-            bool stallBtnDown = Input.GetButtonDown(gameObject.tag + "Select");
+            //bool stallBtnDown = Input.GetButtonDown(gameObject.tag + "Select");
+           // bool stallBtnDown; 
+           //Set this from the Input Manager.
+            
             if (m_currentPlayerState == EPlayerState.Control)
             {
                 if (stallBtnDown)
                 {
                     if (timeBetweenStall < 0)
                     {
-                        SetPlayerState(EPlayerState.Stalling);
-                    }
-                }
-            }
-
-            // Stop spamming stall
-            if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide)// || m_currentPlayerState == EPlayerState.Roulette)
+                        //SetPlayerState(EPlayerState.Stalling);
+                       
+						//Take a Stall value and pass it into the suicide script.
+						float timer = 1.5f;//m_stallingScript.timerUntilBoost;
+						
+						SetPlayerState(EPlayerState.Suicide);
+						
+						m_suicideScript.timerUntilReset = timer;
+					}
+				}
+			}
+			
+			// Stop spamming stall
+			if (m_currentPlayerState == EPlayerState.Stalling || m_currentPlayerState == EPlayerState.Suicide)// || m_currentPlayerState == EPlayerState.Roulette)
             {
                 timeBetweenStall = 5.0f;
             }
 
             // Hacky!! Make auto stall an option
+            /*
             if (m_currentPlayerState == EPlayerState.Stalling)
             {
 
@@ -155,7 +174,7 @@ namespace ProjectStorms
                         m_suicideScript.timerUntilReset = timer;
                     }
                 }
-            }
+            }*/
 
             if (m_currentPlayerState == EPlayerState.Control)
             {
@@ -463,6 +482,7 @@ namespace ProjectStorms
         /// </summary>
         void DevHacks()
         {
+        /*
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 //SetPlayerState(EPlayerState.Roulette);
@@ -488,6 +508,7 @@ namespace ProjectStorms
             {
                 SetPlayerState(EPlayerState.Suicide);
             }
+            */
         }
     } 
 }

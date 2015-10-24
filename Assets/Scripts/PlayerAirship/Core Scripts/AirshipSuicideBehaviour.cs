@@ -79,6 +79,7 @@ namespace ProjectStorms
         {
             hiddenResetValue = timerUntilReset;
         }
+  
 
         void Update()
         {
