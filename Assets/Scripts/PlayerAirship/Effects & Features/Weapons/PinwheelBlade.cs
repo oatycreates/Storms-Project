@@ -27,6 +27,10 @@ namespace ProjectStorms
 
 		private bool velocityCancel = false;
 		
+		[HideInInspector]
+		public Vector3 a_localOffset;
+		//the local offset has to be public, in case a missile want's to target it.
+		
         void Awake()
         {
             //timer
@@ -48,6 +52,12 @@ namespace ProjectStorms
 
         void Update()
         {
+        	//local offset stuff
+			//Local offset - just makes the passengers gather a little bit higher than the actual center of the gameObject.
+			Vector3 localOffset = new Vector3 (0, 15, 0);
+			Vector3 worldOffest = gameObject.transform.rotation * localOffset;
+			a_localOffset = gameObject.transform.position + worldOffest; 
+        
             //timer stuff
             internalTimer -= Time.deltaTime;
             
@@ -82,10 +92,7 @@ namespace ProjectStorms
         {
             Rigidbody passengerRigidbody = other.gameObject.GetComponent<Rigidbody>();
 
-			//Local offset - just makes the passengers gather a little bit higher than the actual center of the gameObject.
-			Vector3 localOffset = new Vector3 (0, 15, 0);
-			Vector3 worldOffest = gameObject.transform.rotation * localOffset;
-			Vector3 lookPos = gameObject.transform.position + worldOffest; 
+			
 		
             if (passengerRigidbody != null)
             {
@@ -100,7 +107,7 @@ namespace ProjectStorms
 	                	{
 		                    passengerRigidbody.AddForce(Vector3.up * 0.7f, ForceMode.Force);
 		
-		                    passengerRigidbody.transform.LookAt(lookPos);
+		                    passengerRigidbody.transform.LookAt(a_localOffset);
 		
 		                    passengerRigidbody.AddRelativeForce(Vector3.forward * 10, ForceMode.Force);
 	                    }

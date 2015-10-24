@@ -59,8 +59,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 133982}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 857.447693, y: 438.886078, z: -443.223358}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
+  m_LocalPosition: {x: -230.100006, y: 243.343948, z: 742.763977}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 492760}
@@ -152,7 +152,6 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -264,7 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ramForce: 200
-  movementVelocity: 300
+  passengerRamForce: 15
+  movementVelocity: 250
   turnSpeed: 7
   closeRangeThreshold: 28
   missileLifetime: 8
@@ -317,7 +317,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: movementVelocity
-      value: 300
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: missileLifetime

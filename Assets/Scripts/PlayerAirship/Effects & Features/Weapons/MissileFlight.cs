@@ -31,12 +31,14 @@ namespace ProjectStorms
 		private bool attacking = false;
 
 		public float movementVelocity = 1;
+		private float hiddenMovementVelocity;
 		public float turnSpeed = 5;
 
 		private Transform m_targetProxy;
 
 		//This is the key value
 		public float closeRangeThreshold = 20;
+		private float hiddenRangeThreshold;
 
 		//Trail renderer
 		private TrailRenderer childTrail;
@@ -50,6 +52,11 @@ namespace ProjectStorms
         private float customPitch = 0.1f;
 
         private static GameObject ms_powerupHolder = null;
+        
+        //Who fired the missile?
+        private GameObject myAirship;
+        //Have I been caught in the wind
+       	private bool caughtInTheWind = false;
 
 		void Awake()
 		{
@@ -91,20 +98,16 @@ namespace ProjectStorms
 			m_Audio.pitch = customPitch;
 		
 		
-			/*//Raycast
-			Vector3 rayDirection = (m_targetProxy.position - m_trans.position).normalized;
-            float rayDistance = Vector3.Distance(m_targetProxy.position, m_trans.position);
-
-			if (attacking)
-			{
-                Debug.DrawRay(m_trans.position, rayDirection * rayDistance, Color.red);
-			}
-			else
-			if (!attacking)
-			{
-                Debug.DrawRay(m_trans.position, rayDirection * rayDistance, Color.green);
-			}*/
+			//Kill the missile if it's been caught in a pinwheel spiral
 			
+			if (caughtInTheWind)
+			{
+				if (m_target == null)
+				{
+					StopAttacking();
+					Invoke("GoToSleep", 1);
+				}
+			}		
 		}
 
 
@@ -121,7 +124,7 @@ namespace ProjectStorms
 
 			if (attacking) 
 			{
-                m_myRigid.velocity = m_trans.forward * movementVelocity;
+                m_myRigid.velocity = m_trans.forward * hiddenMovementVelocity;
 
 				//Try it with targetProxy
 				Quaternion targetDirection = Quaternion.LookRotation (m_targetProxy.position - m_trans.position);
@@ -132,19 +135,19 @@ namespace ProjectStorms
 			if (!attacking) 
 			{
 				//Move forward in a straight line
-                m_myRigid.velocity = m_trans.forward * movementVelocity;
+                m_myRigid.velocity = m_trans.forward * hiddenMovementVelocity;
 			}
 
 			float distanceToProxyPoint = Vector3.Distance(m_targetProxy.position, m_trans.position);
 
 
-            if (distanceToProxyPoint > closeRangeThreshold && m_target != null)
+            if (distanceToProxyPoint > hiddenRangeThreshold && m_target != null)
 			{
 				//only update the target pos if target is more than 10 meters away from missile
 				m_targetProxy.position = m_target.position;
 			}
 			else
-			if (distanceToProxyPoint < closeRangeThreshold)
+			if (distanceToProxyPoint < hiddenRangeThreshold)
 			{
 				//Turn off Movement
 				attacking = false;
@@ -184,6 +187,15 @@ namespace ProjectStorms
 
 		void OnEnable()
 		{
+			//Reset movement velocity
+			hiddenMovementVelocity = movementVelocity;
+			
+			//Reset range threshold
+			hiddenRangeThreshold = closeRangeThreshold;
+			
+			//Caught in the wind
+			caughtInTheWind = false;
+		
 			//Invoke ("GoToSleep", secondsTillTimeout);
 			///FindTarget ();
 			/// //Don't try and find target straight away, because it'll just find the player that shot the missile.
@@ -296,6 +308,74 @@ namespace ProjectStorms
 				gameObject.SetActive (false);
 			}
 		}
+		
+		
+		public void WhoShotMe(GameObject airship)
+		{
+			myAirship = airship;
+		}
+		
+		
+		void StopAttacking()
+		{
+			attacking = false;
+		}
+				
+		void ReturnToSender()
+		{
+			if (myAirship != null)
+			{
+				//m_targetProxy.position = myAirship.transform.position;
+				m_target = myAirship.transform;
+				
+				CancelInvoke("GoToSleep");
+				attacking = true;
+				
+				// give the missile some time to 'retrack';
+				Invoke("StopAttacking", missileLifetime - 0.2f);
+				Invoke ("GoToSleep", missileLifetime);
+				
+				Debug.Log("Returning to Sender " + myAirship.name);
+			}
+			else
+			{
+				Debug.Log("No Sender to Reutrn To");
+			}
+		}
+		
+		
+		void EyeOfTheStorm(GameObject pinwheel)
+		{
+			m_target = pinwheel.transform;
+			//Directly modify the hidden movement velocity
+			//hiddenMovementVelocity = 30.0f;
+			hiddenRangeThreshold = 0.0f;
+		
+			//CancelInvoke("GoToSleep");
+			attacking = true;
+			//It's very important to set caughtInTheWind to True;
+			caughtInTheWind = true;
+		
+			Debug.Log("Missile is sucked into the Eye of the Storm: " + myAirship.name);
+		}
+		
+		
+		void OnTriggerEnter(Collider other)
+		{
+			// If a missile enters Delay Chaff, send it Return to sender.
+			if (other.gameObject.GetComponent<DelayChaff>() != null)
+			{
+				//print ("Yeah!");
+				ReturnToSender();
+			}
+			
+			//If a missie enters a pinwheel, head towards the local offset target on the pinwheel
+			if (other.gameObject.GetComponent<PinwheelBlade>() != null)
+			{
+				EyeOfTheStorm(other.gameObject);
+			}
+		}
+	
 		
 		/*
 		void Spiral()

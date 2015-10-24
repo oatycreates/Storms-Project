@@ -39,7 +39,7 @@ namespace ProjectStorms
 
 			if (!useZaxis)
 			{
-				gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, 1);
+				gameObject.transform.localScale = new Vector3 (scaleFactor, scaleFactor, gameObject.transform.localScale.z);
 			}
 			else
 			if (useZaxis)

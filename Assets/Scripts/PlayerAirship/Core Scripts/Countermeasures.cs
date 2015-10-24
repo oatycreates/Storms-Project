@@ -227,6 +227,9 @@ namespace ProjectStorms
                     {
                         MissileFlight missileScript = missiles[i].GetComponent<MissileFlight>();
                         missileScript.SetTarget(m_tarLock.GetTarget());
+                        
+                        //Send the Return to sender value
+                        missileScript.WhoShotMe(gameObject);
                     }
 
 					//Don't forget to break loop

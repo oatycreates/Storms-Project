@@ -202,12 +202,11 @@ namespace ProjectStorms
         //Alternative 
         void OnTriggerEnter(Collider other)
         {
-            m_myCollider.enabled = false;
-            m_myRenderer.enabled = false;
-
-            bang = true;
-            m_Audio.Stop();
-
+	       	m_myCollider.enabled = false;
+	        m_myRenderer.enabled = false;
+	
+	        bang = true;
+	        m_Audio.Stop();
         }
 
         void FindHomingTarget()
