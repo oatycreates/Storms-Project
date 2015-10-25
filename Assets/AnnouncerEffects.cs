@@ -86,7 +86,7 @@ namespace ProjectStorms
                     singleTextObject.AddComponent<AnnouncerText>();
                 }
 
-                singleTextObject.SetActive(false);
+                //singleTextObject.SetActive(false);
 
                 textObjects.Add(singleTextObject);
             }
@@ -95,16 +95,19 @@ namespace ProjectStorms
            //Use the demo TestText function
             InvokeRepeating("SpawnText", 0, 0.5f);
             
-            condition = Player.PassengersSpawning;
+            condition = Player.IsBehindOtherPlayer;
         }
 
         void Update() 
         {
             SetString(); 
 
-            if (scoreManager.pirateBase1.baseScore < (scoreManager.pirateBase1.baseScore/2))
-            {
-                condition = Player.IsWinning;
+			if (scoreManager != null)
+			{
+	            if (scoreManager.pirateBase1.baseScore < (scoreManager.pirateBase1.baseScore/2))
+	            {
+	                condition = Player.IsWinning;
+	            }
             }
 
             //Come back to this!

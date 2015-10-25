@@ -29,7 +29,7 @@ namespace ProjectStorms
         [HideInInspector]
         public Color m_myColour;
 
-        void Awake()
+        void Start()
         {
             m_text = gameObject.GetComponent<Text>();
             m_text.color = Color.clear;

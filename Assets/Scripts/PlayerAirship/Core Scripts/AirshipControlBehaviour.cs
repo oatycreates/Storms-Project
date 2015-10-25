@@ -324,7 +324,7 @@ namespace ProjectStorms
                 // Check buttonPresses
                // openHatch = a_faceUp;//(a_faceUp || a_faceDown);
                 //if (a_dPadVertical < 0)
-				if (a_bumperLeft || a_bumperRight)
+				if (a_bumperLeft || a_bumperRight || (a_dPadVertical < 0))
                 {
                     openHatch = true;
                 }
