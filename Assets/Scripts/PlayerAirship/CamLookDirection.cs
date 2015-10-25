@@ -42,6 +42,7 @@ namespace ProjectStorms
         	{
             	m_trans.LookAt(m_tarTrans.position);
             	
+            	print("AHAH");
 				DebugMe();
             }
         }

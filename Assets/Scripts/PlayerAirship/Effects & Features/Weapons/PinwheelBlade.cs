@@ -64,7 +64,7 @@ namespace ProjectStorms
             //turn off velocity just before we deactivate the pinwheel
             if (internalTimer < 0.1f)
             {
-            	velocityCancel = true;
+            		velocityCancel = true;
             }
 			// Now deactivate the gameobject
             if (internalTimer <= 0)
