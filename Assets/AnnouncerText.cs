@@ -27,14 +27,14 @@ namespace ProjectStorms
         [HideInInspector]
         public string m_myWords;
         [HideInInspector]
-        public Color m_myColour;
+        public Color m_myColour = Color.clear;
 
         void Start()
         {
             m_text = gameObject.GetComponent<Text>();
-            m_text.color = Color.clear;
+            m_text.color = m_myColour;
 
-            m_myWords = "Nothing Set Yet";
+            m_myWords = "Score!";
         }
 
         void OnEnable()
@@ -42,16 +42,10 @@ namespace ProjectStorms
             //Reset life time on enable
             lifeTime = 1.0f;
 
-            /*
-            //if (messageType == MessageType.playerScoring)
-            {
-                //m_text.text = PlayerScoring[Random.Range(0, PlayerScoring.Count-1)];
-               
-            }
-            */
            
         }
-
+       
+	
         void Update()
         {
             //Set colour
@@ -62,7 +56,11 @@ namespace ProjectStorms
             //lifeTime -= Time.deltaTime;
 
             m_text.color = new Color(m_text.color.r, m_text.color.g, m_text.color.b, lifeTime);
-
+            
+            //Move?
+           // gameObject.transform.position = Vector3.Slerp(gameObject.transform.position, gameObject.transform.parent.transform.position, Time.deltaTime * 1.5f);
+			gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, transform.parent.transform.position, Time.deltaTime * 1.0f);
+			
             if (lifeTime < 0)
             {
                 //Destroy(gameObject);

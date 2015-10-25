@@ -13,6 +13,7 @@ using System.Collections.Generic;
 
 public enum Player {        IsScoring,
                             IsWinning, 
+                            HalfWay,
                             HowManyMoreToGo, 
                             HasWonGame, 
                             HasManyPassengers, 
@@ -39,7 +40,18 @@ namespace ProjectStorms
         
 
         //Give the text a random pos in local space
+        private float width;
+        private float height;
+        
         private Vector3 randomPos;
+        private Vector3 topLeft;
+        private Vector3 topRight;
+        private Vector3 topHalf;
+        private Vector3 bottomLeft;
+        private Vector3 bottomRight;
+        private Vector3 bottomHalf;
+        
+        private Vector3 spawnOffset;
 
         //Values to feed into the text
         private GameObject player1 = null;
@@ -52,7 +64,8 @@ namespace ProjectStorms
 
 
         //Set values stuff
-        private Color textColour = Color.clear;
+        [HideInInspector]
+        public Color textColour = Color.clear;
         private string textText = "Bump, nothing yet";
 
         /*
@@ -66,7 +79,7 @@ namespace ProjectStorms
          */
 
         //Get a component on the same gameobject
-        public ScoreManager scoreManager;
+        //public ScoreManager scoreManager;
 
         void Start()
         {
@@ -86,58 +99,30 @@ namespace ProjectStorms
                     singleTextObject.AddComponent<AnnouncerText>();
                 }
 
-                //singleTextObject.SetActive(false);
+                singleTextObject.SetActive(false);
 
                 textObjects.Add(singleTextObject);
             }
       
         
            //Use the demo TestText function
-            InvokeRepeating("SpawnText", 0, 0.5f);
-            
-            condition = Player.IsBehindOtherPlayer;
+			textText = "Score!";
+			Invoke("SpawnText", 1);
+           
+            //InvokeRepeating("SpawnText", 0, 0.1f);
         }
 
         void Update() 
-        {
+        {    
+        	width = Screen.width;
+        	height = Screen.height;
+        
             SetString(); 
 
-			if (scoreManager != null)
-			{
-	            if (scoreManager.pirateBase1.baseScore < (scoreManager.pirateBase1.baseScore/2))
-	            {
-	                condition = Player.IsWinning;
-	            }
-            }
-
-            //Come back to this!
         }
-        
-
-       public void SpawnText()
-        {
-            RandomPos();
-
-            for (int i = 0; i < textObjects.Count; i++)
-            {
-                if (!textObjects[i].activeInHierarchy)
-                {
-                    textObjects[i].transform.position = gameObject.transform.position + randomPos;
-                    textObjects[i].transform.rotation = Quaternion.identity;
-
-                    //Check for the right script
-                    if (textObjects[i].GetComponent<AnnouncerText>() != null)
-                    {
-                        textObjects[i].GetComponent<AnnouncerText>().m_myWords = textText;
-                    }
-
-                    textObjects[i].SetActive(true);
-
-                    break;
-                }
-            }
-        }
-
+          
+       //TEXT CONDITIONS       
+		//Choose what the text says.
         void SetString()
        {
            //Conditional logic - what do I need to trigger each text condition
@@ -147,12 +132,19 @@ namespace ProjectStorms
                // Need Player, Base
 
                textText = "<Player> Scores!";
+              // textText = "Score!";
            }
 
            if (condition == Player.IsWinning)
            {
                // Player, Base, Score
                textText = "<Player> takes the lead!";
+           }
+           
+           if (condition == Player.HalfWay)
+           {
+           		//Player, Base, Score
+           		textText = "Half Way!";
            }
 
            if (condition == Player.HowManyMoreToGo)
@@ -200,15 +192,87 @@ namespace ProjectStorms
            }
        }
 
-        void RandomPos()
+		//TEXT POSITIONS
+		//Choose where to spawn text, then spawn it.
+        public void RandomPos()
         {
-            float height = Screen.height / 2;
-            float width = Screen.width / 2;
-
-            randomPos = new Vector3(Random.Range(-(width/3), (width/3)), Random.Range(-(height/1.5f), (height/1.5f)), 0);
+            randomPos = new Vector3(Random.Range(-(width/5), (width/5)), Random.Range(-(height/3.5f), (height/3.5f)), 0);
+            spawnOffset = randomPos;
+            
+            SpawnText();
+        }
+        
+        public void TopLeft()
+        {
+        	topLeft = new Vector3 (Random.Range(-width/2, 0), Random.Range(0, 10), 0);
+        	spawnOffset = topLeft;
+			SpawnText();
+        }
+        
+        public void TopRight()
+        {
+        	topRight = new Vector3 (Random.Range(0, width/2), Random.Range(0, 10), 0);
+        	spawnOffset = topRight;
+			SpawnText();
+        }
+        
+       	public void BottomLeft()
+        {
+        	bottomLeft = new Vector3(Random.Range(-width/2, 0), Random.Range(-height/2, (-height/2)+10), 0);
+        	spawnOffset = bottomLeft;
+			SpawnText();
+        }
+        
+       	public void BottomRight()
+        {
+			bottomRight = new Vector3(Random.Range(0, width/2), Random.Range(-height/2, (-height/2)+10), 0);
+        	spawnOffset = bottomRight;
+			SpawnText();
         }
 
-
+		//For two player mode or Team Match
+		public void TopHalf()
+		{
+			topHalf = new Vector3 (Random.Range(-width/2, width/2), 0, 0);
+			spawnOffset = topHalf;
+			
+			SpawnText();
+		}
+		
+		public void BottomHalf()
+		{
+			bottomHalf = new Vector3 (Random.Range(-width/2, width/2),  Random.Range(-height/2, (-height/2)-10), 0);
+			spawnOffset = bottomHalf;
+			
+			SpawnText();
+		}
+		
+		
+		//Finally, spawn the text
+		public void SpawnText()
+		{
+			
+			for (int i = 0; i < textObjects.Count; i++)
+			{
+				if (!textObjects[i].activeInHierarchy)
+				{
+					textObjects[i].transform.position = gameObject.transform.position + spawnOffset;
+					textObjects[i].transform.rotation = Quaternion.identity;
+					
+					//Check for the right script
+					if (textObjects[i].GetComponent<AnnouncerText>() != null)
+					{
+						textObjects[i].GetComponent<AnnouncerText>().m_myColour = textColour;
+						textObjects[i].GetComponent<AnnouncerText>().m_myWords = textText;
+					}
+					
+					textObjects[i].SetActive(true);
+					
+					break;
+				}
+			}
+		}
+		
     }
 
 }

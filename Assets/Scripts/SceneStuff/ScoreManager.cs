@@ -35,17 +35,37 @@ namespace ProjectStorms
 
 
         public PirateBaseIdentity pirateBase1;
+        private int previousBase1Score;
+        private string base1Name = " ";
+		
         public PirateBaseIdentity pirateBase2;
+        private int previousBase2Score;
+        private string base2Name = " ";
+		
         public PirateBaseIdentity pirateBase3;
+        private int previousBase3Score;
+        private string base3Name = " ";
+        
         public PirateBaseIdentity pirateBase4;
+        private int previousBase4Score;
+        private string base4Name = " ";
+        
 
 		public PirateBaseIdentity teamBaseAlpha;
+		private int previousAlphaScore;
+		private string baseAlphaName = " ";
 		public PirateBaseIdentity teamBaseOmega;
-
+		private int previousOmegaScore;
+		private string baseOmegaName = " ";
+		
+		
+		//Set the team names
+		/*
 		public string alphaTeamName = "Alpha";
 		public Color alphaTeamColour = Color.red;
 		public string omegaTeamName = "Omega";
 		public Color omegaTeamColour = Color.black;
+		*/
 
 
 		
@@ -64,6 +84,10 @@ namespace ProjectStorms
         private string player2tag;
         private string player3tag;
         private string player4tag;
+        
+        //Send messages to Announcer Effects
+        public AnnouncerEffects announcerEffects;
+        
 
         void Start()
         {
@@ -96,16 +120,13 @@ namespace ProjectStorms
 				//make the reference
 				teamGame = true;
 
-
-
-                //check the tag
-                
 			}
         }
 
 
         void Update()
         {
+        
            	if (gameType == EGameType.FreeForAll)
 			{
 				FourPlayerMatch();
@@ -124,32 +145,125 @@ namespace ProjectStorms
 					FadeOut();
 				}
 			}
+			
+			//check previous Scores
+			if (gameType == EGameType.FreeForAll) 
+			{
+				previousBase1Score = pirateBase1.baseScore;
+				previousBase2Score = pirateBase2.baseScore;
+				previousBase3Score = pirateBase3.baseScore;
+				previousBase4Score = pirateBase4.baseScore;
+			}
+			else
+			if (gameType == EGameType.TeamGame)
+			{
+				previousBase1Score = teamBaseAlpha.baseScore;
+				previousBase2Score = teamBaseOmega.baseScore;
+			}
+			
+			
+			//get names
+			base1Name = pirateBase1.GetComponent<FactionIndentifier>().name;
+			base2Name = pirateBase2.GetComponent<FactionIndentifier>().name;
+			base3Name = pirateBase3.GetComponent<FactionIndentifier>().name;
+			base4Name = pirateBase4.GetComponent<FactionIndentifier>().name;
+			baseAlphaName = teamBaseAlpha.GetComponent<FactionIndentifier>().name;
+			baseOmegaName = teamBaseOmega.GetComponent<FactionIndentifier>().name;
+		
         }
 
 
 		void TeamMatch()
 		{
 			string winnerName = " ";
+			
+			//Check to see if any base has less score than last update
+			if (previousAlphaScore != teamBaseAlpha.baseScore)
+			{
+				Score(baseAlphaName);
+			}
+			
+			if (previousOmegaScore != teamBaseOmega.baseScore)
+			{
+				Score(baseOmegaName);
+			}
 
+			/*
 			if (teamBaseAlpha.baseScore <= 0)
 			{
-				winnerName = alphaTeamName;
+				
+				winnerName = baseAlphaName; //alphaTeamName;
 				m_winnerColour = alphaTeamColour;
 				TeamWin(winnerName, m_winnerColour);
+				
 			}
 			else
 			if (teamBaseOmega.baseScore <= 0)
 			{
+				
 				winnerName = omegaTeamName;
 				m_winnerColour = omegaTeamColour;
 				TeamWin(winnerName, m_winnerColour);
+				
 			}
-
+			*/
 		}
 
 
 		void FourPlayerMatch()
 		{
+			//Check to see if any base has less score than last update
+			if (previousBase1Score != pirateBase1.baseScore)
+			{
+				//Get faction identifier
+				Score ( pirateBase1.GetComponent<FactionIndentifier>().factionName);
+				
+			}
+			
+			if (previousBase2Score != pirateBase2.baseScore)
+			{
+				//Score(base2Name);
+				Score ( pirateBase2.GetComponent<FactionIndentifier>().factionName);
+			}
+			
+			if (previousBase3Score != pirateBase3.baseScore)
+			{
+				//Score(base3Name);
+				Score ( pirateBase3.GetComponent<FactionIndentifier>().factionName);
+			}
+			
+			if (previousBase4Score != pirateBase4.baseScore)
+			{
+				//Score(base4Name);
+				Score ( pirateBase4.GetComponent<FactionIndentifier>().factionName);
+			}
+			
+			
+			
+			// Check to see if any bases are less than Halfway 
+			if (pirateBase1.baseScore < (passengersToWin/2))
+			{
+				HalfWay ( pirateBase1.GetComponent<FactionIndentifier>().factionName);
+			}	
+			
+			if (pirateBase2.baseScore < (passengersToWin/2))
+			{
+				HalfWay ( pirateBase2.GetComponent<FactionIndentifier>().factionName);
+			}	
+			
+			if (pirateBase3.baseScore < (passengersToWin/2))
+			{
+				HalfWay ( pirateBase3.GetComponent<FactionIndentifier>().factionName);
+			}	
+			
+			if (pirateBase4.baseScore < (passengersToWin/2))
+			{
+				HalfWay ( pirateBase4.GetComponent<FactionIndentifier>().factionName);
+			}	
+			
+			
+			
+		
 			// Check to see if any base score is less than /equal to 0
 			if (pirateBase1.baseScore <= 0)
 			{
@@ -266,6 +380,90 @@ namespace ProjectStorms
 				{
 					fadeOutScene.fadeEnd = true;
 				}
+			}
+		}
+		
+		public void Score(string teamName)	//Base Numbers 1-4 for Free4All Match, 	Base Numbers 5 & 6 for Team Match
+		{
+			//Debug.Log(teamName + "  Scores!");
+			
+			if (teamName == "NONAME")
+			{
+				Debug.Log(teamName);
+			}
+			else
+			if (teamName == null)
+			{
+				Debug.Log("no team name");
+			}
+			else
+			if (teamName == "PIRATES")
+			{
+				announcerEffects.textColour = Color.red;
+				announcerEffects.condition = Player.IsScoring;
+				announcerEffects.TopLeft();
+			}
+			else
+			if (teamName == "NAVY")
+			{
+				announcerEffects.textColour = Color.blue;
+				announcerEffects.condition = Player.IsScoring;
+				announcerEffects.TopRight();
+			}
+			else
+			if (teamName == "TINKERERS")
+			{
+				announcerEffects.textColour = Color.green;
+				announcerEffects.condition = Player.IsScoring;
+				announcerEffects.BottomLeft();	
+			}
+			else
+			if (teamName == "VIKINGS")
+			{
+				announcerEffects.textColour = Color.yellow;
+				announcerEffects.condition = Player.IsScoring;
+				announcerEffects.BottomRight();
+			}
+		}
+		
+		public void HalfWay(string teamName)
+		{
+			if (teamName == "NONAME")
+			{
+				Debug.Log(teamName);
+			}
+			else
+			if (teamName == null)
+			{
+				Debug.Log("no team name");
+			}
+			else
+			if (teamName == "PIRATES")
+			{
+				announcerEffects.textColour = Color.red;
+				announcerEffects.condition = Player.HalfWay;
+				announcerEffects.TopLeft();
+			}
+			else
+			if (teamName == "NAVY")
+			{
+				announcerEffects.textColour = Color.blue;
+				announcerEffects.condition = Player.HalfWay;
+				announcerEffects.TopRight();
+			}
+			else
+			if (teamName == "TINKERERS")
+			{
+				announcerEffects.textColour = Color.green;
+				announcerEffects.condition = Player.HalfWay;
+				announcerEffects.BottomLeft();	
+			}
+			else
+			if (teamName == "VIKINGS")
+			{
+				announcerEffects.textColour = Color.yellow;
+				announcerEffects.condition = Player.HalfWay;
+				announcerEffects.BottomRight();
 			}
 		}
     } 

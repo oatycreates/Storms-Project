@@ -1559,12 +1559,20 @@ Prefab:
       objectReference: {fileID: 481871230}
     - target: {fileID: 191656, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11497332, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
       propertyPath: passengersToWin
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 22308796, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11497332, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
+      propertyPath: announcerEffects
+      value: 
+      objectReference: {fileID: 840680469}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
   m_IsPrefabParent: 0
@@ -1725,7 +1733,7 @@ MonoBehaviour:
   condition: 0
   textPrefab: {fileID: 115102, guid: c67db845666708d40ab2ab8668d1bb93, type: 2}
   pooledAmount: 100
-  scoreManager: {fileID: 1164356151}
+  textColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &840680470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1779,7 +1787,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 2
 --- !u!4 &891014543 stripped
 Transform:
   m_PrefabParentObject: {fileID: 483272, guid: f7cfbc02bc9cd6443a11e836a6f6bebd, type: 2}
@@ -2506,12 +2514,6 @@ Behaviour:
 Transform:
   m_PrefabParentObject: {fileID: 468688, guid: 65f6e76c5896b0c4ba240566e9d03833, type: 2}
   m_PrefabInternal: {fileID: 1911315326}
---- !u!114 &1164356151 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11497332, guid: 0ef6d8f786a14554f899678344e741ef,
-    type: 2}
-  m_PrefabInternal: {fileID: 734528549}
-  m_Script: {fileID: 11500000, guid: 830ace0db69479740861e9a84c03ab48, type: 3}
 --- !u!1 &1226084778
 GameObject:
   m_ObjectHideFlags: 0
@@ -3591,6 +3593,10 @@ Prefab:
     - target: {fileID: 420034, guid: f7cfbc02bc9cd6443a11e836a6f6bebd, type: 2}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22387390, guid: f7cfbc02bc9cd6443a11e836a6f6bebd, type: 2}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7cfbc02bc9cd6443a11e836a6f6bebd, type: 2}

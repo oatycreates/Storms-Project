@@ -23,5 +23,35 @@ namespace ProjectStorms
         }
 
         public Faction faction;
-	}
+		
+		
+		[HideInInspector]
+		public string factionName = "NONAME";
+		
+		void Update()
+		{
+			//factionName = faction.ToString();
+			
+			if (faction == Faction.PIRATES)
+			{
+				factionName = "PIRATES";
+			}
+			else
+			if (faction == Faction.NAVY)
+			{
+				factionName = "NAVY";
+			}
+			else
+			if (faction == Faction.TINKERERS)
+			{
+				factionName = "TINKERERS";
+			}
+			else
+			if (faction == Faction.VIKINGS)
+			{
+				factionName = "VIKINGS";
+			}
+			
+		}
+	}	
 }
