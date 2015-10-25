@@ -86,8 +86,9 @@ namespace ProjectStorms
         private string player4tag;
         
         //Send messages to Announcer Effects
+        /*
         public AnnouncerEffects announcerEffects;
-        
+        */
 
         void Start()
         {
@@ -399,30 +400,30 @@ namespace ProjectStorms
 			else
 			if (teamName == "PIRATES")
 			{
-				announcerEffects.textColour = Color.red;
-				announcerEffects.condition = Player.IsScoring;
-				announcerEffects.TopLeft();
+				//announcerEffects.textColour = Color.red;
+				//announcerEffects.condition = Player.IsScoring;
+				//announcerEffects.TopLeft();
 			}
 			else
 			if (teamName == "NAVY")
 			{
-				announcerEffects.textColour = Color.blue;
-				announcerEffects.condition = Player.IsScoring;
-				announcerEffects.TopRight();
+				//announcerEffects.textColour = Color.blue;
+				//announcerEffects.condition = Player.IsScoring;
+				//announcerEffects.TopRight();
 			}
 			else
 			if (teamName == "TINKERERS")
 			{
-				announcerEffects.textColour = Color.green;
-				announcerEffects.condition = Player.IsScoring;
-				announcerEffects.BottomLeft();	
+				//announcerEffects.textColour = Color.green;
+				//announcerEffects.condition = Player.IsScoring;
+				//announcerEffects.BottomLeft();	
 			}
 			else
 			if (teamName == "VIKINGS")
 			{
-				announcerEffects.textColour = Color.yellow;
-				announcerEffects.condition = Player.IsScoring;
-				announcerEffects.BottomRight();
+				//announcerEffects.textColour = Color.yellow;
+				//announcerEffects.condition = Player.IsScoring;
+				//announcerEffects.BottomRight();
 			}
 		}
 		
@@ -440,30 +441,30 @@ namespace ProjectStorms
 			else
 			if (teamName == "PIRATES")
 			{
-				announcerEffects.textColour = Color.red;
-				announcerEffects.condition = Player.HalfWay;
-				announcerEffects.TopLeft();
+				//announcerEffects.textColour = Color.red;
+				//announcerEffects.condition = Player.HalfWay;
+				//announcerEffects.TopLeft();
 			}
 			else
 			if (teamName == "NAVY")
 			{
-				announcerEffects.textColour = Color.blue;
-				announcerEffects.condition = Player.HalfWay;
-				announcerEffects.TopRight();
+				//announcerEffects.textColour = Color.blue;
+				//announcerEffects.condition = Player.HalfWay;
+				//announcerEffects.TopRight();
 			}
 			else
 			if (teamName == "TINKERERS")
 			{
-				announcerEffects.textColour = Color.green;
-				announcerEffects.condition = Player.HalfWay;
-				announcerEffects.BottomLeft();	
+				//announcerEffects.textColour = Color.green;
+				//announcerEffects.condition = Player.HalfWay;
+				//announcerEffects.BottomLeft();	
 			}
 			else
 			if (teamName == "VIKINGS")
 			{
-				announcerEffects.textColour = Color.yellow;
-				announcerEffects.condition = Player.HalfWay;
-				announcerEffects.BottomRight();
+				//announcerEffects.textColour = Color.yellow;
+				//announcerEffects.condition = Player.HalfWay;
+				//announcerEffects.BottomRight();
 			}
 		}
     } 
