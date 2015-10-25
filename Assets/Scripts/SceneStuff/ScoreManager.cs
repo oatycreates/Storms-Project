@@ -89,6 +89,10 @@ namespace ProjectStorms
         /*
         public AnnouncerEffects announcerEffects;
         */
+        
+        public UI_Controller scoreText;
+        private bool startDelayOver = false;
+        
 
         void Start()
         {
@@ -122,6 +126,8 @@ namespace ProjectStorms
 				teamGame = true;
 
 			}
+			
+			Invoke("FinishStartDelay", 1);
         }
 
 
@@ -172,21 +178,29 @@ namespace ProjectStorms
 			baseOmegaName = teamBaseOmega.GetComponent<FactionIndentifier>().name;
 		
         }
+        	
+        void FinishStartDelay()
+        {
+        	startDelayOver = true;
+        }
 
 
 		void TeamMatch()
 		{
 			string winnerName = " ";
 			
-			//Check to see if any base has less score than last update
-			if (previousAlphaScore != teamBaseAlpha.baseScore)
+			if (startDelayOver)
 			{
-				Score(baseAlphaName);
-			}
-			
-			if (previousOmegaScore != teamBaseOmega.baseScore)
-			{
-				Score(baseOmegaName);
+				//Check to see if any base has less score than last update
+				if (previousAlphaScore != teamBaseAlpha.baseScore)
+				{
+					Score(baseAlphaName);
+				}
+				
+				if (previousOmegaScore != teamBaseOmega.baseScore)
+				{
+					Score(baseOmegaName);
+				}
 			}
 
 			/*
@@ -213,30 +227,33 @@ namespace ProjectStorms
 
 		void FourPlayerMatch()
 		{
-			//Check to see if any base has less score than last update
-			if (previousBase1Score != pirateBase1.baseScore)
+			if (startDelayOver)
 			{
-				//Get faction identifier
-				Score ( pirateBase1.GetComponent<FactionIndentifier>().factionName);
+				//Check to see if any base has less score than last update
+				if (previousBase1Score != pirateBase1.baseScore)
+				{
+					//Get faction identifier
+					Score ( pirateBase1.GetComponent<FactionIndentifier>().factionName);
+					
+				}
 				
-			}
-			
-			if (previousBase2Score != pirateBase2.baseScore)
-			{
-				//Score(base2Name);
-				Score ( pirateBase2.GetComponent<FactionIndentifier>().factionName);
-			}
-			
-			if (previousBase3Score != pirateBase3.baseScore)
-			{
-				//Score(base3Name);
-				Score ( pirateBase3.GetComponent<FactionIndentifier>().factionName);
-			}
-			
-			if (previousBase4Score != pirateBase4.baseScore)
-			{
-				//Score(base4Name);
-				Score ( pirateBase4.GetComponent<FactionIndentifier>().factionName);
+				if (previousBase2Score != pirateBase2.baseScore)
+				{
+					//Score(base2Name);
+					Score ( pirateBase2.GetComponent<FactionIndentifier>().factionName);
+				}
+				
+				if (previousBase3Score != pirateBase3.baseScore)
+				{
+					//Score(base3Name);
+					Score ( pirateBase3.GetComponent<FactionIndentifier>().factionName);
+				}
+				
+				if (previousBase4Score != pirateBase4.baseScore)
+				{
+					//Score(base4Name);
+					Score ( pirateBase4.GetComponent<FactionIndentifier>().factionName);
+				}
 			}
 			
 			
@@ -400,30 +417,22 @@ namespace ProjectStorms
 			else
 			if (teamName == "PIRATES")
 			{
-				//announcerEffects.textColour = Color.red;
-				//announcerEffects.condition = Player.IsScoring;
-				//announcerEffects.TopLeft();
+				scoreText.Score(teamName);
 			}
 			else
 			if (teamName == "NAVY")
 			{
-				//announcerEffects.textColour = Color.blue;
-				//announcerEffects.condition = Player.IsScoring;
-				//announcerEffects.TopRight();
+				scoreText.Score(teamName);
 			}
 			else
 			if (teamName == "TINKERERS")
 			{
-				//announcerEffects.textColour = Color.green;
-				//announcerEffects.condition = Player.IsScoring;
-				//announcerEffects.BottomLeft();	
+				scoreText.Score(teamName);
 			}
 			else
 			if (teamName == "VIKINGS")
 			{
-				//announcerEffects.textColour = Color.yellow;
-				//announcerEffects.condition = Player.IsScoring;
-				//announcerEffects.BottomRight();
+				scoreText.Score(teamName);
 			}
 		}
 		
