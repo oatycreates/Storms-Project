@@ -208,25 +208,25 @@ namespace ProjectStorms
 				}
 			}
 
-			/*
+			
 			if (teamBaseAlpha.baseScore <= 0)
 			{
 				
-				winnerName = baseAlphaName; //alphaTeamName;
-				m_winnerColour = alphaTeamColour;
-				TeamWin(winnerName, m_winnerColour);
+				//winnerName = baseAlphaName; //alphaTeamName;
+				//m_winnerColour = alphaTeamColour;
+				TeamWin(winnerName, m_winnerColour, teamBaseAlpha.GetComponent<FactionIndentifier>().factionName);
 				
 			}
 			else
 			if (teamBaseOmega.baseScore <= 0)
 			{
 				
-				winnerName = omegaTeamName;
-				m_winnerColour = omegaTeamColour;
-				TeamWin(winnerName, m_winnerColour);
+				//winnerName = omegaTeamName;
+				//m_winnerColour = omegaTeamColour;
+				TeamWin(winnerName, m_winnerColour, teamBaseOmega.GetComponent<FactionIndentifier>().factionName);
 				
 			}
-			*/
+			
 		}
 
 
@@ -308,31 +308,31 @@ namespace ProjectStorms
 			{
 				m_winnerColour = pirateBase1.baseColour;
 				m_winnerNumber = pirateBase1.teamNumber;
-				PlayerWin(m_winnerNumber, m_winnerColour);
+				PlayerWin(m_winnerNumber, m_winnerColour, pirateBase1.GetComponent<FactionIndentifier>().factionName );
 			}
 			else if (pirateBase2.baseScore <= 0)
 			{
 				m_winnerColour = pirateBase2.baseColour;
 				m_winnerNumber = pirateBase2.teamNumber;
-				PlayerWin(m_winnerNumber, m_winnerColour);
+				PlayerWin(m_winnerNumber, m_winnerColour, pirateBase2.GetComponent<FactionIndentifier>().factionName );
 			}
 			else if (pirateBase3.baseScore <= 0)
 			{
 				m_winnerColour = pirateBase3.baseColour;
 				m_winnerNumber = pirateBase3.teamNumber;
-				PlayerWin(m_winnerNumber, m_winnerColour);
+				PlayerWin(m_winnerNumber, m_winnerColour, pirateBase3.GetComponent<FactionIndentifier>().factionName);
 			}
 			else if (pirateBase4.baseScore <= 0)
 			{
 				m_winnerColour = pirateBase4.baseColour;
 				m_winnerNumber = pirateBase4.teamNumber;
-				PlayerWin(m_winnerNumber, m_winnerColour);
+				PlayerWin(m_winnerNumber, m_winnerColour, pirateBase4.GetComponent<FactionIndentifier>().factionName);
 			}
 		}
 
 
 
-		void TeamWin (string teamName, Color teamColour)
+		void TeamWin (string teamName, Color teamColour, string factionName)
 		{
 			string teamWinner = teamName;
 
@@ -346,7 +346,7 @@ namespace ProjectStorms
 			{
 				optionalWinnerCam.gameObject.SetActive(true);
 				//optionalWinnerCam.WinCam((teamWinner + "\nWins!"), teamColour);
-				optionalWinnerCam.WinCam(winText.text, teamColour);
+				optionalWinnerCam.NewWinCam(factionName);
 				
 				
 				winText.text = " ";
@@ -368,7 +368,7 @@ namespace ProjectStorms
 		}
 
 
-        void PlayerWin(float a_playerNumber, Color a_colour)
+        void PlayerWin(float a_playerNumber, Color a_colour, string factionName)
         {
             string winner = a_playerNumber.ToString();
 
@@ -384,7 +384,8 @@ namespace ProjectStorms
 			if (optionalWinnerCam != null)
 			{
 				optionalWinnerCam.gameObject.SetActive(true);
-				optionalWinnerCam.WinCam(winText.text, m_winnerColour);
+				//optionalWinnerCam.WinCam(winText.text, m_winnerColour);
+				optionalWinnerCam.NewWinCam(factionName);
 
 
 				winText.text = " ";
@@ -457,6 +458,7 @@ namespace ProjectStorms
 			}
 		}
 		
+		//This is just too confusing atm
 		public void HalfWay(string teamName)
 		{
 			if (teamName == "NONAME")
@@ -471,22 +473,22 @@ namespace ProjectStorms
 			else
 			if (teamName == "PIRATES")
 			{
-				scoreText.HalfWay(teamName);
+				//scoreText.HalfWay(teamName);
 			}
 			else
 			if (teamName == "NAVY")
 			{
-				scoreText.HalfWay(teamName);
+				//scoreText.HalfWay(teamName);
 			}
 			else
 			if (teamName == "TINKERERS")
 			{
-				scoreText.HalfWay(teamName);
+				//scoreText.HalfWay(teamName);
 			}
 			else
 			if (teamName == "VIKINGS")
 			{
-				scoreText.HalfWay(teamName);
+				//scoreText.HalfWay(teamName);
 			}
 		}
     } 

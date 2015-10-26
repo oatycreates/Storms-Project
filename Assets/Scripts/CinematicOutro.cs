@@ -18,10 +18,26 @@ namespace ProjectStorms
         public GameObject rotator;
         public GameObject pirate;
        // private Renderer pirateRenderer;
-        public Text winText;
-        public Color myColour = Color.white;
+       // public Text winText;
+        //public Color myColour = Color.white;
 
         private GameObject m_minimap = null;
+        
+        //Haha new idea
+        public GameObject pirateWin;
+        public GameObject navyWin;
+        public GameObject tinkerersWin;
+        public GameObject vikingWin;
+        
+        //Okay, so we actualy need the win text
+        public Text winnerText;
+        private string words = "Hello hero";
+        private Color colour;
+        
+        private Color myRed = new Color(0.831f, 0.110f, 0.110f, 1f);
+        private Color myNavy = new Color(0.193f, 0.329f, 0.728f, 1f);
+        private Color myGreen = new Color(0.274f, 0.662f, 0.088f, 1f);
+        private Color myYellow = new Color(0.847f, 0.919f, 0.169f, 1f);
 
         void Awake()
         {
@@ -29,6 +45,11 @@ namespace ProjectStorms
 
             //Go to sleep untill I'm needed
             gameObject.SetActive(false);
+            
+            pirateWin.SetActive(false);
+           	navyWin.SetActive(false);
+           	tinkerersWin.SetActive(false);
+           	vikingWin.SetActive(false);
         }
 
         void Start()
@@ -38,20 +59,72 @@ namespace ProjectStorms
 
         void FixedUpdate()
         {
+        	winnerText.text = words;
+        	winnerText.color = colour;
+        
             rotator.transform.Rotate(Vector3.down * Time.deltaTime * 60);
         }
         
+        /*
         public void WinCam(string winnerNumberText, Color winnerColour)
         {
             winText.text = winnerNumberText;
             winText.color = winnerColour;
             //pirateRenderer.material.color = winnerColour;
+            print (winnerNumberText);
 
             // Disable the minimap
             if (m_minimap != null)
             {
                 m_minimap.SetActive(false);
             }
+        }*/
+        
+        public void NewWinCam(string factionName)
+        {
+			if (factionName == "NONAME")
+			{
+				Debug.Log("error - no faction name set");
+			}
+			
+			if (factionName == null)
+			{
+				Debug.Log("error - no faction name set");
+			}
+			
+			if (factionName == "PIRATES")
+			{
+				words = (factionName + "\nWIN!");
+				colour = myRed;
+				pirateWin.SetActive(true);
+			}
+			
+			if (factionName == "NAVY")
+			{
+				words = (factionName + "\nWINS!");
+				colour = myNavy;
+				navyWin.SetActive(true);
+			}
+			
+			if (factionName == "TINKERERS")
+			{
+				words = (factionName + "\nWIN!");
+				colour = myGreen;
+				tinkerersWin.SetActive(true);
+			}
+			
+			if (factionName == "VIKINGS")
+			{
+				words = (factionName + "\nWIN!");
+				colour = myYellow;
+				vikingWin.SetActive(true);
+			}
+        
+			// Disable the minimap
+			if (m_minimap != null)
+			{
+				m_minimap.SetActive(false);
+			}
         }
     }
 }

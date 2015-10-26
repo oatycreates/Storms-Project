@@ -337,6 +337,8 @@ namespace ProjectStorms
 			}
 			
 			//print("Text: " + threeText.text + "   Size : " + threeText.fontSize + "   Colour: "	+ threeText.color);
+			
+			//print ("Red " + oneText.color + " Navy " + twoText.color + " Green " + threeText.color + " Yellow " + fourText.color);
 		}
 	
 		void TotalTextVisiblity()
@@ -353,7 +355,7 @@ namespace ProjectStorms
 			else
 			if (oneHidden)
 			{
-				one.transform.localRotation = Quaternion.Lerp(one.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * textTurnSpeed);
+				one.transform.localRotation = Quaternion.Lerp(one.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * (textTurnSpeed/2));
 			}
 			
 			//Player two visibility
@@ -368,7 +370,7 @@ namespace ProjectStorms
 			else
 			if (twoHidden)
 			{
-				two.transform.localRotation = Quaternion.Lerp(two.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * textTurnSpeed);
+				two.transform.localRotation = Quaternion.Lerp(two.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * (textTurnSpeed/2));
 			}
 			
 			//Player three visibility
@@ -383,7 +385,7 @@ namespace ProjectStorms
 			else
 			if (threeHidden)
 			{
-				three.transform.localRotation = Quaternion.Lerp(three.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * textTurnSpeed);
+				three.transform.localRotation = Quaternion.Lerp(three.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * (textTurnSpeed/2));
 			}
 			
 			//Player four visibility
@@ -398,7 +400,7 @@ namespace ProjectStorms
 			else
 				if (fourHidden)
 			{
-				four.transform.localRotation = Quaternion.Lerp(four.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * textTurnSpeed);
+				four.transform.localRotation = Quaternion.Lerp(four.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * (textTurnSpeed/2));
 			}
 		}
 		
