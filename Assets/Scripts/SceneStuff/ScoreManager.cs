@@ -93,6 +93,11 @@ namespace ProjectStorms
         public UI_Controller scoreText;
         private bool startDelayOver = false;
         
+        private bool halfWayCheck1 = false;
+        private bool halfWayCheck2 = false;
+        private bool halfWayCheck3 = false;
+        private bool halfWayCheck4 = false;
+        
 
         void Start()
         {
@@ -261,22 +266,38 @@ namespace ProjectStorms
 			// Check to see if any bases are less than Halfway 
 			if (pirateBase1.baseScore < (passengersToWin/2))
 			{
-				HalfWay ( pirateBase1.GetComponent<FactionIndentifier>().factionName);
+				if (!halfWayCheck1)
+				{
+					HalfWay ( pirateBase1.GetComponent<FactionIndentifier>().factionName);
+					halfWayCheck1 = true;
+				}
 			}	
 			
 			if (pirateBase2.baseScore < (passengersToWin/2))
 			{
-				HalfWay ( pirateBase2.GetComponent<FactionIndentifier>().factionName);
+				if (!halfWayCheck2)
+				{
+					HalfWay ( pirateBase2.GetComponent<FactionIndentifier>().factionName);
+					halfWayCheck2 = true;
+				}
 			}	
 			
 			if (pirateBase3.baseScore < (passengersToWin/2))
 			{
-				HalfWay ( pirateBase3.GetComponent<FactionIndentifier>().factionName);
+				if (!halfWayCheck3)
+				{
+					HalfWay ( pirateBase3.GetComponent<FactionIndentifier>().factionName);
+					halfWayCheck3 = true;
+				}
 			}	
 			
 			if (pirateBase4.baseScore < (passengersToWin/2))
 			{
-				HalfWay ( pirateBase4.GetComponent<FactionIndentifier>().factionName);
+				if (!halfWayCheck4)
+				{
+					HalfWay ( pirateBase4.GetComponent<FactionIndentifier>().factionName);
+					halfWayCheck4 = true;
+				}
 			}	
 			
 			
@@ -450,30 +471,22 @@ namespace ProjectStorms
 			else
 			if (teamName == "PIRATES")
 			{
-				//announcerEffects.textColour = Color.red;
-				//announcerEffects.condition = Player.HalfWay;
-				//announcerEffects.TopLeft();
+				scoreText.HalfWay(teamName);
 			}
 			else
 			if (teamName == "NAVY")
 			{
-				//announcerEffects.textColour = Color.blue;
-				//announcerEffects.condition = Player.HalfWay;
-				//announcerEffects.TopRight();
+				scoreText.HalfWay(teamName);
 			}
 			else
 			if (teamName == "TINKERERS")
 			{
-				//announcerEffects.textColour = Color.green;
-				//announcerEffects.condition = Player.HalfWay;
-				//announcerEffects.BottomLeft();	
+				scoreText.HalfWay(teamName);
 			}
 			else
 			if (teamName == "VIKINGS")
 			{
-				//announcerEffects.textColour = Color.yellow;
-				//announcerEffects.condition = Player.HalfWay;
-				//announcerEffects.BottomRight();
+				scoreText.HalfWay(teamName);
 			}
 		}
     } 

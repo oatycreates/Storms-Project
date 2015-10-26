@@ -114,34 +114,208 @@ namespace ProjectStorms
 				Debug.Log("error - no faction name set");
 			}
 		
+			
 			if (factionName == "PIRATES")
 			{
 				score = (factionName + " SCORE!");
+				
 				oneText.text = score;
+				oneText.fontSize = 100;
+				oneText.color = rememberOneColour;
+				
+				twoText.text = score;
+				twoText.fontSize = 50;
+				twoText.color = rememberOneColour;
+				
+				threeText.text = score;
+				threeText.fontSize = 50;
+				threeText.color = rememberOneColour;
+				
+				fourText.text = score;
+				fourText.fontSize = 50;
+				fourText.color = rememberOneColour;
+				
 				ShowText(one);
+				ShowText(two);
+				ShowText(three);
+				ShowText(four);
 			}
 			
 			if (factionName == "NAVY")
 			{
 				score = (factionName + " SCORE!");
+				
+				oneText.text = score;
+				oneText.fontSize = 50;
+				oneText.color = rememberTwoColour;
+				
 				twoText.text = score;
+				twoText.fontSize = 100;
+				twoText.color = rememberTwoColour;
+				
+				threeText.text = score;
+				threeText.fontSize = 50;
+				threeText.color = rememberTwoColour;
+				
+				fourText.text = score;
+				fourText.fontSize = 50;
+				fourText.color = rememberTwoColour;
+				
+				ShowText(one);
 				ShowText(two);
+				ShowText(three);
+				ShowText(four);
 			}
 			
 			if (factionName == "TINKERERS")
 			{
 				score = (factionName + " SCORE!");
+				
+				oneText.text = score;
+				oneText.fontSize = 50;
+				oneText.color = rememberThreeColour;
+				
+				twoText.text = score;
+				twoText.fontSize = 50;
+				twoText.color = rememberThreeColour;
+				
 				threeText.text = score;
+				threeText.fontSize = 100;
+				threeText.color = rememberThreeColour;
+				
+				fourText.text = score;
+				fourText.fontSize = 50;
+				fourText.color = rememberThreeColour;
+				
+				ShowText(one);
+				ShowText(two);
 				ShowText(three);
+				ShowText(four);
 			}
 			
 			if (factionName == "VIKINGS")
 			{
 				score = (factionName + " SCORE!");
+				
+				oneText.text = score;
+				oneText.fontSize = 50;
+				oneText.color = rememberFourColour;
+				
+				twoText.text = score;
+				twoText.fontSize = 50;
+				twoText.color = rememberFourColour;
+				
+				threeText.text = score;
+				threeText.fontSize = 50;
+				threeText.color = rememberFourColour;
+				
 				fourText.text = score;
+				fourText.fontSize = 100;
+				fourText.color = rememberFourColour;
+				
+				ShowText(one);
+				ShowText(two);
+				ShowText(three);
 				ShowText(four);
 			}
+			
 		
+		}
+		
+		
+		
+		public void HalfWay(string factionName)
+		{
+			string halfWay = "HALF WAY!";
+			
+			if (factionName == "NONAME")
+			{
+				Debug.Log("error - no faction name set");
+			}
+			
+			if (factionName == null)
+			{
+				Debug.Log("error - no faction name set");
+			}
+			
+			if (factionName == "PIRATES")
+			{
+				oneText.text = halfWay;
+				oneText.fontSize = 100;
+				ShowText(one);
+			}
+			
+			if (factionName == "NAVY")
+			{
+				twoText.text = halfWay;
+				twoText.fontSize = 100;
+				ShowText(two);
+			}
+			
+			if (factionName == "TINKERERS")
+			{
+				threeText.text = halfWay;
+				threeText.fontSize = 100;
+				ShowText(three);
+			}
+			
+			if (factionName == "VIKINGS")
+			{
+				fourText.text = halfWay;
+				fourText.fontSize = 100;
+				ShowText(four);
+			}
+		}
+		
+		
+		public void PassengersInTray(string factionName, int noOfPassengers)
+		{
+			//print (factionName + "  " + noOfPassengers);
+			string people;
+			people = noOfPassengers.ToString();
+			
+			if (factionName == "NONAME")
+			{
+				Debug.Log("error - no faction name set");
+			}
+			
+			if (factionName == null)
+			{
+				Debug.Log("error - no faction name set");
+			}
+			
+			if (factionName == "PIRATES")
+			{
+				oneText.text = people;
+				oneText.fontSize = 100;
+				//Cancel any existing movment on the object.
+				CancelInvoke("HideOne");
+				ShowText(one);
+			}
+			
+			if (factionName == "NAVY")
+			{
+				twoText.text = people;
+				twoText.fontSize = 100;
+				CancelInvoke("HideTwo");
+				ShowText(two);
+			}
+			
+			if (factionName == "TINKERERS")
+			{
+				threeText.text = people;
+				threeText.fontSize = 100;
+				CancelInvoke("HideThree");
+				ShowText(three);
+			}
+			
+			if (factionName == "VIKINGS")
+			{
+				fourText.text = people;
+				fourText.fontSize = 100;
+				CancelInvoke("HideFour");
+				ShowText(four);
+			}
 		}
 		
 		
@@ -162,7 +336,7 @@ namespace ProjectStorms
 				}
 			}
 			
-			print("Text: " + threeText.text + "   Size : " + threeText.fontSize + "   Colour: "	+ threeText.color);
+			//print("Text: " + threeText.text + "   Size : " + threeText.fontSize + "   Colour: "	+ threeText.color);
 		}
 	
 		void TotalTextVisiblity()
@@ -171,7 +345,10 @@ namespace ProjectStorms
 			if (!oneHidden)
 			{	
 				one.transform.localRotation = Quaternion.Lerp(one.transform.localRotation, Quaternion.Euler(new Vector3(0, 0, 0)), Time.deltaTime * textTurnSpeed);
-				Invoke("HideOne", textTimeOnScreen);
+				if (Mathf.Abs(one.transform.localEulerAngles.y) < 1)
+				{
+					Invoke("HideOne", textTimeOnScreen);
+				}
 			}
 			else
 			if (oneHidden)
@@ -182,20 +359,26 @@ namespace ProjectStorms
 			//Player two visibility
 			if (!twoHidden)
 			{	
-				two.transform.localRotation = Quaternion.Lerp(two.transform.localRotation, Quaternion.Euler(new Vector3(0, 0.01f, 0)), Time.deltaTime * textTurnSpeed);
-				Invoke("HideTwo", textTimeOnScreen);
+				two.transform.localRotation = Quaternion.Lerp(two.transform.localRotation, Quaternion.Euler(new Vector3(0, 0, 0)), Time.deltaTime * textTurnSpeed);
+				if (Mathf.Abs(two.transform.localEulerAngles.y) < 1)
+				{
+					Invoke("HideTwo", textTimeOnScreen);
+				}
 			}
 			else
 			if (twoHidden)
 			{
-				two.transform.localRotation = Quaternion.Lerp(two.transform.localRotation, Quaternion.Euler(new Vector3(0, 90, 0)), Time.deltaTime * textTurnSpeed);
+				two.transform.localRotation = Quaternion.Lerp(two.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * textTurnSpeed);
 			}
 			
 			//Player three visibility
 			if (!threeHidden)
 			{	
 				three.transform.localRotation = Quaternion.Lerp(three.transform.localRotation, Quaternion.Euler(new Vector3(0, 0, 0)), Time.deltaTime * textTurnSpeed);
-				Invoke("HideThree", textTimeOnScreen);
+				if (Mathf.Abs(three.transform.localEulerAngles.y) < 1)
+				{
+					Invoke("HideThree", textTimeOnScreen);
+				}
 			}
 			else
 			if (threeHidden)
@@ -206,13 +389,16 @@ namespace ProjectStorms
 			//Player four visibility
 			if (!fourHidden)
 			{	
-				four.transform.localRotation = Quaternion.Lerp(four.transform.localRotation, Quaternion.Euler(new Vector3(0, 0.01f, 0)), Time.deltaTime * textTurnSpeed);
-				Invoke("HideFour", textTimeOnScreen);
+				four.transform.localRotation = Quaternion.Lerp(four.transform.localRotation, Quaternion.Euler(new Vector3(0, 0, 0)), Time.deltaTime * textTurnSpeed);
+				if (Mathf.Abs(four.transform.localEulerAngles.y) < 1)
+				{
+					Invoke("HideFour", textTimeOnScreen);
+				}
 			}
 			else
 				if (fourHidden)
 			{
-				four.transform.localRotation = Quaternion.Lerp(four.transform.localRotation, Quaternion.Euler(new Vector3(0, 90, 0)), Time.deltaTime * textTurnSpeed);
+				four.transform.localRotation = Quaternion.Lerp(four.transform.localRotation, Quaternion.Euler(new Vector3(0, -90, 0)), Time.deltaTime * textTurnSpeed);
 			}
 		}
 		

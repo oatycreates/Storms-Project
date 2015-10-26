@@ -418,7 +418,7 @@ GameObject:
   - 114: {fileID: 11465480}
   m_Layer: 0
   m_Name: StartPoint_Vikings
-  m_TagString: Player4_
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -797,7 +797,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &132894
 GameObject:
@@ -3261,7 +3261,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118810}
   m_LocalRotation: {x: -2.1265361e-08, y: -.991444945, z: -.130525857, w: 1.61526899e-07}
-  m_LocalPosition: {x: -200, y: 0, z: -200}
+  m_LocalPosition: {x: 0, y: 0, z: 850}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 473796}
@@ -6493,7 +6493,6 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
-  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -6731,6 +6730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faction: 3
+  factionName: NONAME
 --- !u!114 &11477490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6746,7 +6746,6 @@ MonoBehaviour:
   peopleLeftToCatch: 100
   maxPeople: 100
   textColour: {r: .970588207, g: .945585191, b: .0642301068, a: 0}
-  baseTag: 
 --- !u!136 &13603776
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -6805,8 +6804,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58500099, z: 1.01383591}
-    m_Extent: {x: 4.68306684, y: 3.38426495, z: 1.60912275}
+    m_Center: {x: -5.06639481e-07, y: 9.58500099, z: 1.01382446}
+    m_Extent: {x: 6.29218292, y: 3.38426542, z: 6.29218245}
   m_DirtyAABB: 0
 --- !u!137 &13748306
 SkinnedMeshRenderer:
@@ -6853,7 +6852,7 @@ Cloth:
   m_StretchingStiffness: 1
   m_BendingStiffness: 0
   m_UseTethers: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_Damping: .899999976
   m_ExternalAcceleration: {x: 0, y: 0, z: 0}
   m_RandomAcceleration: {x: 1, y: 1, z: 1}
@@ -8199,7 +8198,6 @@ ReflectionProbe:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IntensityMultiplier: 1
-  m_BlendDistance: 1
   m_HDR: 1
   m_BoxProjection: 0
   m_RenderDynamicObjects: 0

@@ -109,6 +109,15 @@ namespace ProjectStorms
                 return m_trayContents.Count;
             }
         }
+        
+        
+        /// <summary>
+        /// Get reference UI_Controller Script
+        /// </summary>
+        private GameObject scoreTextController;
+        private UI_Controller scoreMangager;
+        private string factionName;
+		private int noOfPassengers = 0;
 
         void Awake()
         {
@@ -119,6 +128,19 @@ namespace ProjectStorms
             // Cache variables
             m_shipRb = gameObject.GetComponentInParent<Rigidbody>();
             m_shipStartMass = 0.0f;
+            
+            //Find score manager
+            scoreTextController = GameObject.FindWithTag("UIScoreManager");
+            if (scoreTextController != null)
+            {
+            	scoreMangager = scoreTextController.GetComponent<UI_Controller>()as UI_Controller;
+            }
+            else
+            {
+            	Debug.Log("No score manager in this scene.");
+            }
+            
+           
         }
 
         /// <summary>
@@ -137,6 +159,13 @@ namespace ProjectStorms
         /// </summary>
         void Update()
         {
+        	//Check for changes in the number of passengers in the tray.
+        	ContactScoreManager();
+        	
+        	noOfPassengers = m_trayContents.Count;
+        
+        
+        //Tray stuff
             if (m_trayIsPoweredDown)
             {
                 if (m_trayPowerDownCooldown <= 0.0f)
@@ -295,5 +324,21 @@ namespace ProjectStorms
             return outIsTrayObj;
         }
 
+
+		void ContactScoreManager()
+		{
+			//Check faction
+			factionName = gameObject.GetComponentInParent<FactionIndentifier>().factionName;
+			
+			//print (m_trayContents.Count); //Yay - this works
+			//Check tray contents against the previous number of passengers.
+			
+			if (noOfPassengers != m_trayContents.Count)
+			{
+				scoreMangager.PassengersInTray(factionName, noOfPassengers);
+				//print("Ping");
+			}
+			
+		}
     } 
 }
