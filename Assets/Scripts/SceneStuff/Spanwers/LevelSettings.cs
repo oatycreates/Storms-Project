@@ -47,13 +47,52 @@ namespace ProjectStorms
 
     public class LevelSettings : Singleton<LevelSettings>
     {
-        private PlayerSettings[] m_playerSettings;
+        public PlayerSettings[] playersSettings
+        {
+            get
+            {
+                return m_playerSettings;
+            }
+        }
+
+        public Gamemode gamemode
+        {
+            get
+            {
+                return m_gamemode;
+            }
+            set
+            {
+                m_gamemode = value;
+            }
+        }
+        private Gamemode m_gamemode = Gamemode.NONE;
+
+        public int playersPlaying
+        {
+            get
+            {
+                // Count how many playerSettings flagged as playing
+                int count = 0;
+                for (int i = 0; i < m_playerSettings.Length; ++i)
+                {
+                    if (m_playerSettings[i].playing)
+                    {
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+        }
 
         /// <summary>
         /// Protected constructor, to ensure this script is
         /// used as a singleton
         /// </summary>
         protected LevelSettings() {}
+
+        private PlayerSettings[] m_playerSettings;
 
         public void Awake()
         {

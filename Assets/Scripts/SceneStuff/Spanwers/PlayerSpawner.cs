@@ -13,6 +13,13 @@ using System.Collections;
 
 namespace ProjectStorms
 {
+    public enum PlayerSpawnerType
+    {
+        FFA_ONLY,
+        TEAN_ALPHA,
+        TEAM_OMEGA
+    }
+
     public class PlayerSpawner : MonoBehaviour
     {
         [Header("Prefabs")]
@@ -22,33 +29,11 @@ namespace ProjectStorms
         public GameObject vikingsPlayer;
 
         [Header("Spawner Settings")]
-        public PlayerSpawnerType spawnerType = PlayerSpawnerType.FFA_ONLY;
-
-#if UNITY_EDITOR
-        [Header("Editor Only")]
-        public bool overridePlayerSettings  = false;
-        public Faction overrideFaction      = Faction.NONE;
-        public int overridePlayerNumber     = 0;
-#endif
+        public PlayerSpawnerType spawnerType    = PlayerSpawnerType.FFA_ONLY;
+        public int playerNumber                 = 0;
 
         // Script references
         private ScoreManager m_scoreManager;
-
-        public enum PlayerSpawnerType
-        {
-            FFA_ONLY,
-            TEAN_ALPHA,
-            TEAM_OMEGA
-        }
-
-        public enum Faction
-        {
-            NONE,
-            NAVY,
-            PIRATES,
-            TINKERERS,
-            VIKINGS,
-        }
 
         public void Awake()
         {
@@ -68,32 +53,22 @@ namespace ProjectStorms
             {
                 Debug.LogError("Unable to find Score Manager within scene!");
             }
-        }
 
-        void Start()
-        {
-#if UNITY_EDITOR
-            if (overridePlayerSettings)
+            // Ensure player number is set correctly
+            if (playerNumber < 1 ||
+                playerNumber > 4)
             {
-                SpawnPlayer(overrideFaction, overridePlayerNumber);
+                Debug.LogWarning(string.Format("Invalid player number for player spawner {0}", name));
             }
-
-            DestroyImmediate(this.gameObject);
-            return;
-#endif
-
-            // TODO: Spawning using menu settings
         }
 
-        private void SpawnPlayer(Faction a_faction, int a_playerNo)
+        public GameObject SpawnPlayer(Faction a_faction)
         {
             // Ensure valid parameters are given
-            if (a_faction == Faction.NONE   ||
-                a_playerNo < 1              ||
-                a_playerNo > 4)
+            if (a_faction == Faction.NONE)
             {
-                Debug.LogError(string.Format("Cannot spawn player with NONE faction and {0} player number", a_playerNo));
-                return;
+                Debug.LogError("Cannot spawn player with NONE faction");
+                return null;
             }
 
             // Ensure we can spawn in this gamemode
@@ -101,15 +76,14 @@ namespace ProjectStorms
                 m_scoreManager.gameType != EGameType.FreeForAll)
             {
                 // Don't spawn FFA player in teams gamemode
-                return;
+                return null;
             }
             else if ((spawnerType == PlayerSpawnerType.TEAN_ALPHA || spawnerType == PlayerSpawnerType.TEAM_OMEGA) &&
                      m_scoreManager.gameType != EGameType.TeamGame)
             {
                 // Don't spawn Team player in FFA gamemode
-                return;
+                return null;
             }
-
 
             // Get correct prefab
             GameObject prefab = null;
@@ -118,7 +92,7 @@ namespace ProjectStorms
             {
                 case Faction.NONE:
                     Debug.LogError("Unable to load prefab for NONE faction");
-                    return;
+                    return null;
 
                 case Faction.NAVY:
                     prefab = navyPlayer;
@@ -141,7 +115,7 @@ namespace ProjectStorms
             GameObject spawnedPlayer = Instantiate(prefab, transform.position, transform.rotation) as GameObject;
 
             // Set player tag
-            switch (a_playerNo)
+            switch (playerNumber)
             {
                 case 1:
                     spawnedPlayer.tag = "Player1_";
@@ -160,9 +134,14 @@ namespace ProjectStorms
                     break;
 
                 default:
-                    Debug.LogWarning("Unable to tag player with number: " + a_playerNo);
+                    Debug.LogWarning("Unable to tag player with number: " + playerNumber);
                     break;
             }
+
+            DestroyObject(this.gameObject);
+
+            Debug.Log(string.Format("Spawned player: {0}", playerNumber));
+            return spawnedPlayer;
         }
     }
 }

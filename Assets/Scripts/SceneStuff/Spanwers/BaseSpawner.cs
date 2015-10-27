@@ -13,6 +13,13 @@ using System.Collections;
 
 namespace ProjectStorms
 {
+    public enum BaseSpawnerType
+    {
+        TEAM_ALPHA,
+        TEAM_OMEGA,
+        FFA_ONLY
+    }
+
     public class BaseSpawner : MonoBehaviour
     {
         [Header("Prefabs")]
@@ -21,30 +28,9 @@ namespace ProjectStorms
         public GameObject tinkerersBase;
         public GameObject vikingsBase;
 
-        public enum BaseType
-        {
-            TEAM_ALPHA,
-            TEAM_OMEGA,
-            FFA_ONLY
-        }
-
         [Header("Base Settings")]
-        public BaseType baseType;
-
-#if UNITY_EDITOR
-        [Header("Editor Only")]
-        public bool overrideBaseType = false;
-
-        public enum Faction
-        {
-            NONE,
-            NAVY,
-            PIRATES,
-            TINKERERS,
-            VIKINGS,
-        }
-        public Faction overrideFaction = Faction.NONE;
-#endif
+        public BaseSpawnerType baseType;
+        public int playerNumber;
 
         private ScoreManager m_scoreManager;
 
@@ -68,21 +54,7 @@ namespace ProjectStorms
             }
         }
 
-        void Start()
-        {
-#if UNITY_EDITOR
-            // Spawn overrided base type
-            if (overrideBaseType)
-            {
-                SpawnBase(overrideFaction);
-            }
-#endif
-
-            // TODO: Spawn base using settings from main menu
-            DestroyImmediate(this.gameObject);
-        }
-
-        private void SpawnBase(Faction a_faction)
+        public GameObject SpawnBase(Faction a_faction)
         {
             GameObject prefab = null;
 
@@ -90,7 +62,7 @@ namespace ProjectStorms
             {
                 case Faction.NONE:
                     Debug.LogError("Can't load 'NONE' faction!");
-                    return;
+                    return null;
 
                 case Faction.NAVY:
                     prefab = navyBase;
@@ -110,17 +82,17 @@ namespace ProjectStorms
             }
 
             // Spawn base and setup base
-            if (baseType == BaseType.FFA_ONLY &&
+            if (baseType == BaseSpawnerType.FFA_ONLY &&
                 m_scoreManager.gameType != EGameType.FreeForAll)
             {
                 // Don't spawn FFA base in teams gamemode
-                return;
+                return null;
             }
-            else if ((baseType == BaseType.TEAM_ALPHA || baseType == BaseType.TEAM_OMEGA) &&
+            else if ((baseType == BaseSpawnerType.TEAM_ALPHA || baseType == BaseSpawnerType.TEAM_OMEGA) &&
                      m_scoreManager.gameType != EGameType.TeamGame)
             {
                 // Don't spawn Team base in FFA gamemode
-                return;
+                return null;
             }
 
             GameObject baseObject = Instantiate(prefab, transform.position, transform.rotation) as GameObject;
@@ -136,17 +108,21 @@ namespace ProjectStorms
                     SetupBaseForTeams(baseObject);
                     break;
             }
+
+            DestroyObject(this.gameObject);
+
+            return baseObject;
         }
 
         private void SetupBaseForTeams(GameObject a_base)
         {
             switch (baseType)
             {
-                case BaseType.FFA_ONLY:
+                case BaseSpawnerType.FFA_ONLY:
                     Debug.LogWarning(string.Format("SetupBaseForTeams() was called, but base setting for {0} is for FFA", name));
                     return;
 
-                case BaseType.TEAM_ALPHA:
+                case BaseSpawnerType.TEAM_ALPHA:
                     // Log any extra team bases
                     if (m_scoreManager.teamBaseAlpha != null)
                     {
@@ -159,7 +135,7 @@ namespace ProjectStorms
 
                     break;
 
-                case BaseType.TEAM_OMEGA:
+                case BaseSpawnerType.TEAM_OMEGA:
                     // Log any extra team bases
                     if (m_scoreManager.teamBaseOmega != null)
                     {
@@ -176,32 +152,6 @@ namespace ProjectStorms
 
         private void SetupBaseForFFA(GameObject a_base)
         {
-#if UNITY_EDITOR
-            bool tagSet = false;
-            if (CompareTag("Player1_"))
-            {
-                tagSet = true;
-            }
-            else if (CompareTag("Player2_"))
-            {
-                tagSet = true;
-            }
-            else if (CompareTag("Player3_"))
-            {
-                tagSet = true;
-            }
-            else if (CompareTag("Player4_"))
-            {
-                tagSet = true;
-            }
-
-            if (!tagSet)
-            {
-                Debug.LogError(string.Format("Tag not set for base spawner! ({0})", this.name));
-                return;
-            }
-#endif
-
             if (m_scoreManager.pirateBase1 == null)
             {
                 m_scoreManager.pirateBase1 = a_base.GetComponent<PirateBaseIdentity>();

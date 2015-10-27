@@ -76,6 +76,9 @@ namespace ProjectStorms
             }
 #endif
 
+            // Set gamemode within level settings
+            LevelSettings.Instance.gamemode = m_gameMode;
+
             Application.LoadLevel(m_mapName);
         }
 	}
