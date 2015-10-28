@@ -115,8 +115,11 @@ namespace ProjectStorms
         {
             if (m_currentCountdownTime >= (float)countdownTime)
             {
+                // Update LevelSettings team factions
+                LevelSettings.Instance.alphaTeamFaction = m_team1Faction;
+                LevelSettings.Instance.omegaTeamFaction = m_team2Faction;
+
                 m_mainMenu.StartMatch();
-                //Debug.Log("Match starting! (not implemented)");
             }
             else
             {

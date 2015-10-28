@@ -47,10 +47,16 @@ namespace ProjectStorms
 
             // Get reference to score manager within the scene
             m_scoreManager = FindObjectOfType<ScoreManager>();
-
             if (m_scoreManager == null)
             {
                 Debug.LogError("Unable to find the Score manager within the scene!");
+            }
+
+            // Ensure player number is set correctly, if Free for All
+            if ((playerNumber < 1 || playerNumber > 4) &&
+                LevelSettings.Instance.gamemode == Gamemode.FFA)
+            {
+                Debug.LogWarning(string.Format("Invalid player number for player spawner {0}", name));
             }
         }
 
@@ -109,7 +115,7 @@ namespace ProjectStorms
                     break;
             }
 
-            DestroyObject(this.gameObject);
+            DestroyImmediate(this.gameObject);
 
             return baseObject;
         }

@@ -66,7 +66,30 @@ namespace ProjectStorms
                 m_gamemode = value;
             }
         }
-        private Gamemode m_gamemode = Gamemode.NONE;
+
+        public Faction alphaTeamFaction
+        {
+            get
+            {
+                return m_alphaTeamFaction;
+            }
+            set
+            {
+                m_alphaTeamFaction = value;
+            }
+        }
+
+        public Faction omegaTeamFaction
+        {
+            get
+            {
+                return m_omegaTeamFaction;
+            }
+            set
+            {
+                m_omegaTeamFaction = value;
+            }
+        }
 
         public int playersPlaying
         {
@@ -85,6 +108,10 @@ namespace ProjectStorms
                 return count;
             }
         }
+
+        private Gamemode m_gamemode         = Gamemode.NONE;
+        private Faction m_alphaTeamFaction  = Faction.NONE;
+        private Faction m_omegaTeamFaction  = Faction.NONE;
 
         /// <summary>
         /// Protected constructor, to ensure this script is

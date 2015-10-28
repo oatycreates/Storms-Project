@@ -17,6 +17,7 @@ namespace ProjectStorms
     {
         private MasterCamera m_masterCamera;
         private LevelBoundsBehaviour m_levelBounds;
+        private ScoreManager m_scoreManager;
 
         private PlayerSpawner[] m_playerSpawners;
         private BaseSpawner[] m_baseSpawners;
@@ -56,6 +57,13 @@ namespace ProjectStorms
                 Debug.LogError("Unable to find level bounds within scene!");
             }
 
+            // Get reference to Score Manager
+            m_scoreManager = FindObjectOfType<ScoreManager>();
+            if (m_scoreManager == null)
+            {
+                Debug.LogError("Unable to find ScoreManager within scene!");
+            }
+
             // Get all players spawners
             m_playerSpawners = FindObjectsOfType<PlayerSpawner>();
             if (m_playerSpawners == null ||
@@ -77,6 +85,8 @@ namespace ProjectStorms
         {
             m_players = new GameObject[LevelSettings.Instance.playersPlaying];
 
+            SetupScoreManager();
+
             // Spawn each player using the level settings data from the Menu scene
             PlayerSettings[] playersSettings = LevelSettings.Instance.playersSettings;
             for (int i = 0; i < playersSettings.Length; ++i)
@@ -86,6 +96,8 @@ namespace ProjectStorms
                     SpawnPlayer(playersSettings[i], i + 1);
                 }
             }
+
+            SpawnBases();
 
             SetupMasterCamera(m_players);
             SetupLevelBounds(m_players);
@@ -131,7 +143,7 @@ namespace ProjectStorms
             // Ensure player spawner was found
             if (playerSpawner == null)
             {
-                Debug.LogError(string.Format("Unable to find spawner for player: {0}", a_playerNo));
+                Debug.LogWarning(string.Format("Unable to find spawner for player: {0}", a_playerNo));
                 return;
             }
 
@@ -141,10 +153,95 @@ namespace ProjectStorms
             m_players[a_playerNo - 1]   = player;
         }
 
+        private void SpawnBases()
+        {
+            switch (LevelSettings.Instance.gamemode)
+            {
+                case Gamemode.FFA:
+                    // Create bases references array
+                    m_bases = new GameObject[LevelSettings.Instance.playersPlaying];
+
+                    int playersPlaying = LevelSettings.Instance.playersPlaying;
+
+                    for (int i = 0; i < playersPlaying; ++i)
+                    {
+                        int playerNumber = i + 1;
+
+                        BaseSpawner baseSpawner = FindBaseSpawnerForPlayer(playerNumber, BaseSpawnerType.FFA_ONLY);
+                        PlayerSettings playerSettings = LevelSettings.Instance.GetPlayerSettings(playerNumber);
+
+                        // Ensure a base spawner was found
+                        if (baseSpawner == null)
+                        {
+                            Debug.LogWarning("Unable to find base spawner for player: " + playerNumber);
+                            continue;
+                        }
+
+                        // Spawn base, and store reference within bases array
+                        GameObject playerBase = baseSpawner.SpawnBase(playerSettings.faction);
+                        Debug.Log(string.Format("Spawned base: Player {0}", i + 1));
+
+                        m_bases[i] = playerBase;
+                    }
+                    break;
+
+                case Gamemode.TEAMS:
+                    // Create bases references array
+                    m_bases = new GameObject[2];
+
+                    // Spawn Alpha base
+                    BaseSpawner alphaBaseSpawner = FindBaseSpawnerForTeam(Team.ALPHA);
+
+                    if (alphaBaseSpawner == null)
+                    {
+                        Debug.LogWarning("Unable to find spawner for Alpha team");
+                    }
+                    else
+                    {
+                        GameObject alphaBase = alphaBaseSpawner.SpawnBase(LevelSettings.Instance.alphaTeamFaction);
+                        m_bases[0] = alphaBase;
+
+                        Debug.Log("Spawned Base: Team Alpha");
+                    }
+
+                    // Spawn Omega base
+                    BaseSpawner omegaBaseSpawner = FindBaseSpawnerForTeam(Team.OMEGA);
+
+                    if (omegaBaseSpawner == null)
+                    {
+                        Debug.LogWarning("Unable to find spawner for Omega team");
+                    }
+                    else
+                    {
+                        GameObject omegaBase = omegaBaseSpawner.SpawnBase(LevelSettings.Instance.omegaTeamFaction);
+                        m_bases[1] = omegaBase;
+
+                        Debug.Log("Spawned Base: Team Omega");
+                    }
+                    break;
+
+                case Gamemode.NONE:
+                    Debug.LogError("Unable to spawn bases for gamemode 'NONE'");
+                    return;
+            }
+        }
+
         private PlayerSpawner FindPlayerSpawnerForPlayer(int a_playerNo, PlayerSpawnerType a_type)
         {
             for (int i = 0; i < m_playerSpawners.Length; ++i)
             {
+                if (m_playerSpawners[i] == null)
+                {
+                    continue;
+                }
+
+                // Special case, for teams
+                if (a_type != PlayerSpawnerType.FFA_ONLY &&
+                    m_playerSpawners[i].spawnerType == a_type)
+                {
+                    return m_playerSpawners[i];
+                }
+
                 if (m_playerSpawners[i].playerNumber == a_playerNo &&
                     m_playerSpawners[i].spawnerType == a_type)
                 {
@@ -171,6 +268,66 @@ namespace ProjectStorms
 
             // Can't find base spawner for given player
             return null;
+        }
+
+        private BaseSpawner FindBaseSpawnerForTeam(Team a_team)
+        {
+            BaseSpawnerType spawnerType = BaseSpawnerType.FFA_ONLY;
+
+            switch (a_team)
+            {
+                case Team.ALPHA:
+                    spawnerType = BaseSpawnerType.TEAM_ALPHA;
+                    break;
+
+                case Team.OMEGA:
+                    spawnerType = BaseSpawnerType.TEAM_OMEGA;
+                    break;
+
+                case Team.NONE:
+                    Debug.LogWarning("Unable to find base spawner for team NONE");
+                    return null;
+            }
+
+            for (int i = 0; i < m_baseSpawners.Length; ++i)
+            {
+                if (m_baseSpawners[i].baseType == spawnerType)
+                {
+                    // Found base spawner for given team
+                    return m_baseSpawners[i];
+                }
+            }
+
+            // Can't find base spawner for given team
+            return null;
+        }
+
+        private bool FactionPresentWithinMatch(Faction a_faction)
+        {
+            // Ensure arguments are valid
+            if (a_faction == Faction.NONE)
+            {
+                Debug.LogWarning("Unable to check if NONE faction is present within match");
+            }
+
+            int playersPlaying = LevelSettings.Instance.playersPlaying;
+
+            // Loop through all players
+            for (int i = 0; i < playersPlaying; ++i)
+            {
+                PlayerSettings playerSettings = LevelSettings.Instance.GetPlayerSettings(i);
+
+                if (playerSettings.faction == a_faction)
+                {
+                    // Found player with requested faction, faction
+                    // not present within match
+                    return true;
+                }
+            }
+
+            // Unable to find player with requested faction, faction 
+            // not present within match
+            return false;
         }
 
         private void SetupMasterCamera(GameObject[] a_playersArray)
@@ -246,6 +403,24 @@ namespace ProjectStorms
             m_levelBounds.player2RigidBody = a_playersArray[1].GetComponent<Rigidbody>();
             m_levelBounds.player3RigidBody = a_playersArray[2].GetComponent<Rigidbody>();
             m_levelBounds.player4RigidBody = a_playersArray[3].GetComponent<Rigidbody>();
+        }
+
+        private void SetupScoreManager()
+        {
+            switch (LevelSettings.Instance.gamemode)
+            {
+                case Gamemode.FFA:
+                    m_scoreManager.gameType = EGameType.FreeForAll;
+                    break;
+
+                case Gamemode.TEAMS:
+                    m_scoreManager.gameType = EGameType.TeamGame;
+                    break;
+
+                case Gamemode.NONE:
+                    Debug.LogWarning("Gamemode not correctly set within LevelSettings script");
+                    break;
+            }
         }
 
         private Camera GetPlayerCamera(GameObject a_player)
