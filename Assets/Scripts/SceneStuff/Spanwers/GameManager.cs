@@ -83,7 +83,11 @@ namespace ProjectStorms
 
         private void Start()
         {
+#if UNITY_EDITOR
+            m_players = new GameObject[4];
+#else
             m_players = new GameObject[LevelSettings.Instance.playersPlaying];
+#endif
 
             SetupScoreManager();
 
