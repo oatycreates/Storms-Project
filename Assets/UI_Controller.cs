@@ -18,26 +18,26 @@ namespace ProjectStorms
 	{
 		public float textTurnSpeed = 3;
 		public float textTimeOnScreen = 1;
-	
-		public GameObject one;
+
+        private GameObject one;
 		private Text oneText;
 		private string rememberOneWords;
 		private int rememberOneSize;
 		private Color rememberOneColour;
-		
-		public GameObject two;
+
+        private GameObject two;
 		private Text twoText;
 		private string rememberTwoWords;
 		private int rememberTwoSize;
 		private Color rememberTwoColour;
-		
-		public GameObject three;
+
+        private GameObject three;
 		private Text threeText;
 		private string rememberThreeWords;
 		private int rememberThreeSize;
 		private Color rememberThreeColour;
 		
-		public GameObject four;
+		private GameObject four;
 		private Text fourText;
 		private string rememberFourWords;
 		private int rememberFourSize;
@@ -47,15 +47,21 @@ namespace ProjectStorms
 		private bool twoHidden = true;
 		private bool threeHidden = true;
 		private bool fourHidden = true;
-	
-		void Awake () 
+
+        private bool m_beenInitialised = false;
+
+		public void InitialiseAnnouncerText(GameObject[] a_playerGOs) 
 		{
-                //Get Text references
-            oneText = one.GetComponent<Text>();
-			twoText = two.GetComponent<Text>();
-			threeText = three.GetComponent<Text>();
-			fourText = four.GetComponent<Text>();
-			
+            one = a_playerGOs[0];
+            two = a_playerGOs[1];
+            three = a_playerGOs[2];
+            four = a_playerGOs[3];
+
+            //Get Text references
+            oneText = one.GetComponentInChildren<Text>();
+            twoText = two.GetComponentInChildren<Text>();
+            threeText = three.GetComponentInChildren<Text>();
+            fourText = four.GetComponentInChildren<Text>();
 			
 			//Remember stuff for Reset function
 			rememberOneWords = " ";
@@ -72,12 +78,16 @@ namespace ProjectStorms
 			
 			rememberFourWords = " ";
 			rememberFourSize = fourText.fontSize;
-			rememberFourColour = fourText.color;
+            rememberFourColour = fourText.color;
+
+            m_beenInitialised = true;
+
+            Invoke("StartGameText", 5);
 		}
 		
 		void Start()
 		{
-			Invoke("StartGameText", 5);
+
 		}
 		
 		void StartGameText()//GameObject player)
@@ -85,17 +95,17 @@ namespace ProjectStorms
 			string  startText = "Collect Passengers!";//= "GO!";
 		
 			//Make all text show at start
-				oneText.text = startText;
-				ShowText(one);
+			oneText.text = startText;
+			ShowText(one);
 			
-				twoText.text = startText;
-				ShowText(two);
+			twoText.text = startText;
+			ShowText(two);
 			
-				threeText.text = startText;
-				ShowText(three);
+			threeText.text = startText;
+			ShowText(three);
 			
-				fourText.text = startText;
-				ShowText(four);
+			fourText.text = startText;
+			ShowText(four);
 		}
 		
 		public void Score(string factionName)
@@ -369,24 +379,28 @@ namespace ProjectStorms
 		
 		void Update () 
 		{
-			TotalTextVisiblity();
-	
-			
-			if (Input.GetKeyDown(KeyCode.Space))
-			{
-				if (threeHidden)
-				{
-					ShowText(three);
-				}
-				else
-				{
-					HideText(three);
-				}
-			}
-			
-			//print("Text: " + threeText.text + "   Size : " + threeText.fontSize + "   Colour: "	+ threeText.color);
-			
-			//print ("Red " + oneText.color + " Navy " + twoText.color + " Green " + threeText.color + " Yellow " + fourText.color);
+            if (m_beenInitialised)
+            {
+                TotalTextVisiblity();
+
+#if UNITY_EDITOR
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (threeHidden)
+                    {
+                        ShowText(three);
+                    }
+                    else
+                    {
+                        HideText(three);
+                    }
+                }
+
+                //print("Text: " + threeText.text + "   Size : " + threeText.fontSize + "   Colour: "	+ threeText.color);
+
+                //print ("Red " + oneText.color + " Navy " + twoText.color + " Green " + threeText.color + " Yellow " + fourText.color);
+#endif
+            }
 		}
 	
 		void TotalTextVisiblity()

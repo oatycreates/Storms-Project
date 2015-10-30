@@ -134,6 +134,13 @@ namespace ProjectStorms
                 targetLocks[i].AssignPlayerReferences(playerGOs);
             }
 
+            // Set announcer text references
+            UI_Controller uiController = GameObject.FindObjectOfType<UI_Controller>();
+            if (uiController != null)
+            {
+                uiController.InitialiseAnnouncerText(playerGOs);
+            }
+
             SpawnBases();
 
             SetupMasterCamera(m_players);
