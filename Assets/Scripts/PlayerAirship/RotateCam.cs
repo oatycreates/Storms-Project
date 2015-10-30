@@ -201,7 +201,7 @@ namespace ProjectStorms
                 if (a_select)
                 {
                     invertUpDown = !invertUpDown;
-                    a_select = !a_select;
+                    //a_select = !a_select;
 
                     if (announcerController != null)
                     {
@@ -210,6 +210,7 @@ namespace ProjectStorms
                         announcerController.InvertYCam(me);
                     }
                 }
+
                 
             }
         }

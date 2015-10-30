@@ -34,22 +34,21 @@ namespace ProjectStorms
         public void Awake()
         {
             m_transform = transform;
-
-            // Ensure at least one player is assigned
-            if (player1RigidBody == null &&
-                player2RigidBody == null &&
-                player3RigidBody == null &&
-                player4RigidBody == null)
-            {
-                Debug.LogError("Level Bounds' player references not set!");
-            }
-        }
+        }        
         
 		void Start() 
 		{
 			
 		}
 		
+        public void AssignPlayerRigidbodies(Rigidbody[] a_players)
+        {
+            player1RigidBody = a_players[0];
+            player2RigidBody = a_players[1];
+            player3RigidBody = a_players[2];
+            player4RigidBody = a_players[3];
+        }
+
 		void Update() 
 		{
 			

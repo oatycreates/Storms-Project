@@ -10,6 +10,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace ProjectStorms
 {
@@ -30,7 +31,6 @@ namespace ProjectStorms
 		private int rememberTwoSize;
 		private Color rememberTwoColour;
 		
-		
 		public GameObject three;
 		private Text threeText;
 		private string rememberThreeWords;
@@ -42,8 +42,7 @@ namespace ProjectStorms
 		private string rememberFourWords;
 		private int rememberFourSize;
 		private Color rememberFourColour;
-		
-		
+
 		private bool oneHidden = true;
 		private bool twoHidden = true;
 		private bool threeHidden = true;
@@ -51,8 +50,8 @@ namespace ProjectStorms
 	
 		void Awake () 
 		{
-			//Get Text references
-			oneText = one.GetComponent<Text>();
+                //Get Text references
+            oneText = one.GetComponent<Text>();
 			twoText = two.GetComponent<Text>();
 			threeText = three.GetComponent<Text>();
 			fourText = four.GetComponent<Text>();

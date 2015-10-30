@@ -83,18 +83,46 @@ namespace ProjectStorms
 
         private void Start()
         {
+#if UNITY_EDITOR
+            m_players = new GameObject[4];
+#else
             m_players = new GameObject[LevelSettings.Instance.playersPlaying];
+#endif
 
             SetupScoreManager();
 
             // Spawn each player using the level settings data from the Menu scene
             PlayerSettings[] playersSettings = LevelSettings.Instance.playersSettings;
+#if UNITY_EDITOR
+            // Fill in some defaults
+            EditorFillPlayerSettings(ref playersSettings);
+#endif
+            Rigidbody[] playerRBs = new Rigidbody[playersSettings.Length];
             for (int i = 0; i < playersSettings.Length; ++i)
             {
                 if (playersSettings[i].playing)
                 {
-                    SpawnPlayer(playersSettings[i], i + 1);
+                    GameObject player = SpawnPlayer(playersSettings[i], i + 1);
+                    playerRBs[i] = player.GetComponent<Rigidbody>();
                 }
+                else
+                {
+                    playerRBs[i] = null;
+                }
+            }
+
+            // Set bounds references
+            LevelBoundsBehaviour boundsScript = GameObject.FindObjectOfType<LevelBoundsBehaviour>();
+            if (boundsScript != null)
+            {
+                boundsScript.AssignPlayerRigidbodies(playerRBs);
+            }
+
+            // Set slipstreams references
+            SlipStream[] slipstreams = GameObject.FindObjectsOfType<SlipStream>();
+            for (int i = 0; i < slipstreams.Length; ++i)
+            {
+                slipstreams[i].GetPlayerRigidBodies();
             }
 
             SpawnBases();
@@ -103,7 +131,45 @@ namespace ProjectStorms
             SetupLevelBounds(m_players);
         }
 
-        private void SpawnPlayer(PlayerSettings a_playerSettings, int a_playerNo)
+#if UNITY_EDITOR
+        /// <summary>
+        /// Editor only player settings pre-fill.
+        /// </summary>
+        /// <param name="ao_settings">Settings object to be filled.</param>
+        void EditorFillPlayerSettings(ref PlayerSettings[] ao_settings)
+        {
+            if (ao_settings.Length >= 1)
+            {
+                // First player - Pirates
+                ao_settings[0].faction = Faction.PIRATES;
+                ao_settings[0].playing = true;
+                ao_settings[0].team = Team.NONE;
+            }
+            if (ao_settings.Length >= 2)
+            {
+                // Second player - Navy
+                ao_settings[1].faction = Faction.NAVY;
+                ao_settings[1].playing = true;
+                ao_settings[1].team = Team.NONE;
+            }
+            if (ao_settings.Length >= 3)
+            {
+                // Third player - Tinkerers
+                ao_settings[2].faction = Faction.TINKERERS;
+                ao_settings[2].playing = true;
+                ao_settings[2].team = Team.NONE;
+            }
+            if (ao_settings.Length >= 4)
+            {
+                // Fourth player - Vikings
+                ao_settings[3].faction = Faction.VIKINGS;
+                ao_settings[3].playing = true;
+                ao_settings[3].team = Team.NONE;
+            }
+        }
+#endif
+
+        private GameObject SpawnPlayer(PlayerSettings a_playerSettings, int a_playerNo)
         {
             PlayerSpawnerType spawnerType = PlayerSpawnerType.FFA_ONLY;
 
@@ -124,7 +190,7 @@ namespace ProjectStorms
 
                         case Team.NONE:
                             Debug.LogError(string.Format("Team for player {0} not set correctly, unable to spawn player", a_playerNo));
-                            return;
+                            return null;
                     }
                     break;
 
@@ -134,7 +200,7 @@ namespace ProjectStorms
 
                 case Gamemode.NONE:
                     Debug.LogError(string.Format("Gamemode not set correctly, unable to spawn player {0}", a_playerNo));
-                    return;
+                    return null;
             }
 
             // Find player spawner
@@ -144,13 +210,20 @@ namespace ProjectStorms
             if (playerSpawner == null)
             {
                 Debug.LogWarning(string.Format("Unable to find spawner for player: {0}", a_playerNo));
-                return;
+                return null;
+            }
+
+            if (a_playerNo - 1 < 0 || a_playerNo - 1 >= m_players.Length)
+            {
+                Debug.LogError("Player number out of range! " + a_playerNo);
             }
 
             // Spawn player, and retain reference within global
             // player references
             GameObject player           = playerSpawner.SpawnPlayer(a_playerSettings.faction);
             m_players[a_playerNo - 1]   = player;
+
+            return player;
         }
 
         private void SpawnBases()
@@ -407,6 +480,14 @@ namespace ProjectStorms
 
         private void SetupScoreManager()
         {
+#if UNITY_EDITOR
+            // Default in editor
+            if (LevelSettings.Instance.gamemode == Gamemode.NONE)
+            {
+                LevelSettings.Instance.gamemode = Gamemode.FFA;
+            }
+#endif
+
             switch (LevelSettings.Instance.gamemode)
             {
                 case Gamemode.FFA:

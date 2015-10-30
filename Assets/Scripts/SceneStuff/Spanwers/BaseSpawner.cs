@@ -30,6 +30,7 @@ namespace ProjectStorms
 
         [Header("Base Settings")]
         public BaseSpawnerType baseType;
+        [Tooltip("Non-zero based, player 1 is pirates")]
         public int playerNumber;
 
         private ScoreManager m_scoreManager;

@@ -30,7 +30,8 @@ namespace ProjectStorms
 
         [Header("Spawner Settings")]
         public PlayerSpawnerType spawnerType    = PlayerSpawnerType.FFA_ONLY;
-        public int playerNumber                 = 0;
+        [Tooltip("Non-zero based, player 1 is pirates")]
+        public int playerNumber                 = 1;
 
         // Script references
         private ScoreManager m_scoreManager;

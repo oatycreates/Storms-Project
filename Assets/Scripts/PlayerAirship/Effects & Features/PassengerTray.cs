@@ -54,6 +54,16 @@ namespace ProjectStorms
         public Transform explosionCentreTrans;
 
         /// <summary>
+        /// Radius to horizontally suck prisoners in from.
+        /// </summary>
+        public float horizVacuumRadius = 5.0f;
+
+        /// <summary>
+        /// Force to suck prisoners in from.
+        /// </summary>
+        public float horizVacuumForce = 0.5f;
+
+        /// <summary>
         /// Velocity of the ship last tick.
         /// </summary>
         private Vector3 m_lastShipVel = Vector3.zero;
@@ -97,6 +107,7 @@ namespace ProjectStorms
 
         // Cached variables
         private Rigidbody m_shipRb;
+        private Transform m_trans;
 
         /// <summary>
         /// The current amount of passengers within the tray
@@ -127,6 +138,7 @@ namespace ProjectStorms
 
             // Cache variables
             m_shipRb = gameObject.GetComponentInParent<Rigidbody>();
+            m_trans = gameObject.transform;
             m_shipStartMass = 0.0f;
             
             //Find score manager
@@ -216,6 +228,33 @@ namespace ProjectStorms
                     m_lastShipVel = m_shipRb.velocity;
                     m_lastShipAngVel = m_shipRb.angularVelocity;
                 }
+
+                // Suck in nearby prisoners
+                GameObject[] prisoners = GameObject.FindGameObjectsWithTag("Passengers");
+                Transform tempTrans = null;
+                Vector3 offsetVec = Vector3.zero;
+                Rigidbody tempRb = null;
+                foreach (GameObject prisoner in prisoners)
+                {
+                    tempTrans = prisoner.transform;
+                    offsetVec = m_trans.position - tempTrans.position;
+
+                    // If in range
+                    if (offsetVec.magnitude <= horizVacuumRadius)
+                    {
+                        // Make force horizontal
+                        offsetVec.y = 0;
+                        offsetVec.Normalize();
+
+                        Debug.Log("Sucking! " + (offsetVec * horizVacuumForce));
+
+                        // Apply force
+                        tempRb = prisoner.GetComponent<Rigidbody>();
+                        tempRb.AddForce(offsetVec * horizVacuumForce, ForceMode.Force);
+                    }
+                }
+                //horizVacuumRadius
+                //horizVacuumForce;
             }
 
             m_trayContents.Clear();
