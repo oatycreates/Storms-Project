@@ -28,7 +28,7 @@ namespace ProjectStorms
         //Audio
         private AudioSource m_AudioSource;
 
-        void GetPlayerRigidBodies()
+        public void GetPlayerRigidBodies()
         {
             // Airships are the only things that will have AirshipControlBehaviours, this will only change if we refactor the input system
             AirshipControlBehaviour[] objs = GameObject.FindObjectsOfType<AirshipControlBehaviour>();
@@ -66,7 +66,7 @@ namespace ProjectStorms
         public void Awake()
         {
             // Get player rigidbodies
-            GetPlayerRigidBodies();
+            //GetPlayerRigidBodies();
 
             m_AudioSource = gameObject.GetComponent<AudioSource>();
         }

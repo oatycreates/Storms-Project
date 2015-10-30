@@ -93,13 +93,32 @@ namespace ProjectStorms
             // Fill in some defaults
             EditorFillPlayerSettings(ref playersSettings);
 #endif
+            Rigidbody[] playerRBs = new Rigidbody[playersSettings.Length];
             for (int i = 0; i < playersSettings.Length; ++i)
             {
-
                 if (playersSettings[i].playing)
                 {
-                    SpawnPlayer(playersSettings[i], i + 1);
+                    GameObject player = SpawnPlayer(playersSettings[i], i + 1);
+                    playerRBs[i] = player.GetComponent<Rigidbody>();
                 }
+                else
+                {
+                    playerRBs[i] = null;
+                }
+            }
+
+            // Set bounds references
+            LevelBoundsBehaviour boundsScript = GameObject.FindObjectOfType<LevelBoundsBehaviour>();
+            if (boundsScript != null)
+            {
+                boundsScript.AssignPlayerRigidbodies(playerRBs);
+            }
+
+            // Set slipstreams references
+            SlipStream[] slipstreams = GameObject.FindObjectsOfType<SlipStream>();
+            for (int i = 0; i < slipstreams.Length; ++i)
+            {
+                slipstreams[i].GetPlayerRigidBodies();
             }
 
             SpawnBases();
@@ -146,7 +165,7 @@ namespace ProjectStorms
         }
 #endif
 
-        private void SpawnPlayer(PlayerSettings a_playerSettings, int a_playerNo)
+        private GameObject SpawnPlayer(PlayerSettings a_playerSettings, int a_playerNo)
         {
             PlayerSpawnerType spawnerType = PlayerSpawnerType.FFA_ONLY;
 
@@ -167,7 +186,7 @@ namespace ProjectStorms
 
                         case Team.NONE:
                             Debug.LogError(string.Format("Team for player {0} not set correctly, unable to spawn player", a_playerNo));
-                            return;
+                            return null;
                     }
                     break;
 
@@ -177,7 +196,7 @@ namespace ProjectStorms
 
                 case Gamemode.NONE:
                     Debug.LogError(string.Format("Gamemode not set correctly, unable to spawn player {0}", a_playerNo));
-                    return;
+                    return null;
             }
 
             // Find player spawner
@@ -187,13 +206,20 @@ namespace ProjectStorms
             if (playerSpawner == null)
             {
                 Debug.LogWarning(string.Format("Unable to find spawner for player: {0}", a_playerNo));
-                return;
+                return null;
+            }
+
+            if (a_playerNo - 1 < 0 || a_playerNo - 1 >= m_players.Length)
+            {
+                Debug.LogError("Player number out of range! " + a_playerNo);
             }
 
             // Spawn player, and retain reference within global
             // player references
             GameObject player           = playerSpawner.SpawnPlayer(a_playerSettings.faction);
             m_players[a_playerNo - 1]   = player;
+
+            return player;
         }
 
         private void SpawnBases()
