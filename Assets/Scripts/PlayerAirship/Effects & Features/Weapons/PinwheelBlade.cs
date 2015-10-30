@@ -20,6 +20,9 @@ namespace ProjectStorms
 		public float pinwheelForce = 100;
 		private bool delayFinished = false;
 
+        public float upSuckForce = 0.4f;
+        public float inSuckForce = 10.0f;
+
         //Custom timer for the pinwheel - this has to be here, because this way we can caluclate how the passengers are ejected from the vortex
 
         private float internalTimer = 1;
@@ -87,12 +90,34 @@ namespace ProjectStorms
 			//print ("READY");
 		}
 
-         
-        void OnTriggerStay(Collider other)
+        void OnTriggerEnter(Collider a_other)
         {
-            Rigidbody passengerRigidbody = other.gameObject.GetComponent<Rigidbody>();
+            Rigidbody passengerRigidbody = a_other.gameObject.GetComponent<Rigidbody>();
 
-			
+            if (passengerRigidbody != null)
+            {
+                //DOn't forget this bit!
+                if (delayFinished)
+                {
+                    if (passengerRigidbody.gameObject.tag == "Passengers")
+                    {
+                        if (!velocityCancel) //suck passengers in
+                        {
+                            MoveForwardLocalSpace moveScript = GetComponentInParent<MoveForwardLocalSpace>();
+                            if (moveScript != null)
+                            {
+                                passengerRigidbody.velocity = moveScript.transform.forward * moveScript.speed;
+                                passengerRigidbody.angularVelocity = Vector3.zero;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+         
+        void OnTriggerStay(Collider a_other)
+        {
+            Rigidbody passengerRigidbody = a_other.gameObject.GetComponent<Rigidbody>();
 		
             if (passengerRigidbody != null)
             {
@@ -105,11 +130,25 @@ namespace ProjectStorms
 	                	
 	                	if (!velocityCancel) //suck passengers in
 	                	{
-		                    passengerRigidbody.AddForce(Vector3.up * 0.7f, ForceMode.Force);
+                            float distFactor = 1.0f;
+
+                            // This code makes it suck in weaker when they are further away and stronger when they are closer
+                            MoveForwardLocalSpace moveScript = GetComponentInParent<MoveForwardLocalSpace>();
+                            if (moveScript != null)
+                            {
+                                CapsuleCollider myCollider = GetComponent<CapsuleCollider>();
+                                Transform moveTrans = moveScript.transform;
+                                float maxDist = moveTrans.localScale.magnitude * myCollider.radius;
+                                float distToCentre = (moveTrans.position - passengerRigidbody.position).magnitude;
+                                distFactor = 1 - Mathf.Min(distToCentre / maxDist, 1);
+                                //Debug.Log(distFactor + " " + distToCentre + " " + maxDist);
+                            }
+
+                            passengerRigidbody.AddForce(Vector3.up * upSuckForce * distFactor, ForceMode.Force);
 		
 		                    passengerRigidbody.transform.LookAt(a_localOffset);
-		
-		                    passengerRigidbody.AddRelativeForce(Vector3.forward * 10, ForceMode.Force);
+
+                            passengerRigidbody.AddRelativeForce(Vector3.forward * inSuckForce * distFactor, ForceMode.Force);
 	                    }
 	                    else
 	                    if (velocityCancel) // cancel out velocity
@@ -123,9 +162,9 @@ namespace ProjectStorms
 
 
             //passenger tray stuff
-            if (other.gameObject.GetComponent<PassengerTray>() != null)
+            if (a_other.gameObject.GetComponent<PassengerTray>() != null)
             {
-                other.gameObject.GetComponent<PassengerTray>().PowerDownTray();
+                a_other.gameObject.GetComponent<PassengerTray>().PowerDownTray();
             }
             
             /*
