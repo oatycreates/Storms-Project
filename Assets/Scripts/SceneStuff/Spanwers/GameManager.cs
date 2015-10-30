@@ -97,6 +97,7 @@ namespace ProjectStorms
             // Fill in some defaults
             EditorFillPlayerSettings(ref playersSettings);
 #endif
+            GameObject[] playerGOs = new GameObject[playersSettings.Length];
             Rigidbody[] playerRBs = new Rigidbody[playersSettings.Length];
             for (int i = 0; i < playersSettings.Length; ++i)
             {
@@ -104,6 +105,7 @@ namespace ProjectStorms
                 {
                     GameObject player = SpawnPlayer(playersSettings[i], i + 1);
                     playerRBs[i] = player.GetComponent<Rigidbody>();
+                    playerGOs[i] = player;
                 }
                 else
                 {
@@ -123,6 +125,13 @@ namespace ProjectStorms
             for (int i = 0; i < slipstreams.Length; ++i)
             {
                 slipstreams[i].GetPlayerRigidBodies();
+            }
+
+            // Set targetlock references
+            TargetLock[] targetLocks = GameObject.FindObjectsOfType<TargetLock>();
+            for (int i = 0; i < targetLocks.Length; ++i)
+            {
+                targetLocks[i].AssignPlayerReferences(playerGOs);
             }
 
             SpawnBases();

@@ -42,7 +42,7 @@ namespace ProjectStorms
         /// <summary>
         /// Handle to all of the player objects in the scene.
         /// </summary>
-        public GameObject[] playerObjs = null;
+        private GameObject[] m_playerObjs = null;
 
         /// <summary>
         /// Current front target for the ship.
@@ -73,6 +73,15 @@ namespace ProjectStorms
 		{
 		
 		}
+
+        /// <summary>
+        /// Sets up target lock player references.
+        /// </summary>
+        /// <param name="a_playerGOs">Player game objects from the spawner system.</param>
+        public void AssignPlayerReferences(GameObject[] a_playerGOs)
+        {
+            m_playerObjs = a_playerGOs;
+        }
 		
 		void Update() 
 		{
@@ -116,7 +125,7 @@ namespace ProjectStorms
                 Vector3 lookDir = (m_tarTrans != null) ? (m_tarTrans.position - myPos).normalized : m_trans.forward;
                 float currLookDist = 0, currDist = 0;
                 Vector3 tempPos = Vector3.zero, offsetVec = Vector3.zero, offsetVecNorm = Vector3.zero;
-                foreach (GameObject obj in playerObjs)
+                foreach (GameObject obj in m_playerObjs)
                 {
                     if (obj != null)
                     {
@@ -163,5 +172,5 @@ namespace ProjectStorms
                 }
             }
         }
-	}
+    }
 }
