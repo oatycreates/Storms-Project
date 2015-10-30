@@ -10,6 +10,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace ProjectStorms
 {
@@ -17,47 +18,52 @@ namespace ProjectStorms
 	{
 		public float textTurnSpeed = 3;
 		public float textTimeOnScreen = 1;
-	
-		public GameObject one;
+
+        private GameObject one;
 		private Text oneText;
 		private string rememberOneWords;
 		private int rememberOneSize;
 		private Color rememberOneColour;
-		
-		public GameObject two;
+
+        private GameObject two;
 		private Text twoText;
 		private string rememberTwoWords;
 		private int rememberTwoSize;
 		private Color rememberTwoColour;
-		
-		
-		public GameObject three;
+
+        private GameObject three;
 		private Text threeText;
 		private string rememberThreeWords;
 		private int rememberThreeSize;
 		private Color rememberThreeColour;
 		
-		public GameObject four;
+		private GameObject four;
 		private Text fourText;
 		private string rememberFourWords;
 		private int rememberFourSize;
 		private Color rememberFourColour;
-		
-		
+
 		private bool oneHidden = true;
 		private bool twoHidden = true;
 		private bool threeHidden = true;
 		private bool fourHidden = true;
-	
-		void Awake () 
+
+        private bool m_beenInitialised = false;
+
+		public void InitialiseAnnouncerText(GameObject[] a_playerGOs) 
 		{
-			//Get Text references
-			oneText = one.GetComponent<Text>();
-			twoText = two.GetComponent<Text>();
-			threeText = three.GetComponent<Text>();
-			fourText = four.GetComponent<Text>();
-			
-			
+            // Get Text references
+            oneText = a_playerGOs[0].GetComponentInChildren<Text>();
+            twoText = a_playerGOs[1].GetComponentInChildren<Text>();
+            threeText = a_playerGOs[2].GetComponentInChildren<Text>();
+            fourText = a_playerGOs[3].GetComponentInChildren<Text>();
+
+            // Set parent canvas references
+            one = oneText.transform.parent.gameObject;
+            two = twoText.transform.parent.gameObject;
+            three = threeText.transform.parent.gameObject;
+            four = fourText.transform.parent.gameObject;
+
 			//Remember stuff for Reset function
 			rememberOneWords = " ";
 			rememberOneSize = oneText.fontSize;
@@ -73,12 +79,16 @@ namespace ProjectStorms
 			
 			rememberFourWords = " ";
 			rememberFourSize = fourText.fontSize;
-			rememberFourColour = fourText.color;
+            rememberFourColour = fourText.color;
+
+            m_beenInitialised = true;
+
+            Invoke("StartGameText", 5);
 		}
 		
 		void Start()
 		{
-			Invoke("StartGameText", 5);
+
 		}
 		
 		void StartGameText()//GameObject player)
@@ -86,17 +96,17 @@ namespace ProjectStorms
 			string  startText = "Collect Passengers!";//= "GO!";
 		
 			//Make all text show at start
-				oneText.text = startText;
-				ShowText(one);
+			oneText.text = startText;
+			ShowText(one);
 			
-				twoText.text = startText;
-				ShowText(two);
+			twoText.text = startText;
+			ShowText(two);
 			
-				threeText.text = startText;
-				ShowText(three);
+			threeText.text = startText;
+			ShowText(three);
 			
-				fourText.text = startText;
-				ShowText(four);
+			fourText.text = startText;
+			ShowText(four);
 		}
 		
 		public void Score(string factionName)
@@ -274,12 +284,7 @@ namespace ProjectStorms
 			string people;
 			people = noOfPassengers.ToString();
 			
-			if (factionName == "NONAME")
-			{
-				Debug.Log("error - no faction name set");
-			}
-			
-			if (factionName == null)
+			if (factionName == "NONAME" || factionName == null)
 			{
 				Debug.Log("error - no faction name set");
 			}
@@ -317,28 +322,81 @@ namespace ProjectStorms
 				ShowText(four);
 			}
 		}
+
+        public void InvertYCam(string factionName)
+        {
+            string invert = "Cam Inverted";
+
+            if (factionName == "NONAME")
+            {
+                Debug.Log("error - no faction name set");
+            }
+
+            if (factionName == null)
+            {
+                Debug.Log("error - no faction name set");
+            }
+
+            if (factionName == "PIRATES")
+            {
+                oneText.text = invert;
+                oneText.fontSize = 100;
+                //Cancel any existing movment on the object.
+                CancelInvoke("HideOne");
+                ShowText(one);
+            }
+
+            if (factionName == "NAVY")
+            {
+                twoText.text = invert;
+                twoText.fontSize = 100;
+                CancelInvoke("HideTwo");
+                ShowText(two);
+            }
+
+            if (factionName == "TINKERERS")
+            {
+                threeText.text = invert;
+                threeText.fontSize = 100;
+                CancelInvoke("HideThree");
+                ShowText(three);
+            }
+
+            if (factionName == "VIKINGS")
+            {
+                fourText.text = invert;
+                fourText.fontSize = 100;
+                CancelInvoke("HideFour");
+                ShowText(four);
+            }
+
+        }
 		
 		
 		void Update () 
 		{
-			TotalTextVisiblity();
-	
-			
-			if (Input.GetKeyDown(KeyCode.Space))
-			{
-				if (threeHidden)
-				{
-					ShowText(three);
-				}
-				else
-				{
-					HideText(three);
-				}
-			}
-			
-			//print("Text: " + threeText.text + "   Size : " + threeText.fontSize + "   Colour: "	+ threeText.color);
-			
-			//print ("Red " + oneText.color + " Navy " + twoText.color + " Green " + threeText.color + " Yellow " + fourText.color);
+            if (m_beenInitialised)
+            {
+                TotalTextVisiblity();
+
+#if UNITY_EDITOR
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (threeHidden)
+                    {
+                        ShowText(three);
+                    }
+                    else
+                    {
+                        HideText(three);
+                    }
+                }
+
+                //print("Text: " + threeText.text + "   Size : " + threeText.fontSize + "   Colour: "	+ threeText.color);
+
+                //print ("Red " + oneText.color + " Navy " + twoText.color + " Green " + threeText.color + " Yellow " + fourText.color);
+#endif
+            }
 		}
 	
 		void TotalTextVisiblity()

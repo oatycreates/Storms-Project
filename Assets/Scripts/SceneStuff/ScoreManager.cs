@@ -179,9 +179,22 @@ namespace ProjectStorms
 			base2Name = pirateBase2.GetComponent<FactionIndentifier>().name;
 			base3Name = pirateBase3.GetComponent<FactionIndentifier>().name;
 			base4Name = pirateBase4.GetComponent<FactionIndentifier>().name;
-			baseAlphaName = teamBaseAlpha.GetComponent<FactionIndentifier>().name;
-			baseOmegaName = teamBaseOmega.GetComponent<FactionIndentifier>().name;
-		
+            if (teamBaseAlpha != null)
+            {
+                baseAlphaName = teamBaseAlpha.GetComponent<FactionIndentifier>().name;
+            }
+            else
+            {
+                baseAlphaName = "INVALID";
+            }
+            if (teamBaseOmega != null)
+            {
+                baseOmegaName = teamBaseOmega.GetComponent<FactionIndentifier>().name;
+            }
+            else
+            {
+                baseOmegaName = "INVALID";
+            }
         }
         	
         void FinishStartDelay()
