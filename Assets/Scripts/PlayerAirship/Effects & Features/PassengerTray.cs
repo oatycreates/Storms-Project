@@ -56,12 +56,12 @@ namespace ProjectStorms
         /// <summary>
         /// Radius to horizontally suck prisoners in from.
         /// </summary>
-        public float horizVacuumRadius = 5.0f;
+        public float horizVacuumRadius = 50.0f;
 
         /// <summary>
         /// Force to suck prisoners in from.
         /// </summary>
-        public float horizVacuumForce = 0.5f;
+        public float horizVacuumForce = 0.1f;
 
         /// <summary>
         /// Velocity of the ship last tick.
@@ -245,8 +245,6 @@ namespace ProjectStorms
                         // Make force horizontal
                         offsetVec.y = 0;
                         offsetVec.Normalize();
-
-                        Debug.Log("Sucking! " + (offsetVec * horizVacuumForce));
 
                         // Apply force
                         tempRb = prisoner.GetComponent<Rigidbody>();
