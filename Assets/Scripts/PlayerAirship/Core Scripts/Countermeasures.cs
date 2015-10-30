@@ -226,7 +226,7 @@ namespace ProjectStorms
                     if (m_tarLock != null)
                     {
                         MissileFlight missileScript = missiles[i].GetComponent<MissileFlight>();
-                        missileScript.SetTarget(m_tarLock.GetTarget());
+                        missileScript.SetTarget(m_tarLock.GetTarget(), m_tarLock.maximumTarDist);
                         
                         //Send the Return to sender value
                         missileScript.WhoShotMe(gameObject);

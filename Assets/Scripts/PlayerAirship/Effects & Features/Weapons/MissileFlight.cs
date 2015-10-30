@@ -58,10 +58,15 @@ namespace ProjectStorms
         //Have I been caught in the wind
        	private bool caughtInTheWind = false;
 
+        private float m_flightDist = 5.0f;
+        private Vector3 m_startPos = Vector3.zero;
+
 		void Awake()
 		{
 			m_myRigid = gameObject.GetComponent<Rigidbody> ();
             m_trans = transform;
+
+            m_startPos = m_trans.position;
 
             // Find the powerup holder object
             if (ms_powerupHolder == null)
@@ -113,6 +118,12 @@ namespace ProjectStorms
 
 		void FixedUpdate()
         {
+            Vector3 offset = m_trans.position - m_startPos;
+            if (offset.magnitude > m_flightDist)
+            {
+                GoToSleep();
+            }
+
             //Prevent angular velocity
             m_myRigid.angularVelocity = Vector3.zero;
 
@@ -284,7 +295,7 @@ namespace ProjectStorms
         }
         */
 
-        public void SetTarget(Transform a_trans)
+        public void SetTarget(Transform a_trans, float a_homeDist)
         {
             if (a_trans != null)
             {
@@ -295,6 +306,10 @@ namespace ProjectStorms
                 //Give the missile a target
                 m_targetProxy.position = m_target.position;
             }
+
+            // Store flight expiry distance
+            m_startPos = m_trans.position;
+            m_flightDist = a_homeDist;
         }
 
 		void GoToSleep()
@@ -355,6 +370,9 @@ namespace ProjectStorms
 			attacking = true;
 			//It's very important to set caughtInTheWind to True;
 			caughtInTheWind = true;
+
+            // Re-store start position to fix missile life distance
+            m_startPos = m_trans.position;
 		
 			Debug.Log("Missile is sucked into the Eye of the Storm: " + myAirship.name);
 		}
