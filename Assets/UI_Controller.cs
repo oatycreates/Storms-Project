@@ -52,17 +52,18 @@ namespace ProjectStorms
 
 		public void InitialiseAnnouncerText(GameObject[] a_playerGOs) 
 		{
-            one = a_playerGOs[0];
-            two = a_playerGOs[1];
-            three = a_playerGOs[2];
-            four = a_playerGOs[3];
+            // Get Text references
+            oneText = a_playerGOs[0].GetComponentInChildren<Text>();
+            twoText = a_playerGOs[1].GetComponentInChildren<Text>();
+            threeText = a_playerGOs[2].GetComponentInChildren<Text>();
+            fourText = a_playerGOs[3].GetComponentInChildren<Text>();
 
-            //Get Text references
-            oneText = one.GetComponentInChildren<Text>();
-            twoText = two.GetComponentInChildren<Text>();
-            threeText = three.GetComponentInChildren<Text>();
-            fourText = four.GetComponentInChildren<Text>();
-			
+            // Set parent canvas references
+            one = oneText.transform.parent.gameObject;
+            two = twoText.transform.parent.gameObject;
+            three = threeText.transform.parent.gameObject;
+            four = fourText.transform.parent.gameObject;
+
 			//Remember stuff for Reset function
 			rememberOneWords = " ";
 			rememberOneSize = oneText.fontSize;
@@ -283,12 +284,7 @@ namespace ProjectStorms
 			string people;
 			people = noOfPassengers.ToString();
 			
-			if (factionName == "NONAME")
-			{
-				Debug.Log("error - no faction name set");
-			}
-			
-			if (factionName == null)
+			if (factionName == "NONAME" || factionName == null)
 			{
 				Debug.Log("error - no faction name set");
 			}
