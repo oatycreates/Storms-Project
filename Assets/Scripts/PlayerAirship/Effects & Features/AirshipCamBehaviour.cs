@@ -65,10 +65,11 @@ namespace ProjectStorms
         private Cam_DollyForward m_camDolly = null;
 
         private bool m_isInitialised = false;
-
+        
         void Awake()
         {
             m_trans = transform;
+            
         }
 
         void Start()

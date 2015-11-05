@@ -34,10 +34,11 @@ namespace ProjectStorms
         public Camera cam4;
 
         private bool m_isInitialised = false;
+        
 
-        void Start()
+        void Awake()
         {
-
+			
         }
 
         void Update()
