@@ -26,7 +26,7 @@ namespace ProjectStorms
         private float m_offsetValueY = 0.51f;
 
         // Cached variables
-        private Material m_material;
+        private Renderer m_renderer;
 
         /// <summary>
         /// Should be a value within the range 0, 1
@@ -57,19 +57,21 @@ namespace ProjectStorms
 
         public void Awake()
         {
-            m_material = GetComponent<Renderer>().material;
+            m_renderer = GetComponent<Renderer>();
         }
 
 		void Start() 
 		{
             // Ensure starting texture offset is resonable
-            m_material.SetTextureOffset("_MainTex", new Vector2(0.0f, m_offsetValueY));
+            m_renderer.material.SetTextureOffset("_MainTex", new Vector2(0.0f, m_offsetValueY));
+
+            
 		}
 		
 		void Update() 
 		{
-            Vector2 textureOffset   = m_material.mainTextureOffset;
-            Vector2 detailTexOffset = m_material.GetTextureOffset("_DetailAlbedoMap");
+            Vector2 textureOffset   = m_renderer.material.mainTextureOffset;
+            Vector2 detailTexOffset = m_renderer.material.GetTextureOffset("_DetailAlbedoMap");
 
             if (textureOffset.x > 1.0f)
             {
@@ -114,8 +116,8 @@ namespace ProjectStorms
                 textureOffset.y = (m_offsetValueY * m_scorePercent);
             }
 
-            m_material.SetTextureOffset("_MainTex", textureOffset);
-            m_material.SetTextureOffset("_DetailAlbedoMap", detailTexOffset);
+            m_renderer.material.SetTextureOffset("_MainTex", textureOffset);
+            m_renderer.material.SetTextureOffset("_DetailAlbedoMap", detailTexOffset);
 		}
 	}
 }
