@@ -15,6 +15,14 @@ namespace ProjectStorms
 {
     public class GameManager : MonoBehaviour
     {
+#if UNITY_EDITOR
+        [Header("Editor Only")]
+        public PlayerSettings player1Settings;
+        public PlayerSettings player2Settings;
+        public PlayerSettings player3Settings;
+        public PlayerSettings player4Settings;
+#endif
+
         private MasterCamera m_masterCamera;
         private LevelBoundsBehaviour m_levelBounds;
         private ScoreManager m_scoreManager;
@@ -83,20 +91,25 @@ namespace ProjectStorms
 
         private void Start()
         {
-#if UNITY_EDITOR
             m_players = new GameObject[4];
-#else
-            m_players = new GameObject[LevelSettings.Instance.playersPlaying];
-#endif
 
             SetupScoreManager();
 
             // Spawn each player using the level settings data from the Menu scene
             PlayerSettings[] playersSettings = LevelSettings.Instance.playersSettings;
+
 #if UNITY_EDITOR
-            // Fill in some defaults
-            EditorFillPlayerSettings(ref playersSettings);
+            if (LevelSettings.Instance.playersPlaying != 4)
+            {
+                playersSettings[0] = player1Settings;
+                playersSettings[1] = player2Settings;
+                playersSettings[2] = player3Settings;
+                playersSettings[3] = player4Settings;
+
+                Debug.LogWarning("Level being hot loaded, setting In-Editor player settings...");
+            }
 #endif
+
             GameObject[] playerGOs = new GameObject[playersSettings.Length];
             Rigidbody[] playerRBs = new Rigidbody[playersSettings.Length];
             for (int i = 0; i < playersSettings.Length; ++i)
@@ -146,44 +159,6 @@ namespace ProjectStorms
             SetupMasterCamera(m_players);
             SetupLevelBounds(m_players);
         }
-
-#if UNITY_EDITOR
-        /// <summary>
-        /// Editor only player settings pre-fill.
-        /// </summary>
-        /// <param name="ao_settings">Settings object to be filled.</param>
-        void EditorFillPlayerSettings(ref PlayerSettings[] ao_settings)
-        {
-            if (ao_settings.Length >= 1)
-            {
-                // First player - Pirates
-                ao_settings[0].faction = Faction.PIRATES;
-                ao_settings[0].playing = true;
-                ao_settings[0].team = Team.NONE;
-            }
-            if (ao_settings.Length >= 2)
-            {
-                // Second player - Navy
-                ao_settings[1].faction = Faction.NAVY;
-                ao_settings[1].playing = true;
-                ao_settings[1].team = Team.NONE;
-            }
-            if (ao_settings.Length >= 3)
-            {
-                // Third player - Tinkerers
-                ao_settings[2].faction = Faction.TINKERERS;
-                ao_settings[2].playing = true;
-                ao_settings[2].team = Team.NONE;
-            }
-            if (ao_settings.Length >= 4)
-            {
-                // Fourth player - Vikings
-                ao_settings[3].faction = Faction.VIKINGS;
-                ao_settings[3].playing = true;
-                ao_settings[3].team = Team.NONE;
-            }
-        }
-#endif
 
         private GameObject SpawnPlayer(PlayerSettings a_playerSettings, int a_playerNo)
         {
