@@ -14,13 +14,13 @@ using System.Collections.Generic;
 namespace ProjectStorms
 {
 	[RequireComponent(typeof(SphereCollider))]
-	[RequireComponent(typeof(Renderer))]
+	//[RequireComponent(typeof(Renderer))]
 	/// <summary>
 	/// On collision with airship, trigger three waves of explosives.
 	/// </summary>
 	public class MineBehaviour : MonoBehaviour 
 	{
-		private Renderer m_myRenderer;
+		//public Renderer m_myRenderer;
 		private SphereCollider m_myCollider;
         private Transform m_trans = null;
 
@@ -52,7 +52,7 @@ namespace ProjectStorms
 
 		void Awake() 
 		{
-			m_myRenderer = gameObject.GetComponent<Renderer> ();
+			//m_myRenderer = gameObject.GetComponent<Renderer> ();
 			m_myCollider = gameObject.GetComponent<SphereCollider> ();
 
 
@@ -90,7 +90,8 @@ namespace ProjectStorms
 		{
 			// Turn everything on when I start;
 			m_myCollider.enabled = true;
-			m_myRenderer.enabled = true;
+			//m_myRenderer.enabled = true;
+           
 
 			//numberOfExplosions = numberExplosionStartReference;
 
@@ -106,6 +107,9 @@ namespace ProjectStorms
 			numberOfExplosions = numberExplosionStartReference;
 			
 			// Take a reference of audio level
+
+            //make all children active
+            gameObject.GetComponentInChildren<GameObject>().gameObject.SetActive(false);
 			
 		}
 		
@@ -192,7 +196,7 @@ namespace ProjectStorms
 		{
 			//Make the mine 'dissapear', but hang around to keep track of the explosion objects.
 			m_myCollider.enabled = false;
-			m_myRenderer.enabled = false;
+			//m_myRenderer.enabled = false;
 
 			bang = true;
 			//Kill sounds
@@ -203,7 +207,8 @@ namespace ProjectStorms
         void OnTriggerEnter(Collider other)
         {
 	       	m_myCollider.enabled = false;
-	        m_myRenderer.enabled = false;
+	        //m_myRenderer.enabled = false;
+            gameObject.GetComponentInChildren<GameObject>().gameObject.SetActive(false);
 	
 	        bang = true;
 	        m_Audio.Stop();
