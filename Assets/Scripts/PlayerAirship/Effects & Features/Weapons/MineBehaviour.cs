@@ -108,8 +108,8 @@ namespace ProjectStorms
 			
 			// Take a reference of audio level
 
-            //make all children active
-            gameObject.GetComponentInChildren<GameObject>().gameObject.SetActive(false);
+            //make all children renderers active
+			gameObject.GetComponentInChildren<Renderer>().enabled = true;
 			
 		}
 		
@@ -208,7 +208,7 @@ namespace ProjectStorms
         {
 	       	m_myCollider.enabled = false;
 	        //m_myRenderer.enabled = false;
-            gameObject.GetComponentInChildren<GameObject>().gameObject.SetActive(false);
+            gameObject.GetComponentInChildren<Renderer>().enabled = false;
 	
 	        bang = true;
 	        m_Audio.Stop();

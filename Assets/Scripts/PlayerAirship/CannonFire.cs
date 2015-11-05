@@ -99,53 +99,61 @@ namespace ProjectStorms
                 }
             }
 
-            m_cannonBalls = new List<GameObject>();
+			if (cannonBallPrefab != null)
+			{
+            	m_cannonBalls = new List<GameObject>();
+            }
 
             // Create the first cannonball so that we may read its lifetime
             Transform holderTrans = ms_ballHolder.transform;
-            GameObject firstBall = CreateCannonball(holderTrans);
+            if (cannonBallPrefab != null)
+            {
+            	GameObject firstBall = CreateCannonball(holderTrans);
             
-            float ballLife = 0;
-            CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
-            if (ballScript != null)
-            {
-                ballLife = ballScript.cannonBallLifetime;
-            }
-            CannonBallRaytracer rayBallScript = firstBall.GetComponent<CannonBallRaytracer>();
-            if (rayBallScript)
-            {
-                ballLife = rayBallScript.totalLifeTime;
-            }
-            m_pooledAmount = Mathf.CeilToInt(ballLife / shotCooldown);
+            
+	            float ballLife = 0;
+	            CannonBallBehaviour ballScript = firstBall.GetComponent<CannonBallBehaviour>();
+	            if (ballScript != null)
+	            {
+	                ballLife = ballScript.cannonBallLifetime;
+	            }
+	            CannonBallRaytracer rayBallScript = firstBall.GetComponent<CannonBallRaytracer>();
+	            if (rayBallScript)
+	            {
+	                ballLife = rayBallScript.totalLifeTime;
+	            }
+	            m_pooledAmount = Mathf.CeilToInt(ballLife / shotCooldown);
+	
+	            // Start with the shot on cooldown
+	            m_currShotCooldown = shotCooldown;
 
-            // Start with the shot on cooldown
-            m_currShotCooldown = shotCooldown;
-
-            // Spawn the other cannonballs
-            for (int i = 1; i < m_pooledAmount; i++)
-            {
-                CreateCannonball(holderTrans);
+			
+	            // Spawn the other cannonballs
+	            for (int i = 1; i < m_pooledAmount; i++)
+	            {
+	                CreateCannonball(holderTrans);
+	            }
             }
         }
 
         
         private GameObject CreateCannonball(Transform a_holderTrans)
         {
-            // Pooled object details
-            GameObject singleBall = Instantiate(cannonBallPrefab, m_trans.position, Quaternion.identity) as GameObject;
-
-            // Tag the cannonball
-            singleBall.tag = parentAirship.tag;
-
-            // Store it under the holder object
-            singleBall.transform.parent = a_holderTrans;
-
-            singleBall.SetActive(false);
-
-            // Add the singleBall to the list
-            m_cannonBalls.Add(singleBall);
-
-            return singleBall;
+	         // Pooled object details
+	         GameObject singleBall = Instantiate(cannonBallPrefab, m_trans.position, Quaternion.identity) as GameObject;
+	
+	         // Tag the cannonball
+	         singleBall.tag = parentAirship.tag;
+	
+	         // Store it under the holder object
+	         singleBall.transform.parent = a_holderTrans;
+	
+	         singleBall.SetActive(false);
+	
+	         // Add the singleBall to the list
+	         m_cannonBalls.Add(singleBall);
+	
+	            return singleBall;
         }
 
         void Start()
