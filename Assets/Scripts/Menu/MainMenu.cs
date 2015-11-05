@@ -28,7 +28,7 @@ namespace ProjectStorms
 #if UNITY_EDITOR
         [Header("Editor Only")]
         public bool overrideLevel = false;
-        public string overrodeLevelName;
+        public string overrideLevelName;
 #endif
 
         private Gamemode m_gameMode = Gamemode.NONE;
@@ -70,9 +70,10 @@ namespace ProjectStorms
             }
 
 #if UNITY_EDITOR
-            if (overrideLevel)
+            if (overrideLevel && m_mapName != "")
             {
-                m_mapName = overrodeLevelName;
+                m_mapName = overrideLevelName;
+                Debug.LogWarning(string.Format("Loading overrided level ({0})...", m_mapName));
             }
 #endif
 
@@ -80,6 +81,11 @@ namespace ProjectStorms
             LevelSettings.Instance.gamemode = m_gameMode;
 
             Application.LoadLevel(m_mapName);
+        }
+
+        public void LoadLevel(string a_levelName)
+        {
+            Application.LoadLevel(a_levelName);
         }
 	}
 }
