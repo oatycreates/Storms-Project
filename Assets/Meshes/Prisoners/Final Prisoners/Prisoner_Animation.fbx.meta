@@ -1,0 +1,197 @@
+fileFormatVersion: 2
+guid: a578565302de5024e94419f4e8ead63d
+timeCreated: 1446697077
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: character
+    100002: Clavicle_l
+    100004: Clavicle_r
+    100006: foot_l
+    100008: foot_r
+    100010: ForeArm_l
+    100012: ForeArm_r
+    100014: Hand_l
+    100016: Hand_r
+    100018: lowerleg_l
+    100020: lowerleg_r
+    100022: mesh
+    100024: //RootNode
+    100026: root
+    100028: Shoulder
+    100030: Spine
+    100032: toe_l
+    100034: toe_r
+    100036: UpperArm_l
+    100038: UpperArm_r
+    100040: upperleg_l
+    100042: upperleg_r
+    100044: Wrist_l
+    100046: Wrist_r
+    400000: character
+    400002: Clavicle_l
+    400004: Clavicle_r
+    400006: foot_l
+    400008: foot_r
+    400010: ForeArm_l
+    400012: ForeArm_r
+    400014: Hand_l
+    400016: Hand_r
+    400018: lowerleg_l
+    400020: lowerleg_r
+    400022: mesh
+    400024: //RootNode
+    400026: root
+    400028: Shoulder
+    400030: Spine
+    400032: toe_l
+    400034: toe_r
+    400036: UpperArm_l
+    400038: UpperArm_r
+    400040: upperleg_l
+    400042: upperleg_r
+    400044: Wrist_l
+    400046: Wrist_r
+    4300000: character
+    7400000: Falling
+    9500000: //RootNode
+    13700000: character
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0
+    animationPositionError: 0
+    animationScaleError: 0
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Falling
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: mesh
+        weight: 1
+      - path: mesh/character
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/Spine
+        weight: 1
+      - path: root/Spine/Shoulder
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_l
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_l/UpperArm_l
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_l/UpperArm_l/ForeArm_l
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_l/UpperArm_l/ForeArm_l/Wrist_l
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_l/UpperArm_l/ForeArm_l/Wrist_l/Hand_l
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_r
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_r/UpperArm_r
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_r/UpperArm_r/ForeArm_r
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_r/UpperArm_r/ForeArm_r/Wrist_r
+        weight: 1
+      - path: root/Spine/Shoulder/Clavicle_r/UpperArm_r/ForeArm_r/Wrist_r/Hand_r
+        weight: 1
+      - path: root/Spine/upperleg_l
+        weight: 1
+      - path: root/Spine/upperleg_l/lowerleg_l
+        weight: 1
+      - path: root/Spine/upperleg_l/lowerleg_l/foot_l
+        weight: 1
+      - path: root/Spine/upperleg_l/lowerleg_l/foot_l/toe_l
+        weight: 1
+      - path: root/Spine/upperleg_r
+        weight: 1
+      - path: root/Spine/upperleg_r/lowerleg_r
+        weight: 1
+      - path: root/Spine/upperleg_r/lowerleg_r/foot_r
+        weight: 1
+      - path: root/Spine/upperleg_r/lowerleg_r/foot_r/toe_r
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
