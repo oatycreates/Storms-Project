@@ -1601,7 +1601,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199870}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 0, z: 11.499999}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447992}
@@ -2413,7 +2413,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 85.5999985, z: 0}
+  m_LocalPosition: {x: 0, y: 50.7999992, z: 4.9000001}
   m_LocalScale: {x: 3.20000005, y: 3.20000005, z: 3.20000005}
   m_Children:
   - {fileID: 447992}
@@ -5404,7 +5404,7 @@ Animator:
   m_GameObject: {fileID: 103210}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 7ffa97949c7a9d846b9817121de50cdc, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d133ffff20eee2429337a98a96b2055, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5423,7 +5423,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0, g: .131034374, b: 1, a: 1}
   m_Intensity: .800000012
-  m_Range: 50
+  m_Range: 30
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -5481,13 +5481,11 @@ MonoBehaviour:
   timeBetweenPrisonerDrops: 12
   numberOfTimesKlaxonShouldSound: 1
   timePassengerSpawnFor: 15
-  sternLight: {fileID: 0}
   hullLight: {fileID: 10831066}
   maxLightIntensity: .800000012
   klaxonSound: {fileID: 8300000, guid: b5a295c5de36a51499a537042562a605, type: 3}
-  sternPassengerSpawn: {fileID: 0}
   hullPassengerSpawn: {fileID: 11439086}
-  prisonAnim: {fileID: 0}
+  prisonAnim: {fileID: 9551978}
   myLaser: {fileID: 2392004}
 --- !u!136 &13600012
 CapsuleCollider:

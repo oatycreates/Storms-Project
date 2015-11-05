@@ -43,7 +43,7 @@ namespace ProjectStorms
 
         private AudioSource m_mySource;
 
-        public Light sternLight;
+       // public Light sternLight;
         public Light hullLight;
 
         public float maxLightIntensity = 4.0f;
@@ -56,7 +56,7 @@ namespace ProjectStorms
         private bool m_warningCanPlay = true;
         private bool m_spawningCanPlay = true;
 
-        public SpawnPassengers sternPassengerSpawn;
+       // public SpawnPassengers sternPassengerSpawn;
         public SpawnPassengers hullPassengerSpawn;
 
         private Color orange;
@@ -79,7 +79,7 @@ namespace ProjectStorms
         void Start()
         {
             m_mySource.volume = 0.3f;
-            sternLight.intensity = 0.0f;
+           // sternLight.intensity = 0.0f;
             hullLight.intensity = 0.0f;
 
             //m_timer = timeBetweenPrisonerDrops;
@@ -120,7 +120,7 @@ namespace ProjectStorms
                 m_lightUp = false;
                 m_warningCanPlay = true;
                 m_spawningCanPlay = true;
-                sternPassengerSpawn.currentlySpawning = false;
+              //  sternPassengerSpawn.currentlySpawning = false;
                 hullPassengerSpawn.currentlySpawning = false;
                 timePassengerSpawnFor = m_rememberPassengerTimerValue;
             }
@@ -209,6 +209,7 @@ namespace ProjectStorms
 
         void ClampLights()
         {
+            /*
             if (sternLight.intensity < 0.0f)
             {
                 sternLight.intensity = 0.0f;
@@ -218,7 +219,7 @@ namespace ProjectStorms
             {
                 sternLight.intensity = maxLightIntensity;
             }
-
+            */
             if (hullLight.intensity < 0.0f)
             {
                 hullLight.intensity = 0.0f;
@@ -232,13 +233,13 @@ namespace ProjectStorms
             // Increase or decrease lights
             if (m_lightUp)
             {
-                sternLight.intensity += 0.05f;
+                //sternLight.intensity += 0.05f;
                 hullLight.intensity += 0.05f;
             }
             else
                 if (!m_lightUp)
                 {
-                    sternLight.intensity -= 0.5f;
+                    //sternLight.intensity -= 0.5f;
                     hullLight.intensity -= 0.5f;
                 }
         }
@@ -251,7 +252,7 @@ namespace ProjectStorms
             m_mySource.clip = klaxonSound;
 
             Color stateColour = orange; // Now Orange
-            sternLight.color = stateColour;
+            //sternLight.color = stateColour;
             hullLight.color = stateColour;
 
             UpdateSpawnerLaserColour(stateColour);
@@ -261,7 +262,7 @@ namespace ProjectStorms
             m_mySource.Play();
 
             m_warningCanPlay = true;
-            sternPassengerSpawn.currentlySpawning = false;
+            //sternPassengerSpawn.currentlySpawning = false;
             hullPassengerSpawn.currentlySpawning = false;
         }
 	
@@ -279,11 +280,13 @@ namespace ProjectStorms
         private void UpdateSpawnerLaserColour(Color a_baseColour)
         {
             Color laserColour = a_baseColour;
+            /*
             if (sternPassengerSpawn.spawnHelperLaser != null)
             {
                 laserColour.a = sternPassengerSpawn.GetSpawnLaserAlpha();
                 sternPassengerSpawn.spawnHelperLaser.material.color = laserColour;
             }
+             */
             if (hullPassengerSpawn.spawnHelperLaser != null)
             {
                 laserColour.a = hullPassengerSpawn.GetSpawnLaserAlpha();
@@ -297,14 +300,14 @@ namespace ProjectStorms
         void Spawning()
         {
             Color stateColour = Color.red;
-            sternLight.color = stateColour;
+           // sternLight.color = stateColour;
             hullLight.color = stateColour;
             m_lightUp = true;
 
             // Update spawn laser colour
             UpdateSpawnerLaserColour(stateColour);
 
-            sternPassengerSpawn.currentlySpawning = true;
+           // sternPassengerSpawn.currentlySpawning = true;
             hullPassengerSpawn.currentlySpawning = true;
         }
     } 
