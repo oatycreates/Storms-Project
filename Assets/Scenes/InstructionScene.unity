@@ -37,9 +37,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
---- !u!127 &3
-LevelGameManager:
-  m_ObjectHideFlags: 0
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -68,6 +65,7 @@ LightmapSettings:
     m_TextureCompression: 1
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
+    m_ReflectionCompression: 2
   m_LightmapSnapshot: {fileID: 112000000, guid: f349c3822cd4f7c49b1c04b1f18f85f1,
     type: 2}
   m_RuntimeCPUUsage: 25
@@ -156,6 +154,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -279,12 +278,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ef6d8f786a14554f899678344e741ef, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1687312885 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11497332, guid: 0ef6d8f786a14554f899678344e741ef,
-    type: 2}
-  m_PrefabInternal: {fileID: 1687312884}
-  m_Script: {fileID: 11500000, guid: 830ace0db69479740861e9a84c03ab48, type: 3}
 --- !u!1 &1867455343
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +311,7 @@ MonoBehaviour:
   condition: 0
   textPrefab: {fileID: 115102, guid: c67db845666708d40ab2ab8668d1bb93, type: 2}
   pooledAmount: 2000
-  scoreManager: {fileID: 1687312885}
+  textColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1867455345
 MonoBehaviour:
   m_ObjectHideFlags: 0
