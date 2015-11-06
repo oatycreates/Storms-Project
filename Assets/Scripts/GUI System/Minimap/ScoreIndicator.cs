@@ -28,14 +28,15 @@ namespace ProjectStorms
 
         [Range(0.0f, 1.0f)]
         [Tooltip("Decimal percentage of the player's score, to win")]
-        public float m_scorePercent     = 1.0f;
+        public float m_scorePercent = 1.0f;
         [Tooltip("Speed in UV units per second")]
-        public float m_animationSpeed  = 0.05f;
+        public float m_animationSpeed = 0.05f;
 
-        public bool m_antiClockwiseAnimation = true;
+        public bool inverseFlowDirection = false;
+        public bool inverseFlowAnimationDirection = false;
 
         // Used for setting the Y texture offset
-        private float m_offsetValueY = 0.5f;
+        private float m_offsetValueY = -0.5f;
 
         // Cached variables
         private Renderer m_renderer;
@@ -104,7 +105,7 @@ namespace ProjectStorms
             else
             {
                 // Animate
-                if (!m_antiClockwiseAnimation)
+                if (!inverseFlowDirection)
                 {
                     textureOffset.x -= m_animationSpeed * Time.deltaTime;
                 }
@@ -114,7 +115,7 @@ namespace ProjectStorms
                 }
             }
 
-            if (!m_antiClockwiseAnimation)
+            if (inverseFlowAnimationDirection)
             {
                 detailTexOffset.y -= m_animationSpeed * Time.deltaTime;
             }
@@ -124,14 +125,13 @@ namespace ProjectStorms
             }
 
             // Set Y offset - display's score percent
-            if (m_antiClockwiseAnimation)
+            if (inverseFlowDirection)
             {
-                textureOffset.y = -m_offsetValueY + (m_offsetValueY * m_scorePercent) + 0.01f;
+                textureOffset.y = m_offsetValueY - (m_offsetValueY * m_scorePercent);
             }
             else
             {
-                textureOffset.y = (m_offsetValueY * m_scorePercent);
-                textureOffset.y *= -1.0f;
+                textureOffset.y = m_offsetValueY * m_scorePercent;
             }
 
             m_renderer.material.SetTextureOffset("_MainTex", textureOffset);
@@ -140,7 +140,7 @@ namespace ProjectStorms
 
         void SetTextures()
         {
-            if (m_antiClockwiseAnimation)
+            if (inverseFlowDirection)
             {
                 m_renderer.material.SetTexture("_MainTex", flippedAlbedo);
             }
