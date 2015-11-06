@@ -213,7 +213,7 @@ namespace ProjectStorms
 			//Invoke ("FindTarget", 1);
 			//Fire ();
 			//Fix the trail time
-			childTrail.time = 1;
+			childTrail.time = 0.2f;
 			
 			m_Audio.clip = launchSFX;
 			//m_Audio.pitch = 0.75f;
