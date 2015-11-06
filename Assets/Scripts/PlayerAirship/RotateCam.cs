@@ -80,12 +80,17 @@ namespace ProjectStorms
         //Connect to announcer text
         public UI_Controller announcerController;
 
+        //Bool a_lastSelect
+        private bool a_lastSelect = false;
+
         void Start()
         {
             // Cache variables
             m_referenceStateManager = GetComponent<StateManager>();
             m_shipTrans = transform;
             m_camRotTrans = rotateCam.transform;
+
+            announcerController = GameObject.FindObjectOfType<UI_Controller>();
         }
 
         public void ResetCamRotation(bool a_snap)
@@ -197,21 +202,33 @@ namespace ProjectStorms
                 }           
 
 
+
                 //Invert cam on select button press
-                if (a_select)
+                if (!a_select && a_lastSelect) 
                 {
+                    
+
                     invertUpDown = !invertUpDown;
                     //a_select = !a_select;
 
                     if (announcerController != null)
                     {
-                        
                         string me = gameObject.GetComponent<FactionIndentifier>().factionName;
-                        announcerController.InvertYCam(me);
+
+                        if (invertUpDown)
+                        {
+                            announcerController.InvertYCam(me);
+                        }
+                        else
+                        if (!invertUpDown)
+                        {
+                            announcerController.NormalYCam(me);
+                        }
                     }
+                   
                 }
 
-                
+                a_lastSelect = a_select; 
             }
         }
 
