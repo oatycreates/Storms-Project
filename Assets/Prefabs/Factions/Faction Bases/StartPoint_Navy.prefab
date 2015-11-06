@@ -151,6 +151,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &127808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 478038}
+  - 108: {fileID: 10854422}
+  m_Layer: 0
+  m_Name: HaloLight_Blue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &131118
 GameObject:
   m_ObjectHideFlags: 1
@@ -777,14 +793,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 411392}
   m_RootOrder: 0
+--- !u!4 &478038
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127808}
+  m_LocalRotation: {x: -.0602701157, y: .879422486, z: .115777858, w: -.457798243}
+  m_LocalPosition: {x: 0, y: 41.5348167, z: 11.1291924}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 478628}
+  m_RootOrder: 12
 --- !u!4 &478628
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135386}
-  m_LocalRotation: {x: .0922957063, y: -.701057494, z: -.0922957212, w: -.701057374}
-  m_LocalPosition: {x: -850, y: 0, z: 0}
+  m_LocalRotation: {x: .0602701157, y: -.879422486, z: -.115777858, w: -.457798243}
+  m_LocalPosition: {x: -600, y: 187, z: 600}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 497714}
@@ -799,6 +827,7 @@ Transform:
   - {fileID: 494688}
   - {fileID: 480074}
   - {fileID: 412690}
+  - {fileID: 478038}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &478862
@@ -1607,6 +1636,38 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!108 &10854422
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127808}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_Type: 2
+  m_Color: {r: 0, g: .229000092, b: 1, a: 1}
+  m_Intensity: .899999976
+  m_Range: 175
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_NormalBias: .400000006
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 2
+  m_BounceIntensity: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_AreaSize: {x: 1, y: 1}
 --- !u!114 &11455916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1642,7 +1703,6 @@ MonoBehaviour:
   peopleLeftToCatch: 100
   maxPeople: 100
   textColour: {r: .213235319, g: .70699811, b: 1, a: 0}
-  baseTag: 
 --- !u!114 &11469908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1655,6 +1715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faction: 0
+  factionName: NONAME
 --- !u!137 &13736428
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1687,8 +1748,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -5.96046448e-07, y: 9.58500099, z: 1.01383972}
-    m_Extent: {x: 6.29218102, y: 3.38426495, z: 6.29218149}
+    m_Center: {x: 0, y: 9.58500099, z: 1.01383209}
+    m_Extent: {x: 6.19514132, y: 3.38426518, z: 6.00975943}
   m_DirtyAABB: 0
 --- !u!183 &18346838
 Cloth:
