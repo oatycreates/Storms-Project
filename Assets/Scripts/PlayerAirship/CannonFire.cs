@@ -83,6 +83,10 @@ namespace ProjectStorms
         // Cached variables
         private Transform m_trans = null;
 
+        //Call the AnnouncerText
+        //public UI_Controller announcerText;
+        //Do this in Countermeasure Script
+
         void Awake()
         {
             m_trans = transform;
@@ -134,6 +138,7 @@ namespace ProjectStorms
 	                CreateCannonball(holderTrans);
 	            }
             }
+
         }
 
         
@@ -171,6 +176,7 @@ namespace ProjectStorms
             if (lookAtTarget != null)
             {
                 m_trans.LookAt(lookAtTarget.position);
+
             }
 
             m_relativeForward = m_trans.forward;

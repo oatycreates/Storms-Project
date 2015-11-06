@@ -371,7 +371,104 @@ namespace ProjectStorms
             }
 
         }
-		
+
+        public void NormalYCam(string factionName)
+        {
+            string normal = "Cam Normal";
+
+            if (factionName == "NONAME")
+            {
+                Debug.Log("error - no faction name set");
+            }
+
+            if (factionName == null)
+            {
+                Debug.Log("error - no faction name set");
+            }
+
+            if (factionName == "PIRATES")
+            {
+                oneText.text = normal;
+                oneText.fontSize = 100;
+                //Cancel any existing movment on the object.
+                CancelInvoke("HideOne");
+                ShowText(one);
+            }
+
+            if (factionName == "NAVY")
+            {
+                twoText.text = normal;
+                twoText.fontSize = 100;
+                CancelInvoke("HideTwo");
+                ShowText(two);
+            }
+
+            if (factionName == "TINKERERS")
+            {
+                threeText.text = normal;
+                threeText.fontSize = 100;
+                CancelInvoke("HideThree");
+                ShowText(three);
+            }
+
+            if (factionName == "VIKINGS")
+            {
+                fourText.text = normal;
+                fourText.fontSize = 100;
+                CancelInvoke("HideFour");
+                ShowText(four);
+            }
+
+        }
+
+        public void LockOn(string factionName)
+        {
+            string warning = "Incoming Missile";
+
+            if (factionName == "NONAME")
+            {
+                Debug.Log("error - no faction name set");
+            }
+
+            if (factionName == null)
+            {
+                Debug.Log("error - no faction name set");
+            }
+
+            if (factionName == "PIRATES")
+            {
+                oneText.text = warning;
+                oneText.fontSize = 100;
+                //Cancel any existing movment on the object.
+                CancelInvoke("HideOne");
+                ShowText(one);
+            }
+
+            if (factionName == "NAVY")
+            {
+                twoText.text = warning;
+                twoText.fontSize = 100;
+                CancelInvoke("HideTwo");
+                ShowText(two);
+            }
+
+            if (factionName == "TINKERERS")
+            {
+                threeText.text = warning;
+                threeText.fontSize = 100;
+                CancelInvoke("HideThree");
+                ShowText(three);
+            }
+
+            if (factionName == "VIKINGS")
+            {
+                fourText.text = warning;
+                fourText.fontSize = 100;
+                CancelInvoke("HideFour");
+                ShowText(four);
+            }
+
+        }
 		
 		void Update () 
 		{

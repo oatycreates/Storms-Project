@@ -22,12 +22,6 @@ namespace ProjectStorms
         [Tooltip("Prefab which will be the base for player and base icons")]
         public Image iconTemplatePrefab;
 
-        [Header("Score Bar Materials")]
-        public Material navyScoreIndicatorMaterial;
-        public Material piratesIndicatorMaterial;
-        public Material tinkerersIndicatorMaterial;
-        public Material vikingsIndicatorMaterial;
-
         // Player images
         [Header("Players")]
         [Tooltip("Sprite to represent players within the navy faction")]
@@ -276,22 +270,24 @@ namespace ProjectStorms
             // Get score indicator references
             string scoreBarPath = "Minimap Renderer/Minimap Score Indicator Capture/";
 
-            m_player2_ScoreIndicator = m_transform.FindChild(scoreBarPath + "Player 2 Score Bar").GetComponent<ScoreIndicator>();
             m_player1_ScoreIndicator = m_transform.FindChild(scoreBarPath + "Player 1 Score Bar").GetComponent<ScoreIndicator>();
+            m_player2_ScoreIndicator = m_transform.FindChild(scoreBarPath + "Player 2 Score Bar").GetComponent<ScoreIndicator>();
             m_player3_ScoreIndicator = m_transform.FindChild(scoreBarPath + "Player 4 Score Bar").GetComponent<ScoreIndicator>();
             m_player4_ScoreIndicator = m_transform.FindChild(scoreBarPath + "Player 3 Score Bar").GetComponent<ScoreIndicator>();
 
             // Set initial scores
-            m_player2_ScoreIndicator.scorePercent = 0.0f;
             m_player1_ScoreIndicator.scorePercent = 0.0f;
+            m_player2_ScoreIndicator.scorePercent = 0.0f;
             m_player3_ScoreIndicator.scorePercent = 0.0f;
             m_player4_ScoreIndicator.scorePercent = 0.0f;
 
-            // Set materials
-            SetScoreIndicatorMaterial(m_player1_ScoreIndicator, 1);
-            SetScoreIndicatorMaterial(m_player2_ScoreIndicator, 2);
-            SetScoreIndicatorMaterial(m_player3_ScoreIndicator, 3);
-            SetScoreIndicatorMaterial(m_player4_ScoreIndicator, 4);
+            // Set faction for score bars
+            PlayerSettings[] playerSettings = LevelSettings.Instance.playersSettings;
+
+            m_player1_ScoreIndicator.faction = playerSettings[0].faction;
+            m_player2_ScoreIndicator.faction = playerSettings[1].faction;
+            m_player3_ScoreIndicator.faction = playerSettings[2].faction;
+            m_player4_ScoreIndicator.faction = playerSettings[3].faction;
         }
 
         void Start()
@@ -339,34 +335,6 @@ namespace ProjectStorms
                 RectTransform repairZone_iconRectTrans = m_repairImages[i].rectTransform;
 
                 PositionIconToTransform(repairZone_iconRectTrans, repairZone_trans);
-            }
-        }
-
-        void SetScoreIndicatorMaterial(ScoreIndicator a_scoreIndicator, int a_playerNo)
-        {
-            Faction playerFaction = LevelSettings.Instance.GetPlayerSettings(a_playerNo).faction;
-            Renderer scoreIndicatorRenderer = a_scoreIndicator.GetComponent<Renderer>();
-
-            switch (playerFaction)
-            {
-                case Faction.NAVY:
-                    scoreIndicatorRenderer.material = navyScoreIndicatorMaterial;
-                    break;
-            
-                case Faction.PIRATES:
-                    scoreIndicatorRenderer.material = piratesIndicatorMaterial;
-                    break;
-            
-                case Faction.TINKERERS:
-                    scoreIndicatorRenderer.material = tinkerersIndicatorMaterial;
-                    break;
-            
-                case Faction.VIKINGS:
-                    scoreIndicatorRenderer.material = vikingsIndicatorMaterial;
-                    break;
-            
-                case Faction.NONE:
-                    break;
             }
         }
 

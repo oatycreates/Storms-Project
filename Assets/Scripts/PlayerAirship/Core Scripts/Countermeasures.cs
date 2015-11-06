@@ -63,6 +63,9 @@ namespace ProjectStorms
        // [HideInInspector]
         public bool gotPickup = true;
 
+        //Call the AnnouncerText
+        public UI_Controller announcerText;
+
 		void Awake()
 		{
 			m_trans = gameObject.transform;
@@ -79,6 +82,10 @@ namespace ProjectStorms
                     ms_powerupHolder.tag = "PowerupHolder";
                 }
             }
+
+
+            //Find the announcer text
+            announcerText = GameObject.FindObjectOfType<UI_Controller>();
 		}
 
 		void Start() 
@@ -230,6 +237,22 @@ namespace ProjectStorms
                         
                         //Send the Return to sender value
                         missileScript.WhoShotMe(gameObject);
+
+
+                        //Trigger the announcer text
+                        string faction = "NONAME";
+
+                        Transform warnTarget = m_tarLock.GetTarget();
+
+                        //Check the target Airship's faction
+
+
+                        if (warnTarget.gameObject.GetComponent<FactionIndentifier>() != null)
+                        {
+                            faction = warnTarget.gameObject.GetComponent<FactionIndentifier>().factionName;
+
+                            announcerText.LockOn(faction);
+                        }
                     }
 
 					//Don't forget to break loop

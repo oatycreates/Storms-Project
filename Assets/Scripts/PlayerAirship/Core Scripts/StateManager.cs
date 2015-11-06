@@ -463,10 +463,10 @@ namespace ProjectStorms
                 rouletteHierachy.SetActive(a_rouletteEnable);
             }
 
-            if (particlesEffectsHierachy != null)
+            /*if (particlesEffectsHierachy != null)
             {
                 particlesEffectsHierachy.SetActive(a_particlesEnable);
-            }
+            }*/
 
             if (weaponsHierachy != null)
             {
