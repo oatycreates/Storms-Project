@@ -84,7 +84,8 @@ namespace ProjectStorms
         private Transform m_trans = null;
 
         //Call the AnnouncerText
-        public UI_Controller announcerText;
+        //public UI_Controller announcerText;
+        //Do this in Countermeasure Script
 
         void Awake()
         {
@@ -138,8 +139,6 @@ namespace ProjectStorms
 	            }
             }
 
-            //Find the announcer text
-            announcerText = GameObject.FindObjectOfType<UI_Controller>();
         }
 
         
@@ -178,16 +177,6 @@ namespace ProjectStorms
             {
                 m_trans.LookAt(lookAtTarget.position);
 
-                string faction = "NONAME";
-
-                //Check the target Airship's faction
-
-                if (lookAtTarget.gameObject.GetComponent<FactionIndentifier>() != null)
-                {
-                    faction = lookAtTarget.gameObject.GetComponent<FactionIndentifier>().factionName;
-                }
-
-                announcerText.LockOn(faction);
             }
 
             m_relativeForward = m_trans.forward;

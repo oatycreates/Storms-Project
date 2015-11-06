@@ -423,7 +423,7 @@ namespace ProjectStorms
 
         public void LockOn(string factionName)
         {
-            string warning = "Missile Lock";
+            string warning = "Incoming Missile";
 
             if (factionName == "NONAME")
             {
