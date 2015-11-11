@@ -56,7 +56,7 @@ namespace ProjectStorms
         public AudioClip scoreSound;
 
 		public void InitialiseAnnouncerText(GameObject[] a_playerGOs) 
-		{
+		{		
             // Get Text references
             oneText = a_playerGOs[0].GetComponentInChildren<Text>();
             twoText = a_playerGOs[1].GetComponentInChildren<Text>();
@@ -71,8 +71,8 @@ namespace ProjectStorms
 
 			//Remember stuff for Reset function
 			rememberOneWords = " ";
-			rememberOneSize = oneText.fontSize;
-			rememberOneColour = oneText.color;
+			rememberOneSize =	oneText.fontSize;
+			rememberOneColour =	oneText.color;
 			
 			rememberTwoWords = " ";
 			rememberTwoSize = twoText.fontSize;
@@ -108,7 +108,7 @@ namespace ProjectStorms
 		
 		void StartGameText()//GameObject player)
 		{
-			string  startText = "Collect Passengers!";//= "GO!";
+			string  startText = "Collect Passengers!";
 		
 			//Make all text show at start
 			oneText.text = startText;
@@ -124,12 +124,13 @@ namespace ProjectStorms
 			ShowText(four);
 		}
 		
-		public void Score(string factionName, int currentScore)
+		public void Score(string factionName, int currentScore, int screenQuadrant)
 		{
 			//Set text
 			string score; 	//What everyone else sees.
 			
 			//score = (factionName + " SCORE!");
+			
 			
 			string wordNumber = currentScore.ToString();
 			string passengersLeft;
@@ -143,9 +144,20 @@ namespace ProjectStorms
 			{
 				Debug.Log("error - no faction name set");
 			}
+			
+			if (screenQuadrant == 0)
+			{
+				Debug.Log("No screen quadrant set.");
+			}
+			
+			if (screenQuadrant > 4)
+			{
+				Debug.Log("Wrong screen quadrant.");
+			}
 		
 			
-			if (factionName == "PIRATES")
+			//if (factionName == "PIRATES")
+			if (screenQuadrant == 1)
 			{
 				score = (factionName + " SCORE!"); 
 				passengersLeft = ("Need " + wordNumber + " more!" );
@@ -173,7 +185,8 @@ namespace ProjectStorms
 				ShowText(four);
 			}
 			
-			if (factionName == "NAVY")
+			//if (factionName == "NAVY")
+			if (screenQuadrant == 2)
 			{
 				score = (factionName + " SCORE!"); 
 				passengersLeft = ("Need " + wordNumber + " more!" );
@@ -201,7 +214,8 @@ namespace ProjectStorms
 				ShowText(four);
 			}
 			
-			if (factionName == "TINKERERS")
+			//if (factionName == "TINKERERS")
+			if (screenQuadrant == 3)
 			{
 				score = (factionName + " SCORE!"); 
 				passengersLeft = ("Need " + wordNumber + " more!" );
@@ -229,7 +243,8 @@ namespace ProjectStorms
 				ShowText(four);
 			}
 			
-			if (factionName == "VIKINGS")
+			//if (factionName == "VIKINGS")
+			if (screenQuadrant == 4)
 			{
 				score = (factionName + " SCORE!"); 
 				passengersLeft = ("Need " + wordNumber + " more!" );
@@ -276,7 +291,7 @@ namespace ProjectStorms
 		}
 		
 		
-		
+		/*
 		public void HalfWay(string factionName)
 		{
 			string halfWay = "HALF WAY!";
@@ -319,14 +334,16 @@ namespace ProjectStorms
 				ShowText(four);
 			}
 		}
+		*/
 		
-		
-		public void PassengersInTray(string factionName, int noOfPassengers, bool morePassengers)
+		public void PassengersInTray(string factionName, int noOfPassengers, bool morePassengers, string airshipTag)
 		{
 			//print (factionName + "  " + noOfPassengers);
 			string people;
 			people = noOfPassengers.ToString();
 			
+			//Save this just in case
+			/*
 			if (factionName == "NONAME" || factionName == null)
 			{
 				Debug.Log("error - no faction name set");
@@ -358,6 +375,40 @@ namespace ProjectStorms
 			}
 			
 			if (factionName == "VIKINGS")
+			{
+				fourText.text = people;
+				fourText.fontSize = 100;
+				CancelInvoke("HideFour");
+				ShowText(four);
+			}
+			*/
+			
+			if (airshipTag == "Player1_")
+			{
+					oneText.text = people;
+					oneText.fontSize = 100;
+				
+					CancelInvoke("HideOne");
+					ShowText(one);
+			}
+			else
+			if (airshipTag == "Player2_")
+			{
+				twoText.text = people;
+				twoText.fontSize = 100;
+				CancelInvoke("HideTwo");
+				ShowText(two);
+			}
+			else
+			if (airshipTag == "Player3_")
+			{
+				threeText.text = people;
+				threeText.fontSize = 100;
+				CancelInvoke("HideThree");
+				ShowText(three);
+			}
+			else
+			if (airshipTag == "Player4_")
 			{
 				fourText.text = people;
 				fourText.fontSize = 100;
@@ -406,51 +457,10 @@ namespace ProjectStorms
 					
 					PlayCatchSound();
 				}
-			}
-			/*
-			else
-			//check to see if we're losing passengers?
-			if (!morePassengers)
-			{
-				float pitchGoodbyePassenger =  (float)(noOfPassengers)/25;
-				float newPitch = 1.0f - pitchGoodbyePassenger;
-				
-				if (!m_source.isPlaying)
-				{	
-					//Set pitch according to passengers in tray
-					if (newPitch >= 0.5f)
-					{
-						m_source.pitch = newPitch;
-					}
-					else
-					{
-						m_source.pitch = 0.5f;
-					}
-					
-					PlayCatchSound();
-				}
-				else
-				if (m_source.isPlaying)
-				{
-					//Reset sound
-					m_source.time = 0;
-					
-					//Set pitch according to passengers in tray
-					if (newPitch >= 0.5f)
-					{
-						m_source.pitch = newPitch;
-					}
-					else
-					{
-						m_source.pitch = 0.5f;
-					}
-					
-					PlayCatchSound();
-				}
-			}*/
+			}	
 		}
 
-        public void InvertYCam(string factionName)
+        public void InvertYCam(string factionName, string airshipTag)
         {
             string invert = "Cam Inverted";
 
@@ -463,17 +473,27 @@ namespace ProjectStorms
             {
                 Debug.Log("error - no faction name set");
             }
+            
+			
+			if (airshipTag == null)
+			{
+				Debug.Log("No player tag");
+			}
+			
+			
 
-            if (factionName == "PIRATES")
+           // if (factionName == "PIRATES")
+           if (airshipTag == "Player1_")
             {
                 oneText.text = invert;
                 oneText.fontSize = 100;
                 //Cancel any existing movment on the object.
                 CancelInvoke("HideOne");
-                ShowText(one);
+               	ShowText(one);
             }
 
-            if (factionName == "NAVY")
+            //if (factionName == "NAVY")
+            if (airshipTag == "Player2_")
             {
                 twoText.text = invert;
                 twoText.fontSize = 100;
@@ -481,7 +501,8 @@ namespace ProjectStorms
                 ShowText(two);
             }
 
-            if (factionName == "TINKERERS")
+            //if (factionName == "TINKERERS")
+            if (airshipTag == "Player3_")
             {
                 threeText.text = invert;
                 threeText.fontSize = 100;
@@ -489,7 +510,8 @@ namespace ProjectStorms
                 ShowText(three);
             }
 
-            if (factionName == "VIKINGS")
+            //if (factionName == "VIKINGS")
+            if (airshipTag == "Player4_")
             {
                 fourText.text = invert;
                 fourText.fontSize = 100;
@@ -499,7 +521,7 @@ namespace ProjectStorms
 
         }
 
-        public void NormalYCam(string factionName)
+        public void NormalYCam(string factionName, string airshipTag)
         {
             string normal = "Cam Normal";
 
@@ -512,8 +534,16 @@ namespace ProjectStorms
             {
                 Debug.Log("error - no faction name set");
             }
+            
+            if (airshipTag == null)
+            {
+            	Debug.Log("No player tag");
+            }
+            
+           
 
-            if (factionName == "PIRATES")
+            //if (factionName == "PIRATES")
+            if (airshipTag == "Player1_")
             {
                 oneText.text = normal;
                 oneText.fontSize = 100;
@@ -522,7 +552,8 @@ namespace ProjectStorms
                 ShowText(one);
             }
 
-            if (factionName == "NAVY")
+            //if (factionName == "NAVY")
+            if (airshipTag == "Player2_")
             {
                 twoText.text = normal;
                 twoText.fontSize = 100;
@@ -530,7 +561,8 @@ namespace ProjectStorms
                 ShowText(two);
             }
 
-            if (factionName == "TINKERERS")
+            //if (factionName == "TINKERERS")
+            if (airshipTag == "Player3_")
             {
                 threeText.text = normal;
                 threeText.fontSize = 100;
@@ -538,7 +570,8 @@ namespace ProjectStorms
                 ShowText(three);
             }
 
-            if (factionName == "VIKINGS")
+           // if (factionName == "VIKINGS")
+           if (airshipTag == "Player4_")
             {
                 fourText.text = normal;
                 fourText.fontSize = 100;
@@ -548,7 +581,7 @@ namespace ProjectStorms
 
         }
 
-        public void LockOn(string factionName)
+        public void LockOn(string factionName, string targetAirshipTag)
         {
             string warning = "Incoming Missile";
 
@@ -561,8 +594,14 @@ namespace ProjectStorms
             {
                 Debug.Log("error - no faction name set");
             }
+            
+            if (targetAirshipTag == null)
+            {
+            	Debug.Log("Target doesn't use player tag");
+            }
 
-            if (factionName == "PIRATES")
+            //if (factionName == "PIRATES")
+            if (targetAirshipTag == "Player1_")
             {
                 oneText.text = warning;
                 oneText.fontSize = 100;
@@ -571,7 +610,8 @@ namespace ProjectStorms
                 ShowText(one);
             }
 
-            if (factionName == "NAVY")
+            //if (factionName == "NAVY")
+            if (targetAirshipTag == "Player2_")
             {
                 twoText.text = warning;
                 twoText.fontSize = 100;
@@ -579,7 +619,8 @@ namespace ProjectStorms
                 ShowText(two);
             }
 
-            if (factionName == "TINKERERS")
+            //if (factionName == "TINKERERS")
+            if (targetAirshipTag == "Player3_")
             {
                 threeText.text = warning;
                 threeText.fontSize = 100;
@@ -587,7 +628,8 @@ namespace ProjectStorms
                 ShowText(three);
             }
 
-            if (factionName == "VIKINGS")
+            //if (factionName == "VIKINGS")
+            if (targetAirshipTag == "Player4_")
             {
                 fourText.text = warning;
                 fourText.fontSize = 100;

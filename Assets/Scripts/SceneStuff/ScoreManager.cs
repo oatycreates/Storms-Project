@@ -80,10 +80,10 @@ namespace ProjectStorms
 		private bool gameOver = false;
 
         //check each base identity
-        private string player1tag;
-        private string player2tag;
-        private string player3tag;
-        private string player4tag;
+        //private string player1tag;
+        //private string player2tag;
+        //private string player3tag;
+        //private string player4tag;
         
         //Send messages to Announcer Effects
         /*
@@ -212,12 +212,12 @@ namespace ProjectStorms
 				//Check to see if any base has less score than last update
 				if (previousAlphaScore != teamBaseAlpha.baseScore)
 				{
-					Score(baseAlphaName, teamBaseAlpha.baseScore);
+					Score(baseAlphaName, teamBaseAlpha.baseScore, 0);
 				}
 				
 				if (previousOmegaScore != teamBaseOmega.baseScore)
 				{
-					Score(baseOmegaName, teamBaseOmega.baseScore);
+					Score(baseOmegaName, teamBaseOmega.baseScore, 0);
 				}
 			}
 
@@ -251,26 +251,26 @@ namespace ProjectStorms
 				if (previousBase1Score != pirateBase1.baseScore)
 				{
 					//Get faction identifier
-					Score ( pirateBase1.GetComponent<FactionIndentifier>().factionName, pirateBase1.baseScore);
+					Score ( pirateBase1.GetComponent<FactionIndentifier>().factionName, pirateBase1.baseScore, 1);
 					
 				}
 				
 				if (previousBase2Score != pirateBase2.baseScore)
 				{
 					//Score(base2Name);
-					Score ( pirateBase2.GetComponent<FactionIndentifier>().factionName, pirateBase2.baseScore);
+					Score ( pirateBase2.GetComponent<FactionIndentifier>().factionName, pirateBase2.baseScore, 2);
 				}
 				
 				if (previousBase3Score != pirateBase3.baseScore)
 				{
 					//Score(base3Name);
-					Score ( pirateBase3.GetComponent<FactionIndentifier>().factionName, pirateBase3.baseScore);
+					Score ( pirateBase3.GetComponent<FactionIndentifier>().factionName, pirateBase3.baseScore, 3);
 				}
 				
 				if (previousBase4Score != pirateBase4.baseScore)
 				{
 					//Score(base4Name);
-					Score ( pirateBase4.GetComponent<FactionIndentifier>().factionName, pirateBase4.baseScore);
+					Score ( pirateBase4.GetComponent<FactionIndentifier>().factionName, pirateBase4.baseScore, 4);
 				}
 			}
 			
@@ -436,7 +436,7 @@ namespace ProjectStorms
 			}
 		}
 		
-		public void Score(string teamName, int currentScore)	//Base Numbers 1-4 for Free4All Match, 	Base Numbers 5 & 6 for Team Match
+		public void Score(string teamName, int currentScore, int screenQuadrant)	//Base Numbers 1-4 for Free4All Match, 	Base Numbers 5 & 6 for Team Match
 		{
 			//Debug.Log(teamName + "  Scores!");
 			
@@ -452,22 +452,22 @@ namespace ProjectStorms
 			else
 			if (teamName == "PIRATES")
 			{
-				scoreText.Score(teamName, currentScore);
+				scoreText.Score(teamName, currentScore, screenQuadrant);
 			}
 			else
 			if (teamName == "NAVY")
 			{
-				scoreText.Score(teamName, currentScore);
+				scoreText.Score(teamName, currentScore, screenQuadrant);
 			}
 			else
 			if (teamName == "TINKERERS")
 			{
-				scoreText.Score(teamName, currentScore);
+				scoreText.Score(teamName, currentScore, screenQuadrant);
 			}
 			else
 			if (teamName == "VIKINGS")
 			{
-				scoreText.Score(teamName, currentScore);
+				scoreText.Score(teamName, currentScore, screenQuadrant);
 			}
 		}
 		

@@ -241,6 +241,7 @@ namespace ProjectStorms
 
                         //Trigger the announcer text
                         string faction = "NONAME";
+                        string targetTag = null;
 
                         Transform warnTarget = m_tarLock.GetTarget();
 
@@ -251,8 +252,9 @@ namespace ProjectStorms
 	                        if (warnTarget.gameObject.GetComponent<FactionIndentifier>() != null)
 	                        {
 	                            faction = warnTarget.gameObject.GetComponent<FactionIndentifier>().factionName;
+	                            targetTag = warnTarget.gameObject.GetComponent<FactionIndentifier>().gameObject.tag;
 	
-	                            announcerText.LockOn(faction);
+	                            announcerText.LockOn(faction, targetTag);
 	                        }
                         }
                     }

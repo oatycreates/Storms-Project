@@ -129,6 +129,7 @@ namespace ProjectStorms
         private UI_Controller scoreMangager;
         private string factionName;
 		private int noOfPassengers = 0;
+		private string airshipTag;
 
         void Awake()
         {
@@ -327,7 +328,7 @@ namespace ProjectStorms
             foreach (GameObject go in m_trayContents)
             {
                 go.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, explosionCentreTrans.position, explosionRadius);
-                print("Rowan! It works!!!");
+               // print("Rowan! It works!!!");
             }
         }
 
@@ -366,6 +367,7 @@ namespace ProjectStorms
 		{
 			//Check faction
 			factionName = gameObject.GetComponentInParent<FactionIndentifier>().factionName;
+			airshipTag = gameObject.transform.root.gameObject.tag;
 			
 			//print (m_trayContents.Count); //Yay - this works
 			//Check tray contents against the previous number of passengers.
@@ -375,12 +377,12 @@ namespace ProjectStorms
 				//check to see if there are more or less passengers in the tray
 				if (m_trayContents.Count > noOfPassengers)
 				{
-					scoreMangager.PassengersInTray(factionName, noOfPassengers, true);
+					scoreMangager.PassengersInTray(factionName, noOfPassengers, true, airshipTag);
 				}
 				else
 				if (m_trayContents.Count < noOfPassengers)
 				{
-					scoreMangager.PassengersInTray(factionName, noOfPassengers, false);
+					scoreMangager.PassengersInTray(factionName, noOfPassengers, false, airshipTag);
 				}
 				
 			}

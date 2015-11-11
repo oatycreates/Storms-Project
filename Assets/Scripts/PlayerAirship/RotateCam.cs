@@ -214,15 +214,16 @@ namespace ProjectStorms
                     if (announcerController != null)
                     {
                         string me = gameObject.GetComponent<FactionIndentifier>().factionName;
+                        string myTag = gameObject.GetComponent<FactionIndentifier>().gameObject.tag;
 
                         if (invertUpDown)
                         {
-                            announcerController.InvertYCam(me);
+                            announcerController.InvertYCam(me, myTag);
                         }
                         else
                         if (!invertUpDown)
                         {
-                            announcerController.NormalYCam(me);
+                            announcerController.NormalYCam(me, myTag);
                         }
                     }
                    
