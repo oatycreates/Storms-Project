@@ -246,12 +246,14 @@ namespace ProjectStorms
 
                         //Check the target Airship's faction
 
-
-                        if (warnTarget.gameObject.GetComponent<FactionIndentifier>() != null)
-                        {
-                            faction = warnTarget.gameObject.GetComponent<FactionIndentifier>().factionName;
-
-                            announcerText.LockOn(faction);
+						if (warnTarget != null)
+						{
+	                        if (warnTarget.gameObject.GetComponent<FactionIndentifier>() != null)
+	                        {
+	                            faction = warnTarget.gameObject.GetComponent<FactionIndentifier>().factionName;
+	
+	                            announcerText.LockOn(faction);
+	                        }
                         }
                     }
 
