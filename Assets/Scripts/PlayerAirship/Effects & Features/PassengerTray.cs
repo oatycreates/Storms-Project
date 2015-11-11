@@ -372,8 +372,17 @@ namespace ProjectStorms
 			
 			if (noOfPassengers != m_trayContents.Count)
 			{
-				scoreMangager.PassengersInTray(factionName, noOfPassengers);
-				//print("Ping");
+				//check to see if there are more or less passengers in the tray
+				if (m_trayContents.Count > noOfPassengers)
+				{
+					scoreMangager.PassengersInTray(factionName, noOfPassengers, true);
+				}
+				else
+				if (m_trayContents.Count < noOfPassengers)
+				{
+					scoreMangager.PassengersInTray(factionName, noOfPassengers, false);
+				}
+				
 			}
 			
 		}

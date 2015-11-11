@@ -49,6 +49,10 @@ namespace ProjectStorms
 		private bool fourHidden = true;
 
         private bool m_beenInitialised = false;
+        
+        private AudioSource m_source;
+        public AudioClip catchSound;
+        public AudioClip scoreSound;
 
 		public void InitialiseAnnouncerText(GameObject[] a_playerGOs) 
 		{
@@ -86,10 +90,20 @@ namespace ProjectStorms
             Invoke("StartGameText", 5);
 		}
 		
-		void Start()
+		void Awake()
 		{
-
+			m_source = gameObject.GetComponent<AudioSource>();
+			
+			if (m_source == null)
+			{
+				gameObject.AddComponent<AudioSource>();
+				m_source = gameObject.GetComponent<AudioSource>();
+			}
+			
+			m_source.loop = false;
 		}
+		
+		
 		
 		void StartGameText()//GameObject player)
 		{
@@ -230,6 +244,14 @@ namespace ProjectStorms
 			}
 			
 		
+			/*
+			//Audio stuff
+			if (!m_source.isPlaying)
+			{
+				m_source.pitch = 1;
+				PlayScoreSound();
+			}
+			*/
 		}
 		
 		
@@ -278,7 +300,7 @@ namespace ProjectStorms
 		}
 		
 		
-		public void PassengersInTray(string factionName, int noOfPassengers)
+		public void PassengersInTray(string factionName, int noOfPassengers, bool morePassengers)
 		{
 			//print (factionName + "  " + noOfPassengers);
 			string people;
@@ -320,6 +342,49 @@ namespace ProjectStorms
 				fourText.fontSize = 100;
 				CancelInvoke("HideFour");
 				ShowText(four);
+			}
+			
+		
+			
+			//Audio stuff
+			if (morePassengers)
+			{
+				float pitchPerPassenger =  (float)(noOfPassengers)/25;
+				float newPitch = 0.5f + pitchPerPassenger;
+				
+			
+				if (!m_source.isPlaying)
+				{	
+					//Set pitch according to passengers in tray
+					if (newPitch <= 1.3f)
+					{
+						m_source.pitch = newPitch;
+					}
+					else
+					{
+						m_source.pitch = 1.3f;
+					}
+					
+					PlayCatchSound();
+				}
+				else
+				if (m_source.isPlaying)
+				{
+					//Reset sound
+					m_source.time = 0;
+					
+					//Set pitch according to passengers in tray
+					if (newPitch <= 1.3f)
+					{
+						m_source.pitch = newPitch;
+					}
+					else
+					{
+						m_source.pitch = 1.3f;
+					}
+					
+					PlayCatchSound();
+				}
 			}
 		}
 
@@ -469,9 +534,24 @@ namespace ProjectStorms
             }
 
         }
+        
+        
+		void PlayCatchSound()
+		{
+			m_source.clip = catchSound;
+			m_source.Play();
+		}
+		
+		void PlayScoreSound()
+		{
+			m_source.clip = scoreSound;
+			//m_source.pitch = Random.Range(1.05f, 1.15f);			
+			m_source.Play();
+		}
 		
 		void Update () 
 		{
+		
             if (m_beenInitialised)
             {
                 TotalTextVisiblity();
