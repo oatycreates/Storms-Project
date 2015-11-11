@@ -130,6 +130,10 @@ namespace ProjectStorms
         private string factionName;
 		private int noOfPassengers = 0;
 		private string airshipTag;
+		
+		//A particle system for visual feedback
+		public ParticleSystem m_system;
+		private string parentFaction;
 
         void Awake()
         {
@@ -153,6 +157,36 @@ namespace ProjectStorms
             	Debug.Log("No score manager in this scene.");
             }
             
+            
+            //Particle stuff
+            m_system.Stop();
+            
+			parentFaction = gameObject.GetComponentInParent<FactionIndentifier>().factionName;
+			
+			if (parentFaction == "PIRATES")
+			{
+				m_system.startColor = Color.red;
+			}
+			else
+			if (parentFaction == "NAVY")
+			{
+				m_system.startColor = Color.blue;
+			}
+			else
+			if (parentFaction == "TINKERERS")
+			{
+				m_system.startColor = Color.green;
+			}
+			else
+			if (parentFaction == "VIKINGS")
+			{
+				m_system.startColor = Color.yellow;
+			}
+			else
+			if (parentFaction == "NONE")
+			{
+				m_system.startColor = Color.white;
+			}
            
         }
 
@@ -378,6 +412,13 @@ namespace ProjectStorms
 				if (m_trayContents.Count > noOfPassengers)
 				{
 					scoreMangager.PassengersInTray(factionName, noOfPassengers, true, airshipTag);
+					
+				
+					
+					if (!m_system.isPlaying)
+					{
+						m_system.Play();
+					}
 				}
 				else
 				if (m_trayContents.Count < noOfPassengers)

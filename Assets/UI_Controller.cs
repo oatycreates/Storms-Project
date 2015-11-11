@@ -163,7 +163,8 @@ namespace ProjectStorms
 				passengersLeft = ("Need " + wordNumber + " more!" );
 				
 				
-				oneText.text = score;
+				//oneText.text = score;
+				oneText.text = passengersLeft;
 				oneText.fontSize = 100;
 				oneText.color = rememberOneColour;
 				
@@ -196,7 +197,8 @@ namespace ProjectStorms
 				oneText.fontSize = 50;
 				oneText.color = rememberTwoColour;
 				
-				twoText.text = score;
+				//twoText.text = score;
+				twoText.text = passengersLeft;
 				twoText.fontSize = 100;
 				twoText.color = rememberTwoColour;
 				
@@ -229,7 +231,8 @@ namespace ProjectStorms
 				twoText.fontSize = 50;
 				twoText.color = rememberThreeColour;
 				
-				threeText.text = score;
+				//threeText.text = score;
+				threeText.text = passengersLeft;
 				threeText.fontSize = 100;
 				threeText.color = rememberThreeColour;
 				
@@ -262,7 +265,8 @@ namespace ProjectStorms
 				threeText.fontSize = 50;
 				threeText.color = rememberFourColour;
 				
-				fourText.text = score;
+				//fourText.text = score;
+				fourText.text = passengersLeft;
 				fourText.fontSize = 100;
 				fourText.color = rememberFourColour;
 				
