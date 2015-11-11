@@ -50,6 +50,7 @@ namespace ProjectStorms
 
         private bool m_beenInitialised = false;
         
+        //Audio stuff
         private AudioSource m_source;
         public AudioClip catchSound;
         public AudioClip scoreSound;
@@ -123,10 +124,15 @@ namespace ProjectStorms
 			ShowText(four);
 		}
 		
-		public void Score(string factionName)
+		public void Score(string factionName, int currentScore)
 		{
 			//Set text
-			string score; 
+			string score; 	//What everyone else sees.
+			
+			//score = (factionName + " SCORE!");
+			
+			string wordNumber = currentScore.ToString();
+			string passengersLeft;
 			
 			if (factionName == "NONAME")
 			{
@@ -141,7 +147,9 @@ namespace ProjectStorms
 			
 			if (factionName == "PIRATES")
 			{
-				score = (factionName + " SCORE!");
+				score = (factionName + " SCORE!"); 
+				passengersLeft = ("Need " + wordNumber + " more!" );
+				
 				
 				oneText.text = score;
 				oneText.fontSize = 100;
@@ -167,7 +175,9 @@ namespace ProjectStorms
 			
 			if (factionName == "NAVY")
 			{
-				score = (factionName + " SCORE!");
+				score = (factionName + " SCORE!"); 
+				passengersLeft = ("Need " + wordNumber + " more!" );
+				
 				
 				oneText.text = score;
 				oneText.fontSize = 50;
@@ -193,7 +203,9 @@ namespace ProjectStorms
 			
 			if (factionName == "TINKERERS")
 			{
-				score = (factionName + " SCORE!");
+				score = (factionName + " SCORE!"); 
+				passengersLeft = ("Need " + wordNumber + " more!" );
+				
 				
 				oneText.text = score;
 				oneText.fontSize = 50;
@@ -219,7 +231,9 @@ namespace ProjectStorms
 			
 			if (factionName == "VIKINGS")
 			{
-				score = (factionName + " SCORE!");
+				score = (factionName + " SCORE!"); 
+				passengersLeft = ("Need " + wordNumber + " more!" );
+				
 				
 				oneText.text = score;
 				oneText.fontSize = 50;
@@ -243,15 +257,22 @@ namespace ProjectStorms
 				ShowText(four);
 			}
 			
-		
-			/*
+						
 			//Audio stuff
 			if (!m_source.isPlaying)
 			{
 				m_source.pitch = 1;
 				PlayScoreSound();
 			}
-			*/
+			else
+			if (m_source.isPlaying)
+			{
+				//Rest timer
+				m_source.time = 0;
+				m_source.pitch = 1;
+				PlayScoreSound();
+			}
+			
 		}
 		
 		
@@ -386,6 +407,47 @@ namespace ProjectStorms
 					PlayCatchSound();
 				}
 			}
+			/*
+			else
+			//check to see if we're losing passengers?
+			if (!morePassengers)
+			{
+				float pitchGoodbyePassenger =  (float)(noOfPassengers)/25;
+				float newPitch = 1.0f - pitchGoodbyePassenger;
+				
+				if (!m_source.isPlaying)
+				{	
+					//Set pitch according to passengers in tray
+					if (newPitch >= 0.5f)
+					{
+						m_source.pitch = newPitch;
+					}
+					else
+					{
+						m_source.pitch = 0.5f;
+					}
+					
+					PlayCatchSound();
+				}
+				else
+				if (m_source.isPlaying)
+				{
+					//Reset sound
+					m_source.time = 0;
+					
+					//Set pitch according to passengers in tray
+					if (newPitch >= 0.5f)
+					{
+						m_source.pitch = newPitch;
+					}
+					else
+					{
+						m_source.pitch = 0.5f;
+					}
+					
+					PlayCatchSound();
+				}
+			}*/
 		}
 
         public void InvertYCam(string factionName)

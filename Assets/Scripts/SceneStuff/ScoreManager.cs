@@ -212,12 +212,12 @@ namespace ProjectStorms
 				//Check to see if any base has less score than last update
 				if (previousAlphaScore != teamBaseAlpha.baseScore)
 				{
-					Score(baseAlphaName);
+					Score(baseAlphaName, teamBaseAlpha.baseScore);
 				}
 				
 				if (previousOmegaScore != teamBaseOmega.baseScore)
 				{
-					Score(baseOmegaName);
+					Score(baseOmegaName, teamBaseOmega.baseScore);
 				}
 			}
 
@@ -251,26 +251,26 @@ namespace ProjectStorms
 				if (previousBase1Score != pirateBase1.baseScore)
 				{
 					//Get faction identifier
-					Score ( pirateBase1.GetComponent<FactionIndentifier>().factionName);
+					Score ( pirateBase1.GetComponent<FactionIndentifier>().factionName, pirateBase1.baseScore);
 					
 				}
 				
 				if (previousBase2Score != pirateBase2.baseScore)
 				{
 					//Score(base2Name);
-					Score ( pirateBase2.GetComponent<FactionIndentifier>().factionName);
+					Score ( pirateBase2.GetComponent<FactionIndentifier>().factionName, pirateBase2.baseScore);
 				}
 				
 				if (previousBase3Score != pirateBase3.baseScore)
 				{
 					//Score(base3Name);
-					Score ( pirateBase3.GetComponent<FactionIndentifier>().factionName);
+					Score ( pirateBase3.GetComponent<FactionIndentifier>().factionName, pirateBase3.baseScore);
 				}
 				
 				if (previousBase4Score != pirateBase4.baseScore)
 				{
 					//Score(base4Name);
-					Score ( pirateBase4.GetComponent<FactionIndentifier>().factionName);
+					Score ( pirateBase4.GetComponent<FactionIndentifier>().factionName, pirateBase4.baseScore);
 				}
 			}
 			
@@ -436,7 +436,7 @@ namespace ProjectStorms
 			}
 		}
 		
-		public void Score(string teamName)	//Base Numbers 1-4 for Free4All Match, 	Base Numbers 5 & 6 for Team Match
+		public void Score(string teamName, int currentScore)	//Base Numbers 1-4 for Free4All Match, 	Base Numbers 5 & 6 for Team Match
 		{
 			//Debug.Log(teamName + "  Scores!");
 			
@@ -452,22 +452,22 @@ namespace ProjectStorms
 			else
 			if (teamName == "PIRATES")
 			{
-				scoreText.Score(teamName);
+				scoreText.Score(teamName, currentScore);
 			}
 			else
 			if (teamName == "NAVY")
 			{
-				scoreText.Score(teamName);
+				scoreText.Score(teamName, currentScore);
 			}
 			else
 			if (teamName == "TINKERERS")
 			{
-				scoreText.Score(teamName);
+				scoreText.Score(teamName, currentScore);
 			}
 			else
 			if (teamName == "VIKINGS")
 			{
-				scoreText.Score(teamName);
+				scoreText.Score(teamName, currentScore);
 			}
 		}
 		
