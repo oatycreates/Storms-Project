@@ -866,22 +866,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!1 &133422
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 424030}
-  - 215: {fileID: 21506730}
-  m_Layer: 0
-  m_Name: ReflectionProbe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &134780
 GameObject:
   m_ObjectHideFlags: 1
@@ -2791,18 +2775,6 @@ Transform:
   - {fileID: 439240}
   m_Father: {fileID: 454792}
   m_RootOrder: 2
---- !u!4 &424030
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133422}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 25.1000004, z: 6.69999981}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 454792}
-  m_RootOrder: 11
 --- !u!4 &424186
 Transform:
   m_ObjectHideFlags: 1
@@ -3144,7 +3116,7 @@ Transform:
   - {fileID: 421938}
   - {fileID: 405998}
   m_Father: {fileID: 454792}
-  m_RootOrder: 16
+  m_RootOrder: 15
 --- !u!4 &443482
 Transform:
   m_ObjectHideFlags: 1
@@ -3320,7 +3292,7 @@ Transform:
   m_Children:
   - {fileID: 480868}
   m_Father: {fileID: 454792}
-  m_RootOrder: 12
+  m_RootOrder: 11
 --- !u!4 &451574
 Transform:
   m_ObjectHideFlags: 1
@@ -3365,9 +3337,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118810}
-  m_LocalRotation: {x: .0602701157, y: -.879422486, z: -.115777858, w: -.457798243}
-  m_LocalPosition: {x: 1495.50684, y: 1079.19067, z: 53.600132}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: .0499500632, y: -.915975749, z: -.120590165, w: -.379409432}
+  m_LocalPosition: {x: -1500, y: 0, z: -1500}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 3}
   m_Children:
   - {fileID: 473796}
   - {fileID: 495582}
@@ -3380,7 +3352,6 @@ Transform:
   - {fileID: 424186}
   - {fileID: 485062}
   - {fileID: 415666}
-  - {fileID: 424030}
   - {fileID: 451356}
   - {fileID: 464416}
   - {fileID: 474386}
@@ -3587,7 +3558,7 @@ Transform:
   m_Children:
   - {fileID: 460798}
   m_Father: {fileID: 454792}
-  m_RootOrder: 13
+  m_RootOrder: 12
 --- !u!4 &464680
 Transform:
   m_ObjectHideFlags: 1
@@ -3776,7 +3747,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 454792}
-  m_RootOrder: 15
+  m_RootOrder: 14
 --- !u!4 &473796
 Transform:
   m_ObjectHideFlags: 1
@@ -3804,7 +3775,7 @@ Transform:
   m_Children:
   - {fileID: 455790}
   m_Father: {fileID: 454792}
-  m_RootOrder: 14
+  m_RootOrder: 13
 --- !u!4 &475144
 Transform:
   m_ObjectHideFlags: 1
@@ -7042,8 +7013,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58501434, z: 1.01383209}
-    m_Extent: {x: 6.19513798, y: 3.38426805, z: 6.00975513}
+    m_Center: {x: -7.62939453e-06, y: 9.37791061, z: .822270393}
+    m_Extent: {x: 8.21751881, y: 4.64617109, z: 4.85204124}
   m_DirtyAABB: 0
 --- !u!137 &13748306
 SkinnedMeshRenderer:
@@ -8410,38 +8381,6 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
---- !u!215 &21506730
-ReflectionProbe:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 133422}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Type: 0
-  m_Mode: 1
-  m_RefreshMode: 0
-  m_TimeSlicingMode: 0
-  m_Resolution: 128
-  m_UpdateFrequency: 0
-  m_Importance: 1
-  m_BoxSize: {x: 550, y: 650, z: 550}
-  m_BoxOffset: {x: .0346069336, y: 0, z: .288574219}
-  m_NearClip: .300000012
-  m_FarClip: 1000
-  m_ShadowDistance: 100
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: 0}
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IntensityMultiplier: 1
-  m_BlendDistance: 1
-  m_HDR: 1
-  m_BoxProjection: 0
-  m_RenderDynamicObjects: 0
-  m_UseOcclusionCulling: 1
-  m_CustomBakedTexture: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
