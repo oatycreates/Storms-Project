@@ -10,7 +10,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-#if (UNITY_STANDALONE)
+#if (UNITY_STANDALONE_WIN || UNITY_XBOX360 || UNITY_XBOXONE || UNITY_WSA || UNITY_WP8 || UNITY_WP8_1)
+// XInput only works on DirectX
 using XInputDotNetPure;
 #endif
 
@@ -202,8 +203,10 @@ namespace ProjectStorms
                         sumRight += ms_currRumbles[i].rightMotor;
                     }
                 }
-                
-#if (UNITY_STANDALONE)
+
+#if (UNITY_STANDALONE_WIN || UNITY_XBOX360 || UNITY_XBOXONE || UNITY_WSA || UNITY_WP8 || UNITY_WP8_1)
+                // XInput only works on DirectX
+
                 // Apply rumble, will clear if sum is zero
                 GamePad.SetVibration((PlayerIndex)playerTag, sumLeft, sumRight);
 #endif
