@@ -45,7 +45,7 @@ namespace ProjectStorms
         {
             if (!m_isInitialised)
             {
-                Debug.LogError("InitialiseMasterCamera() has not been run!");
+                Debug.LogWarning("InitialiseMasterCamera() has not been run!");
             }
         }
 
