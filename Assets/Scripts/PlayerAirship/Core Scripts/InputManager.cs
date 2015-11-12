@@ -208,7 +208,7 @@ namespace ProjectStorms
                 // XInput only works on DirectX
 
                 // Apply rumble, will clear if sum is zero
-                GamePad.SetVibration((PlayerIndex)playerTag, sumLeft, sumRight);
+                //GamePad.SetVibration((PlayerIndex)playerTag, sumLeft, sumRight);
 #endif
             }
         }
