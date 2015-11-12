@@ -64,6 +64,16 @@ namespace ProjectStorms
         public float horizVacuumForce = 0.1f;
 
         /// <summary>
+        /// Radius to force the passengers to match vacuum.
+        /// </summary>
+        public float superVacuumRadius = 3.0f;
+
+        /// <summary>
+        /// Percentage of the player's velocity to match each second when in the super vacuum radius.
+        /// </summary>
+        public float superVacuumStrength = 1.0f;
+
+        /// <summary>
         /// Velocity of the ship last tick.
         /// </summary>
         private Vector3 m_lastShipVel = Vector3.zero;
@@ -284,10 +294,15 @@ namespace ProjectStorms
                         // Apply force
                         tempRb = prisoner.GetComponent<Rigidbody>();
                         tempRb.AddForce(offsetVec * horizVacuumForce, ForceMode.Force);
+
+                        // Stick above player if close enough
+                        if (offsetVec.magnitude <= superVacuumRadius)
+                        {
+                            // Match player velocity
+                            tempRb.velocity = Vector3.Lerp(tempRb.velocity, m_shipRb.velocity, superVacuumStrength * Time.deltaTime);
+                        }
                     }
                 }
-                //horizVacuumRadius
-                //horizVacuumForce;
             }
 
             m_trayContents.Clear();
