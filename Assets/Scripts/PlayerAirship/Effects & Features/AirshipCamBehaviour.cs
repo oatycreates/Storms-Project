@@ -81,7 +81,7 @@ namespace ProjectStorms
         {
             if (!m_isInitialised)
             {
-                Debug.LogError("InitialiseCam() has not been called!");
+                Debug.LogWarning("InitialiseCam() has not been called!");
             }
 
 #if UNITY_EDITOR
