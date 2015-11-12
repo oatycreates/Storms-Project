@@ -331,7 +331,7 @@ namespace ProjectStorms
 		void SpawnPinwheel()
 		{
 			//Spawn offset
-			Vector3 localOffset = new Vector3 (-10, 15, 0);
+			Vector3 localOffset = new Vector3 (-10, 7.5f, 0);
 			Vector3 worldOffset = m_trans.rotation * localOffset;
 			Vector3 spawnPos = m_trans.position + worldOffset;
 

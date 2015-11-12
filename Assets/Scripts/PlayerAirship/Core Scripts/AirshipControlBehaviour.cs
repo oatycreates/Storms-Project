@@ -561,7 +561,7 @@ namespace ProjectStorms
             // Check if moving slowly, increase control if slow
             if (m_myRigid.velocity.magnitude <= highControlSpeedThreshold)
             {
-                handleMod *= highControlMult;
+                handleMod *= highControlMult * (1 - (m_myRigid.velocity.magnitude / highControlSpeedThreshold));
             }
 
             // Reverse 

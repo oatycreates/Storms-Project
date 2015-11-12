@@ -17,22 +17,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &103174
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 477872}
-  - 96: {fileID: 9689436}
-  m_Layer: 0
-  m_Name: Trail Renderer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &105570
 GameObject:
   m_ObjectHideFlags: 1
@@ -1799,7 +1783,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
   m_LocalRotation: {x: 0, y: .923879564, z: 0, w: .382683307}
-  m_LocalPosition: {x: -222.689026, y: 339.261719, z: 94.8362274}
+  m_LocalPosition: {x: -746.761719, y: 368.962463, z: -122.979988}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -1811,7 +1795,6 @@ Transform:
   - {fileID: 456234}
   - {fileID: 447192}
   - {fileID: 22410536}
-  - {fileID: 477872}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &423296
@@ -2550,18 +2533,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 413156}
   m_RootOrder: 2
---- !u!4 &477872
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103174}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.540000021, y: 2.44000006, z: -12.1899996}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 422878}
-  m_RootOrder: 9
 --- !u!4 &478030
 Transform:
   m_ObjectHideFlags: 1
@@ -3606,7 +3577,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144540}
-  m_Mesh: {fileID: 4300026, guid: 23faeca25b218ca41b88d52cee742f18, type: 3}
+  m_Mesh: {fileID: 4300024, guid: ed132d924d67f8945bd64d2f36142272, type: 3}
 --- !u!33 &3353092
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -4504,51 +4475,6 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: .100000001
   m_Autodestruct: 0
---- !u!96 &9689436
-TrailRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103174}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_Materials:
-  - {fileID: 2100000, guid: 72c08ba5472789643a228dfcfc8e789d, type: 2}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 1
-  m_ReflectionProbeUsage: 1
-  m_ProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Time: 1
-  m_StartWidth: 5
-  m_EndWidth: 5
-  m_Colors:
-    m_Color[0]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[1]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[2]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[3]:
-      serializedVersion: 2
-      rgba: 4294967295
-    m_Color[4]:
-      serializedVersion: 2
-      rgba: 16777215
-  m_MinVertexDistance: .100000001
-  m_Autodestruct: 0
 --- !u!108 &10800294
 Light:
   m_ObjectHideFlags: 1
@@ -5235,8 +5161,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58496094, z: 1.0138092}
-    m_Extent: {x: 6.29218292, y: 3.38427734, z: 6.29218292}
+    m_Center: {x: 0, y: 9.58496094, z: 1.01382446}
+    m_Extent: {x: 6.29216194, y: 3.38427734, z: 6.29216194}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:
@@ -7676,7 +7602,7 @@ ParticleSystem:
       minMaxState: 3
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 4000
+    maxNumParticles: 100
   ShapeModule:
     serializedVersion: 2
     enabled: 1
