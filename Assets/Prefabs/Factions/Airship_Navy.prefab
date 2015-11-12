@@ -1689,7 +1689,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194162}
   m_LocalRotation: {x: 0, y: -.923879564, z: 0, w: .382683307}
-  m_LocalPosition: {x: -673.791016, y: 331.235626, z: -122.818039}
+  m_LocalPosition: {x: 581.390015, y: 261.430634, z: 591.583984}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 496100}
@@ -4892,6 +4892,8 @@ MonoBehaviour:
   explosionCentreTrans: {fileID: 407966}
   horizVacuumRadius: 50
   horizVacuumForce: .100000001
+  superVacuumRadius: 3
+  superVacuumStrength: 1
   m_system: {fileID: 19854382}
 --- !u!114 &11487124
 MonoBehaviour:
@@ -4992,6 +4994,8 @@ MonoBehaviour:
   stallY: 1000
   killY: -1479.59998
   trapdoorRumbleCooldown: .75
+  highControlSpeedThreshold: 30
+  highControlMult: 2
   shipPartConns:
   - partType: 1
     partValueMult: 0
@@ -5075,8 +5079,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58496094, z: 1.01373291}
-    m_Extent: {x: 6.29216194, y: 3.38427734, z: 6.29216194}
+    m_Center: {x: 3.05175781e-05, y: 9.58496094, z: 1.01373291}
+    m_Extent: {x: 6.29214573, y: 3.38427734, z: 6.29214573}
   m_DirtyAABB: 0
 --- !u!183 &18325980
 Cloth:
