@@ -52,6 +52,14 @@ namespace ProjectStorms
 		public int pooledPinwheels = 2;
 		List<GameObject> pinwheels;
 
+        public bool weaponsActive
+        {
+            get
+            {
+                return m_currPowerupCooldown <= 0.0f;
+            }
+        }
+
         /// <summary>
         /// For the homing missile's target.
         /// </summary>
@@ -323,7 +331,7 @@ namespace ProjectStorms
 		void SpawnPinwheel()
 		{
 			//Spawn offset
-			Vector3 localOffset = new Vector3 (-10, 15, 0);
+			Vector3 localOffset = new Vector3 (-10, 7.5f, 0);
 			Vector3 worldOffset = m_trans.rotation * localOffset;
 			Vector3 spawnPos = m_trans.position + worldOffset;
 

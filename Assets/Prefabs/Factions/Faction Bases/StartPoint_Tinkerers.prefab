@@ -3564,22 +3564,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!1 &172738
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 498146}
-  - 215: {fileID: 21590770}
-  m_Layer: 0
-  m_Name: ReflectionProbe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &173046
 GameObject:
   m_ObjectHideFlags: 1
@@ -5127,7 +5111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 497250}
-  m_RootOrder: 17
+  m_RootOrder: 16
 --- !u!4 &409740
 Transform:
   m_ObjectHideFlags: 1
@@ -6455,7 +6439,7 @@ Transform:
   m_Children:
   - {fileID: 417722}
   m_Father: {fileID: 497250}
-  m_RootOrder: 16
+  m_RootOrder: 15
 --- !u!4 &448322
 Transform:
   m_ObjectHideFlags: 1
@@ -8358,9 +8342,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186162}
-  m_LocalRotation: {x: .0602701157, y: -.879422486, z: -.115777858, w: -.457798243}
-  m_LocalPosition: {x: -462.912903, y: 648.158569, z: 265.596649}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: .0499500632, y: -.915975749, z: -.120590165, w: -.379409432}
+  m_LocalPosition: {x: -1184, y: 23, z: -816}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 401924}
   - {fileID: 400936}
@@ -8377,23 +8361,10 @@ Transform:
   - {fileID: 448870}
   - {fileID: 484730}
   - {fileID: 491920}
-  - {fileID: 498146}
   - {fileID: 447718}
   - {fileID: 408990}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &498146
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172738}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 30.7000008, z: 8.19999981}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 497250}
-  m_RootOrder: 15
 --- !u!4 &498172
 Transform:
   m_ObjectHideFlags: 1
@@ -14407,8 +14378,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 4.76837158e-07, y: 9.58500671, z: 1.01383209}
-    m_Extent: {x: 6.1951437, y: 3.38427258, z: 6.00976467}
+    m_Center: {x: -7.62939453e-06, y: 9.37791252, z: .822265625}
+    m_Extent: {x: 8.21751881, y: 4.64617109, z: 4.85204506}
   m_DirtyAABB: 0
 --- !u!137 &13783920
 SkinnedMeshRenderer:
@@ -14937,38 +14908,6 @@ Cloth:
     collisionSphereDistance: 3.40282347e+38
   m_CapsuleColliders: []
   m_SphereColliders: []
---- !u!215 &21590770
-ReflectionProbe:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 172738}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Type: 0
-  m_Mode: 1
-  m_RefreshMode: 0
-  m_TimeSlicingMode: 0
-  m_Resolution: 128
-  m_UpdateFrequency: 0
-  m_Importance: 1
-  m_BoxSize: {x: 550, y: 550, z: 550}
-  m_BoxOffset: {x: .0346069336, y: -2.67779541, z: .288574219}
-  m_NearClip: .300000012
-  m_FarClip: 1000
-  m_ShadowDistance: 100
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: 0}
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IntensityMultiplier: 1
-  m_BlendDistance: 1
-  m_HDR: 1
-  m_BoxProjection: 0
-  m_RenderDynamicObjects: 0
-  m_UseOcclusionCulling: 1
-  m_CustomBakedTexture: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -14995,6 +14934,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

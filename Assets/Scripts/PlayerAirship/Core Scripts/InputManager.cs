@@ -10,7 +10,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-#if (UNITY_STANDALONE)
+#if (UNITY_STANDALONE_WIN || UNITY_XBOX360 || UNITY_XBOXONE || UNITY_WSA || UNITY_WP8 || UNITY_WP8_1)
+// XInput only works on DirectX
 using XInputDotNetPure;
 #endif
 
@@ -202,10 +203,12 @@ namespace ProjectStorms
                         sumRight += ms_currRumbles[i].rightMotor;
                     }
                 }
-                
-#if (UNITY_STANDALONE)
+
+#if (UNITY_STANDALONE_WIN || UNITY_XBOX360 || UNITY_XBOXONE || UNITY_WSA || UNITY_WP8 || UNITY_WP8_1)
+                // XInput only works on DirectX
+
                 // Apply rumble, will clear if sum is zero
-                GamePad.SetVibration((PlayerIndex)playerTag, sumLeft, sumRight);
+                //GamePad.SetVibration((PlayerIndex)playerTag, sumLeft, sumRight);
 #endif
             }
         }
@@ -243,7 +246,7 @@ namespace ProjectStorms
         /// <summary>
         /// Makes the input controller vibrate.
         /// </summary>
-        /// <param name="a_playerTag">Player tag. E.g. "Player1_"</param>
+        /// <param name="a_player">Player tag e.g. "Player1_".</param>
         /// <param name="a_motorLeft">Vibration value for the left controller motor. Should have a maximum of 1. Is a percentage value.</param>
         /// <param name="a_motorRight">Vibration value for the right controller motor. Should have a maximum of 1. Is a percentage value.</param>
         /// <param name="a_rumbleDurr">How long to rumble for in seconds.</param>
@@ -253,19 +256,35 @@ namespace ProjectStorms
             // Ignore null vibrations
             if (a_motorLeft != 0 || a_motorRight != 0)
             {
-                // Find the player of the input tag
-                for (int i = 0; i < ms_playerTags.Length; ++i)
+                // Find the player index
+                int playerIndex = -1;
+                switch (a_playerTag)
                 {
-                    if (ms_playerTags[i].CompareTo(a_playerTag) == 0)
-                    {
-                        // Store the vibration for later
-                        ms_currRumbles.Add(new ControllerRumbleInfo(i, Mathf.Min(a_motorLeft, 1.0f), Mathf.Min(a_motorRight, 1.0f), a_rumbleDurr));
-
-                        if (a_shouldShakeScreen)
-                        {
-                            ShakeScreenForPlayer(a_playerTag, Mathf.Max(a_motorLeft, a_motorRight), a_rumbleDurr);
-                        }
+                    case "Player1_":
+                        playerIndex = 0;
                         break;
+                    case "Player2_":
+                        playerIndex = 1;
+                        break;
+                    case "Player3_":
+                        playerIndex = 2;
+                        break;
+                    case "Player4_":
+                        playerIndex = 3;
+                        break;
+                    default:
+                        Debug.LogWarning("Unknown player tag for vibrations!");
+                        break;
+                }
+
+                if (playerIndex >= 0)
+                {
+                    // Store the vibration for later
+                    ms_currRumbles.Add(new ControllerRumbleInfo(playerIndex, Mathf.Min(a_motorLeft, 1.0f), Mathf.Min(a_motorRight, 1.0f), a_rumbleDurr));
+
+                    if (a_shouldShakeScreen)
+                    {
+                        ShakeScreenForPlayer(a_playerTag, Mathf.Max(a_motorLeft, a_motorRight), a_rumbleDurr);
                     }
                 }
             }
@@ -274,7 +293,7 @@ namespace ProjectStorms
         /// <summary>
         /// Shakes the the screen for the input player.
         /// </summary>
-        /// <param name="a_playerTag">Player tag. E.g. "Player1_"</param>
+        /// <param name="a_player">Player tag e.g. "Player1_".</param>
         /// <param name="a_shakeStr">Amplitude of the shake.</param>
         /// <param name="a_shakeDurr">Duration of the shake.</param>
         private static void ShakeScreenForPlayer(string a_playerTag, float a_shakeStr, float a_shakeDurr)
