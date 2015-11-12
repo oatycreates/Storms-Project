@@ -123,6 +123,16 @@ namespace ProjectStorms
         public float trapdoorRumbleCooldown = 0.75f;
 
         /// <summary>
+        /// Speed threshold to consider for high control multipliers.
+        /// </summary>
+        public float highControlSpeedThreshold = 30.0f;
+
+        /// <summary>
+        /// Multiplier for each contro axis when moving slowly.
+        /// </summary>
+        public float highControlMult = 2.0f;
+
+        /// <summary>
         /// Multiplier values for when various ship parts get destroyed.
         /// </summary>
         public ShipPartInputConnection[] shipPartConns;
@@ -547,6 +557,12 @@ namespace ProjectStorms
 
             // Handle worse when laden
             float handleMod = 1.0f; // CalcHandlingMassMult();
+
+            // Check if moving slowly, increase control if slow
+            if (m_myRigid.velocity.magnitude <= highControlSpeedThreshold)
+            {
+                handleMod *= highControlMult;
+            }
 
             // Reverse 
             float reverseMult = 1;
