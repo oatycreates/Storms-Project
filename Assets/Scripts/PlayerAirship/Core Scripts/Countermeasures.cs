@@ -218,7 +218,7 @@ namespace ProjectStorms
 		void SpawnMissile()
 		{
 			//Local offset
-			Vector3 localOffset = new Vector3 (0, 0, 20);
+			Vector3 localOffset = new Vector3 (0, 0, 22);
 			Vector3 worldOffest = m_trans.rotation * localOffset;
 			Vector3 spawnPos = m_trans.position + worldOffest;
 
