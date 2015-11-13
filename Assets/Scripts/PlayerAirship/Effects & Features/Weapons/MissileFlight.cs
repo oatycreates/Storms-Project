@@ -280,7 +280,7 @@ namespace ProjectStorms
 
             // Disable on hit
            //gameObject.SetActive(false);
-           Invoke("GoToSleep", 0.1f);
+           Invoke("GoToSleep", 0.5f);
         }
 
         /*
