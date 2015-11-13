@@ -343,6 +343,8 @@ namespace ProjectStorms
             m_rb.velocity = Vector3.zero;
             m_rb.angularVelocity = Vector3.zero;
 
+            m_airshipScript.ClearPropellerAnim();
+
             // Repair the player ship
             m_shipParts.RepairAllParts();
         }

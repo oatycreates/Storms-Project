@@ -379,6 +379,11 @@ namespace ProjectStorms
 			}
         }
 
+        public void ClearPropellerAnim()
+        {
+            m_anim.SetFloat(m_animPropellerMult, 0);
+        }
+
         /// <summary>
         /// Executes a pulse of rumble, repeats if button is still held down.
         /// </summary>
