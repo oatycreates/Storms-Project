@@ -105,6 +105,9 @@ namespace ProjectStorms
             }
         }
 
+        [HideInInspector]
+        public float lastTrayTime = -1.0f;
+
         /// <summary>
         /// Time until the tray powers back up.
         /// </summary>
@@ -329,6 +332,8 @@ namespace ProjectStorms
                         rb.velocity = m_lastShipVel;
                         rb.angularVelocity = m_lastShipAngVel;
                         rb.AddForce(Physics.gravity, ForceMode.VelocityChange);
+
+                        lastTrayTime = Time.time;
 
                         // Cumulate mass
                         m_trayContents.Add(rb.gameObject);
