@@ -4978,13 +4978,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjustableMass: 20
-  generalSpeed: 200
+  generalSpeed: 250
   reverseSpeedMult: .25
   pitchForce: 1500
-  yawForce: 3750
+  yawForce: 4000
   rollForce: 1000
   pitchLimitMult: 1.5
-  rollLimitMult: 1.5
+  rollLimitMult: 1
   animThrottleMult: 2.5
   animLowThrottleMult: 0
   airshipMainCam: {fileID: 11464088}
@@ -9571,11 +9571,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: yawForce
-      value: 1500
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: generalSpeed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rollLimitMult
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
