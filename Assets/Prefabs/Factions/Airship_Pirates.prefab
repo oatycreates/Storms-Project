@@ -4966,7 +4966,7 @@ MonoBehaviour:
   yawForce: 4000
   rollForce: 1000
   pitchLimitMult: 1.5
-  rollLimitMult: 1
+  rollLimitMult: 2
   animThrottleMult: 2.5
   animLowThrottleMult: 0
   airshipMainCam: {fileID: 11448570}
@@ -5062,6 +5062,8 @@ MonoBehaviour:
   explosionCentreTrans: {fileID: 490864}
   horizVacuumRadius: 50
   horizVacuumForce: .100000001
+  superVacuumRadius: 3
+  superVacuumStrength: 1
   m_system: {fileID: 19876236}
 --- !u!114 &11494226
 MonoBehaviour:
@@ -11847,7 +11849,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: rollLimitMult
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
