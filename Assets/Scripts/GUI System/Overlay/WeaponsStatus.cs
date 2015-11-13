@@ -40,18 +40,18 @@ namespace ProjectStorms
         [Range(1, 4)]
         public int playerNumber = 1;
 
-        private Image m_weaponStatusImage;
+        //private Image m_weaponStatusImage;
 
         private Countermeasures m_playerWeaponSystem;
         private StateManager m_playerStateManager;
 
         public void Awake()
         {
-            m_weaponStatusImage = GetComponent<Image>();
+            /*m_weaponStatusImage = GetComponent<Image>();
             if (m_weaponStatusImage == null)
             {
                 Debug.LogError("No Image component attached");
-            }
+            }*/
         }
 
         void Start()
@@ -85,7 +85,7 @@ namespace ProjectStorms
             }
             else
             {
-                cannonImage.sprite = cannonActive;
+                cannonImage.sprite = cannonInactive;
             }
 
             // Set Mine Sprite
