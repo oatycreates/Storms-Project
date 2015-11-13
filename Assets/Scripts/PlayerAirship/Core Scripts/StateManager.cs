@@ -88,6 +88,9 @@ namespace ProjectStorms
         //Stall button
         private bool stallBtnDown;
 
+        //Get AudioSource on PlayerAirship
+        private AudioSource m_Audio;
+
         void Awake()
         {
             m_trans = transform;
@@ -107,6 +110,9 @@ namespace ProjectStorms
             // World position & rotation
             m_worldStartPos = m_trans.position;
             m_worldStartRotation = m_trans.rotation;
+
+            //get reference to audio source
+            m_Audio = gameObject.GetComponent<AudioSource>();
         }
 
         void Start()
@@ -147,6 +153,20 @@ namespace ProjectStorms
 						
 						m_suicideScript.timerUntilReset = timer;
 					}
+                    else
+                    {
+                        //Do Murrays sound here.
+                        if (!m_Audio.isPlaying)
+                        {
+                            m_Audio.Play();
+                        }/*
+                        else
+                        if (m_Audio.isPlaying)
+                        {
+                            m_Audio.time = 0;
+                            m_Audio.Play();
+                        }*/
+                    }
 				}
 			}
 			

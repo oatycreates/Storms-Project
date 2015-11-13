@@ -1504,6 +1504,7 @@ GameObject:
   - 114: {fileID: 11439742}
   - 114: {fileID: 11404446}
   - 114: {fileID: 11430862}
+  - 82: {fileID: 8258316}
   m_Layer: 0
   m_Name: Airship_Pirates
   m_TagString: Player1_
@@ -1783,7 +1784,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193358}
   m_LocalRotation: {x: 0, y: .923879564, z: 0, w: .382683307}
-  m_LocalPosition: {x: 396.200012, y: 270.995026, z: 540.63147}
+  m_LocalPosition: {x: -160, y: 308, z: 461}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431462}
@@ -4179,6 +4180,76 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8258316
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 193358}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d57992a6de598e44cbdc7cb67baae31d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1.11000001
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!82 &8260808
 AudioSource:
   m_ObjectHideFlags: 1
@@ -4641,12 +4712,16 @@ MonoBehaviour:
   powerUpCooldown: 1.5
   missilePrefab: {fileID: 133982, guid: a4a46434d1bb8284e982c7d11e4374f0, type: 2}
   pooledMissiles: 2
+  missileCooldown: 0
   chaffPrefab: {fileID: 176804, guid: 51c1189e727dd794a92747d696c77e62, type: 2}
   pooledChaff: 3
+  chaffCooldown: 0
   skyMinePrefab: {fileID: 107992, guid: a6ccf0fb192ba2144857dd8d073db124, type: 2}
   pooledSkyMines: 3
+  minesCooldown: 0
   pinwheelPrefab: {fileID: 180144, guid: f5400e541fe588743b9fd758804f8513, type: 2}
   pooledPinwheels: 2
+  pinwheelCooldown: 0
   gotPickup: 1
   announcerText: {fileID: 0}
 --- !u!114 &11436244
@@ -4996,6 +5071,7 @@ MonoBehaviour:
   yaw: 0
   throttle: 0
   openHatch: 0
+  forceOpenHatch: 0
 --- !u!114 &11486696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5064,6 +5140,7 @@ MonoBehaviour:
   horizVacuumForce: .100000001
   superVacuumRadius: 3
   superVacuumStrength: 1
+  lastTrayTime: -1
   m_system: {fileID: 19876236}
 --- !u!114 &11494226
 MonoBehaviour:
@@ -5165,8 +5242,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58496094, z: 1.01381683}
-    m_Extent: {x: 6.29216671, y: 3.38427734, z: 6.29216671}
+    m_Center: {x: 0, y: 9.58496094, z: 1.01382446}
+    m_Extent: {x: 6.29218864, y: 3.38427734, z: 6.29218864}
   m_DirtyAABB: 0
 --- !u!183 &18356394
 Cloth:
