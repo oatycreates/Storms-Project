@@ -56,14 +56,6 @@ namespace ProjectStorms
         List<GameObject> pinwheels;
         public float pinwheelCooldown = 0.0f;
 
-        public bool weaponsActive
-        {
-            get
-            {
-                return m_currPowerupCooldown <= 0.0f;
-            }
-        }
-
         /// <summary>
         /// For the homing missile's target.
         /// </summary>
