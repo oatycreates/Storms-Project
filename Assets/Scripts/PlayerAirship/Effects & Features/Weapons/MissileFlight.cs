@@ -262,6 +262,7 @@ namespace ProjectStorms
                 if (tray != null)
                 {
                     Vector3 missileVel = m_myRigid.velocity;
+                    tray.PowerDownTray();
 
                     // Launch passengers with missile velocity
                     Rigidbody rbTemp = null;
