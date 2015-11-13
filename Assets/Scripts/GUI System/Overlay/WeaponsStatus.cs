@@ -88,8 +88,19 @@ namespace ProjectStorms
                 cannonImage.sprite = cannonInactive;
             }
 
+            // Count mines in scene
+            int numMyMinesInScene = 0;
+            MineBehaviour[] mines = GameObject.FindObjectsOfType<MineBehaviour>();
+            foreach (MineBehaviour mine in mines)
+            {
+                if (mine.gameObject.CompareTag(m_playerWeaponSystem.gameObject.tag))
+                {
+                    numMyMinesInScene += 1;
+                }
+            }
+
             // Set Mine Sprite
-            if (m_playerWeaponSystem.minesCooldown <= 0.0f)
+            if (m_playerWeaponSystem.minesCooldown <= 0.0f && numMyMinesInScene < m_playerWeaponSystem.pooledSkyMines)
             {
                 mineImage.sprite = mineActive;
             }
