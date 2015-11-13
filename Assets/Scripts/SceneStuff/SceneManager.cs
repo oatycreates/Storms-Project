@@ -22,7 +22,7 @@ namespace ProjectStorms
             // Reset the level - Press Both Start AND Select
 			if ((Input.GetButton("Player1_Start") && Input.GetButton("Player1_Select")) || (Input.GetButton("Player2_Start") && Input.GetButton("Player2_Select")) || (Input.GetButton("Player3_Start") && Input.GetButton("Player3_Select")) || (Input.GetButton("Player4_Start") && Input.GetButton("Player4_Select")) )
 			{
-				LoopCurrentLevel();
+                MenuScene();
 			}
 
             if (Input.GetKeyDown(KeyCode.Backspace))
