@@ -262,6 +262,7 @@ namespace ProjectStorms
                 if (tray != null)
                 {
                     Vector3 missileVel = m_myRigid.velocity;
+                    tray.PowerDownTray();
 
                     // Launch passengers with missile velocity
                     Rigidbody rbTemp = null;
@@ -279,7 +280,7 @@ namespace ProjectStorms
 
             // Disable on hit
            //gameObject.SetActive(false);
-           Invoke("GoToSleep", 0.1f);
+           Invoke("GoToSleep", 0.5f);
         }
 
         /*

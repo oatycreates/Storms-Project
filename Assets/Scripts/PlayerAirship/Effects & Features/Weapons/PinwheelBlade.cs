@@ -23,6 +23,16 @@ namespace ProjectStorms
         public float upSuckForce = 0.4f;
         public float inSuckForce = 10.0f;
 
+        /// <summary>
+        /// Radius to force the passengers to match vacuum.
+        /// </summary>
+        public float superVacuumRadius = 3.0f;
+
+        /// <summary>
+        /// Percentage of the player's velocity to match each second when in the super vacuum radius.
+        /// </summary>
+        public float superVacuumStrength = 1.0f;
+
         //Custom timer for the pinwheel - this has to be here, because this way we can caluclate how the passengers are ejected from the vortex
 
         private float internalTimer = 1;
@@ -149,6 +159,19 @@ namespace ProjectStorms
 		                    passengerRigidbody.transform.LookAt(a_localOffset);
 
                             passengerRigidbody.AddRelativeForce(Vector3.forward * inSuckForce * distFactor, ForceMode.Force);
+
+                            // Stick into whirlwind
+                            if (moveScript != null)
+                            {
+                                Transform moveTrans = moveScript.transform;
+                                Vector3 offsetVec = (moveTrans.position - passengerRigidbody.position);
+                                if (offsetVec.magnitude <= superVacuumRadius)
+                                {
+                                    // Match whirlwind velocity
+                                    passengerRigidbody.velocity = Vector3.Lerp(passengerRigidbody.velocity,
+                                        moveTrans.forward * moveScript.speed, superVacuumStrength * Time.deltaTime);
+                                }
+                            }
 	                    }
 	                    else
 	                    if (velocityCancel) // cancel out velocity

@@ -68,6 +68,7 @@ namespace ProjectStorms
         private bool m_selectHeld     = false;    // Current state of the select button
         private bool m_lastSelectHeld = false;    // Last frame's state of the back button, for comparison
 
+
         void Awake()
         {
             m_myRigid = gameObject.GetComponent<Rigidbody>();

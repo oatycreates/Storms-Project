@@ -29,7 +29,7 @@ namespace ProjectStorms
         /// <summary>
         /// Current powerup cooldown.
         /// </summary>
-        private float m_currPowerupCooldown = 0.0f;
+        //private float m_currPowerupCooldown = 0.0f;
 
 		//CannonPort
 		/*
@@ -39,26 +39,22 @@ namespace ProjectStorms
 		public GameObject missilePrefab;
 		public int pooledMissiles = 3;
 		List<GameObject> missiles;
+        public float missileCooldown = 0.0f;
 
 		public GameObject chaffPrefab;
 		public int pooledChaff = 3;
-		List<GameObject> chaff;
+        List<GameObject> chaff;
+        public float chaffCooldown = 0.0f;
 
 		public GameObject skyMinePrefab;
 		public int pooledSkyMines = 3;
-		List<GameObject> skyMines;
+        List<GameObject> skyMines;
+        public float minesCooldown = 0.0f;
 
 		public GameObject pinwheelPrefab;
 		public int pooledPinwheels = 2;
-		List<GameObject> pinwheels;
-
-        public bool weaponsActive
-        {
-            get
-            {
-                return m_currPowerupCooldown <= 0.0f;
-            }
-        }
+        List<GameObject> pinwheels;
+        public float pinwheelCooldown = 0.0f;
 
         /// <summary>
         /// For the homing missile's target.
@@ -151,15 +147,30 @@ namespace ProjectStorms
 			}
 
             // Start on cooldown
-            m_currPowerupCooldown = powerUpCooldown;
+            missileCooldown = powerUpCooldown;
+            chaffCooldown = powerUpCooldown;
+            minesCooldown = powerUpCooldown;
+            pinwheelCooldown = powerUpCooldown;
 		}
 
         void Update()
         {
             // Decrease powerup cooldown if waiting
-            if (m_currPowerupCooldown > 0)
+            if (missileCooldown > 0)
             {
-                m_currPowerupCooldown -= Time.deltaTime;
+                missileCooldown -= Time.deltaTime;
+            }
+            if (chaffCooldown > 0)
+            {
+                chaffCooldown -= Time.deltaTime;
+            }
+            if (minesCooldown > 0)
+            {
+                minesCooldown -= Time.deltaTime;
+            }
+            if (pinwheelCooldown > 0)
+            {
+                pinwheelCooldown -= Time.deltaTime;
             }
         }
 
@@ -171,36 +182,33 @@ namespace ProjectStorms
                 // Check to see if I can fire any countermeasures
                 //if (gotPickup)
                 {
-                    if (m_currPowerupCooldown <= 0)
+                    // Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
+                    if (a_faceDown && chaffCooldown <= 0)//(a_down)
                     {
-                        // Missile is UP, Chaff is DOWN, Mine is RIGHT, Pinwheel is LEFT
-                        if (a_faceDown)//(a_down)
-                        {
-                            SpawnChaff();
-                            buttonDown = true;
-                            gotPickup = false;
-                        }
+                        SpawnChaff();
+                        buttonDown = true;
+                        gotPickup = false;
+                    }
 
-                        if (a_faceUp) //(a_up)
-                        {
-                            SpawnMissile();
-                            buttonDown = true;
-                            gotPickup = false;
-                        }
+                    if (a_faceUp && missileCooldown <= 0) //(a_up)
+                    {
+                        SpawnMissile();
+                        buttonDown = true;
+                        gotPickup = false;
+                    }
 
-                        if (a_faceRight) //(a_right)
-                        {
-                            SpawnSkyMine();
-                            buttonDown = true;
-                            gotPickup = false;
-                        }
+                    if (a_faceRight && minesCooldown <= 0) //(a_right)
+                    {
+                        SpawnSkyMine();
+                        buttonDown = true;
+                        gotPickup = false;
+                    }
 
-                        if (a_faceLeft) //(a_left)
-                        {
-                            SpawnPinwheel();
-                            buttonDown = true;
-                            gotPickup = false;
-                        }
+                    if (a_faceLeft && pinwheelCooldown <= 0) //(a_left)
+                    {
+                        SpawnPinwheel();
+                        buttonDown = true;
+                        gotPickup = false;
                     }
                 }
 
@@ -218,7 +226,7 @@ namespace ProjectStorms
 		void SpawnMissile()
 		{
 			//Local offset
-			Vector3 localOffset = new Vector3 (0, 0, 20);
+			Vector3 localOffset = new Vector3 (0, 0, 22);
 			Vector3 worldOffest = m_trans.rotation * localOffset;
 			Vector3 spawnPos = m_trans.position + worldOffest;
 
@@ -231,7 +239,7 @@ namespace ProjectStorms
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
 
                     // Go on cooldown
-                    m_currPowerupCooldown = powerUpCooldown;
+                    missileCooldown = powerUpCooldown;
 
                     //missiles[i].transform.position = spawnOffset;
 					//missiles[i].transform.position = port.transform.position;
@@ -289,7 +297,7 @@ namespace ProjectStorms
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
 
                     // Go on cooldown
-                    m_currPowerupCooldown = powerUpCooldown;
+                    chaffCooldown = powerUpCooldown;
 
                     chaff[i].transform.position = spawnPos;
 					chaff[i].transform.rotation = m_trans.rotation;
@@ -316,7 +324,7 @@ namespace ProjectStorms
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
 
                     // Go on cooldown
-                    m_currPowerupCooldown = powerUpCooldown;
+                    minesCooldown = powerUpCooldown;
 
                     //skyMines[i].transform.position = m_trans.position;
 					skyMines[i].transform.position = spawnPos;
@@ -343,7 +351,7 @@ namespace ProjectStorms
                     InputManager.SetControllerVibrate(gameObject.tag, 0.3f, 0.3f, 0.2f, false);
 
                     // Go on cooldown
-                    m_currPowerupCooldown = powerUpCooldown;
+                    pinwheelCooldown = powerUpCooldown;
 
 					pinwheels[i].transform.position = spawnPos;
 					pinwheels[i].transform.rotation = m_trans.rotation;

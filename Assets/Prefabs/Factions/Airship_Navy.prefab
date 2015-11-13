@@ -1489,6 +1489,7 @@ GameObject:
   - 114: {fileID: 11440284}
   - 114: {fileID: 11458632}
   - 114: {fileID: 11423164}
+  - 82: {fileID: 8271900}
   m_Layer: 0
   m_Name: Airship_Navy
   m_TagString: Player2_
@@ -1689,7 +1690,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194162}
   m_LocalRotation: {x: 0, y: -.923879564, z: 0, w: .382683307}
-  m_LocalPosition: {x: -673.791016, y: 331.235626, z: -122.818039}
+  m_LocalPosition: {x: 451.469574, y: 420.34845, z: 332.418457}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 496100}
@@ -4231,6 +4232,76 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!82 &8271900
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194162}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d57992a6de598e44cbdc7cb67baae31d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1.11000001
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!82 &8298254
 AudioSource:
   m_ObjectHideFlags: 1
@@ -4598,12 +4669,16 @@ MonoBehaviour:
   powerUpCooldown: 1.5
   missilePrefab: {fileID: 133982, guid: a4a46434d1bb8284e982c7d11e4374f0, type: 2}
   pooledMissiles: 2
+  missileCooldown: 0
   chaffPrefab: {fileID: 176804, guid: 51c1189e727dd794a92747d696c77e62, type: 2}
   pooledChaff: 3
+  chaffCooldown: 0
   skyMinePrefab: {fileID: 107992, guid: a6ccf0fb192ba2144857dd8d073db124, type: 2}
   pooledSkyMines: 3
+  minesCooldown: 0
   pinwheelPrefab: {fileID: 180144, guid: f5400e541fe588743b9fd758804f8513, type: 2}
   pooledPinwheels: 2
+  pinwheelCooldown: 0
   gotPickup: 1
   announcerText: {fileID: 0}
 --- !u!114 &11428262
@@ -4892,6 +4967,9 @@ MonoBehaviour:
   explosionCentreTrans: {fileID: 407966}
   horizVacuumRadius: 50
   horizVacuumForce: .100000001
+  superVacuumRadius: 3
+  superVacuumStrength: 1
+  lastTrayTime: -1
   m_system: {fileID: 19854382}
 --- !u!114 &11487124
 MonoBehaviour:
@@ -4976,13 +5054,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjustableMass: 20
-  generalSpeed: 200
+  generalSpeed: 250
   reverseSpeedMult: .25
   pitchForce: 1500
-  yawForce: 3750
+  yawForce: 6000
   rollForce: 1000
   pitchLimitMult: 1.5
-  rollLimitMult: 1.5
+  rollLimitMult: 2
   animThrottleMult: 2.5
   animLowThrottleMult: 0
   airshipMainCam: {fileID: 11464088}
@@ -4992,6 +5070,8 @@ MonoBehaviour:
   stallY: 1000
   killY: -1479.59998
   trapdoorRumbleCooldown: .75
+  highControlSpeedThreshold: 30
+  highControlMult: 2
   shipPartConns:
   - partType: 1
     partValueMult: 0
@@ -5010,6 +5090,7 @@ MonoBehaviour:
   yaw: 0
   throttle: 0
   openHatch: 0
+  forceOpenHatch: 0
 --- !u!124 &12482752
 Behaviour:
   m_ObjectHideFlags: 1
@@ -5075,8 +5156,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: 9.58496094, z: 1.01373291}
-    m_Extent: {x: 6.29216194, y: 3.38427734, z: 6.29216194}
+    m_Center: {x: 0, y: 9.58496094, z: 1.01385498}
+    m_Extent: {x: 6.29218864, y: 3.38427734, z: 6.29218864}
   m_DirtyAABB: 0
 --- !u!183 &18325980
 Cloth:
@@ -9567,11 +9648,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: yawForce
-      value: 1500
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: generalSpeed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: rollLimitMult
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -64,6 +64,16 @@ namespace ProjectStorms
         public float horizVacuumForce = 0.1f;
 
         /// <summary>
+        /// Radius to force the passengers to match vacuum.
+        /// </summary>
+        public float superVacuumRadius = 3.0f;
+
+        /// <summary>
+        /// Percentage of the player's velocity to match each second when in the super vacuum radius.
+        /// </summary>
+        public float superVacuumStrength = 1.0f;
+
+        /// <summary>
         /// Velocity of the ship last tick.
         /// </summary>
         private Vector3 m_lastShipVel = Vector3.zero;
@@ -94,6 +104,9 @@ namespace ProjectStorms
                 return m_trayContents;
             }
         }
+
+        [HideInInspector]
+        public float lastTrayTime = -1.0f;
 
         /// <summary>
         /// Time until the tray powers back up.
@@ -275,7 +288,7 @@ namespace ProjectStorms
                     offsetVec = m_trans.position - tempTrans.position;
 
                     // If in range
-                    if (offsetVec.magnitude <= horizVacuumRadius)
+                    if (offsetVec.magnitude <= horizVacuumRadius && offsetVec.y < 0)
                     {
                         // Make force horizontal
                         offsetVec.y = 0;
@@ -284,10 +297,15 @@ namespace ProjectStorms
                         // Apply force
                         tempRb = prisoner.GetComponent<Rigidbody>();
                         tempRb.AddForce(offsetVec * horizVacuumForce, ForceMode.Force);
+
+                        // Stick above player if close enough
+                        if (offsetVec.magnitude <= superVacuumRadius)
+                        {
+                            // Match player velocity
+                            tempRb.velocity = Vector3.Lerp(tempRb.velocity, m_shipRb.velocity, superVacuumStrength * Time.deltaTime);
+                        }
                     }
                 }
-                //horizVacuumRadius
-                //horizVacuumForce;
             }
 
             m_trayContents.Clear();
@@ -314,6 +332,8 @@ namespace ProjectStorms
                         rb.velocity = m_lastShipVel;
                         rb.angularVelocity = m_lastShipAngVel;
                         rb.AddForce(Physics.gravity, ForceMode.VelocityChange);
+
+                        lastTrayTime = Time.time;
 
                         // Cumulate mass
                         m_trayContents.Add(rb.gameObject);
