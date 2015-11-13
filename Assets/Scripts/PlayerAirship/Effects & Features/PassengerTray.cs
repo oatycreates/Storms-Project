@@ -285,7 +285,7 @@ namespace ProjectStorms
                     offsetVec = m_trans.position - tempTrans.position;
 
                     // If in range
-                    if (offsetVec.magnitude <= horizVacuumRadius)
+                    if (offsetVec.magnitude <= horizVacuumRadius && offsetVec.y < 0)
                     {
                         // Make force horizontal
                         offsetVec.y = 0;
