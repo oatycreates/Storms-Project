@@ -7490,6 +7490,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &189416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 408166}
+  - 65: {fileID: 6599232}
+  - 114: {fileID: 11497624}
+  m_Layer: 0
+  m_Name: AutoTrayOpen
+  m_TagString: Player2_
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &189420
 GameObject:
   m_ObjectHideFlags: 1
@@ -9018,6 +9035,18 @@ Transform:
   - {fileID: 434412}
   m_Father: {fileID: 490990}
   m_RootOrder: 4
+--- !u!4 &408166
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189416}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 43.4000015, z: 11.6000004}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_Children: []
+  m_Father: {fileID: 478628}
+  m_RootOrder: 14
 --- !u!4 &408228
 Transform:
   m_ObjectHideFlags: 1
@@ -13867,6 +13896,7 @@ Transform:
   - {fileID: 445192}
   - {fileID: 469960}
   - {fileID: 480078}
+  - {fileID: 408166}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &478652
@@ -18134,6 +18164,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 12.5, y: 3, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6599232
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &9504824
 Animator:
   serializedVersion: 3
@@ -18372,6 +18414,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faction: 0
   factionName: NONAME
+--- !u!114 &11497624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3fc19273efe3f842a63f4d3316b78d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &13637650
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -18936,6 +18989,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Player2_
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -1040,6 +1040,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &108280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 434790}
+  - 65: {fileID: 6548802}
+  - 114: {fileID: 11435292}
+  m_Layer: 0
+  m_Name: AutoTrayOpen
+  m_TagString: Player3_
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &108448
 GameObject:
   m_ObjectHideFlags: 1
@@ -15442,6 +15459,18 @@ Transform:
   - {fileID: 478028}
   m_Father: {fileID: 449372}
   m_RootOrder: 19
+--- !u!4 &434790
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 43.4000015, z: 11.6000004}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_Children: []
+  m_Father: {fileID: 497250}
+  m_RootOrder: 24
 --- !u!4 &435098
 Transform:
   m_ObjectHideFlags: 1
@@ -21647,6 +21676,7 @@ Transform:
   - {fileID: 440444}
   - {fileID: 431806}
   - {fileID: 470632}
+  - {fileID: 434790}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &497330
@@ -27619,6 +27649,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6548802
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108280}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6549426
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -28509,6 +28551,17 @@ MonoBehaviour:
   maxRotationInDegrees: 90
   controller: {fileID: 0}
   flipDirection: 1
+--- !u!114 &11435292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3fc19273efe3f842a63f4d3316b78d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11444384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -29835,6 +29888,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.z
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Player3_
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

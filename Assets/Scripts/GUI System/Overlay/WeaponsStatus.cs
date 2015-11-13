@@ -13,12 +13,28 @@ using System.Collections;
 
 namespace ProjectStorms
 {
-    [RequireComponent(typeof(Image))]
     public class WeaponsStatus : MonoBehaviour
     {
-        [Header("References")]
-        public Sprite weaponsActiveSprite;
-        public Sprite weaponsInactiveSprite;
+        [Header("Sprite References")]
+        public Sprite cannonActive;
+        public Sprite mineActive;
+        public Sprite chaffActive;
+        public Sprite whirlwindActive;
+        public Sprite boostActive;
+
+        [Space(5)]
+        public Sprite cannonInactive;
+        public Sprite mineInactive;
+        public Sprite chaffInactive;
+        public Sprite whirlwindInactive;
+        public Sprite boostInactive;
+
+        [Header("Image References")]
+        public Image cannonImage;
+        public Image mineImage;
+        public Image chaffImage;
+        public Image whirlwindImage;
+        public Image boostImage;
 
         [Header("Configuration")]
         [Range(1, 4)]
@@ -27,6 +43,7 @@ namespace ProjectStorms
         private Image m_weaponStatusImage;
 
         private Countermeasures m_playerWeaponSystem;
+        private StateManager m_playerStateManager;
 
         public void Awake()
         {
@@ -49,19 +66,66 @@ namespace ProjectStorms
             m_playerWeaponSystem = player.GetComponent<Countermeasures>();
             if (m_playerWeaponSystem == null)
             {
-                Debug.LogError("Unable to find player Counter Measure");
+                Debug.LogError("Unable to find player Counter Measure Script");
+            }
+
+            m_playerStateManager = player.GetComponent<StateManager>();
+            if (m_playerStateManager == null)
+            {
+                Debug.LogError("Unable to find player StateManager Script");
             }
         }
 
         void Update()
         {
-            if (m_playerWeaponSystem.weaponsActive)
+            // Set Cannon Sprite
+            if (m_playerWeaponSystem.missileCooldown <= 0.0f)
             {
-                m_weaponStatusImage.sprite = weaponsActiveSprite;
+                cannonImage.sprite = cannonActive;
             }
             else
             {
-                m_weaponStatusImage.sprite = weaponsInactiveSprite;
+                cannonImage.sprite = cannonActive;
+            }
+
+            // Set Mine Sprite
+            if (m_playerWeaponSystem.minesCooldown <= 0.0f)
+            {
+                mineImage.sprite = mineActive;
+            }
+            else
+            {
+                mineImage.sprite = mineInactive;
+            }
+
+            // Set Chaff Sprite
+            if (m_playerWeaponSystem.chaffCooldown <= 0.0f)
+            {
+                chaffImage.sprite = chaffActive;
+            }
+            else
+            {
+                chaffImage.sprite = chaffInactive;
+            }
+
+            // Set Whirlwind Sprite
+            if (m_playerWeaponSystem.pinwheelCooldown <= 0.0f)
+            {
+                whirlwindImage.sprite = whirlwindActive;
+            }
+            else
+            {
+                whirlwindImage.sprite = whirlwindInactive;
+            }
+
+            // Set Boost Sprite
+            if (m_playerStateManager.timeBetweenStall <= 0)
+            {
+                boostImage.sprite = boostActive;
+            }
+            else
+            {
+                boostImage.sprite = boostInactive;
             }
         }
     }

@@ -1189,7 +1189,7 @@ GameObject:
   - 114: {fileID: 11465480}
   m_Layer: 0
   m_Name: StartPoint_Vikings
-  m_TagString: Untagged
+  m_TagString: Player4_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -1282,6 +1282,23 @@ GameObject:
   m_Layer: 0
   m_Name: transform255
   m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &120466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 405856}
+  - 65: {fileID: 6507236}
+  - 114: {fileID: 11467184}
+  m_Layer: 0
+  m_Name: AutoTrayOpen
+  m_TagString: Player4_
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7370,6 +7387,18 @@ Transform:
   - {fileID: 415190}
   m_Father: {fileID: 441526}
   m_RootOrder: 0
+--- !u!4 &405856
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120466}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 43.4000015, z: 11.6000004}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_Children: []
+  m_Father: {fileID: 454792}
+  m_RootOrder: 18
 --- !u!4 &405998
 Transform:
   m_ObjectHideFlags: 1
@@ -10269,6 +10298,7 @@ Transform:
   - {fileID: 461842}
   - {fileID: 453426}
   - {fileID: 482048}
+  - {fileID: 405856}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &454928
@@ -15324,6 +15354,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6507236
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120466}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6507524
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -16275,6 +16317,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   faction: 3
   factionName: NONAME
+--- !u!114 &11467184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3fc19273efe3f842a63f4d3316b78d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11477490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18127,6 +18180,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.z
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Player4_
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

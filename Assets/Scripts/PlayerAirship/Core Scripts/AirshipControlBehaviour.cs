@@ -175,6 +175,9 @@ namespace ProjectStorms
         [HideInInspector]
         public bool openHatch = false;
 
+        [HideInInspector]
+        public bool forceOpenHatch = false;
+
         //Last Vibration values
         //private float previousYaw = 0;
         //private float previousRoll = 0;
@@ -341,6 +344,12 @@ namespace ProjectStorms
                 else
                 {
                     openHatch = false;
+                }
+
+                // If in auto-open zone, force open
+                if (forceOpenHatch)
+                {
+                    openHatch = forceOpenHatch;
                 }
 
                 // Keep the inputs in reasonable ranges, see the standard asset examples for more
