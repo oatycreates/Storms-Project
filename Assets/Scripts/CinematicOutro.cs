@@ -38,6 +38,10 @@ namespace ProjectStorms
         private Color myNavy = new Color(0.193f, 0.329f, 0.728f, 1f);
         private Color myGreen = new Color(0.274f, 0.662f, 0.088f, 1f);
         private Color myYellow = new Color(0.847f, 0.919f, 0.169f, 1f);
+        
+        //Last minute win sounds
+        private AudioSource my_Audio;
+        public AudioClip winSound;
 
         void Awake()
         {
@@ -50,11 +54,24 @@ namespace ProjectStorms
            	navyWin.SetActive(false);
            	tinkerersWin.SetActive(false);
            	vikingWin.SetActive(false);
+           	
+			my_Audio = gameObject.GetComponent<AudioSource>();
+			my_Audio.volume = 0;
+			my_Audio.pitch = 0.5f;
         }
 
         void Start()
         {
             m_minimap = GameObject.Find("Minimap");
+            
+           my_Audio.clip = winSound;
+           my_Audio.Play();
+
+        }
+        
+        void Update()
+        {
+        	my_Audio.volume += 0.05f;
         }
 
         void FixedUpdate()
