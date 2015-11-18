@@ -106,7 +106,7 @@ namespace ProjectStorms
                 playersSettings[2] = player3Settings;
                 playersSettings[3] = player4Settings;
 
-                Debug.LogWarning("Level being hot loaded, setting In-Editor player settings...");
+               // Debug.LogWarning("Level being hot loaded, setting In-Editor player settings...");
             }
 #endif
 
@@ -243,7 +243,7 @@ namespace ProjectStorms
 
                         // Spawn base, and store reference within bases array
                         GameObject playerBase = baseSpawner.SpawnBase(playerSettings.faction);
-                        Debug.Log(string.Format("Spawned base: Player {0}", i + 1));
+                       // Debug.Log(string.Format("Spawned base: Player {0}", i + 1));
 
                         m_bases[i] = playerBase;
                     }

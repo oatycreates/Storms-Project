@@ -171,36 +171,40 @@ namespace ProjectStorms
             }
             
             
-            //Particle stuff
-            m_system.Stop();
+            
             
 			parentFaction = gameObject.GetComponentInParent<FactionIndentifier>().factionName;
 			
-			if (parentFaction == "PIRATES")
+			if (m_system != null)
 			{
-				m_system.startColor = Color.red;
-			}
-			else
-			if (parentFaction == "NAVY")
-			{
-				m_system.startColor = Color.blue;
-			}
-			else
-			if (parentFaction == "TINKERERS")
-			{
-				m_system.startColor = Color.green;
-			}
-			else
-			if (parentFaction == "VIKINGS")
-			{
-				m_system.startColor = Color.yellow;
-			}
-			else
-			if (parentFaction == "NONE")
-			{
-				m_system.startColor = Color.white;
-			}
-           
+				//Particle stuff
+				m_system.Stop();
+				
+				if (parentFaction == "PIRATES")
+				{
+					m_system.startColor = Color.red;
+				}
+				else
+				if (parentFaction == "NAVY")
+				{
+					m_system.startColor = Color.blue;
+				}
+				else
+				if (parentFaction == "TINKERERS")
+				{
+					m_system.startColor = Color.green;
+				}
+				else
+				if (parentFaction == "VIKINGS")
+				{
+					m_system.startColor = Color.yellow;
+				}
+				else
+				if (parentFaction == "NONE")
+				{
+					m_system.startColor = Color.white;
+				}
+           	}
         }
 
         /// <summary>
@@ -434,10 +438,12 @@ namespace ProjectStorms
 					scoreMangager.PassengersInTray(factionName, noOfPassengers, true, airshipTag);
 					
 				
-					
-					if (!m_system.isPlaying)
+					if (m_system != null)
 					{
-						m_system.Play();
+						if (!m_system.isPlaying)
+						{
+							m_system.Play();
+						}
 					}
 				}
 				else

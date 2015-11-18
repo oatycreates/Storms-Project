@@ -3652,14 +3652,14 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 62783894}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e44c222455197cd429897f783f64668b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 100
-  rumbleStr: 1
-  rumbleDurr: .100000001
+  force: .00999999978
+  rumbleStr: .349999994
+  rumbleDurr: .25
 --- !u!65 &62783898
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7052,7 +7052,6 @@ GameObject:
   - 4: {fileID: 119355455}
   - 33: {fileID: 119355458}
   - 23: {fileID: 119355457}
-  - 114: {fileID: 119355456}
   m_Layer: 0
   m_Name: Cog Axis Big
   m_TagString: Untagged
@@ -7073,18 +7072,6 @@ Transform:
   - {fileID: 1615404500}
   m_Father: {fileID: 740601959}
   m_RootOrder: 22
---- !u!114 &119355456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11495380, guid: 134e1628c8c74c142a26e314a3d9403d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 119355454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &119355457
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10623,7 +10610,6 @@ GameObject:
   - 4: {fileID: 198075553}
   - 33: {fileID: 198075556}
   - 23: {fileID: 198075555}
-  - 114: {fileID: 198075554}
   m_Layer: 0
   m_Name: Cog Axis Big (1)
   m_TagString: Untagged
@@ -10644,18 +10630,6 @@ Transform:
   - {fileID: 1080870840}
   m_Father: {fileID: 1705260302}
   m_RootOrder: 25
---- !u!114 &198075554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11406184, guid: 134e1628c8c74c142a26e314a3d9403d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 198075552}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &198075555
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -41343,7 +41317,6 @@ GameObject:
   - 4: {fileID: 779433545}
   - 33: {fileID: 779433548}
   - 23: {fileID: 779433547}
-  - 114: {fileID: 779433546}
   m_Layer: 0
   m_Name: Cog Axis Small
   m_TagString: Untagged
@@ -41364,18 +41337,6 @@ Transform:
   - {fileID: 1253229952}
   m_Father: {fileID: 716420843}
   m_RootOrder: 19
---- !u!114 &779433546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11493882, guid: 134e1628c8c74c142a26e314a3d9403d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 779433544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &779433547
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -42077,7 +42038,6 @@ GameObject:
   - 4: {fileID: 799152363}
   - 33: {fileID: 799152366}
   - 23: {fileID: 799152365}
-  - 114: {fileID: 799152364}
   m_Layer: 0
   m_Name: Cog Axis Big (1)
   m_TagString: Untagged
@@ -42098,18 +42058,6 @@ Transform:
   - {fileID: 1445639603}
   m_Father: {fileID: 1696059351}
   m_RootOrder: 59
---- !u!114 &799152364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11430492, guid: 134e1628c8c74c142a26e314a3d9403d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 799152362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &799152365
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -58971,7 +58919,6 @@ GameObject:
   - 4: {fileID: 1132772899}
   - 33: {fileID: 1132772902}
   - 23: {fileID: 1132772901}
-  - 114: {fileID: 1132772900}
   m_Layer: 0
   m_Name: Cog Axis Big
   m_TagString: Untagged
@@ -58992,18 +58939,6 @@ Transform:
   - {fileID: 54938052}
   m_Father: {fileID: 1696059351}
   m_RootOrder: 60
---- !u!114 &1132772900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11456258, guid: 134e1628c8c74c142a26e314a3d9403d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1132772898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &1132772901
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -66725,7 +66660,6 @@ GameObject:
   - 4: {fileID: 1278024969}
   - 33: {fileID: 1278024972}
   - 23: {fileID: 1278024971}
-  - 114: {fileID: 1278024970}
   m_Layer: 0
   m_Name: Cog Axis Big (1)
   m_TagString: Untagged
@@ -66746,18 +66680,6 @@ Transform:
   - {fileID: 995974599}
   m_Father: {fileID: 740601959}
   m_RootOrder: 21
---- !u!114 &1278024970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11466638, guid: 134e1628c8c74c142a26e314a3d9403d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1278024968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &1278024971
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -84060,7 +83982,6 @@ GameObject:
   - 4: {fileID: 1629214644}
   - 33: {fileID: 1629214647}
   - 23: {fileID: 1629214646}
-  - 114: {fileID: 1629214645}
   m_Layer: 0
   m_Name: Cog Axis Big
   m_TagString: Untagged
@@ -84081,18 +84002,6 @@ Transform:
   - {fileID: 1163978053}
   m_Father: {fileID: 716420843}
   m_RootOrder: 16
---- !u!114 &1629214645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11457992, guid: 134e1628c8c74c142a26e314a3d9403d,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1629214643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &1629214646
 MeshRenderer:
   m_ObjectHideFlags: 0

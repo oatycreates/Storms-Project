@@ -141,7 +141,7 @@ namespace ProjectStorms
 
             DestroyImmediate(this.gameObject);
 
-            Debug.Log(string.Format("Spawned player: {0}", playerNumber));
+           // Debug.Log(string.Format("Spawned player: {0}", playerNumber));
             return spawnedPlayer;
         }
     }
