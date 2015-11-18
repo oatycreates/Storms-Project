@@ -77,6 +77,12 @@ namespace ProjectStorms
                 m_selectedButton = selectable.GetComponent<Button>();
             }
         }
+        
+        //A quick fix
+        public void ResetScene()
+        {
+        	Application.LoadLevel(Application.loadedLevelName);
+        }
 
         public void OnEnable()
         {
@@ -133,6 +139,15 @@ namespace ProjectStorms
                 backButton != null)
             {
                 backButton.onClick.Invoke();
+            }
+            
+            //Trigger stuff using ESC
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+				if ( backButton != null)
+				{
+					backButton.onClick.Invoke();
+				}
             }
         }
 
