@@ -36,5 +36,13 @@ namespace ProjectStorms
                 m_rawImage.texture = renderTexture;
             }
         }
+        
+        public void IsHighlighted( BaseEventData eventSystem)
+        {
+			if (m_button.interactable)
+			{
+				m_rawImage.texture = renderTexture;
+			}
+        }
     }
 }
