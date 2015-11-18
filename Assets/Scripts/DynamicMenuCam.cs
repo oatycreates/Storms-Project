@@ -108,12 +108,14 @@ namespace ProjectStorms
 		{
 			currentPos += 1;
 			internalTimer = cycleTimer;
+			Sound();
 		}
 		
 		void Previous()
 		{
 			currentPos -= 1;
 			internalTimer = cycleTimer;
+			Sound();
 		}
 		
 		
@@ -136,6 +138,14 @@ namespace ProjectStorms
 			}
 		
 			
+		}
+		
+		void Sound()
+		{
+			if (gameObject.GetComponent<AudioSource>() != null)
+			{
+				gameObject.GetComponent<AudioSource>().Play();
+			}
 		}
 	}
 }
