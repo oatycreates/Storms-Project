@@ -280,7 +280,10 @@ namespace ProjectStorms
 
             // Disable on hit
            //gameObject.SetActive(false);
-           Invoke("GoToSleep", 0.5f);
+           //Invoke("GoToSleep", 0.5f);
+           //Invoke("GoToSleep", 0.1f);
+           Invoke("GoToSleep", 0.025f);
+          	//GoToSleep();
         }
 
         /*
@@ -351,11 +354,11 @@ namespace ProjectStorms
 				Invoke("StopAttacking", missileLifetime - 0.2f);
 				Invoke ("GoToSleep", missileLifetime);
 				
-				Debug.Log("Returning to Sender " + myAirship.name);
+				//Debug.Log("Returning to Sender " + myAirship.name);
 			}
 			else
 			{
-				Debug.Log("No Sender to Reutrn To");
+				//Debug.Log("No Sender to Reutrn To");
 			}
 		}
 		
