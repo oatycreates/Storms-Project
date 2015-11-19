@@ -2348,7 +2348,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 187888}
   m_LocalRotation: {x: 0, y: -.866019189, z: 0, w: .500010788}
-  m_LocalPosition: {x: -489.738525, y: 504.319458, z: -807.276672}
+  m_LocalPosition: {x: 321.925323, y: 278.925293, z: 736.386658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 454476}
@@ -2511,6 +2511,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
+  m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -3825,6 +3826,7 @@ AudioSource:
   m_Pitch: 1.11000001
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -3894,6 +3896,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -3963,6 +3966,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -4032,6 +4036,7 @@ AudioSource:
   m_Pitch: 1
   Loop: 0
   Mute: 0
+  Spatialize: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
@@ -4680,6 +4685,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: .846688211, g: .91911763, b: .168955445, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 100
@@ -4807,7 +4818,7 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -6.10351562e-05, y: 9.58496094, z: 1.01379395}
+    m_Center: {x: 3.05175781e-05, y: 9.58496094, z: 1.01379395}
     m_Extent: {x: 6.07655478, y: 3.38427734, z: 5.66464853}
   m_DirtyAABB: 0
 --- !u!183 &18302522
